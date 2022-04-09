@@ -26,6 +26,7 @@ namespace UILayer.Controllers
         }
         [HttpGet]
         public IActionResult Registration()
+        
         {
             return View();
         }

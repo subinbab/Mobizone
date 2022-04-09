@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.UserModel
 {
-    class UserDataViewModel
+    public class UserDataViewModel
     {
+        public int id { get; set; }
+        public string name { get; set; }
+        public DateTime createdOn { get; set; }
     }
 }
