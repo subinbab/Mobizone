@@ -1,10 +1,12 @@
-﻿using DTOLayer.UserModel;
+﻿using DomainLayer.Users;
+using DTOLayer.UserModel;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
 using System.Text;
-
+using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
 {
@@ -31,6 +33,25 @@ namespace UILayer.Data.ApiServices
                     return true;
                 }
                 return false;
+            }
+        }
+
+        public IEnumerable<UserRegistration> GetUserData()
+        {
+            ResponseModel<IEnumerable<UserRegistration>> _responseModel = null;
+            using (HttpClient httpclient = new HttpClient())
+            {
+                _responseModel = null;
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/user";
+                Uri uri = new Uri(url);
+                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
+                if (result.Result.IsSuccessStatusCode)
+                {
+                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<UserRegistration>>>(response.Result);
+                }
+
+                return _responseModel.result;
             }
         }
     }

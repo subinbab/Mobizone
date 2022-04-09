@@ -14,6 +14,9 @@ namespace UILayer.Models
             CreateMap<ProductViewModel, ProductEntity>();
             CreateMap<ProductEntity, ProductListViewModel>();
             CreateMap<UserViewModel, UserRegistration>();
+            CreateMap<UserDataViewModel, UserRegistration>()
+                .ForPath(prop => prop.FirstName, opt => opt.MapFrom(src => src.name))
+                .ForPath(prop=> prop.createdOn,opt=> opt.MapFrom(src=>src.createdOn));
         }
     }
 }

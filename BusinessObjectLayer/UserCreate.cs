@@ -20,5 +20,9 @@ namespace BusinessObjectLayer.User
             _userRepo.Add(user);
             _userRepo.Save();
         }
+        public IEnumerable<UserRegistration> Get()
+        {
+            return _userRepo.Get();
+        }
     }
 }

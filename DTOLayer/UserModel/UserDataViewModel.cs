@@ -10,6 +10,7 @@ namespace DTOLayer.UserModel
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string FirstName { get; set; }
         public DateTime createdOn { get; set; }
     }
 }

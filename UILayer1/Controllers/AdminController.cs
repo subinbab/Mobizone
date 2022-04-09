@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using DTOLayer.Product;
 using DocumentFormat.OpenXml.Presentation;
+using DTOLayer.UserModel;
+using DomainLayer.Users;
 
 namespace UIlayer.Controllers
 {
@@ -31,6 +33,7 @@ namespace UIlayer.Controllers
         private readonly INotyfService _notyf;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        IEnumerable<UserRegistration> _userDataList;
         public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _notyf = notyf;
@@ -275,5 +278,12 @@ namespace UIlayer.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult Userdata()
+        {
+            UserApi userApi = new UserApi(Configuration);
+            _userDataList = userApi.GetUserData();
+            return View(_userDataList);
+        }
+        
     }
 }
