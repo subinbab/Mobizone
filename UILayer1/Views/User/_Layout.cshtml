@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/SideBar.css" />
+    <link rel="stylesheet" href="~/css/navigation-bar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+</head>
+<body>
+    <!-- As a link -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index">MOBIZONE</a>
+            <div>
+                <input class="input-group-lg" />
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+
+            <div>
+                <i class="fa-solid fa-cart-shopping"></i>
+                <a class="mr-3">Cart</a>
+                <i class="fa-solid fa-user"></i>
+                <a asp-action="Login">Account</a>
+            </div>
+
+        </div>
+    </nav>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="border-top footer text-muted">
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

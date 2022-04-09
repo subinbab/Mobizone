@@ -1,0 +1,33 @@
+{
+  "Products": [
+    {
+      "ProductAdded": "Successfully Added Your New Product",
+      "ProductAddedError": "Error Occured During Product Adding Time",
+      "ProductUpdated": "Successfully Updated Your Product",
+      "ProductUpdatedError": "Error Occured during Product Updation",
+      "ProductNull": "Dont Have Any Products Now",
+      "ProductDeleted": "Successfully deleted your product",
+      "ProductDeltedError": "Error occured during Product Deletion",
+      "ProductDuplicateData": "Entered Data is Already exist"
+    }
+  ],
+  "Users": [
+    {
+      "UserAdded": "Successfully added new user",
+      "UserAddedError": "Error occured while adding user",
+      "ProductDuplicateData": "Entered Data Already exist"
+    }
+  ],
+  "Master": [
+    {
+      "MasterAdded": "Successfully Added Your New Data",
+      "MasterAddedError": "Error Occured During Data Adding Time",
+      "MasterUpdated": "Successfully Updated Your Data",
+      "MasterUpdatedError": "Error Occured during Data Updation",
+      "MasterNull": "Dont Have Any Datas Now",
+      "MasterDeleted": "Successfully deleted your Data",
+      "MasterDeltedError": "Error occured during Data Deletion",
+      "MasterDuplicateData": "Entered Data is Already exist"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+﻿<div class="" style="padding-top:60px;">
+    <div class="sidebar">
+        <a class="" asp-action="">Dashboard</a>
+        <div id="product">
+        <a  class="@(Context.Request.Path == "/Admin" ? "active" : "")">Products</a>
+        <div id="dropdown1" class="dropdown">
+            <a asp-action="Create" class="@(Context.Request.Path == "/Admin/Product/Create" ? "active " : "")">Create</a>
+        </div>
+        </div>
+        <div id="settings">
+        <a   class="@(Context.Request.Path == "/Admin/Settings" ? "active" : "")">Settings</a>
+        <div id="dropdown2" class="dropdown">
+            <a asp-action="MasterData" id="dropdown2"  class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Master</a>
+        </div>
+        </div>
+        <a asp-action="Create">Users</a>
+
+        <a id="orders">Orders</a>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+  $("#product").mouseenter(function(){
+    $("#dropdown1").show();
+  });
+  $("#product").mouseleave(function(){
+    $("#dropdown1").hide();
+  });
+});
+
+ $(document).ready(function(){
+  $("#settings").hover(function(){
+    $("#dropdown2").toggle();
+  });
+});
+    </script>
+    <style>
+        .dropdown {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+        }
+    </style>
