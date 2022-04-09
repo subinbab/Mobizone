@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DomainLayer.Users
@@ -28,5 +29,17 @@ namespace DomainLayer.Users
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+
+        [Column("CreatedOn")]
+        public DateTime createdOn { get; set; }
+        [Column("CreatedBy", TypeName = "nvarchar")]
+        [MaxLength(150)]
+        public string createdBy { get; set; }
+        [Column("ModifiedOn")]
+        public DateTime modifiedOn { get; set; }
+        [Column("ModifiedBy", TypeName = "nvarchar")]
+        [MaxLength(150)]
+        public string modifiedBy { get; set; }
+
     }
 }

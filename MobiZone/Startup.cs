@@ -35,7 +35,7 @@ namespace MobiZone
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("myoffice")));
+            services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             /*services.AddScoped(typeof(IRepositoryOperations<>), typeof(RepositoryOperations<>));*/
             services.AddScoped(typeof(IProductCatalog), typeof(ProductCatalog));
             services.AddScoped(typeof(IUserCreate), typeof(UserCreate));
@@ -48,6 +48,7 @@ namespace MobiZone
             .AllowAnyHeader()));
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

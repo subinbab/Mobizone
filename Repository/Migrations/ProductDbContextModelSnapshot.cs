@@ -200,6 +200,24 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("createdBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<string>("modifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("ModifiedBy");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ModifiedOn");
+
                     b.HasKey("UserId");
 
                     b.ToTable("userRegistrations");

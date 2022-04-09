@@ -9,7 +9,7 @@ namespace ApiLayer.Messages
 {
     public class UserMessages : IMessages
     {
-        private string jsonFile = @"D:\GitlabProject\updatedMobizone\MobiZone\messages.json";
+        private string jsonFile = @"D:\projects\Mobizone\MobiZone\messages.json";
         public string Added { get; set; }
         public string AddedError { get; set; }
         public string Deleted { get; set; }

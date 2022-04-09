@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20220406064016_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220409092724_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,6 +201,24 @@ namespace Repository.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("createdBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<string>("modifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("ModifiedBy");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ModifiedOn");
 
                     b.HasKey("UserId");
 
