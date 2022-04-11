@@ -70,29 +70,58 @@ namespace UIlayer.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.BrandList = _collection.FetchData((int)Master.Brand);
+            ViewBag.SimType = _collection.FetchData((int)Master.SimType);
+            ViewBag.ProductType = _collection.FetchData((int)Master.ProductType);
+            ViewBag.Processor = _collection.FetchData((int)Master.OsProcessor);
+            ViewBag.Core = _collection.FetchData((int)Master.OsCore);
+            ViewBag.Ram = _collection.FetchData((int)Master.Ram);
+            ViewBag.Storage = _collection.FetchData((int)Master.Storage);
+            ViewBag.camFeatures = _collection.FetchData((int)Master.CamFeature);
             return View();
         }
         [HttpPost]
-        public ActionResult Create(ViewProductModel product)
+        public ActionResult Create(ProductViewModel product)
         {
-            if (ModelState.IsValid)
+            ProductViewModel data = new ProductViewModel();
+            data = product;
+            ProductEntity products = new ProductEntity();
+            products = (ProductEntity)_mapper.Map<ProductEntity>(data);
+            Images image;
+            List<Images> images = new List<Images>();
+            foreach (IFormFile files in data.imageFile)
             {
-                data.Id = 0;
-                data.Name = product.Name;
-                data.Model = product.Model;
-                data.Price = product.Price;
-                data.Description = product.Description;
-                bool result = pr.CreateProduct(data);
-                if (result)
-                {
-                    _notyf.Success(Configuration.GetSection("Products")["ProductAdded"].ToString());
-                }
-                else
-                {
-                    _notyf.Error(Configuration.GetSection("Products")["ProductAddedError"].ToString());
-                }
+
+                image = new Images();
+                image.imagePath = files.FileName;
+                images.Add(image);
             }
-            
+            products.images = images;
+
+
+
+
+            string uniqueFileName = null;
+            /*if (data.imageFile !=null && data.imageFile.Count > 0)
+            {
+                foreach (IFormFile files in data.imageFile)
+                {
+                    string folder = "Product/Images";
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                    files.CopyTo(new FileStream(serverFolder, FileMode.Create));
+                }
+            }*/
+            bool result = _opApi.CreateProduct(products);
+            if (result)
+            {
+                _notyf.Success("Prduct added");
+            }
+            else
+            {
+                _notyf.Error("Not Added");
+            }
+
             return RedirectToAction("");
         }
         [HttpGet]
