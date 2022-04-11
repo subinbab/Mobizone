@@ -15,6 +15,7 @@ namespace Repository
         IEnumerable<T> Get();
         IQueryable<T> Get(params Expression<Func<T, object>>[] includes);
         T GetById(int Id);
+        T GetById(int id, params Expression<Func<T, object>>[] includeProperties);
 
 
         void Save();

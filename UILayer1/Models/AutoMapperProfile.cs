@@ -11,6 +11,7 @@ namespace UILayer.Models
         {
             CreateMap<ProductViewModel, ProductEntity>();
             CreateMap<ProductEntity, ProductListViewModel>();
+            CreateMap<ProductEntity, ProductViewModel>();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace BusinessObjectLayer.User
         
         void AddUserRegistration (UserRegistration user);
         IEnumerable<UserRegistration> Get();
+        UserRegistration Authenticate(string username , string password);
     }
 }

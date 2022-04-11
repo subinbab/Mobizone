@@ -24,7 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.price)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -43,10 +45,9 @@
                 @Html.DisplayFor(modelItem => item.price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+                    <button class="btn btn-light"><a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.id" style="text-decoration:none;"><b>Edit</b></a></button>
+                    <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Delete" asp-route-id="@item.id" style="text-decoration:none; color:white;"><b>Delete</b></a></button>
+                </td>
         </tr>
 }
     </tbody>

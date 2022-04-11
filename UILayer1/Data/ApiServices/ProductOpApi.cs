@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
@@ -19,10 +20,9 @@ namespace UILayer.Data.ApiServices
         }
         public IEnumerable<ProductEntity> GetProduct()
         {
-            ResponseModel<IEnumerable<ProductEntity>> _responseModel = null;
+            ResponseModel<IEnumerable<ProductEntity>> _responseModel = new ResponseModel<IEnumerable<ProductEntity>>();
             using (HttpClient httpclient = new HttpClient())
             {
-                _responseModel = null;
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
                 Uri uri = new Uri(url);
                 httpclient.DefaultRequestHeaders.Authorization =
@@ -36,17 +36,17 @@ namespace UILayer.Data.ApiServices
                 return _responseModel.result;
             }
         }
-        public ProductEntity GetProduct(int id)
+        public  async Task<ProductEntity> GetProduct(int id)
         {
             ResponseModel<ProductEntity> _responseModel = null;
             using (HttpClient httpclient = new HttpClient())
             {
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop/" + id;
                 Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
+                HttpResponseMessage result = await    httpclient.GetAsync(uri);
+                if (result.IsSuccessStatusCode)
                 {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                    System.Threading.Tasks.Task<string> response = result.Content.ReadAsStringAsync();
                     _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<ProductEntity>>(response.Result);
                 }
                 return _responseModel.result;
@@ -80,7 +80,7 @@ namespace UILayer.Data.ApiServices
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
                 //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
                 Uri uri = new Uri(url);
-                httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "hello");
+                httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", " c3ViaW5AZ21haWwuY29tOmN4djJzQ0tPaFA0YmFTblhzMlY2Ymc9PQ==");
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
                 if (result.Result.IsSuccessStatusCode)
                 {

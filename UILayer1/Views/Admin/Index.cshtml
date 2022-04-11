@@ -1,55 +1,57 @@
-﻿@model IEnumerable<DomainLayer.Product>
+﻿@model IEnumerable<DTOLayer.Product.ProductListViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ProductList";
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.0/bootstrap-table.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" defer></script>
 
-@*<button class="btn btn-light"><a asp-controller="Product" asp-action="Create" style="text-decoration:none;"><b>Add</b></a></button>*@
-<table class="table table-bordered" id="datatable">
-    <thead>
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.First().Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Price)
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+<table id="datatable" class="table table-striped">
+        <thead>
             <tr>
-                <td>
-                    @Html.ActionLink(item.Name, "Details", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <button class="btn btn-light"><a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.Id" style="text-decoration:none;"><b>Edit</b></a></button>
-                    <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id" style="text-decoration:none; color:white;"><b>Delete</b></a></button>
-                </td>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Edit</th>
             </tr>
-        }
-    </tbody>
+        </thead>
 </table>
 
-@*@HtmlHelper.PagedListPager(Model, i => Url.Action("Index","Product",new {i}))*@
+<script>
+    $(document).ready(function(){
+
+            
+            $.ajax({
+                url:'productList',
+                type:'get',
+                datatype:'json',
+                success:function(data){
+                    console.log(data);
+                    $('#datatable').dataTable({
+                        "processing": false,
+                        data:data,
+                        columns:[
+                            {'data':'productBrand'},
+                            {'data':'model'},
+                            {'data':'quantity'},
+                            {'data':'price'},
+                            {  
+                    "render": function(data, type, full, meta) { return '<a class="btn btn-info" href="/admin/Edit/' + full.id + '">Edit</a>'; }  
+                }
+                        ]
+                    })
+                }
+            })
+        })
+</script>

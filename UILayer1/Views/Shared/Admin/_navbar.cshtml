@@ -3,8 +3,24 @@
         <div class="navbar-brand ">
             MOBIZONE
         </div>
-        <div class="navbar carousel-item-right">
+        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="admin" asp-action="Logout">Logout</a>
+                            </li>
+        }
+        else
+        {
+            <div class="navbar carousel-item-right">
             Admin
         </div>
+        }
+        
     </nav>
 </header>
+
+<style>
+    header{
+        z-index:999;
+    }
+</style>

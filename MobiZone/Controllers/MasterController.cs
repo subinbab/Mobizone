@@ -3,6 +3,7 @@ using ApiLayer.Models;
 using BusinessObjectLayer.ProductOperations;
 using DomainLayer.ProductModel.Master;
 using log4net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
@@ -23,15 +24,17 @@ namespace ApiLayer.Controllers
         IEnumerable<MasterTable> _masterDataList;
         MasterTable _masterData;
         IMessages _masterMessages;
+        IWebHostEnvironment _webHostEnvironment;
 
-        public MasterController(ProductDbContext context, IMasterDataOperations masterOperations)
+        public MasterController(ProductDbContext context, IMasterDataOperations masterOperations, IWebHostEnvironment web)
         {
             _context = context;
+            _webHostEnvironment = web;
             _masterOperations = masterOperations;
             _response = new ResponseModel<MasterTable>();
             _masterData = new MasterTable();
             _log = LogManager.GetLogger(typeof(ProductController));
-            _masterMessages = new MasterMessages();
+            _masterMessages = new MasterMessages(_webHostEnvironment);
         }
         [HttpPost]
         public IActionResult Post([FromBody] MasterTable masterData)

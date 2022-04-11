@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace UILayer1
 {
@@ -26,6 +28,36 @@ namespace UILayer1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/login";
+                /*options.Events = new CookieAuthenticationEvents()
+                {
+                    OnSigningIn = async context =>
+                    {
+                        var principal = context.Principal;
+                        if (principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
+                        {*//*
+                            if (principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == model.password)
+                            {
+                                var claimsIdentity = principal.Identity as ClaimsIdentity;
+                                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                            }*//*
+                        }
+
+                        await Task.CompletedTask;
+                    },
+                    OnSignedIn = async content =>
+                    {
+                        await Task.CompletedTask;
+                    },
+                    OnValidatePrincipal = async content =>
+                    {
+                        await Task.CompletedTask;
+                    }
+                };*/
+
+            });
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
@@ -47,7 +79,7 @@ namespace UILayer1
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

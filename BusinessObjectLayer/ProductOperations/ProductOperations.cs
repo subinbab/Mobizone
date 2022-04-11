@@ -25,5 +25,10 @@ namespace BusinessObjectLayer.ProductOperations
         {
             return _repo.Get(n1=> n1.specs,n2=> n2.images);
         }
+
+        public ProductEntity GetById(int id)
+        {
+            return _repo.GetById(id, n1 => n1.specs, n2 => n2.images);
+        }
     }
 }

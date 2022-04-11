@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,24 @@ namespace ApiLayer.Messages
 {
     public class UserMessages : IMessages
     {
-        private string jsonFile = @"D:\projects\Mobizone\MobiZone\messages.json";
+        private IWebHostEnvironment _webHostEnvironment;
+        string _jsonFile = null;
+        public UserMessages(IWebHostEnvironment environment)
+        {
+            _webHostEnvironment = environment;
+
+            string file = "messages.json";
+            _jsonFile = Path.Combine(_webHostEnvironment.ContentRootPath, file);  
+            JArray objArray = new JArray();
+            objArray = Read();
+            foreach (var users in objArray.ToList())
+            {
+                this.Added = JsonConvert(users["UserAdded"]);
+                this.AddedError = JsonConvert(users["UserAddedError"]);
+                this.ExceptionError = JsonConvert(users["UserException"]);
+            }
+        }
+        
         public string Added { get; set; }
         public string AddedError { get; set; }
         public string Deleted { get; set; }
@@ -20,22 +38,9 @@ namespace ApiLayer.Messages
         public string UpdatedError { get; set; }
         public string ExceptionError { get; set; }
 
-        public UserMessages()
-        {
-            JArray objArray = new JArray();
-            objArray = Read();
-            foreach (var users in objArray.ToList())
-            {
-                this.Added = JsonConvert(users["UserAdded"]);
-                this.AddedError = JsonConvert(users["UserAddedError"]);
-                this.ExceptionError = JsonConvert(users["UserException"]);
-            }
-           
-
-        }
         private JArray Read()
         {
-            string json = File.ReadAllText(jsonFile);
+            string json = File.ReadAllText(_jsonFile);
             var jObject = JObject.Parse(json);
             JArray userArray = (JArray)jObject["Users"];
             return userArray;

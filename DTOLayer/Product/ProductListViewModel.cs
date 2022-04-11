@@ -9,6 +9,7 @@ namespace DTOLayer.Product
 {
     public class ProductListViewModel
     {
+        public int id { get; set; }
         [DisplayName("Brand")]
         public string productBrand { get; set; }
         [DisplayName("Model Name")]

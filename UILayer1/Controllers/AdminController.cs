@@ -19,9 +19,16 @@ using DTOLayer.Product;
 using DocumentFormat.OpenXml.Presentation;
 using DTOLayer.UserModel;
 using DomainLayer.Users;
+using System.Threading.Tasks;
+using UILayer.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace UIlayer.Controllers
 {
+    
 
     public class AdminController : Controller
     {
@@ -34,6 +41,7 @@ namespace UIlayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         IEnumerable<UserRegistration> _userDataList;
+        DataCollection _collection;
         public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _notyf = notyf;
@@ -44,11 +52,14 @@ namespace UIlayer.Controllers
             _opApi = new ProductOpApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
+            _collection = new DataCollection(Configuration);
         }
+        [Authorize]
         public ActionResult Index(int? i)
         {
-            IEnumerable<Product> products = pr.GetProduct();
-            return View(products);
+            var data = _opApi.GetProduct();
+            List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
+            return View(productList);
         }
 
         public ActionResult Details(int id)
@@ -85,10 +96,20 @@ namespace UIlayer.Controllers
             return RedirectToAction("");
         }
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            Product product = pr.GetProduct(id);
-            return View(product);
+            var product = await _opApi.GetProduct(id);
+            var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
+            ViewBag.BrandList = _collection.FetchData((int)Master.Brand);
+            ViewBag.SimType = _collection.FetchData((int)Master.SimType);
+            ViewBag.ProductType = _collection.FetchData((int)Master.ProductType);
+            ViewBag.Processor = _collection.FetchData((int)Master.OsProcessor);
+            ViewBag.Core = _collection.FetchData((int)Master.OsCore);
+            ViewBag.Ram = _collection.FetchData((int)Master.Ram);
+            ViewBag.Storage = _collection.FetchData((int)Master.Storage);
+            ViewBag.camFeatures = _collection.FetchData((int)Master.CamFeature);
+
+            return View(data);
         }
         [HttpPost]
         public ActionResult Edit(Product product)
@@ -163,75 +184,19 @@ namespace UIlayer.Controllers
             
             var data = _opApi.GetProduct();
             List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
-            return View(productList);
+            return new JsonResult(productList);
         }
         [HttpGet("ProductCreate")]
         public ActionResult ProductCreate()
         {
-            List<string> brandList = new List<string>();
-            
-            IEnumerable<MasterTable> data1 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.Brand);
-            foreach(var item in data1)
-            {
-                brandList.Add(item.masterData.ToString());
-            }
-            ViewBag.BrandList = brandList;
-            List<string> simType = new List<string>();
-
-            IEnumerable<MasterTable> data2 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.SimType);
-            foreach (var item in data2)
-            {
-                simType.Add(item.masterData.ToString());
-            }
-            ViewBag.SimType = simType;
-            List<string> productType = new List<string>();
-
-            IEnumerable<MasterTable> data3 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.ProductType);
-            foreach (var item in data3)
-            {
-                productType.Add(item.masterData.ToString());
-            }
-            ViewBag.ProductType = productType;
-            List<string> processor = new List<string>();
-
-            IEnumerable<MasterTable> data4 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.OsProcessor);
-            foreach (var item in data4)
-            {
-                processor.Add(item.masterData.ToString());
-            }
-            ViewBag.Processor = processor;
-            List<string> core = new List<string>();
-
-            IEnumerable<MasterTable> data5 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.OsCore);
-            foreach (var item in data5)
-            {
-                core.Add(item.masterData.ToString());
-            }
-            ViewBag.Core = core;
-            List<string> ram = new List<string>();
-
-            IEnumerable<MasterTable> data7 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.Ram);
-            foreach (var item in data7)
-            {
-                ram.Add(item.masterData.ToString());
-            }
-            ViewBag.Ram = ram;
-            List<string> storage = new List<string>();
-
-            IEnumerable<MasterTable> data = _masterApi.GetAll().Where(s => s.parantId == (int)Master.Storage);
-            foreach (var item in data)
-            {
-                storage.Add(item.masterData.ToString());
-            }
-            ViewBag.Storage = storage;
-            List<string> camFeature = new List<string>();
-
-            IEnumerable<MasterTable> data8 = _masterApi.GetAll().Where(s => s.parantId == (int)Master.CamFeature);
-            foreach (var item in data8)
-            {
-                camFeature.Add(item.masterData.ToString());
-            }
-            ViewBag.camFeatures = camFeature;
+            ViewBag.BrandList = _collection.FetchData((int)Master.Brand);
+            ViewBag.SimType = _collection.FetchData((int)Master.SimType);
+            ViewBag.ProductType = _collection.FetchData((int)Master.ProductType);
+            ViewBag.Processor = _collection.FetchData((int)Master.OsProcessor);
+            ViewBag.Core = _collection.FetchData((int)Master.OsCore);
+            ViewBag.Ram = _collection.FetchData((int)Master.Ram);
+            ViewBag.Storage = _collection.FetchData((int)Master.Storage);
+            ViewBag.camFeatures = _collection.FetchData((int)Master.CamFeature);
             return View();
         }
         [HttpPost("ProductCreate")]
@@ -284,6 +249,45 @@ namespace UIlayer.Controllers
             _userDataList = userApi.GetUserData();
             return View(_userDataList);
         }
+        [AllowAnonymous]
+        [HttpGet("login")]
+        public IActionResult Login(string returnUrl)
         
+        {
+            /*var myString = returnUrl;
+            myString = myString.Substring(1);*/
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost("/Login")]
+        public async Task<IActionResult> Validate(string userName, string password, string ReturnUrl)
+        {
+            UserApi userApi = new UserApi(Configuration);
+            LoginViewModel user = new LoginViewModel();
+            user.userName = userName;
+            user.password = password;
+            bool check = userApi.Authenticate(user);
+            if (check)
+            {
+                var claims = new List<Claim>();
+                claims.Add(new Claim("email", user.userName));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                claims.Add(new Claim("password", user.password));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return Redirect(ReturnUrl);
+            }
+            TempData["Error"] = "Invalid Email or Password";
+            return View("login");
+        }
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
     }
 }

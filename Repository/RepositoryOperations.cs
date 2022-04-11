@@ -88,6 +88,25 @@ namespace Repository
 
             return entity;
         }
+        public T GetById(int id, params Expression<Func<T, object>>[] includes)
+        {
+            try
+            {
+                IQueryable<T> result = dbSet;
+                query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));
+                /*foreach (var includeProperty in includeProperties)
+                {
+                    dbSet.Include(includeProperty);
+                }*/
+                entity = dbSet.Find(id);
+                return entity;
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
+
+        }
 
         public void Save()
         {

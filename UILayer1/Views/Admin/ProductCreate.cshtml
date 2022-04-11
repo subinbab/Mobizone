@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="specs.ram" class="control-label"></label>
-                <input asp-for="specs.ram" class="form-control" />
+                <select asp-for="specs.ram" class="form-control" asp-items="new SelectList(ViewBag.Ram)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
             <div class="form-group">

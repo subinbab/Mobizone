@@ -3,6 +3,7 @@ using ApiLayer.Models;
 using BusinessObjectLayer;
 using DomainLayer;
 using log4net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
@@ -29,17 +30,19 @@ namespace ApiLayer.Controllers
         IEnumerable<Product> _productList;
         Product _product;
         IMessages _productMessages;
+        IWebHostEnvironment _webHostEnvironment;
         #endregion
         /*IRepositoryOperations<Product> _repo;*/
-        public ProductController(ProductDbContext context, IProductCatalog catalog)
+        public ProductController(ProductDbContext context, IProductCatalog catalog, IWebHostEnvironment web)
         {
             #region Object Assigning
             _context = context;
+            _webHostEnvironment = web;
             _catalog = catalog;
             _response = new ResponseModel<Product>();
             _product = new Product();
             _log = LogManager.GetLogger(typeof(ProductController));
-            _productMessages = new ProductMessages();
+            _productMessages = new ProductMessages(_webHostEnvironment);
             #endregion
 
         }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,21 +8,14 @@ namespace ApiLayer.Messages
 {
     public class ProductMessages : IMessages
     {
-        private string jsonFile = @"D:\GitlabProject\updatedMobizone\MobiZone\messages.json";
-
-        public string Added { get; set; }
-        public string Updated { get; set; }
-        public string Deleted { get; set; }
-        public string Null { get; set; }
-        public string AddedError { get; set; }
-        public string UpdatedError { get; set; }
-        public string DeltedError { get; set; }
-
-        public string DuplicateData { get; set; }
-        public string ExceptionError { get; set; }
-
-        public ProductMessages()
+        private IWebHostEnvironment _webHostEnvironment;
+        string _jsonFile = null;
+        public ProductMessages(IWebHostEnvironment environment)
         {
+            _webHostEnvironment = environment;
+
+            string file = "messages.json";
+            _jsonFile = Path.Combine(_webHostEnvironment.ContentRootPath, file);
             JArray objArray = new JArray();
             objArray = Read();
             foreach (var product in objArray.ToList())
@@ -36,11 +30,22 @@ namespace ApiLayer.Messages
                 this.DuplicateData = JsonConvert(product["ProductDuplicateData"]);
                 this.ExceptionError = JsonConvert(product["ProductException"]);
             }
-
         }
+
+
+        public string Added { get; set; }
+        public string Updated { get; set; }
+        public string Deleted { get; set; }
+        public string Null { get; set; }
+        public string AddedError { get; set; }
+        public string UpdatedError { get; set; }
+        public string DeltedError { get; set; }
+
+        public string DuplicateData { get; set; }
+        public string ExceptionError { get; set; }
         private JArray Read()
         {
-            string json = File.ReadAllText(jsonFile);
+            string json = File.ReadAllText(_jsonFile);
             var jObject = JObject.Parse(json);
             JArray productArray = (JArray)jObject["Products"];
             return productArray;

@@ -1,5 +1,7 @@
 ﻿using BusinessObjectLayer;
+using BusinessObjectLayer.User;
 using DomainLayer;
+using DomainLayer.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,17 +22,20 @@ namespace ApiLayer.Models
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        /*private readonly IUserService _userService;*/
+        private readonly IUserCreate _userService;
+        IEnumerable<UserRegistration> _userList;
+        Security _security;
 
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
-            ISystemClock clock
-            /*IUserService userService*/)
+            ISystemClock clock,
+            IUserCreate userService)
             : base(options, logger, encoder, clock)
         {
-            /*_userService = userService;*/
+            _userService = userService;
+            _security = new Security();
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -43,7 +48,8 @@ namespace ApiLayer.Models
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
-            /*User user = null;*/
+            UserRegistration user = new UserRegistration();
+            user = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
@@ -51,19 +57,23 @@ namespace ApiLayer.Models
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                /*user = await _userService.Authenticate(username, password);*/
+                var decryptPass = _security.Decrypt("subin", password);
+                _userList = _userService.Get();
+                /*user = _userList.Where(c=> c.Email.Equals(username)&& c.Password.Equals(decryptPass)).FirstOrDefault();*/
+
+                user =  _userService.Authenticate(username, password);
             }
             catch
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            if (null == null)
+            if (user == null)
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, "1"),
-                new Claim(ClaimTypes.Name,"subin" ),
+                new Claim(ClaimTypes.NameIdentifier, user.Email),
+                new Claim(ClaimTypes.Name,user.FirstName +" "+ user.LastName ),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

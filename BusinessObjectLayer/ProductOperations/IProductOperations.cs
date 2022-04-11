@@ -8,5 +8,6 @@ namespace BusinessObjectLayer.ProductOperations
     {
         void Add(ProductEntity product);
         IEnumerable<ProductEntity> GetAll();
+        ProductEntity GetById(int id);
     }
 }

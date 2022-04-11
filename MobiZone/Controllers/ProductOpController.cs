@@ -4,6 +4,7 @@ using BusinessObjectLayer.ProductOperations;
 using DomainLayer.ProductModel;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
@@ -13,7 +14,7 @@ using System.Net.Http;
 
 namespace ApiLayer.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProductOpController : ControllerBase
@@ -25,20 +26,22 @@ namespace ApiLayer.Controllers
         IEnumerable<ProductEntity> _productDataList;
         ProductEntity _productData;
         IMessages _productMessages;
-
-        public ProductOpController(ProductDbContext context, IProductOperations productOperations)
+        IWebHostEnvironment _webHostEnvironment;
+        public ProductOpController(ProductDbContext context, IProductOperations productOperations, IWebHostEnvironment web)
         {
             #region Object Assigning
             _context = context;
+            _webHostEnvironment = web;
             _productOperations = productOperations;
             _response = new ResponseModel<ProductEntity>();
             _productData = new ProductEntity();
             _log = LogManager.GetLogger(typeof(ProductController));
-            _productMessages = new ProductMessages();
+            _productMessages = new ProductMessages(_webHostEnvironment);
             #endregion
         }
 
         #region Post Method for Product
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] ProductEntity product)
         {
@@ -82,6 +85,41 @@ namespace ApiLayer.Controllers
                     string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, _productDataList, message);
 
+                    return new JsonResult(_response);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, _productMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+
+        }
+        #endregion
+
+        #region Get Method for product
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                _productData = _productOperations.GetById(id);
+                if (_productData == null)
+                {
+                    ResponseModel<string> _response = new ResponseModel<string>();
+                    string message = _productMessages.Null + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    return new JsonResult(_response);
+                }
+                else
+                {
+                    ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _productData, message);
                     return new JsonResult(_response);
                 }
 

@@ -25,10 +25,10 @@ namespace DomainLayer.Users
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required(ErrorMessage = "This Field is Required")]
-        [Display(Name = "Password")]
+        /*[Display(Name = "Password")]
         [DataType(DataType.Password)]
         [Compare("Password")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }*/
 
         [Column("CreatedOn")]
         public DateTime createdOn { get; set; }

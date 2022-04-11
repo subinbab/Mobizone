@@ -54,5 +54,22 @@ namespace UILayer.Data.ApiServices
                 return _responseModel.result;
             }
         }
+        public bool Authenticate(LoginViewModel user)
+        {
+            using (HttpClient httpclient = new HttpClient())
+            {
+                string data = Newtonsoft.Json.JsonConvert.SerializeObject(user);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/auth";
+                //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
+                Uri uri = new Uri(url);
+                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
+                if (result.Result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
