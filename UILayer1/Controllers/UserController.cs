@@ -37,5 +37,22 @@ namespace UILayer.Controllers
             userApi.CreateUser(user);
             return View("Index");
         }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Company()
+        {
+            return View();
+        }
     }
 }
