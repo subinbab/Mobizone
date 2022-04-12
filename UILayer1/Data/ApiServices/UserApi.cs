@@ -35,9 +35,10 @@ namespace UILayer.Data.ApiServices
                 return false;
             }
         }
-
+        //getuser data
         public IEnumerable<UserRegistration> GetUserData()
         {
+            
             ResponseModel<IEnumerable<UserRegistration>> _responseModel = null;
             using (HttpClient httpclient = new HttpClient())
             {
@@ -54,6 +55,7 @@ namespace UILayer.Data.ApiServices
                 return _responseModel.result;
             }
         }
+        //Authenticate
         public bool Authenticate(LoginViewModel user)
         {
             using (HttpClient httpclient = new HttpClient())
@@ -68,7 +70,8 @@ namespace UILayer.Data.ApiServices
                 {
                     return true;
                 }
-                return false;
+                return false; 
+
             }
         }
     }

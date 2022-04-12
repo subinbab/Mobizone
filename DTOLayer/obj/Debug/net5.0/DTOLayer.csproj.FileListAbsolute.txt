@@ -1,0 +1,15 @@
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\DTOLayer.deps.json
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\DTOLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\ref\DTOLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\DTOLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\DomainLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\bin\Debug\net5.0\DomainLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.csproj.AssemblyReference.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.AssemblyInfoInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.AssemblyInfo.cs
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.csproj.CoreCompileInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.csproj.CopyComplete
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\ref\DTOLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DTOLayer\obj\Debug\net5.0\DTOLayer.pdb

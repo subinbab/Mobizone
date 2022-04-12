@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "OIM5LfmGnV04JtPJp+FpUN4bpBYzjmwN/sfxuXWqwsHMMJMaAye/KZBRE6jhyxcGFBqtfgRR8+C3STMB95tlJA==",
+  "success": true,
+  "projectFilePath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DTOLayer\\DTOLayer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dcabral\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.15\\microsoft.aspnetcore.http.features.5.0.15.nupkg.sha512",
+    "C:\\Users\\dcabral\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\dcabral\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

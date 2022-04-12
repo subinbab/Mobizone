@@ -1,0 +1,10 @@
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.deps.json
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.AssemblyReference.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfoInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfo.cs
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.CoreCompileInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.pdb
