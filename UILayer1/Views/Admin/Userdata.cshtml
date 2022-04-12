@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DomainLayer.Users.UserRegistration>
+
+@{
+    ViewData["Title"] = "Userdata";
+}
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdOn)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createdOn)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
