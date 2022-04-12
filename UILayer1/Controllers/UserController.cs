@@ -12,9 +12,11 @@ namespace UILayer.Controllers
     public class UserController : Controller
     {
         IConfiguration _configuration;
+        UserApi userApi;
         public UserController(IConfiguration configuration)
         {
             _configuration = configuration;
+            userApi  = new UserApi(_configuration);
         }
         public IActionResult Index()
         {
@@ -33,7 +35,7 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult Registration(UserViewModel user)
         {
-            UserApi userApi = new UserApi(_configuration);
+             
             userApi.CreateUser(user);
             return View("Index");
         }
