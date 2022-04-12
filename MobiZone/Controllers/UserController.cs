@@ -47,7 +47,7 @@ namespace ApiLayer.Controllers
 
         }
         [HttpPost]
-        public IActionResult Post([FromBody] UserViewModel users)
+        public IActionResult post([FromBody] UserViewModel users)
         {
             _user = (UserRegistration)_mapper.Map<UserRegistration>(users);
             string myDateTime = DateTime.Now.ToString();
