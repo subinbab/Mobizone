@@ -19,6 +19,44 @@ namespace Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("DomainLayer.Login", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("createdBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("modifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("roleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("rolesid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("rolesid");
+
+                    b.ToTable("login");
+                });
+
             modelBuilder.Entity("DomainLayer.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -173,6 +211,53 @@ namespace Repository.Migrations
                     b.ToTable("Specificatiion");
                 });
 
+            modelBuilder.Entity("DomainLayer.Roles", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("createdBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("modifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            createdBy = "Subin",
+                            createdOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(6445),
+                            modifiedBy = "Subin",
+                            modifiedOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7177),
+                            name = "User"
+                        },
+                        new
+                        {
+                            id = 2,
+                            createdBy = "Subin",
+                            createdOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7799),
+                            modifiedBy = "Subin",
+                            modifiedOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7805),
+                            name = "Admin"
+                        });
+                });
+
             modelBuilder.Entity("DomainLayer.Users.UserRegistration", b =>
                 {
                     b.Property<int>("UserId")
@@ -217,6 +302,15 @@ namespace Repository.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("userRegistrations");
+                });
+
+            modelBuilder.Entity("DomainLayer.Login", b =>
+                {
+                    b.HasOne("DomainLayer.Roles", "roles")
+                        .WithMany()
+                        .HasForeignKey("rolesid");
+
+                    b.Navigation("roles");
                 });
 
             modelBuilder.Entity("DomainLayer.ProductModel.Images", b =>

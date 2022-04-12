@@ -1,4 +1,5 @@
 ﻿
+using BusinessObjectLayer;
 using BusinessObjectLayer.ProductOperations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +18,7 @@ namespace ApiLayer.DI
             services.AddTransient(typeof(IMasterDataOperations), typeof(MasterDataOperations));
             services.AddTransient(typeof(IProductOperations), typeof(ProductOperations));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddScoped(typeof(ILoginOperations), typeof(LoginOperations));
         
     }
     }

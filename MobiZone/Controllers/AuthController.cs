@@ -1,7 +1,9 @@
 ﻿using ApiLayer.Messages;
 using ApiLayer.Models;
 using AutoMapper;
+using BusinessObjectLayer;
 using BusinessObjectLayer.User;
+using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using log4net;
@@ -32,7 +34,8 @@ namespace ApiLayer.Controllers
         List<UserDataViewModel> _userDataList;
         IWebHostEnvironment _webHostEnvironment;
         Security _sec;
-        public AuthController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web)
+        ILoginOperations _loginOperations;
+        public AuthController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -44,16 +47,19 @@ namespace ApiLayer.Controllers
             _mapper = mapper;
             _userDataList = new List<UserDataViewModel>();
             _sec = new Security();
+            _loginOperations = loginOperations;
         }
         [HttpPost]
         public IActionResult post(LoginViewModel data)
         {
             try
             {
-                ResponseModel<UserRegistration> _response = new ResponseModel<UserRegistration>();
+                ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
                 string password = _sec.Encrypt("subin", data.password);
-                UserRegistration check = _userCreate.Authenticate(data.userName, password);
+                IEnumerable<Login> list = _loginOperations.Get();
+                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)).FirstOrDefault();
+                /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);

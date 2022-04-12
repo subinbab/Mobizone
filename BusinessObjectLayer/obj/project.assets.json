@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "EntityFramework/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Http.Features/5.0.15": {
         "type": "package",
         "dependencies": {
@@ -1608,6 +1617,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "DomainLayer": "1.0.0",
+          "EntityFramework": "5.0.0",
           "Microsoft.EntityFrameworkCore": "5.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.0",
           "Microsoft.Extensions.Configuration": "5.0.0",
@@ -1623,6 +1633,35 @@
     }
   },
   "libraries": {
+    "EntityFramework/5.0.0": {
+      "sha512": "WYfgJWKg/RjwU8pzZkImD9DsV+J1nqDcIGp1S0/bdnElKBmAaUC2nmq/QQAcco32KyQQWnLgJNiDzIOz2xWFbQ==",
+      "type": "package",
+      "path": "entityframework/5.0.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/App.config.transform",
+        "Content/Web.config.transform",
+        "entityframework.5.0.0.nupkg.sha512",
+        "entityframework.nuspec",
+        "lib/net40/EntityFramework.dll",
+        "lib/net40/EntityFramework.xml",
+        "lib/net45/EntityFramework.dll",
+        "lib/net45/EntityFramework.xml",
+        "tools/EntityFramework.PS3.psd1",
+        "tools/EntityFramework.PowerShell.Utility.dll",
+        "tools/EntityFramework.PowerShell.dll",
+        "tools/EntityFramework.psd1",
+        "tools/EntityFramework.psm1",
+        "tools/Redirect.VS11.config",
+        "tools/Redirect.config",
+        "tools/about_EntityFramework.help.txt",
+        "tools/init.ps1",
+        "tools/install.ps1",
+        "tools/migrate.exe"
+      ]
+    },
     "Microsoft.AspNetCore.Http.Features/5.0.15": {
       "sha512": "K+94zdxmXJeEBWMoIqkhgdo0gQ+wIVIqye0MrUAMI9PrCB4+PX8+jyux90XmB1iVszUAjbEW6geYq3OjYOC0Rw==",
       "type": "package",
@@ -6025,19 +6064,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dcabral\\.nuget\\packages\\": {}
+    "C:\\Users\\subabu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MobizoneOriginal_forked\\Mobizone-1\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
+      "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
       "projectName": "BusinessObjectLayer",
-      "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
-      "packagesPath": "C:\\Users\\dcabral\\.nuget\\packages\\",
-      "outputPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\BusinessObjectLayer\\obj\\",
+      "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
+      "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dcabral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6051,11 +6090,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj": {
-              "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj"
+            "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+              "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
             },
-            "D:\\MobizoneOriginal_forked\\Mobizone-1\\Repository\\Repository.csproj": {
-              "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\Repository\\Repository.csproj"
+            "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj"
             }
           }
         }
@@ -6084,8 +6123,20 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'EntityFramework 5.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "EntityFramework",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

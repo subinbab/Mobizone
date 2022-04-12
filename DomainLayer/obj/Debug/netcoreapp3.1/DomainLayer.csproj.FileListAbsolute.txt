@@ -8,3 +8,13 @@ D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\Domain
 D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.CoreCompileInputs.cache
 D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.dll
 D:\MobizoneOriginal_forked\Mobizone-1\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.pdb
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.deps.json
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.dll
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.pdb
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.AssemblyReference.cache
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfoInputs.cache
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfo.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.CoreCompileInputs.cache
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.dll
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.pdb

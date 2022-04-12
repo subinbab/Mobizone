@@ -154,19 +154,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dcabral\\.nuget\\packages\\": {}
+    "C:\\Users\\subabu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj",
+      "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj",
       "projectName": "DomainLayer",
-      "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj",
-      "packagesPath": "C:\\Users\\dcabral\\.nuget\\packages\\",
-      "outputPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\obj\\",
+      "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj",
+      "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dcabral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -212,7 +212,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

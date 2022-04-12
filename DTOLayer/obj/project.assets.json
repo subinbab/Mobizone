@@ -128,19 +128,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dcabral\\.nuget\\packages\\": {}
+    "C:\\Users\\subabu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DTOLayer\\DTOLayer.csproj",
+      "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj",
       "projectName": "DTOLayer",
-      "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DTOLayer\\DTOLayer.csproj",
-      "packagesPath": "C:\\Users\\dcabral\\.nuget\\packages\\",
-      "outputPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DTOLayer\\obj\\",
+      "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj",
+      "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dcabral\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -154,8 +154,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj": {
-              "projectPath": "D:\\MobizoneOriginal_forked\\Mobizone-1\\DomainLayer\\DomainLayer.csproj"
+            "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+              "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
             }
           }
         }
@@ -184,7 +184,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }
