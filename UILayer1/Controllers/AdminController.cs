@@ -61,13 +61,13 @@ namespace UIlayer.Controllers
             List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
             return View(productList);
         }
-
+        [Authorize]
         public ActionResult Details(int id)
         {
             Product product = pr.GetProduct(id);
             return View(product);
         }
-
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.BrandList = _collection.FetchData((int)Master.Brand);
@@ -81,6 +81,7 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
             ProductViewModel data = new ProductViewModel();
@@ -125,6 +126,7 @@ namespace UIlayer.Controllers
             return RedirectToAction("");
         }
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
             var product = await _opApi.GetProduct(id);
@@ -155,6 +157,7 @@ namespace UIlayer.Controllers
             data = pr.GetProduct(id);
             return View(data);
         }
+        [Authorize]
         public ActionResult DeleteProduct(int id)
         {
             bool result = pr.DeleteProduct(id);
@@ -174,6 +177,7 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpGet]
+        [Authorize]
         public ActionResult MasterData()
         {
             /*var enumData = from Master e in Enum.GetValues(typeof(Master))
@@ -202,12 +206,14 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpGet("MasterList")]
+        [Authorize]
         public ActionResult MasterList(int id)
         {
             IEnumerable < MasterTable > data  = _masterApi.GetAll();
             return View(data);
         }
         [HttpGet("ProductList")]
+        [Authorize]
         public ActionResult ProductList()
         {
             
@@ -229,6 +235,7 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpPost("ProductCreate")]
+        [Authorize]
         public ActionResult ProductCreate(ProductViewModel product )
         {
             ProductViewModel data = new ProductViewModel();
@@ -272,6 +279,7 @@ namespace UIlayer.Controllers
 
             return RedirectToAction("Index");
         }
+        [Authorize]
         public IActionResult Userdata()
         {
             UserApi userApi = new UserApi(Configuration);
