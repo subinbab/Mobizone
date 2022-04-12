@@ -19,7 +19,7 @@ namespace ApiLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly ILog _log;
         ProductDbContext _userContext;
@@ -32,7 +32,7 @@ namespace ApiLayer.Controllers
         List<UserDataViewModel> _userDataList;
         IWebHostEnvironment _webHostEnvironment;
         Security _sec;
-        public UserController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web)
+        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -40,13 +40,13 @@ namespace ApiLayer.Controllers
             _user = new UserRegistration();
             _userMessages = new UserMessages(_webHostEnvironment);
             _userResponse = new ResponseModel<UserDataViewModel>();
-            _log = LogManager.GetLogger(typeof(UserController));
+            _log = LogManager.GetLogger(typeof(UsersController));
             _mapper = mapper;
             _userDataList = new List<UserDataViewModel>();
             _sec = new Security();
 
         }
-        [HttpPost]
+        [HttpPost("UserCreate")]
         public IActionResult post([FromBody] UserViewModel users)
         {
             _user = (UserRegistration)_mapper.Map<UserRegistration>(users);

@@ -24,7 +24,7 @@ namespace UILayer.Data.ApiServices
             {
                 string data = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/user";
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/users/UserCreate";
                 //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
                 Uri uri = new Uri(url);
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
