@@ -1,0 +1,16 @@
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\Repository.deps.json
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\Repository.runtimeconfig.json
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\Repository.runtimeconfig.dev.json
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\Repository.dll
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\Repository.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\DomainLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\bin\Debug\netcoreapp3.1\DomainLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.csproj.AssemblyReference.cache
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.AssemblyInfoInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.AssemblyInfo.cs
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.csproj.CoreCompileInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.csproj.CopyComplete
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.dll
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\Repository\obj\Debug\netcoreapp3.1\Repository.genruntimeconfig.cache

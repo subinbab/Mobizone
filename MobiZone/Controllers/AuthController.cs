@@ -40,7 +40,7 @@ namespace ApiLayer.Controllers
             _user = new UserRegistration();
             _userMessages = new UserMessages(_webHostEnvironment);
             _userResponse = new ResponseModel<UserDataViewModel>();
-            _log = LogManager.GetLogger(typeof(UserController));
+            _log = LogManager.GetLogger(typeof(UsersController));
             _mapper = mapper;
             _userDataList = new List<UserDataViewModel>();
             _sec = new Security();

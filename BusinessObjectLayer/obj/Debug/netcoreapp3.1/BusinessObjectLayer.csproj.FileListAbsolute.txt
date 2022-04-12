@@ -1,0 +1,15 @@
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\BusinessObjectLayer.deps.json
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\BusinessObjectLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\BusinessObjectLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\DomainLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\Repository.dll
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\DomainLayer.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\bin\Debug\netcoreapp3.1\Repository.pdb
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.csproj.AssemblyReference.cache
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.AssemblyInfoInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.AssemblyInfo.cs
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.csproj.CoreCompileInputs.cache
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.csproj.CopyComplete
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.dll
+D:\MobizoneOriginal_forked\Mobizone-1\BusinessObjectLayer\obj\Debug\netcoreapp3.1\BusinessObjectLayer.pdb
