@@ -320,6 +320,27 @@ namespace UIlayer.Controllers
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
+        public IActionResult OrderList()
+        {
+            return View();
+        }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Company()
+        {
+            return View();
+        }
     }
 }
