@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace ApiLayer.Controllers
@@ -142,8 +143,9 @@ namespace ApiLayer.Controllers
             try
             {
                 ResponseModel<string> _response = new ResponseModel<string>();
-                _productData = _productOperations.GetById(id).Result;
-
+                List<ProductEntity> data = new List<ProductEntity>(); 
+                data = _productOperations.GetAll().Result.ToList();
+                _productData = data.Where(c => c.id.Equals(id)).FirstOrDefault();
                 _productOperations.DeleteProduct(_productData);
                 string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, _productMessages.Deleted, message);
