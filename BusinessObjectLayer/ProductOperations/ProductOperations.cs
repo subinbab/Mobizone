@@ -25,8 +25,16 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task DeleteProduct(ProductEntity entity)
         {
-            _repo.Delete(entity);
-            _repo.Save();
+            try
+            {
+                await _repo.Delete(entity);
+                await _repo.Save();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
         }
 
         public async Task EditProduct(ProductEntity entity)
