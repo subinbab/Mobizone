@@ -1,0 +1,25 @@
+﻿
+footer {
+    text-align: center;
+}
+
+    footer ul {
+        list-style-type: none;
+    }
+
+.about {
+    padding-right: 250px;
+}
+
+li {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+a.privacy {
+    margin-right: -86px;
+}
+
+a.contact {
+    margin-right: -86px;
+}
