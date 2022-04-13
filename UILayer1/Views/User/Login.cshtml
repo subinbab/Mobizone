@@ -3,18 +3,27 @@
 @{
     ViewData["Title"] = "Login";
 }
-@{ 
+@{
     var loginUrl = ViewData["LoginUrl"] as string;
     var error = TempData["error"] as string;
 }
 
+<div style="text-align: center;">
 
-<h1>Login</h1>
+    <div style="width: 400px; margin-left: auto; margin-right:auto;">
 
-<h4>LoginViewModel</h4>
+        <h1>Login</h1>
+
+    </div>
+
+</div>
+
+
+
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row" >
+    <div class="col-md-4"style="width: 400px; margin-left: auto; margin-right:auto;">
         <form asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -28,16 +37,21 @@
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Login" class="btn btn-primary" />
             </div>
-            <input asp-for="url" type="hidden" value="@System.Net.WebUtility.UrlEncode(loginUrl)"/>
+            <div class="form-group">
+                <a asp-action="ForgotPassword">Forgot Password</a>
+
+            </div>
+            <div >
+                <a asp-action="Registration">Do not have a account Click here</a>
+            </div>
+            <input asp-for="url" type="hidden" value="@System.Net.WebUtility.UrlEncode(loginUrl)" />
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
