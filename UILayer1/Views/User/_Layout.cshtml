@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/SideBar.css" />
     <link rel="stylesheet" href="~/css/navigation-bar.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
 </head>
 <body>
     <!-- As a link -->
@@ -34,6 +35,54 @@
         @RenderBody()
     </div>
     <footer class="border-top footer text-muted">
+        <ul class="list">
+            <li>
+
+
+                <img src="~/css/Image/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
+                     class="float-left" />
+
+            </li>
+            <li class="about">
+                <a asp-controller="User" asp-action="Company">Company</a>
+            </li>
+            <li class="about">
+                <a asp-controller="User" asp-action="About">About</a>
+            </li>
+
+            <li class="about">
+                <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy Policy</a>
+            </li>
+
+            <li class="about">
+
+                <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact</a>
+
+            </li>
+
+
+            <hr>
+            <li>
+                <img src="~/css/Image/copyright-38672_1280.png" alt="Mobizone" style="height:18px; width:18px;" />
+                <a href=#> Mobizone private limited all right reserved</a>
+
+
+
+            </li>
+
+        </ul>
+
+    
+
+    <style>
+        .container-fluid {
+            /* width: 100%; */
+            /* padding-right: 15px; */
+            /* padding-left: 15px; */
+            /* margin-right: auto; */
+            margin-left: 0px;
+        }
+    </style>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
