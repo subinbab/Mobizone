@@ -241,3 +241,6 @@ D:\suyati\Mobizone\MobiZone\obj\Debug\net5.0\ApiLayer.genruntimeconfig.cache
 D:\suyati\Mobizone\MobiZone\bin\Debug\net5.0\System.Net.Http.Formatting.dll
 D:\suyati\Mobizone\MobiZone\bin\Debug\net5.0\System.Web.Http.dll
 D:\suyati\Mobizone\MobiZone\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\MobiZone\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\MobiZone\bin\Debug\net5.0\System.Web.Http.dll
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\MobiZone\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

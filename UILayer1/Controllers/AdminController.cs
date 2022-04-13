@@ -103,16 +103,17 @@ namespace UIlayer.Controllers
 
 
             string uniqueFileName = null;
-            /*if (data.imageFile !=null && data.imageFile.Count > 0)
+            if (data.imageFile != null && data.imageFile.Count > 0)
             {
                 foreach (IFormFile files in data.imageFile)
                 {
                     string folder = "Product/Images";
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                    files.CopyTo(new FileStream(serverFolder, FileMode.Create));
+                    string folderPath = Path.Combine(uniqueFileName, serverFolder);
+                    files.CopyTo(new FileStream(folderPath, FileMode.Create));
                 }
-            }*/
+            }
             bool result = _opApi.CreateProduct(products);
             if (result)
             {

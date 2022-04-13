@@ -81,7 +81,7 @@ namespace ApiLayer.Controllers
 
         }
         [HttpPost("admin")]
-        public async Task<HttpResponseMessage> admin(LoginViewModel data)
+        public async Task<IActionResult> admin(LoginViewModel data)
         {
             try
             {
@@ -95,17 +95,17 @@ namespace ApiLayer.Controllers
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);
-                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    return Ok();
                 }
                 message = _userMessages.Null;
                 _response.AddResponse(false, 0, null, message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+                return NotFound();
             }
             catch (Exception ex)
             {
                 ResponseModel<string> _response = new ResponseModel<string>();
                 _response.AddResponse(false, 0, null, ex.Message);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                return BadRequest();
             }
 
         }
