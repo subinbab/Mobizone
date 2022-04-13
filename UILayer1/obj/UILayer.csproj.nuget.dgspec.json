@@ -189,6 +189,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "bootstrap.chosen": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
             "toastr": {
               "target": "Package",
               "version": "[2.1.1, )"

@@ -488,3 +488,13 @@ D:\suyati\Mobizone\UILayer1\obj\Debug\net5.0\UILayer.dll
 D:\suyati\Mobizone\UILayer1\obj\Debug\net5.0\ref\UILayer.dll
 D:\suyati\Mobizone\UILayer1\obj\Debug\net5.0\UILayer.pdb
 D:\suyati\Mobizone\UILayer1\obj\Debug\net5.0\UILayer.genruntimeconfig.cache
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\About.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\Company.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\Contact.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\OrderDetails.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\OrderList.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\Admin\Privacy.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\User\About.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\User\Company.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\User\Contact.cshtml.g.cs
+C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\UILayer1\obj\Debug\net5.0\Razor\Views\User\Privacy.cshtml.g.cs

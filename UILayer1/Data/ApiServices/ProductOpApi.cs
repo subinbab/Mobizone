@@ -20,6 +20,8 @@ namespace UILayer.Data.ApiServices
         }
         public IEnumerable<ProductEntity> GetProduct()
         
+        
+        
         {
             ResponseModel<IEnumerable<ProductEntity>> _responseModel = new ResponseModel<IEnumerable<ProductEntity>>();
             using (HttpClient httpclient = new HttpClient())

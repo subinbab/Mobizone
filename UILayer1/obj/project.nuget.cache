@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "t+24CZ08MOk7izlJs92sLWUr0qyCD7RPyXMR/D2In1f5b0QxB0L9o9jPta/9r12MbiMdxBrXEVTHUivtByik7A==",
+  "dgSpecHash": "QXta1k9CL6D2TGlOH7Jur5kr8qQyibkasCXkPaFYu+weeGz0+XivhaKVEcmec7PFCDPXrHB92lizRuhOz/ZLMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\UILayer1\\UILayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\subabu\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\subabu\\.nuget\\packages\\bootstrap.chosen\\1.0.0\\bootstrap.chosen.1.0.0.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
-    "C:\\Users\\subabu\\.nuget\\packages\\jquery\\1.6.3\\jquery.1.6.3.nupkg.sha512",
+    "C:\\Users\\subabu\\.nuget\\packages\\jquery\\1.6.4\\jquery.1.6.4.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.15\\microsoft.aspnetcore.http.features.5.0.15.nupkg.sha512",
     "C:\\Users\\subabu\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

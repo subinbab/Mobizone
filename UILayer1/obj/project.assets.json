@@ -50,6 +50,12 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "bootstrap.chosen/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.6.4"
+        }
+      },
       "DocumentFormat.OpenXml/2.16.0": {
         "type": "package",
         "dependencies": {
@@ -74,7 +80,7 @@
           "lib/netstandard1.0/Humanizer.dll": {}
         }
       },
-      "jQuery/1.6.3": {
+      "jQuery/1.6.4": {
         "type": "package"
       },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
@@ -2198,6 +2204,24 @@
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
+    "bootstrap.chosen/1.0.0": {
+      "sha512": "gq1QwZ53xlx1mKUBbSP9+o0AVsL61g6RQ5Jia/ghXb4CurA1aJUZtoOnO77fZrSsuRNh0J7I5ct5qTu2otQUmg==",
+      "type": "package",
+      "path": "bootstrap.chosen/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bootstrap.chosen.1.0.0.nupkg.sha512",
+        "bootstrap.chosen.nuspec",
+        "content/Content/bootstrap-chosen.css",
+        "content/Content/bootstrap-chosen.less",
+        "content/Content/bootstrap-chosen.scss",
+        "content/Content/chosen-sprite.png",
+        "content/Content/chosen-sprite@2x.png",
+        "content/Scripts/chosen.jquery.js",
+        "content/Scripts/chosen.jquery.min.js"
+      ]
+    },
     "DocumentFormat.OpenXml/2.16.0": {
       "sha512": "RhpnDgyyx1KjZm98T3w3bSXFHG/7ZNUaVmz4NAUA+jmV3PcVNZeW87Y04CpBNLdDHEMSspirfo0B5kLRaoE97w==",
       "type": "package",
@@ -2232,21 +2256,21 @@
         "lib/netstandard1.0/Humanizer.dll"
       ]
     },
-    "jQuery/1.6.3": {
-      "sha512": "vb0p7+eRmc2evBCT9W7PCUupqWiDMi9/ofBHN99LraRzLY5jPKMeFzFYBoMgwA8TiwRoFDke5hiDDLsvae7qMg==",
+    "jQuery/1.6.4": {
+      "sha512": "8RzoZQFeFYL/cINRXksLWyl8D5TKctZ/2G8hrlOLLM5OgFNI9h3t3l5tB+BBbsBUxaPUageVe0p9ruU5jrFeow==",
       "type": "package",
-      "path": "jquery/1.6.3",
+      "path": "jquery/1.6.4",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "Content/Scripts/jquery-1.6.3-vsdoc.js",
-        "Content/Scripts/jquery-1.6.3.js",
-        "Content/Scripts/jquery-1.6.3.min.js",
+        "Content/Scripts/jquery-1.6.4-vsdoc.js",
+        "Content/Scripts/jquery-1.6.4.js",
+        "Content/Scripts/jquery-1.6.4.min.js",
         "Tools/install.ps1",
-        "Tools/jquery-1.6.3-vsdoc-para.js",
+        "Tools/jquery-1.6.4-vsdoc-para.js",
         "Tools/uninstall.ps1",
-        "jquery.1.6.3.nupkg.sha512",
+        "jquery.1.6.4.nupkg.sha512",
         "jquery.nuspec"
       ]
     },
@@ -7131,6 +7155,7 @@
       "DomainLayer >= 1.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
       "System.Configuration.ConfigurationManager >= 6.0.0",
+      "bootstrap.chosen >= 1.0.0",
       "toastr >= 2.1.1"
     ]
   },
@@ -7203,6 +7228,10 @@
           "System.Configuration.ConfigurationManager": {
             "target": "Package",
             "version": "[6.0.0, )"
+          },
+          "bootstrap.chosen": {
+            "target": "Package",
+            "version": "[1.0.0, )"
           },
           "toastr": {
             "target": "Package",

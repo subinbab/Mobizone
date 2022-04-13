@@ -15,7 +15,7 @@
         </div>
         <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Users</a>
 
-        <a id="orders">Orders</a>
+        <a asp-action="orderlist" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Orders</a>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>

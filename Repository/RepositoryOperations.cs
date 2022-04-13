@@ -99,7 +99,7 @@ namespace Repository
                 {
                     dbSet.Include(includeProperty);
                 }
-                entity = dbSet.Find();
+                entity = dbSet.Find(id);
                 return entity;
             }
             catch (SqlException ex)
