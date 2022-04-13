@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
     public interface IProductCatalog
     {
-        void AddProduct(Product entity);
-        void EditProduct(Product entity);
-        IEnumerable<Product> GetProduct();
-        Product GetById(int id);
-        void DeleteProduct(Product entity);
+        Task AddProduct(Product entity);
+        Task EditProduct(Product entity);
+        Task<IEnumerable<Product>> GetProduct();
+        Task<Product> GetById(int id);
+        Task DeleteProduct(Product entity);
     }
 }

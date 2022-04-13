@@ -40,7 +40,7 @@ namespace ApiLayer.Controllers
             _webHostEnvironment = web;
             _catalog = catalog;
             _response = new ResponseModel<Product>();
-            _product = new Product();
+
             _log = LogManager.GetLogger(typeof(ProductController));
             _productMessages = new ProductMessages(_webHostEnvironment);
             #endregion
@@ -98,7 +98,7 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                _productList = _catalog.GetProduct();
+                _productList = _catalog.GetProduct().Result;
                 if (_productList == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
@@ -134,7 +134,7 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                _product = _catalog.GetById(id);
+                _product = _catalog.GetById(id).Result;
                 if (_product == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
@@ -165,12 +165,12 @@ namespace ApiLayer.Controllers
 
         #region Delete Method for Product
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 ResponseModel<string> _response = new ResponseModel<string>();
-                _product = _catalog.GetById(id);
+                _product =  _catalog.GetById(id).Result;
                 _catalog.DeleteProduct(_product);
                 string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, _productMessages.Deleted, message);

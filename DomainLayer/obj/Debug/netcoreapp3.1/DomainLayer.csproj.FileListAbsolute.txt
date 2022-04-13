@@ -18,3 +18,13 @@ C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netco
 C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.CoreCompileInputs.cache
 C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.dll
 C:\Users\subabu\Downloads\Mobizone(anjali)1\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.pdb
+D:\suyati\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.deps.json
+D:\suyati\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.dll
+D:\suyati\Mobizone\DomainLayer\bin\Debug\netcoreapp3.1\DomainLayer.pdb
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.AssemblyReference.cache
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfoInputs.cache
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.AssemblyInfo.cs
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.csproj.CoreCompileInputs.cache
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.dll
+D:\suyati\Mobizone\DomainLayer\obj\Debug\netcoreapp3.1\DomainLayer.pdb

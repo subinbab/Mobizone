@@ -1,11 +1,12 @@
 ﻿using DomainLayer.ProductModel.Master;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.ProductOperations
 {
     public interface IMasterDataOperations
     {
-        void Add(MasterTable data);
-        IEnumerable<MasterTable> GetAll();
+        Task Add(MasterTable data);
+        Task<IEnumerable<MasterTable>> GetAll();
     }
 }

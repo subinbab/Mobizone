@@ -43,7 +43,7 @@ namespace UILayer.Data.ApiServices
             using (HttpClient httpclient = new HttpClient())
             {
                 _responseModel = null;
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/user";
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/users/userdata";
                 Uri uri = new Uri(url);
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
                 if (result.Result.IsSuccessStatusCode)
@@ -66,7 +66,7 @@ namespace UILayer.Data.ApiServices
                 //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
                 Uri uri = new Uri(url);
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
-                if (result.Result.IsSuccessStatusCode)
+                if (result.Result.StatusCode==System.Net.HttpStatusCode.OK)
                 {
                     return true;
                 }

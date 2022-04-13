@@ -71,7 +71,7 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                _productDataList = _productOperations.GetAll();
+                _productDataList = _productOperations.GetAll().Result;
                 if (_productDataList == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
@@ -107,7 +107,7 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                _productData = _productOperations.GetById(id);
+                _productData = _productOperations.GetById(id).Result;
                 if (_productData == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
@@ -133,6 +133,30 @@ namespace ApiLayer.Controllers
                 return new JsonResult(_response);
             }
 
+        }
+        #endregion
+        #region Delete Method for Product
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                _productData = _productOperations.GetById(id).Result;
+
+                _productOperations.DeleteProduct(_productData);
+                string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, _productMessages.Deleted, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, _productMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
         }
         #endregion
     }

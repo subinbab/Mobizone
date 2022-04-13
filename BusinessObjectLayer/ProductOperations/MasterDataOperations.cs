@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.ProductOperations
 {
@@ -15,15 +16,14 @@ namespace BusinessObjectLayer.ProductOperations
         {
             _repo = repo;
         }
-        public void Add(MasterTable data)
+        public async Task Add(MasterTable data)
         {
             _repo.Add(data);
             _repo.Save();
         }
-        public IEnumerable<MasterTable> GetAll()
+        public async Task<IEnumerable<MasterTable>> GetAll()
         {
-            _masterDatas = _repo.Get().ToList();
-            return _masterDatas;
+            return await _repo.Get();
         }
     }
 }

@@ -13,7 +13,7 @@
             <a asp-action="MasterData" id="dropdown2"  class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Master</a>
         </div>
         </div>
-        <a asp-action="Create">Users</a>
+        <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Users</a>
 
         <a id="orders">Orders</a>
     </div>

@@ -44,15 +44,10 @@ namespace Repository.Migrations
                     b.Property<int>("roleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("rolesid")
-                        .HasColumnType("int");
-
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("rolesid");
 
                     b.ToTable("login");
                 });
@@ -242,18 +237,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(6445),
+                            createdOn = new DateTime(2022, 4, 13, 0, 45, 27, 291, DateTimeKind.Local).AddTicks(6208),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7177),
+                            modifiedOn = new DateTime(2022, 4, 13, 0, 45, 27, 291, DateTimeKind.Local).AddTicks(6572),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7799),
+                            createdOn = new DateTime(2022, 4, 13, 0, 45, 27, 291, DateTimeKind.Local).AddTicks(6869),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 12, 19, 24, 18, 506, DateTimeKind.Local).AddTicks(7805),
+                            modifiedOn = new DateTime(2022, 4, 13, 0, 45, 27, 291, DateTimeKind.Local).AddTicks(6871),
                             name = "Admin"
                         });
                 });
@@ -302,15 +297,6 @@ namespace Repository.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("userRegistrations");
-                });
-
-            modelBuilder.Entity("DomainLayer.Login", b =>
-                {
-                    b.HasOne("DomainLayer.Roles", "roles")
-                        .WithMany()
-                        .HasForeignKey("rolesid");
-
-                    b.Navigation("roles");
                 });
 
             modelBuilder.Entity("DomainLayer.ProductModel.Images", b =>

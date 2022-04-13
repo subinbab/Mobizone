@@ -1,13 +1,16 @@
 ﻿using DomainLayer.ProductModel;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.ProductOperations
 {
     public interface IProductOperations
     {
-        void Add(ProductEntity product);
-        IEnumerable<ProductEntity> GetAll();
-        ProductEntity GetById(int id);
+        Task Add(ProductEntity product);
+        Task<IEnumerable<ProductEntity>> GetAll();
+        Task<ProductEntity> GetById(int id);
+        Task DeleteProduct(ProductEntity entity);
+        Task EditProduct(ProductEntity entity);
     }
 }

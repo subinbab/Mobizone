@@ -4,6 +4,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.ProductOperations
 {
@@ -16,17 +17,30 @@ namespace BusinessObjectLayer.ProductOperations
         {
             _repo = repo;
         }
-        public void Add(ProductEntity product)
+        public async Task Add(ProductEntity product)
         {
             _repo.Add(product);
             _repo.Save();
         }
-        public IEnumerable<ProductEntity> GetAll()
+
+        public async Task DeleteProduct(ProductEntity entity)
         {
-            return _repo.Get(n1=> n1.specs,n2=> n2.images);
+            _repo.Delete(entity);
+            _repo.Save();
         }
 
-        public ProductEntity GetById(int id)
+        public async Task EditProduct(ProductEntity entity)
+        {
+            _repo.Update(entity);
+            _repo.Save();
+        }
+
+        public async Task<IEnumerable<ProductEntity>> GetAll()
+        {
+            return await _repo.Get(n1=> n1.specs,n2=> n2.images);
+        }
+
+        public Task<ProductEntity> GetById(int id)
         {
             return _repo.GetById(id, n1 => n1.specs, n2 => n2.images);
         }

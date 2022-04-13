@@ -30,7 +30,7 @@ namespace Repository
         }
         public void SeedUser(ModelBuilder builder)
         {
-            Role role1 = new Role()
+            Roles role1 = new Roles()
             {
                 id = 1,
                 name = "User",
@@ -39,7 +39,7 @@ namespace Repository
                 modifiedOn = DateTime.Now,
                 modifiedBy = "Subin"
             };
-            Role role2 = new Role()
+            Roles role2 = new Roles()
             {
                 id = 2,
                 name = "Admin",
@@ -48,8 +48,8 @@ namespace Repository
                 modifiedOn = DateTime.Now,
                 modifiedBy = "Subin"
             };
-            builder.Entity<Role>().HasData(role1);
-            builder.Entity<Role>().HasData(role2);
+            builder.Entity<Roles>().HasData(role1);
+            builder.Entity<Roles>().HasData(role2);
         }
     }
     

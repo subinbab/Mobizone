@@ -63,7 +63,7 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                _masterDataList = _masterOperations.GetAll();
+                _masterDataList = _masterOperations.GetAll().Result;
                 if (_masterDataList == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();

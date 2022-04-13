@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.User
 {
@@ -16,22 +17,22 @@ namespace BusinessObjectLayer.User
             _userContext = userContext;
             _userRepo = new RepositoryOperations<UserRegistration>(_userContext);
         }
-        public void AddUserRegistration(UserRegistration user)
+        public async Task AddUserRegistration(UserRegistration user)
         {
             _userRepo.Add(user);
             _userRepo.Save();
         }
 
-        public UserRegistration Authenticate(string username, string password)
+        public async Task<UserRegistration> Authenticate(string username, string password)
         {
             UserRegistration registration = new UserRegistration();
-            var list= _userRepo.Get();
+            var list= await _userRepo.Get();
             var user = list.Where(c => c.Email.Equals(username) && c.Password.Equals(password)).FirstOrDefault();
             
             return user;
         }
 
-        public IEnumerable<UserRegistration> Get()
+        public Task<IEnumerable<UserRegistration>> Get()
         {
             return _userRepo.Get();
         }

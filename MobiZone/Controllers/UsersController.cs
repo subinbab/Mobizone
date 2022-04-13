@@ -91,12 +91,12 @@ namespace ApiLayer.Controllers
 
 
         #region Get Method for users
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("userdata")]
+        public IActionResult userdata()
         {
             try
             {
-                _userList = _userCreate.Get();
+                _userList = _userCreate.Get().Result;
                 if (_userList == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
@@ -133,7 +133,7 @@ namespace ApiLayer.Controllers
             {
                 ResponseModel<UserRegistration> _response = new ResponseModel<UserRegistration>();
                 string message;
-                UserRegistration check = _userCreate.Authenticate(data.userName, data.password);
+                UserRegistration check = _userCreate.Authenticate(data.userName, data.password).Result;
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK) ;

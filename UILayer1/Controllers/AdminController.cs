@@ -151,16 +151,11 @@ namespace UIlayer.Controllers
             }
             return RedirectToAction("");
         }
-        [HttpGet]
+        
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
-            data = pr.GetProduct(id);
-            return View(data);
-        }
-        [Authorize]
-        public ActionResult DeleteProduct(int id)
-        {
-            bool result = pr.DeleteProduct(id);
+            bool result = _opApi.DeleteProduct(id);
             if (result)
             {
                 _notyf.Success(Configuration.GetSection("Products")["ProductDeleted"].ToString());
@@ -314,7 +309,7 @@ namespace UIlayer.Controllers
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
-                return Redirect(ReturnUrl);
+                return Redirect("/admin");
             }
             TempData["Error"] = "Invalid Email or Password";
             return View("login");

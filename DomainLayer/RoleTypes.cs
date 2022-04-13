@@ -6,7 +6,7 @@ namespace DomainLayer
 {
     public enum RoleTypes :int
     {
-        User,
+        User=1,
         Admin
     }
 }

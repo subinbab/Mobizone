@@ -8,14 +8,16 @@ using DomainLayer.Users;
 using DTOLayer.UserModel;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+
 
 namespace ApiLayer.Controllers
 {
@@ -50,33 +52,63 @@ namespace ApiLayer.Controllers
             _loginOperations = loginOperations;
         }
         [HttpPost]
-        public IActionResult post(LoginViewModel data)
+        public async Task<IActionResult> post(LoginViewModel data)
         {
             try
             {
                 ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
                 string password = _sec.Encrypt("subin", data.password);
-                IEnumerable<Login> list = _loginOperations.Get();
+                var list = await _loginOperations.Get();
                 Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)).FirstOrDefault();
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);
-                    return new JsonResult(_response);
+                    return Ok();
                 }
                 message = _userMessages.Null;
                 _response.AddResponse(false, 0, null, message);
-                return new JsonResult(_response);
+                return NotFound();
             }
             catch (Exception ex)
             {
                 ResponseModel<string> _response = new ResponseModel<string>();
                 _response.AddResponse(false, 0, null, ex.Message);
-                return new JsonResult(_response);
+                return BadRequest();
             }
 
         }
+        [HttpPost("admin")]
+        public async Task<HttpResponseMessage> admin(LoginViewModel data)
+        {
+            try
+            {
+                ResponseModel<Login> _response = new ResponseModel<Login>();
+                string message;
+                string password = _sec.Encrypt("subin", data.password);
+                var list = await _loginOperations.Get();
+                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)&& c.roleId.Equals(2)).FirstOrDefault();
+                /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
+                if (check != null)
+                {
+                    message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, check, message);
+                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                }
+                message = _userMessages.Null;
+                _response.AddResponse(false, 0, null, message);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                _response.AddResponse(false, 0, null, ex.Message);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            }
+
+        }
+
     }
 }

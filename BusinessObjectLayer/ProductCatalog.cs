@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
@@ -14,30 +15,30 @@ namespace BusinessObjectLayer
             _context = context;
             _repo = new RepositoryOperations<Product>(_context); 
         }
-        public void AddProduct(Product entity)
+        public async Task AddProduct(Product entity)
         {
             _repo.Add(entity);
             _repo.Save();
         }
 
-        public void DeleteProduct(Product entity)
+        public async Task DeleteProduct(Product entity)
         {
             _repo.Delete(entity);
             _repo.Save();
         }
 
-        public void EditProduct(Product entity)
+        public async Task EditProduct(Product entity)
         {
             _repo.Update(entity);
             _repo.Save();
         }
 
-        public Product GetById(int id)
+        public Task<Product> GetById(int id)
         {
             return _repo.GetById(id);
         }
 
-        public IEnumerable<Product> GetProduct()
+        public Task<IEnumerable<Product>> GetProduct()
         {
             return _repo.Get();
         }

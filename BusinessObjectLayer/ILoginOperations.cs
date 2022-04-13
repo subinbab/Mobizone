@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
     public interface ILoginOperations
     {
-        void Add(Login entity);
-        void Edit(Login entity);
-        IEnumerable<Login> Get();
+        Task Add(Login entity);
+        Task Edit(Login entity);
+        Task<IEnumerable<Login>> Get();
         Login Get(int id);
-        void Delete(Login entity);
+        Task Delete(Login entity);
     }
 }

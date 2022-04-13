@@ -16,7 +16,7 @@
     setTimeout("preventBack()", 0);
     window.onunload = function () { null };
 </script>
-<table id="datatable" class="table table-striped">
+<table id="datatable" class="table table-bordered">
         <thead>
             <tr>
                 <th>Brand</th>
@@ -47,11 +47,32 @@
                             {'data':'quantity'},
                             {'data':'price'},
                             {  
-                    "render": function(data, type, full, meta) { return '<a class="btn btn-info" href="/admin/Edit/' + full.id + '">Edit</a>'; }  
+                    "render": function(data, type, full, meta) { return '<a class="btn btn-info" href="/admin/Edit/' + full.id + '">Edit</a> <button class="btn btn-danger"><a href="#" onclick="someFunction(' + full.id + '); ">Delete</a></button>'; }  
                 }
-                        ]
+                 
+                                       ]
                     })
                 }
             })
         })
+
+        function someFunction(data) {
+    var id = data;
+    $(document).ready(function (e) {
+        if (confirm("please confirm") == true) {
+            $.ajax({
+                url: 'admin/Delete/' + id,
+                type: 'delete',
+                dataType: 'json',
+                success: function (data) {
+                    alert(data["result"])
+                }
+            })
+        }
+        else (
+            alert("thankyou"))
+
+
+    });
+}
 </script>

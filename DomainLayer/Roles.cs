@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DomainLayer
 {
-    public class Role
+    public class Roles
     {
         [Key]
         public int id { get; set; }

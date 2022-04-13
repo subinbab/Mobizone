@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -23,11 +24,11 @@ namespace Repository
             dbSet = _context.Set<T>();
            
         }
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
             try
             {
-                dbSet.Add(entity);
+                dbSet.AddAsync(entity);
             }
             catch(SqlException ex)
             {
@@ -36,7 +37,7 @@ namespace Repository
             
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             try
             {
@@ -49,11 +50,11 @@ namespace Repository
             
         }
 
-        public IEnumerable<T> Get()
+        public async Task<IEnumerable<T>> Get()
         {
             try
             {
-                entities = dbSet.ToList();
+                entities = await dbSet.ToListAsync();
             }
             catch(SqlException ex)
             {
@@ -61,7 +62,7 @@ namespace Repository
             }
             return entities;
         }
-        public IQueryable<T> Get(params Expression<Func<T, object>>[] includes)
+        public async Task<IQueryable<T>> Get(params Expression<Func<T, object>>[] includes)
         {
             try
             {
@@ -75,7 +76,7 @@ namespace Repository
             return query;
         }
 
-        public T GetById(int Id)
+        public async Task<T> GetById(int Id)
         {
             try
             {
@@ -88,17 +89,17 @@ namespace Repository
 
             return entity;
         }
-        public T GetById(int id, params Expression<Func<T, object>>[] includes)
+        public async Task<T> GetById(int id, params Expression<Func<T, object>>[] includes)
         {
             try
             {
                 IQueryable<T> result = dbSet;
-                query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));
-                /*foreach (var includeProperty in includeProperties)
+               /* query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));*/
+                foreach (var includeProperty in includes)
                 {
                     dbSet.Include(includeProperty);
-                }*/
-                entity = dbSet.Find(id);
+                }
+                entity = dbSet.Find();
                 return entity;
             }
             catch (SqlException ex)
@@ -108,7 +109,7 @@ namespace Repository
 
         }
 
-        public void Save()
+        public async Task Save()
         {
             try
             {
@@ -121,7 +122,7 @@ namespace Repository
             
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
             try
             {

@@ -58,10 +58,10 @@ namespace ApiLayer.Models
                 var username = credentials[0];
                 var password = credentials[1];
                 var decryptPass = _security.Decrypt("subin", password);
-                _userList = _userService.Get();
+                _userList = _userService.Get().Result;
                 /*user = _userList.Where(c=> c.Email.Equals(username)&& c.Password.Equals(decryptPass)).FirstOrDefault();*/
 
-                user =  _userService.Authenticate(username, password);
+                user =  _userService.Authenticate(username, password).Result;
             }
             catch
             {
