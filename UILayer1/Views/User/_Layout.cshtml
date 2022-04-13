@@ -26,7 +26,20 @@
                 <i class="fa-solid fa-cart-shopping"></i>
                 <a class="mr-3">Cart</a>
                 <i class="fa-solid fa-user"></i>
-                <a asp-action="Login">Account</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+
+                    <a asp-controller="User" asp-action="Logout">Logout</a>
+
+
+
+                }
+                else
+                {
+
+                    <a asp-action="Login">Account</a>
+                }
             </div>
 
         </div>
