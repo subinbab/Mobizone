@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +18,10 @@ using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace MobiZone
 {
@@ -34,7 +39,15 @@ namespace MobiZone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddIdentity<IdentityUser, IdentityRole>(
+        options => {
+            options.SignIn.RequireConfirmedAccount = false;
+
+            //Other options go here
+        }
+        )
+    .AddEntityFrameworkStores<ProductDbContext>();
+            services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             /*services.AddScoped(typeof(IRepositoryOperations<>), typeof(RepositoryOperations<>));*/
             services.AddScoped(typeof(IProductCatalog), typeof(ProductCatalog));
@@ -69,7 +82,7 @@ namespace MobiZone
             {
                 endpoints.MapControllerRoute(
                     name:"default",
-                    pattern:"{controller=Product}/{action=Index}/{id?}");
+                    pattern:"{controller=Home}/{action=Index}");
             });
         }
     }

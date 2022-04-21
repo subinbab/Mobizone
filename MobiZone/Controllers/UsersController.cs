@@ -9,7 +9,9 @@ using DTOLayer.UserModel;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -36,7 +38,13 @@ namespace ApiLayer.Controllers
         Security _sec;
         ILoginOperations _loginOperations;
         Login _login;
-        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
+        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -50,6 +58,9 @@ namespace ApiLayer.Controllers
             _userDataList = new List<UserDataViewModel>();
             _sec = new Security();
             _loginOperations = loginOperations;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _configuration = configuration;
         }
         [HttpPost("UserCreate")]
         public IActionResult post([FromBody] UserViewModel users)
@@ -152,6 +163,69 @@ namespace ApiLayer.Controllers
             }
             
         }
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] UserViewModel model)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            var userExists = await _userManager.FindByNameAsync(model.Email);
+            if (userExists != null)
+            {
+                _response.AddResponse(true, 0, null, "not regsitered");
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+                
+
+            IdentityUser user = new()
+            {
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.FirstName + "" + model.LastName
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                _response.AddResponse(true, 0, null, "cant register");
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+                
+
+            return Ok(_response);
+        }
+
+        /*[HttpPost]
+        [Route("register-admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        {
+            var userExists = await _userManager.FindByNameAsync(model.Username);
+            if (userExists != null)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+
+            IdentityUser user = new()
+            {
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.Username
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+            }
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.User);
+            }
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }*/
     }
 
 

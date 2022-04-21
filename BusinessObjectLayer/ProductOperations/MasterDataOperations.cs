@@ -21,6 +21,19 @@ namespace BusinessObjectLayer.ProductOperations
             _repo.Add(data);
             _repo.Save();
         }
+
+        public async Task Delete(MasterTable entity)
+        {
+            await _repo.Delete(entity);
+            await _repo.Save();
+        }
+
+        public async Task Edit(MasterTable entity)
+        {
+            await _repo.Update(entity);
+            await _repo.Save();
+        }
+
         public async Task<IEnumerable<MasterTable>> GetAll()
         {
             return await _repo.Get();

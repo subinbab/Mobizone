@@ -12,5 +12,8 @@ namespace BusinessObjectLayer.ProductOperations
         Task<ProductEntity> GetById(int id);
         Task DeleteProduct(ProductEntity entity);
         Task EditProduct(ProductEntity entity);
+        Task<IEnumerable<ProductEntity>> Search(string name);
+        Task<IEnumerable<ProductEntity>> SortByPrice();
+        Task<IEnumerable<ProductEntity>> SortByBrand(string name);
     }
 }

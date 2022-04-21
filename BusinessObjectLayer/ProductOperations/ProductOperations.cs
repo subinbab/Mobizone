@@ -3,6 +3,7 @@ using DomainLayer.ProductModel;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,13 @@ namespace BusinessObjectLayer.ProductOperations
         {
             _repo = repo;
         }
+
+        public async Task<IEnumerable<ProductEntity>> Search(string name)
+        {
+            var data = _repo.Get().Result.Where(c => c.name.StartsWith(name));
+            return data;
+        }
+
         public async Task Add(ProductEntity product)
         {
             _repo.Add(product);
@@ -48,9 +56,21 @@ namespace BusinessObjectLayer.ProductOperations
             return await _repo.Get(n1=> n1.specs,n2=> n2.images);
         }
 
-        public Task<ProductEntity> GetById(int id)
+        public async Task<ProductEntity> GetById(int id)
         {
-            return _repo.GetById(id, n1 => n1.specs, n2 => n2.images);
+            var datalist =  _repo.Get(n1 => n1.specs, n2 => n2.images).Result.ToList();
+            return  datalist.Where(c => c.id.Equals(id)).FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<ProductEntity>> SortByPrice()
+        {
+            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderBy(c => c.price);
+        }
+
+        public async Task<IEnumerable<ProductEntity>> SortByBrand(string name)
+        {
+            var data = _repo.Get(n1 => n1.specs, n2 => n2.images).Result.Where(c => c.productBrand.Equals(name));
+            return data.OrderBy(c => c.productBrand);
         }
     }
 }

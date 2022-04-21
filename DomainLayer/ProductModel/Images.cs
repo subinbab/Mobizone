@@ -13,6 +13,7 @@ namespace DomainLayer.ProductModel
         public int id { get; set; }
         [Required]
         public string imagePath { get; set; }
-
+        public int? ProductEntityId { get; set; }
+        public ProductEntity? product { get; set; }
     }
 }

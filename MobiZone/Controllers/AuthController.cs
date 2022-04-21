@@ -8,8 +8,9 @@ using DomainLayer.Users;
 using DTOLayer.UserModel;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,12 @@ namespace ApiLayer.Controllers
         IWebHostEnvironment _webHostEnvironment;
         Security _sec;
         ILoginOperations _loginOperations;
-        public AuthController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
+        public AuthController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -50,6 +56,9 @@ namespace ApiLayer.Controllers
             _userDataList = new List<UserDataViewModel>();
             _sec = new Security();
             _loginOperations = loginOperations;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _configuration = configuration;
         }
         [HttpPost]
         public async Task<IActionResult> post(LoginViewModel data)
@@ -109,6 +118,6 @@ namespace ApiLayer.Controllers
             }
 
         }
-
+        
     }
 }

@@ -12,6 +12,7 @@ namespace UILayer.Models
         public AutoMapperProfile()
         {
             CreateMap<ProductViewModel, ProductEntity>();
+            CreateMap<ProductEntity, ProductViewModel>();
             CreateMap<ProductEntity, ProductListViewModel>();
             CreateMap<UserViewModel, UserRegistration>();
             CreateMap<UserDataViewModel, UserRegistration>()

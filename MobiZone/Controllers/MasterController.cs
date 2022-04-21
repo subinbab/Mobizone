@@ -1,6 +1,7 @@
 ﻿using ApiLayer.Messages;
 using ApiLayer.Models;
 using BusinessObjectLayer.ProductOperations;
+using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace ApiLayer.Controllers
@@ -90,6 +92,52 @@ namespace ApiLayer.Controllers
                 return new JsonResult(_response);
             }
 
+        }
+        #endregion
+        #region Delete Method for Product
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                List<MasterTable> data = new List<MasterTable>();
+                data = _masterOperations.GetAll().Result.ToList();
+                _masterData = data.Where(c => c.id.Equals(id)).FirstOrDefault();
+                _masterOperations.Delete(_masterData);
+                string message = _masterMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, _masterMessages.Deleted, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _masterMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, _masterMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+        }
+        #endregion
+        #region Update Method for Product
+        [HttpPut]
+        public IActionResult Put([FromBody] MasterTable product)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _masterOperations.Edit(product);
+                string message = _masterMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, _masterMessages.Updated, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = _masterMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, _masterMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
         }
         #endregion
     }

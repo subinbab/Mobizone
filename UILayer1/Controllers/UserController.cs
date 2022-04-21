@@ -19,14 +19,18 @@ namespace UILayer.Controllers
     {
         IConfiguration _configuration;
         UserApi userApi;
+        ProductOpApi _opApi;
+        UserRegistration _user { get; set; }
         public UserController(IConfiguration configuration)
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
+            _opApi = new ProductOpApi(_configuration);
         }
         public IActionResult Index()
         {
-            return View();
+            var data = _opApi.GetAll().Result;
+            return View(data);
         }
         [AllowAnonymous]
         [HttpGet]
@@ -45,14 +49,16 @@ namespace UILayer.Controllers
             LoginViewModel user = new LoginViewModel();
             /* user.userName = userName;
              user.password = password;*/
+            _user = userApi.GetUserData().ToList().Where(c=> c.Email.Equals(c.Email)).FirstOrDefault();
             user = data;
             bool check = userApi.Authenticate(user);
             if (check)
             {
                 var claims = new List<Claim>();
-                claims.Add(new Claim("email", user.userName));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+               
                 claims.Add(new Claim("password", user.password));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                claims.Add(new Claim(ClaimTypes.Name, user.userName));
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
@@ -95,6 +101,21 @@ namespace UILayer.Controllers
             return View();
         }
         public IActionResult Company()
+        {
+            return View();
+        }
+        public IActionResult checkout(int id)
+        {
+            var data = _opApi.GetProduct(id).Result;
+            ViewData["ProductDetails"] = data;
+            ViewData["userData"] = _user;
+            return View();
+        }
+        public IActionResult order()
+        {
+            return View();
+        }
+        public IActionResult Account()
         {
             return View();
         }

@@ -1,5 +1,6 @@
 ﻿using DomainLayer;
 using DomainLayer.ProductModel;
+using DTOLayer.Product;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -18,47 +19,32 @@ namespace UILayer.Data.ApiServices
         {
             Configuration = configuration;
         }
-        public IEnumerable<ProductEntity> GetProduct()
-        
-        
-        
+        public async Task<IEnumerable<ProductEntity>> GetAll()
         {
-            ResponseModel<IEnumerable<ProductEntity>> _responseModel = new ResponseModel<IEnumerable<ProductEntity>>();
-            using (HttpClient httpclient = new HttpClient())
-            {
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
-                Uri uri = new Uri(url);
-                httpclient.DefaultRequestHeaders.Authorization =
-    new AuthenticationHeaderValue("Basic", "hello");
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ProductEntity>>>(response.Result);
-                }
-                return _responseModel.result;
-            }
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(Configuration);
+            _requestHandler.url = "api/productop/GetAll";
+            return _requestHandler.Get(); 
+        }
+        public async Task<IEnumerable<ProductListViewModel>> GetProduct()
+
+        {
+            RequestHandler<IEnumerable<ProductListViewModel>> _requestHandler = new RequestHandler<IEnumerable<ProductListViewModel>>(Configuration);
+            _requestHandler.url = "api/productop/GetList";
+            return _requestHandler.Get();
+            
         }
         public  async Task<ProductEntity> GetProduct(int id)
         {
-            ResponseModel<ProductEntity> _responseModel = null;
-            using (HttpClient httpclient = new HttpClient())
-            {
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop/" + id;
-                Uri uri = new Uri(url);
-                HttpResponseMessage result = await    httpclient.GetAsync(uri);
-                if (result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<ProductEntity>>(response.Result);
-                }
-                return _responseModel.result;
-            }
+            RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(Configuration);
+            _requestHandler.url = "api/productop/GetDetails/" + id;
+            return _requestHandler.Get();
+            
         }
         public bool EditProduct(ProductEntity product)
         {
-
-            using (HttpClient httpclient = new HttpClient())
+            RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(Configuration);
+            _requestHandler.url = "api/productop";
+            /*using (HttpClient httpclient = new HttpClient())
             {
                 string data = Newtonsoft.Json.JsonConvert.SerializeObject(product);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -69,9 +55,9 @@ namespace UILayer.Data.ApiServices
                 if (response.Result.IsSuccessStatusCode)
                 {
                     return true;
-                }
-                return false;
-            }
+                }*/
+                return _requestHandler.Edit(product);
+            
         }
         public bool CreateProduct(ProductEntity product)
         {
