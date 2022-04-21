@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /UILayer1/obj
 obj
+/DTOLayer/obj/Debug
+
