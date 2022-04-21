@@ -1,0 +1,91 @@
+﻿@model DTOLayer.Product.ProductViewModel
+
+@{
+    ViewData["Title"] = "ProductCreate";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProductCreate" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="productType" class="control-label"></label>
+                <select class="form-control" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType)"></select>
+                <span asp-validation-for="productType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productBrand" class="control-label"></label>
+                <select asp-for="productBrand" class="form-control" asp-items="new SelectList(ViewBag.BrandList)"></select>
+                <span asp-validation-for="productBrand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="model" class="control-label"></label>
+                <input asp-for="model" class="form-control" />
+                <span asp-validation-for="model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                 <label for="formFileMultiple" class="form-label">Uplaod product images</label>
+                <input asp-for="imageFile" class="form-control" type="file" id="formFileMultiple" multiple>
+           </div>
+           <div class="form-group">
+                <label asp-for="specs.processor" class="control-label"></label>
+                <select asp-for="specs.processor" class="form-control" asp-items="new SelectList(ViewBag.Processor)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.ram" class="control-label"></label>
+                <select asp-for="specs.ram" class="form-control" asp-items="new SelectList(ViewBag.Ram)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.storage" class="control-label"></label>
+                <select asp-for="specs.storage" class="form-control" asp-items="new SelectList(ViewBag.Storage)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.core" class="control-label"></label>
+                <select asp-for="specs.core"  class="form-control" asp-items="new SelectList(ViewBag.Core)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.camFeatures" class="control-label"></label>
+                <select asp-for="specs.camFeatures" class="form-control" asp-items="new SelectList(ViewBag.camFeatures)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.simType" class="control-label"></label>
+                <select asp-for="specs.simType" class="form-control" asp-items="new SelectList(ViewBag.SimType)"></select>
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

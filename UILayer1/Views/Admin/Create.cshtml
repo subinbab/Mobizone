@@ -1,0 +1,199 @@
+﻿@model DTOLayer.Product.ProductViewModel
+
+@{
+    ViewData["Title"] = "ProductCreate";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet"/>
+
+      <style type="text/css">
+		 .image_container {
+		 	height: 120px;
+		 	width: 200px;
+		 	border-radius: 6px;
+		 	overflow: hidden;
+		 	margin: 10px;
+		 }
+		 .image_container img {
+		 	height: 100%;
+		 	width: auto;
+		 	object-fit: cover;
+		 }
+		 .image_container span {
+		 	top: -6px;
+		 	right: 8px;
+		 	color: red;
+		 	font-size: 28px;
+		 	font-weight: normal;
+		 	cursor: pointer;
+		 }
+	</style>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="id" value="@Model.id" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="productType" class="control-label"></label>
+                <select class="form-control master" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType)"></select>
+                <span asp-validation-for="productType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productBrand" class="control-label"></label>
+                <select asp-for="productBrand" class="form-control master" asp-items="new SelectList(ViewBag.BrandList)"></select>
+                <span asp-validation-for="productBrand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="model" class="control-label"></label>
+                <input asp-for="model" class="form-control" />
+                <span asp-validation-for="model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="specs.processor" class="control-label"></label>
+                <select asp-for="specs.processor" class="form-control master" asp-items="new SelectList(ViewBag.Processor)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.ram" class="control-label"></label>
+                <select asp-for="specs.ram" class="form-control master" asp-items="new SelectList(ViewBag.Ram)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.storage" class="control-label"></label>
+                <select asp-for="specs.storage" class="form-control master" asp-items="new SelectList(ViewBag.Storage)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.core" class="control-label"></label>
+                <select asp-for="specs.core" class="form-control master" asp-items="new SelectList(ViewBag.Core)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.camFeatures" class="control-label"></label>
+                <select asp-for="specs.camFeatures" class="form-control master" asp-items="new SelectList(ViewBag.camFeatures)"></select>
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="specs.simType" class="control-label"></label>
+                <select asp-for="specs.simType" class="form-control master" asp-items="new SelectList(ViewBag.SimType) "></select>
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+   
+    $(".master").chosen();
+    /*  ==========================================
+        SHOW UPLOADED IMAGE NAME
+    * ========================================== 
+    var input = document.getElementById('upload');
+    var infoArea = document.getElementById('upload-label');
+
+    input.addEventListener('change', showFileName);
+    function showFileName(event) {
+        var input = event.srcElement;
+        var fileName = input.files[0].name;
+        infoArea.textContent = 'File name: ' + fileName;
+    }
+    $(document).ready(function(){
+        $('input[name=imageFile]').change(function(){
+            filesize();
+        })
+    })
+  
+   function filesize(){
+       alert("clicked");
+   }
+   */
+   // this variable will store images for preview
+   var images = [];
+   var image = [];
+
+   function imageselect() {
+       alert("hello");
+   	  	  image = Array.from(document.getElementById('image').files);
+   	  	  for (i = 0; i < image.length; i++) {
+   	  	  	  if (check_duplicate(image[i].name)) {
+                images.push({
+   	  	  	  	    "name" : image[i].name,
+   	  	  	  	    "url" : URL.createObjectURL(image[i]),
+   	  	  	  	    "file" : image[i],
+   	  	  	    })
+   	  	  	  } else 
+   	  	  	  {
+   	  	  	  	 alert(image[i].name + " is already added to the list");
+   	  	  	  }
+   	  	  }
+   	  	  document.getElementById('container').innerHTML = imageshow();
+   	  }
+
+         function imageshow() {
+             alert("helo");
+   	  	  var image = "";
+   	  	  images.forEach((i) => {
+   	  	  	 image += `<div class="image_container d-flex justify-content-center position-relative">
+   	  	  	  	  <img src="`+ i.url +`" alt="Image">
+   	  	  	  	  <span class="position-absolute" onclick="delete_image(`+ images.indexOf(i) +`)">&times;</span>
+   	  	  	  </div>`;
+   	  	  })
+   	  	  return image;
+   	  }
+         function check_duplicate(name) {
+   	  	var image = true;
+   	  	if (images.length > 0) {
+   	  		for (e = 0; e < images.length; e++) {
+   	  			if (images[e].name == name) {
+   	  				image = false;
+   	  				break;
+   	  			}
+   	  		}
+   	  	}
+   	  	return image;
+   	  }
+
+                
+    function delete_image(e) {
+   	  	  images.splice(e, 1);
+          alert(e);
+          image.splice(e,1);
+   	  	  document.getElementById('container').innerHTML = imageshow();
+   	}
+       function getFiles(){
+           return image;
+       }
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

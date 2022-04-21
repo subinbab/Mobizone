@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<html>
+
+
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+</style>
+
+
+
+<table>
+    <tr>
+        <th>Filter</th>
+        <th>All</th>
+        <th>Save</th>
+</table>
+        </tr>
+
+
+<table>
+    <tr>
+        <th>SL</th>
+        <th>Order Id</th>
+        <th>Cancel Requested</th>
+        <th>Status</th>
+    </tr>
+
+    <tr>
+        <td>1</td>
+        <td><a href="OrderDetails">189953</a></td>
+        <td></td>
+        <td>
+            <form action="/action_page.php">
+                <select>
+                    <option>Order Placed</option>
+                    <option>Dispatched</option>
+                    <option>Delivered</option>
+                    <option>Cancelled</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+
+    <tr>
+        <td>2</td>
+        <td>
+            <a href="<%
+Response.Redirect " 189953"
+               %>189953</a>
+        </td>
+        <td>Cancelled by User</td>
+        <td>
+            <form action="/action_page.php">
+                <select>
+                    <option>Cancelled</option>
+                    <option>Dispatched</option>
+                    <option>Delivered</option>
+                    <option>Order Placed</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+
+    <tr>
+        <td>3</td>
+        <td><a href="">23557572</a></td>
+        <td></td>
+        <td>
+            <form action="/action_page.php">
+                <select>
+                    <option>Dispatched</option>
+                    <option>Order Placed</option>
+                    <option>Delivered</option>
+                    <option>Cancelled</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+
+    <tr>
+        <td>4</td>
+        <td><a href="">656777</a></td>
+        <td></td>
+        <td>
+            <form action="/action_page.php">
+                <select>
+                    <option>Order Placed</option>
+                    <option>Dispatched</option>
+                    <option>Delivered</option>
+                    <option>Cancelled</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+
+    <tr>
+        <td>5</td>
+        <td><a href="">342777</a></td>
+        <td>Yes</td>
+        <td>
+            <form action="/action_page.php">
+                <select>
+                    <option>Order Placed</option>
+                    <option>Dispatched</option>
+                    <option>Delivered</option>
+                    <option>Cancelled</option>
+                </select>
+            </form>
+        </td>
+    </tr>
+
+</table>
+</html>
+
+

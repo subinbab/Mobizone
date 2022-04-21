@@ -1,0 +1,10 @@
+﻿body {
+    
+}
+
+header {
+    height: 60px;
+    background-color: grey;
+    position: fixed;
+    width: 100%;
+}

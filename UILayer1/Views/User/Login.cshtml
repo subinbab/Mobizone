@@ -1,0 +1,59 @@
+﻿@model DomainLayer.Users.LoginViewModel
+
+@{
+
+    ViewData["Title"] = "Login";
+}
+@{
+    var loginUrl = ViewData["LoginUrl"] as string;
+    var error = TempData["error"] as string;
+}
+
+<div style="text-align: center;">
+
+    <div style="width: 400px; margin-left: auto; margin-right:auto;">
+
+        <h1>Login</h1>
+
+    </div>
+
+</div>
+
+
+
+
+<hr />
+<div class="row" >
+    <div class="col-md-4"style="width: 400px; margin-left: auto; margin-right:auto;">
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="userName" class="control-label"></label>
+                <input asp-for="userName" class="form-control" />
+                <span asp-validation-for="userName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <a asp-action="ForgotPassword">Forgot Password</a>
+
+            </div>
+            <div >
+                <a asp-action="Registration">Do not have a account Click here</a>
+            </div>
+            <input asp-for="url" type="hidden" value="@System.Net.WebUtility.UrlEncode(loginUrl)" />
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

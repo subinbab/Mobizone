@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Simpleview/_Layout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+@{
+    var returnUrl = ViewData["ReturnUrl"] as string;
+    var error = TempData["error"] as string;
+}
+
+<script type="text/javascript">
+function noBack(){window.history.forward()}
+noBack();
+window.onload=noBack;
+window.onpageshow=function(evt){if(evt.persisted)noBack()}
+window.onunload=function(){void(0)}
+</script>
+
+<div style="width: 600px; margin-left: auto; margin-right:auto;">
+    <h1>Admin Panel Login</h1>
+</div>
+<div class="row" style="width: 600px; margin-left: auto; margin-right:auto;">
+    <div class="col-md-3">
+        <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
+            <div class="form-group">
+
+                <label name="Username">Username</label>
+                <input type="email" name="userName" placeholder="User name " required />
+            </div>
+            <div class="form-group">
+                <label name="Password">Password</label>
+                <input type="password" name="password" placeholder=" Password" minlength="8" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="login" />
+            </div>
+
+
+        </form>
+    </div>
+   
+</div>
+<div class="row" style="width: 400px; margin-left: auto; margin-right:auto;">
+
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <span class="alert-danger" style="padding:20px;">@error</span>
+    }
+</div>
+
+

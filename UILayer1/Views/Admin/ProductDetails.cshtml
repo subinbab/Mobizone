@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DomainLayer.ProductModel.ProductEntity
+
+@{
+    var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
+    var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
+}
+
+
+<div class=card>
+    <div class="card-body row">
+        <div class="col-1">
+            <table class="table">
+@if(Model.images == null){
+        <h1>No iamges</h1>}
+else{
+    foreach (var item in Model.images)
+    {
+                <div class="card" style="width : 50px; height:100px;">
+                     <img src="~/Product/Images/@item.imagePath" width="50" height="100" onclick="showImage('@item.imagePath');"/>
+                     
+                </div>
+               
+            } 
+        }
+    
+</table>
+        </div>
+        <div class="col-4">
+            @if (Model.images != null && Model.images.Any())
+            {
+                
+                 <img class="showimage"  src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=250 height=500/>
+
+            }
+            else
+            {
+               <p>No Image</p>
+            }
+                    </div>
+        <div class="col-6">
+            <h2 class="card-title ">@Model.name</h2>
+        <h3 class="card-subtitle" > @Model.price &#8377</h3>
+        <h4>Model:@Model.model</h4>
+        <div class="row mt-3">
+            <div class="col-3"><h5>Highlights</h5></div>
+        <div class="col-6">
+        <p class="card-text ">Brand : @Model.productBrand</p>
+        <p class="card-text ">Model : @Model.model</p>
+        <p class="card-text ">Quatity : @Model.quantity</p><span><form asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><button>ADD</button></form></span>
+        
+        </div>
+        </div>
+        <p class="card-text "> Operating System : @Model.specs.os</p>
+        <p class="card-text "> Processor : @Model.specs.processor</p>
+        <p class="card-text ">Processor Core : @Model.specs.core</p>
+        <p class="card-text ">Ram : @Model.specs.ram</p>
+        <p class="card-text ">Storage : @Model.specs.storage</p>
+        <p class="card-text ">SimType : @Model.specs.simType</p>
+        <p class="card-text ">Camera : @Model.specs.camFeatures</p>
+        
+        </div>
+        
+    </div>
+</div>
+<button class="btn btn-light"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+
+<button class="btn btn-light"><a asp-controller="Admin" asp-action="AddImage" asp-route-id=@Model.id style="text-decoration:none;"><b>AddImage</b></a></button>
+<script>
+    function showImage(data){
+        
+        $(".showimage").attr('src','/Product/Images/'+data);
+    }
+</script>

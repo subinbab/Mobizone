@@ -1,0 +1,29 @@
+﻿<header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-brand ">
+            MOBIZONE
+        </div>
+        @if (User.Identity.IsAuthenticated)
+                        {
+            <div>
+                @User.Claims?.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value
+            </div>
+                            <div><a class="nav-link text-dark" asp-area="" asp-controller="admin" asp-action="Logout">Logout</a></div>
+                            
+                          
+        }
+        else
+        {
+            <div class="navbar carousel-item-right">
+            Admin
+        </div>
+        }
+        
+    </nav>
+</header>
+
+<style>
+    header{
+        z-index:999;
+    }
+</style>

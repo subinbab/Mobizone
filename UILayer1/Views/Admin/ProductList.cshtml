@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DTOLayer.Product.ProductListViewModel>
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+<h1>ProductList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productBrand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.productBrand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                    <button class="btn btn-light"><a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.id" style="text-decoration:none;"><b>Edit</b></a></button>
+                    <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Delete" asp-route-id="@item.id" style="text-decoration:none; color:white;"><b>Delete</b></a></button>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
