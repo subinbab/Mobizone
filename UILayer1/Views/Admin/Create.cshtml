@@ -36,7 +36,7 @@
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="id" value="@Model.id" type="hidden"/>
+            <input asp-for="id" runat="server" type="hidden"/>
             <div class="form-group">
                 <label asp-for="productType" class="control-label"></label>
                 <select class="form-control master" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType)"></select>
