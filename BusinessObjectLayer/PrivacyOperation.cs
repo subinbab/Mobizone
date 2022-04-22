@@ -1,4 +1,5 @@
-﻿using Repository;
+﻿using DomainLayer;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
-    public class PrivacyPolicy : IPrivacyOperation
+    public class PrivacyOperations : IPrivacyOperation
     {
         IRepositoryOperations<PrivacyPolicy> _repo;
-        public PrivacyPolicy(IRepositoryOperations<PrivacyPolicy> repo)
+        public PrivacyOperations(IRepositoryOperations<PrivacyPolicy> repo)
         {
 
             _repo = repo;

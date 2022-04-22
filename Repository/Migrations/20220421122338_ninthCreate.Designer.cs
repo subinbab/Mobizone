@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220421122338_ninthCreate")]
+    partial class ninthCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,34 +293,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-<<<<<<< .mine
                             createdOn = new DateTime(2022, 4, 21, 17, 53, 38, 543, DateTimeKind.Local).AddTicks(2306),
-=======
-                            createdOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(656),
->>>>>>> .theirs
                             modifiedBy = "Subin",
-<<<<<<< .mine
                             modifiedOn = new DateTime(2022, 4, 21, 17, 53, 38, 543, DateTimeKind.Local).AddTicks(3211),
-=======
-                            modifiedOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1025),
->>>>>>> .theirs
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-<<<<<<< .mine
                             createdOn = new DateTime(2022, 4, 21, 17, 53, 38, 543, DateTimeKind.Local).AddTicks(3893),
-=======
-                            createdOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1312),
->>>>>>> .theirs
                             modifiedBy = "Subin",
-<<<<<<< .mine
                             modifiedOn = new DateTime(2022, 4, 21, 17, 53, 38, 543, DateTimeKind.Local).AddTicks(3901),
-=======
-                            modifiedOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1315),
->>>>>>> .theirs
                             name = "Admin"
                         });
                 });
@@ -332,9 +318,6 @@ namespace Repository.Migrations
 
                     b.Property<int?>("UserRegistrationUserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("additionalInfo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("address")
                         .HasColumnType("nvarchar(max)");

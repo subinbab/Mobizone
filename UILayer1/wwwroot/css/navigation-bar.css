@@ -1,10 +1,8 @@
-﻿body {
-    
-}
+﻿
 
 header {
     height: 60px;
-    background-color: grey;
+    background-color: darksalmon !important;
     position: fixed;
     width: 100%;
 }

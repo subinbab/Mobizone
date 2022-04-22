@@ -463,6 +463,18 @@ namespace UIlayer.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult ContactEdit()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ContactEdit(string contact)
+        {
+            return View();
+        }
+
+
 
         public IActionResult Privacy()
         {
