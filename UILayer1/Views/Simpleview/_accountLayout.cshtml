@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+   var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+}
+<html>
+    <head>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/SideBar.css" />
+    <link rel="stylesheet" href="~/css/navigation-bar.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
+    </head>
+    <body>
+        <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+        <div class="col-md-3 pt-0">
+          <div class="list-group list-group-flush account-settings-links">
+            <h5 class="list-group-item">Account Settings</h4>
+            <a class="list-group-item list-group-item-action active" asp-action="account" >Profile Information</a>
+            <a class="list-group-item list-group-item-action"  asp-action="address">Manage Address</a>
+          </div>
+        </div>
+        @RenderBody();
+        </div>
+        </div>
+    </body>
+</html>

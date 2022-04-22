@@ -14,5 +14,6 @@ namespace DomainLayer.Users
         public string country { get; set; }
         public string pincode { get; set; }
         public string phoneNumber { get; set; }
+        public string additionalInfo { get; set; }
     }
 }

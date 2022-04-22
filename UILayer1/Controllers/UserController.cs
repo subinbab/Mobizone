@@ -114,6 +114,7 @@ namespace UILayer.Controllers
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
+            _user = userApi.GetUserData().Where(c=> c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
         }
@@ -123,7 +124,24 @@ namespace UILayer.Controllers
         }
         public IActionResult Account()
         {
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
+            ViewData["userData"] = _user;
             return View();
+        }
+        [HttpGet]
+        public IActionResult Address()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Address(Address addreses)
+        {
+            List<Address> addresses = new List<Address>();
+            addresses.Add(addreses);
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
+            _user.address = addresses; 
+            bool result = userApi.EditUser(_user);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -10,7 +10,12 @@
         <div id="settings">
         <a   class="@(Context.Request.Path == "/Admin/Settings" ? "active" : "")">Settings</a>
         <div id="dropdown2" class="dropdown">
-            <a asp-action="MasterData" id="dropdown2"  class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Master</a>
+            <a asp-action="Contact" id="dropdown2" class="@(Context.Request.Path == "/Admin/Contact" ? "active " : "")">Contact Us</a>
+
+            <a asp-action="About" id="dropdown2" class="@(Context.Request.Path == "/Admin/About" ? "active " : "")">About</a>
+            <a asp-action="Privacy" id="dropdown2" class="@(Context.Request.Path == "/Admin/Privacy" ? "active " : "")">Privacy  and Policy</a>
+            <a asp-action="MasterData" id="dropdown2" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Master</a>
+
         </div>
         </div>
         <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Users</a>
@@ -29,7 +34,7 @@
 });
 
  $(document).ready(function(){
-  $("#settings").hover(function(){
+  $("#settings").click(function(){
     $("#dropdown2").toggle();
   });
 });
@@ -37,7 +42,7 @@
     <style>
         .dropdown {
             display: none;
-            background-color: #262626;
+            background-color: #19bb7b;
             padding-left: 8px;
         }
     </style>
