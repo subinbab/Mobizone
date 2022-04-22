@@ -104,11 +104,24 @@ namespace UILayer.Controllers
         {
             return View();
         }
+
         public IActionResult checkout(int id)
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
             ViewData["userData"] = _user;
+            return View();
+        }
+        public IActionResult Orderplaced()
+        {
+            return View();
+        }
+        public IActionResult OrderList()
+        {
+            return View();
+        }
+        public IActionResult DetailedOrderPage()
+        {
             return View();
         }
         public IActionResult order()
