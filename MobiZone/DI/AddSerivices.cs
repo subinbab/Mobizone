@@ -19,8 +19,8 @@ namespace ApiLayer.DI
             services.AddTransient(typeof(IProductOperations), typeof(ProductOperations));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped(typeof(ILoginOperations), typeof(LoginOperations));
-            services.AddScoped(typeof(IProductImageOperations),typeof(ProductImageOperations)); 
-        
+            services.AddScoped(typeof(IProductImageOperations),typeof(ProductImageOperations));
+            services.AddScoped(typeof(IPrivacyOperation), typeof(PrivacyOperations));
     }
     }
 }

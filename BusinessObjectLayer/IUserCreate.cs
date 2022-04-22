@@ -13,5 +13,6 @@ namespace BusinessObjectLayer.User
         Task AddUserRegistration (UserRegistration user);
         Task<IEnumerable<UserRegistration>> Get();
         Task<UserRegistration> Authenticate(string username , string password);
+        Task Edit(UserRegistration user);
     }
 }

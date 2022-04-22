@@ -74,5 +74,24 @@ namespace UILayer.Data.ApiServices
 
             }
         }
+        public bool EditUser(UserRegistration product)
+        {
+            RequestHandler<UserRegistration> _requestHandler = new RequestHandler<UserRegistration>(Configuration);
+            _requestHandler.url = "api/users";
+            /*using (HttpClient httpclient = new HttpClient())
+            {
+                string data = Newtonsoft.Json.JsonConvert.SerializeObject(product);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
+                Uri uri = new Uri(url);
+                System.Threading.Tasks.Task<HttpResponseMessage> response = httpclient.PutAsync(uri, content);
+
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    return true;
+                }*/
+            return _requestHandler.Edit(product);
+
+        }
     }
 }

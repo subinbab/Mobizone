@@ -226,7 +226,29 @@ namespace ApiLayer.Controllers
             }
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }*/
+
+        #region Update Method for Users
+        [HttpPut]
+        public IActionResult Put([FromBody] UserRegistration product)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _userCreate.Edit(product);
+                string message = _userMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, _userMessages.Updated, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+        }
+        #endregion
     }
 
 
-    }
+}
