@@ -32,9 +32,15 @@ namespace BusinessObjectLayer.User
             return user;
         }
 
-        public Task<IEnumerable<UserRegistration>> Get()
+        public async Task Edit(UserRegistration user)
         {
-            return _userRepo.Get();
+            await _userRepo.Update(user);
+            await _userRepo.Save();
+        }
+
+        public async  Task<IEnumerable<UserRegistration>> Get()
+        {
+            return await _userRepo.Get(n1=> n1.address);
         }
     }
 }
