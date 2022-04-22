@@ -87,6 +87,12 @@ namespace UILayer.Controllers
             userApi.CreateUser(user);
             return View("Index");
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
         public IActionResult Contact()
         {
             return View();
