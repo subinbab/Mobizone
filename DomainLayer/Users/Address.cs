@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DomainLayer.Users
@@ -15,5 +16,7 @@ namespace DomainLayer.Users
         public string pincode { get; set; }
         public string phoneNumber { get; set; }
         public string additionalInfo { get; set; }
+        [NotMapped]
+        public bool IsChecked { get; set; }
     }
 }

@@ -3,36 +3,23 @@
 *@
 @{
 }
+@model DomainLayer.Checkout
 @{
     var data = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+    var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
 }
 
 <div class="container-fluid mt-3">
+
     <div class="row">
-        <div class="col-sm-6 container-fluid">
+        <form asp-action="checkout" method="post" class="col">
+            <input asp-for="id" value="0" type="hidden"/>
+            <input  asp-for="productId" type="hidden" value="@data.id"/>
+            <input asp-for="userId" type="hidden" value="@user.UserId"/>
+        <div >
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Delivery Address</h5>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            User <br> street no:2<br> Place
-                        </label>
-                    </div>
-
-                    <div class="row">
-                        <div class="col"><a class="btn btn-light "><button>Add New Address</button></a></div>
-                        <div class="col"></div>
-                        <div class="col col d-flex justify-content-end"><a href="#" class="btn btn-primary " onclick="orderDetails()">continue</a></div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="card order mt-3" style="display:none">
-                <div class="card-body">
-
                     <h5 class="card-title">Delivery Address</h5>
                     @if(user.address == null)
                     {
@@ -40,53 +27,84 @@
                     }
                     else
                     {
+                    @foreach(var address in @user.address)
+                    {
                         <div class="form-check">
-
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input"  name="addressId" type="checkbox" value="@address.id"  id="flexCheckDefault" onchange="showbutton1()"/>
                         <label class="form-check-label" for="flexCheckDefault">
-                            Samsung Galaxy M12(Blue,6GB RAM,128GB Storage)<br>17499/-
-                           <div class=>Qty:<input type="number" style="width:50px; height:20px;"></div>
+                            @address.name <br> @address.address<br> @address.district
                         </label>
-                            
-                        </div>
+                    </div>
+                    }
                     }
                     
 
                     <div class="row">
-
-                        <div class="col col d-flex justify-content-end"><a href="#" class="btn btn-primary " onclick="paymentDetails()">continue</a></div>
+                        <div class="col"><a class="btn btn-light "><button>Add New Address</button></a></div>
+                        <div class="col"></div>
+                        <div class="col col d-flex justify-content-end "  ><a style="display:none" href="#" class="btn btn-primary toggle-button1" onclick="orderDetails()">continue</a></div>
                     </div>
 
                 </div>
             </div>
-            <div class="card payment mt-3" style="display:none">
+            <div class="card order mt-3" style="display:none">
+                <div class="card-body">
+
+                    <h5 class="card-title">Order Summary</h5>
+                    
+                        <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @data.name (@data.specs.ram GB , @data.specs.storage GB)<br>@data.price
+                           <div class=>Qty:<input asp-for="quatity" type="number" style="width:50px; height:20px;" value="1"></div>
+                        </label>
+                            
+                        </div>
+         
+                    
+
+                    <div class="row">
+
+                        <div class="col col d-flex justify-content-end "  style="display:none"><a href="#" class="btn btn-primary toggle-button2" onclick="paymentDetails()">continue</a></div>
+                    </div>
+
+                </div>
+            </div>
+                
+                    <div class="card payment mt-3" style="display:none">
                 <div class="card-body">
                     <h5 class="card-title">Payment</h5>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    @foreach(var item in values)
+                {
+
+                            <div class="form-check">
+                                <input class="form-check-input" name ="paymentModeId" type="checkbox"  value='@Convert.ToInt32(item)'>
                         <label class="form-check-label" for="flexCheckDefault">
-                            Cash On Delivery
+                            @item
                         </label>
                     </div>
+                      }
                     <p class="card-text"></p>
                     <div class="row">
                         <div class="col"></div>
-                        <div class="col col d-flex justify-content-end"><a href="#" class="btn btn-primary " onclick="orderDetails()">continue</a></div>
+                        <div class="col col d-flex justify-content-end"><input type="submit" class="btn btn-primary" /></div>
                     </div>
 
 
                 </div>
             </div>
+              
+            
         </div>
+        </form>
         <div class="col">
             <!-- Card with center text alignment -->
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Price Details</h5>
                     <hr />
-                    <p class="card-text">Price (1 item) : 17499/-</p>
+                    <p class="card-text">Price (1 item) : @data.price</p>
                     <p class="card-text">Shipping Charge : 0</p>
-                    <h3 class=" card p-2">Total :17499/-</h3>
+                    <h3 class=" card p-2">Total :@data.price</h3>
                 </div>
             </div>
         </div>
@@ -99,5 +117,8 @@
     }
     function orderDetails() {
         $(".order").show();
+    }
+    function showbutton1(){
+        $(".toggle-button1").show();
     }
 </script>
