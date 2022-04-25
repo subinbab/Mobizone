@@ -49,8 +49,9 @@ namespace ApiLayer.Controllers
             _mapper = mapper;
             #endregion
         }
-        
+       /* public ResponseModel<PrivacyPolicy> GetDetails(int id)
+        {
 
-    }
-}
+        }
 */
+  
