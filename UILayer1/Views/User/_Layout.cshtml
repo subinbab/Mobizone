@@ -29,7 +29,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
 
-
+                    <a asp-controller="User" asp-action="account"> Welcome @User.Identity.Name </a>
                     <a asp-controller="User" asp-action="Logout">Logout</a>
 
 
@@ -52,7 +52,7 @@
             <li>
 
 
-                <img src="~/css/Image/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
+                <img src="~/css/Images/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
                      class="float-left" />
 
             </li>
@@ -76,7 +76,7 @@
 
             <hr>
             <li>
-                <img src="~/css/Images/MobiZone-logos_black.png" alt="Mobizone" style="height:18px; width:18px;"/>
+                <img src="~/css/Images/copyright-38672_1280.png" alt="Mobizone" style="height:18px; width:18px;"/>
                 <a href=#> Mobizone private limited all right reserved</a>
 
 

@@ -94,12 +94,12 @@ namespace Repository
             try
             {
                 IQueryable<T> result = dbSet;
-               /* query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));*/
-                foreach (var includeProperty in includes)
+                query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));
+                /*foreach (var includeProperty in includes)
                 {
                     dbSet.Include(includeProperty);
-                }
-                entity = dbSet.Find(id);
+                }*/
+                entity = dbSet.Find();
                 return entity;
             }
             catch (SqlException ex)

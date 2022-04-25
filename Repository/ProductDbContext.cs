@@ -2,6 +2,8 @@
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Text;
 
 namespace Repository
 {
-    public class ProductDbContext : DbContext
+    public class ProductDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public ProductDbContext(DbContextOptions options):base(options)
         {
@@ -21,6 +23,8 @@ namespace Repository
         public DbSet<MasterTable> masterData { get; set; }
         public DbSet<ProductEntity> product { get; set; }
         public DbSet<Login> login { get; set; }
+        public DbSet<Order> order { get; set; }
+        public DbSet<PrivacyPolicy> privacy { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

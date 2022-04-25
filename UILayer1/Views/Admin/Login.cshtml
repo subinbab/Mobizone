@@ -1,68 +1,51 @@
 ﻿@{
-
+    Layout = "~/Views/Simpleview/_Layout.cshtml";
     ViewData["Title"] = "Login";
 }
- 
+
 @{
     var returnUrl = ViewData["ReturnUrl"] as string;
     var error = TempData["error"] as string;
 }
 
+<script type="text/javascript">
+function noBack(){window.history.forward()}
+noBack();
+window.onload=noBack;
+window.onpageshow=function(evt){if(evt.persisted)noBack()}
+window.onunload=function(){void(0)}
+</script>
 
-@if (!string.IsNullOrEmpty(error))
-{
-    <h1 class="alert-danger" style="padding:20px;">@error</h1>
-}
-<div style="width: 400px; margin-left: auto; margin-right:auto;">
+<div style="width: 600px; margin-left: auto; margin-right:auto;">
     <h1>Admin Panel Login</h1>
 </div>
-<div class="row" style="width: 400px; margin-left: auto; margin-right:auto;">
-    <div class="col-md-3" >
+<div class="row" style="width: 600px; margin-left: auto; margin-right:auto;">
+    <div class="col-md-3">
         <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
             <div class="form-group">
-                
+
                 <label name="Username">Username</label>
-                <input type="text" name="userName" placeholder="User name " />
+                <input type="email" name="userName" placeholder="User name " required />
             </div>
             <div class="form-group">
                 <label name="Password">Password</label>
-                <input type="text" name="password" placeholder=" Password" />
+                <input type="password" name="password" placeholder=" Password" minlength="8" required />
             </div>
             <div class="form-group">
                 <input type="submit" value="login" />
             </div>
-           
-           
+
+
         </form>
     </div>
-    
+   
+</div>
+<div class="row" style="width: 400px; margin-left: auto; margin-right:auto;">
+
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <span class="alert-danger" style="padding:20px;">@error</span>
+    }
 </div>
 
-@*<div class="row">
-    <div class="col-md-4" >
-        <form asp-action="Login" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="userName" class="control-label"></label>
-                <input asp-for="userName" class="form-control" />
-                <span asp-validation-for="userName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-            <div class="form-group">
-                <a asp-action="ForgotPassword">Forgot Password</a>
 
-            </div>
-            <div>
-                <a asp-action="Registration">Do not have a account Click here</a>
-            </div>
-            <input asp-for="url" type="hidden" value="@System.Net.WebUtility.UrlEncode(loginUrl)" />
-        </form>
-    </div>
-</div>*@

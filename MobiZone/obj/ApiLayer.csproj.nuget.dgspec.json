@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\MobiZone\\ApiLayer.csproj": {}
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\MobiZone\\ApiLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj": {
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
+        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
         "projectName": "BusinessObjectLayer",
-        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
+        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj",
         "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\obj\\",
+        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj"
               },
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj"
               }
             }
           }
@@ -61,18 +61,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj",
+        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj",
         "projectName": "DomainLayer",
-        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj",
+        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj",
         "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\obj\\",
+        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -121,18 +121,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj": {
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\DTOLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj",
+        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\DTOLayer.csproj",
         "projectName": "DTOLayer",
-        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj",
+        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\DTOLayer.csproj",
         "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\obj\\",
+        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -149,8 +149,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj"
               }
             }
           }
@@ -179,18 +179,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\MobiZone\\ApiLayer.csproj": {
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\MobiZone\\ApiLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\MobiZone\\ApiLayer.csproj",
+        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\MobiZone\\ApiLayer.csproj",
         "projectName": "ApiLayer",
-        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\MobiZone\\ApiLayer.csproj",
+        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\MobiZone\\ApiLayer.csproj",
         "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\MobiZone\\obj\\",
+        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\MobiZone\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -207,17 +207,17 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\BusinessObjectLayer\\BusinessObjectLayer.csproj"
               },
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj"
               },
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DTOLayer\\DTOLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\DTOLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DTOLayer\\DTOLayer.csproj"
               },
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj"
               }
             }
           }
@@ -247,6 +247,18 @@
             "Microsoft.AspNet.WebPages": {
               "target": "Package",
               "version": "[3.2.7, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -295,18 +307,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj": {
+    "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\Repository.csproj",
+        "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\Repository.csproj",
         "packagesPath": "C:\\Users\\subabu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\Repository\\obj\\",
+        "outputPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\subabu\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -323,8 +335,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(anjali)1\\Mobizone\\DomainLayer\\DomainLayer.csproj"
+              "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "C:\\Users\\subabu\\Downloads\\Mobizone(presentation6)\\Mobizone\\DomainLayer\\DomainLayer.csproj"
               }
             }
           }
@@ -340,6 +352,10 @@
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "EntityFramework": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.0, )"
             },
@@ -381,7 +397,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     }
