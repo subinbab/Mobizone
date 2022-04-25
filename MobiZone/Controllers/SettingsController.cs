@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+ 
 
 namespace ApiLayer.Controllers
 {
@@ -25,22 +26,22 @@ namespace ApiLayer.Controllers
         private readonly ILog _log;
         ProductDbContext _context;
         IPrivacyOperation _privacyOperation;
-        IAboutOperations _aboutOperations;
+     
         ResponseModel<ProductEntity> _response;
         IEnumerable<ProductEntity> _productDataList;
-        About _aboutData;
+      
         PrivacyPolicy _privacyPolicy;
         IMessages _productMessages;
         IWebHostEnvironment _webHostEnvironment;
         IMapper _mapper;
 
-        public SettingsController(ProductDbContext context, IPrivacyOperation privacyOperation, IAboutOperations aboutOperations, IWebHostEnvironment web, IMapper mapper)
+        public SettingsController(ProductDbContext context, IPrivacyOperation privacyOperation,  IWebHostEnvironment web, IMapper mapper)
         {
             #region Object Assigning
             _context = context;
             _webHostEnvironment = web;
             _privacyOperation = privacyOperation;
-            _aboutOperations = aboutOperations;
+         
             _response = new ResponseModel<ProductEntity>();
             
               _log = LogManager.GetLogger(typeof(ProductController));
