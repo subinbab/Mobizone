@@ -39,12 +39,12 @@
             <input asp-for="id" runat="server" type="hidden"/>
             <div class="form-group">
                 <label asp-for="productType" class="control-label"></label>
-                <select class="form-control master" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType)"></select>
+                <select class="form-control master" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
                 <span asp-validation-for="productType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="productBrand" class="control-label"></label>
-                <select asp-for="productBrand" class="form-control master" asp-items="new SelectList(ViewBag.BrandList)"></select>
+                <select asp-for="productBrand" class="form-control master"   asp-items="new SelectList(ViewBag.BrandList)"></select>
                 <span asp-validation-for="productBrand" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,12 +75,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="specs.ram" class="control-label"></label>
-                <select asp-for="specs.ram" class="form-control master" asp-items="new SelectList(ViewBag.Ram)"></select>
+                <select asp-for="specs.ram" multiple class="form-control master" asp-items="new SelectList(ViewBag.Ram)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="specs.storage" class="control-label"></label>
-                <select asp-for="specs.storage" class="form-control master" asp-items="new SelectList(ViewBag.Storage)"></select>
+                <select asp-for="specs.storage" multiple class="form-control master" asp-items="new SelectList(ViewBag.Storage)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
             <div class="form-group">

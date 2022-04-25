@@ -1,11 +1,14 @@
-﻿using DomainLayer.Users;
+﻿using DomainLayer;
+using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
@@ -91,6 +94,32 @@ namespace UILayer.Data.ApiServices
                     return true;
                 }*/
             return _requestHandler.Edit(product);
+
+        }
+        public bool CreateCheckOut(Checkout checkout)
+        {
+
+            using (HttpClient httpclient = new HttpClient())
+            {
+                string data = Newtonsoft.Json.JsonConvert.SerializeObject(checkout);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/Users/CheckOutData";
+                //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
+                Uri uri = new Uri(url);
+                httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", " c3ViaW5AZ21haWwuY29tOmN4djJzQ0tPaFA0YmFTblhzMlY2Ymc9PQ==");
+                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
+                if (result.Result.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public async Task<IEnumerable<Checkout>> GetCheckOut()
+        {
+            RequestHandler<IEnumerable<Checkout>> _requestHandler = new RequestHandler<IEnumerable<Checkout>>(Configuration);
+            _requestHandler.url = "api/users/CheckOutData";
+            return _requestHandler.Get();
 
         }
     }

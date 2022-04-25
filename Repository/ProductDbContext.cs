@@ -25,6 +25,7 @@ namespace Repository
         public DbSet<Login> login { get; set; }
         public DbSet<Order> order { get; set; }
         public DbSet<PrivacyPolicy> privacy { get; set; }
+        public DbSet<Checkout> checkOut { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

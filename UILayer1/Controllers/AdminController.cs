@@ -452,7 +452,25 @@ namespace UIlayer.Controllers
         }
         public IActionResult OrderList()
         {
-            return View();
+            UserApi userApi = new UserApi(Configuration);
+            var data = userApi.GetCheckOut().Result;
+            return View(data);
+        }
+        [HttpPost]
+        public async Task<IActionResult> OrderUpdate(List<string> status , List<int> orderId)
+        {
+            Checkout checkout = new Checkout();
+            OrderStatus statuses = new OrderStatus();
+            foreach (var item in status)
+            {
+                OrderStatus MyStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), item, true);
+
+            }
+
+
+            UserApi userApi = new UserApi(Configuration);
+            var data = await userApi.GetCheckOut();
+            return View("OrderList",data);
         }
         public IActionResult OrderDetails()
         {

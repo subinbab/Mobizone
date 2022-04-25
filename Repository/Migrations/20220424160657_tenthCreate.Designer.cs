@@ -3,60 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220424160657_tenthCreate")]
+    partial class tenthCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
-
-            modelBuilder.Entity("DomainLayer.Checkout", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("addressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("cancelRequested")
-                        .HasColumnType("int");
-
-                    b.Property<int>("orderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("paymentModeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quatity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("checkOut");
-                });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
                 {
@@ -330,18 +293,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(7734),
+                            createdOn = new DateTime(2022, 4, 24, 21, 36, 57, 178, DateTimeKind.Local).AddTicks(8826),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8279),
+                            modifiedOn = new DateTime(2022, 4, 24, 21, 36, 57, 178, DateTimeKind.Local).AddTicks(9177),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8695),
+                            createdOn = new DateTime(2022, 4, 24, 21, 36, 57, 178, DateTimeKind.Local).AddTicks(9462),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8698),
+                            modifiedOn = new DateTime(2022, 4, 24, 21, 36, 57, 178, DateTimeKind.Local).AddTicks(9465),
                             name = "Admin"
                         });
                 });
