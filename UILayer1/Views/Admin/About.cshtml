@@ -1,14 +1,17 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model DomainLayer.About
 <section class=" flex-fill">
     <div class=" text-center">
 
         <h2>About</h2>
     </div>
+    <div class="text-center">
+        <p> @Model.content</p>
 
-    <p> Loreum lpsum is simply dummy text of printing and typesetting industry.Loreum lpsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-
+    </div>
+   
     <div class=" text-center">
         <div class="form-group">
             <a asp-action="AboutEdit"><button  class="btn btn-primary">Edit</button></a>

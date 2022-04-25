@@ -19,6 +19,23 @@ namespace Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("DomainLayer.About", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("content")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
+
+                    b.HasKey("id");
+
+                    b.ToTable("About");
+                });
+
             modelBuilder.Entity("DomainLayer.Checkout", b =>
                 {
                     b.Property<int>("id")
@@ -56,6 +73,42 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.ToTable("checkOut");
+                });
+
+            modelBuilder.Entity("DomainLayer.Contact", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("district")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("pincode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("shopName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("state")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
@@ -330,18 +383,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(7734),
+                            createdOn = new DateTime(2022, 4, 25, 18, 15, 42, 939, DateTimeKind.Local).AddTicks(9738),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8279),
+                            modifiedOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(386),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8695),
+                            createdOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(957),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 25, 2, 55, 41, 768, DateTimeKind.Local).AddTicks(8698),
+                            modifiedOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(962),
                             name = "Admin"
                         });
                 });

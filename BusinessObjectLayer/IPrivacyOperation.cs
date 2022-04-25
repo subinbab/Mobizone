@@ -1,8 +1,5 @@
 ﻿using DomainLayer;
-using DomainLayer.ProductModel.Master;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -11,6 +8,6 @@ namespace BusinessObjectLayer
     {
         Task Add(PrivacyPolicy data);
         Task Edit(PrivacyPolicy data);
-        Task Get(PrivacyPolicy data);
+        Task<IEnumerable<PrivacyPolicy>> Get();
     }
 }

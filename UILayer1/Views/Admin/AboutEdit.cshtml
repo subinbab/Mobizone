@@ -3,15 +3,18 @@
 *@
 @{
 }
+@model DomainLayer.About
 <div class="text-center">
 
     <form asp-action="AboutEdit" method="post">
         <h2>About</h2>
-
-        <textarea name="about" rows="10" cols="50"></textarea>
+        <input asp-for="id" value="@Model.id" type="hidden"/>
+        <textarea asp-for="content" rows="10" cols="50"></textarea>
         <br />
         <div>
-            <input type="submit" value="Save"  class="btn btn-primary" />
+            <input type="submit" value="Save" class="btn btn-primary" />
+
+            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
         </div>
 
     </form>

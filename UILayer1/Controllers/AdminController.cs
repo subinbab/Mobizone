@@ -479,49 +479,72 @@ namespace UIlayer.Controllers
 
         public IActionResult Contact()
         {
-            return View();
+
+            adminApi _adminApi = new adminApi(Configuration);
+            var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
+            return View(contactData);
+           
         }
         [HttpGet]
         public IActionResult ContactEdit()
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+          var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
+            return View(contactData);
+         
         }
         [HttpPost]
-        public IActionResult ContactEdit(string contact)
+        public IActionResult ContactEdit(Contact contact)
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            _adminApi.EditContact(contact);
+            return RedirectToAction("Contact");
         }
 
 
 
         public IActionResult Privacy()
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
+            return View(privacyData);
+           
         }
         [HttpGet]
         public IActionResult PrivacyEdit()
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
+            return View(privacyData);
         }
         [HttpPost]
-        public IActionResult PrivacyEdit(string privacy)
+        public IActionResult PrivacyEdit(PrivacyPolicy privacy)
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            _adminApi.EditPrivacy(privacy);
+            return RedirectToAction("Privacy");
+           
         }
 
         public IActionResult About()
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
+            return View(aboutData);
         }
         [HttpGet]
         public IActionResult AboutEdit()
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
+            return View(aboutData);
         }
         [HttpPost]
-        public IActionResult AboutEdit(string about)
+        public IActionResult AboutEdit(About about)
         {
-            return View();
+            adminApi _adminApi = new adminApi(Configuration);
+            _adminApi.EditAbout(about);
+            return RedirectToAction("About");
         }
         public IActionResult Company()
         {
