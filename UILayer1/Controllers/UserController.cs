@@ -1,4 +1,5 @@
-﻿using DomainLayer.Users;
+﻿using DomainLayer;
+using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -110,12 +111,36 @@ namespace UILayer.Controllers
         {
             return View();
         }
+        [Authorize]
+        [HttpGet]
         public IActionResult checkout(int id)
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
             _user = userApi.GetUserData().Where(c=> c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
             ViewData["userData"] = _user;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult checkout(Checkout checkout)
+        {
+            Random rnd = new Random();
+            checkout.orderId = rnd.Next();
+            checkout.status = OrderStatus.orderplaced;
+            bool result = userApi.CreateCheckOut(checkout);
+            ViewBag.orderId = checkout.orderId;
+            return View("Orderplaced");
+        }
+        public IActionResult Orderplaced()
+        {
+            return View();
+        }
+        public IActionResult OrderList()
+        {
+            return View();
+        }
+        public IActionResult DetailedOrderPage()
+        {
             return View();
         }
         public IActionResult order()

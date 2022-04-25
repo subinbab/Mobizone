@@ -15,7 +15,9 @@
     <!-- As a link -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index">MOBIZONE</a>
+            <img src="~/css/Images/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
+     class="float-left" />
+            <a class="navbar-brand justify-content-start" asp-action="Index"style="margin-left:-6px;">MOBIZONE</a>
             <div>
                 <input class="input-group-lg" />
                 <button><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -48,19 +50,27 @@
         @RenderBody()
     </div>
     <footer class="border-top footer text-muted">
+
+
         <ul class="list">
             <li>
+                <div class="row">
+                    <div class="Col">
+                        <img src="~/css/Images/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
+                             class="float-left" />
+                        <a class="float-xl-left" asp-action="Index" style="margin-right:8000px">MOBIZONE</a>
+                    </div>
 
 
-                <img src="~/css/Images/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
-                     class="float-left" />
+                    <div class="col">
+
 
             </li>
             <li class="about">
-                <a asp-controller="User" asp-action="Company">Company</a>
+                <a asp-controller="User" asp-action="Company"style="margin-right:-86px">Company</a>
             </li>
             <li class="about">
-                <a asp-controller="User" asp-action="About">About</a>
+                <a asp-controller="User" asp-action="About"style="margin-right:-86px">About</a>
             </li>
 
             <li class="about">
@@ -74,9 +84,10 @@
             </li>
 
 
+
             <hr>
             <li>
-                <img src="~/css/Images/copyright-38672_1280.png" alt="Mobizone" style="height:18px; width:18px;"/>
+                <img src="~/css/Images/copyright-38672_1280.png" alt="Mobizone" style="height:18px; width:18px;" />
                 <a href=#> Mobizone private limited all right reserved</a>
 
 
@@ -85,17 +96,18 @@
 
         </ul>
 
-    
+        </div>
+        </div>
 
-    <style>
-        .container-fluid {
-            /* width: 100%; */
-            /* padding-right: 15px; */
-            /* padding-left: 15px; */
-            /* margin-right: auto; */
-            margin-left: 0px;
-        }
-    </style>
+        <style>
+            .container-fluid {
+                /* width: 100%; */
+                /* padding-right: 15px; */
+                /* padding-left: 15px; */
+                /* margin-right: auto; */
+                margin-left: 0px;
+            }
+        </style>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -38,13 +38,15 @@ namespace ApiLayer.Controllers
         Security _sec;
         ILoginOperations _loginOperations;
         Login _login;
+        ICheckOutOperation _checkOutOperation;
+        IEnumerable<Checkout> _checkout;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration)
+            IConfiguration configuration, ICheckOutOperation checkOutOperation)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -61,6 +63,7 @@ namespace ApiLayer.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _checkOutOperation = checkOutOperation;
         }
         [HttpPost("UserCreate")]
         public IActionResult post([FromBody] UserViewModel users)
@@ -246,6 +249,62 @@ namespace ApiLayer.Controllers
                 _log.Error("log4net : error in the post controller", ex);
                 return new JsonResult(_response);
             }
+        }
+        #endregion
+
+        #region Post Method for Product
+        [HttpPost("CheckOutData")]
+        public IActionResult CheckOutData([FromBody] Checkout checkoutData)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _checkOutOperation.Add(checkoutData);
+                string message = "added" + ", Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, "", message);
+                var data = Newtonsoft.Json.JsonConvert.SerializeObject(_response);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = "error occured" + ", Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+
+        }
+        #endregion
+        #region GetDetails Method for product
+        [HttpGet("CheckOutData")]
+        public ResponseModel<IEnumerable<Checkout>> CheckOutData(int id)
+        {
+            ResponseModel<IEnumerable<Checkout>> _response = new ResponseModel<IEnumerable<Checkout>>();
+            try
+            {
+                _checkout = _checkOutOperation.get().Result;
+                if (_checkout == null)
+                {
+                    string message = " null data" + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    return _response;
+                }
+                else
+                {
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _checkout, message);
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = " exception occured" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
         }
         #endregion
     }
