@@ -3,12 +3,12 @@
 *@
 @{
 }
-<div class="text-center">
+@*<div class="text-center">
 
     <form asp-action="ContactEdit" method="post">
         <h2>Contact Us</h2>
 
-        
+
 
         <br />
         <div>
@@ -16,4 +16,88 @@
         </div>
 
     </form>
+</div>*@
+
+@model DomainLayer.Users.Address
+
+@{
+    ViewData["Title"] = "Address";
+}
+<div class="row align-item-center">
+    <div class="col"></div>
+    <div class="col-md-8 mb-4">
+        <div class="card-body">
+            <form asp-action="ContactEdit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <input asp-for="id" class="form-control" type="hidden" />
+
+                <div class="center">
+                    <div class="form-group row mb-4">
+                        <div class="col-md-12">
+                            <label asp-for="name" class="control-label">Shop Name</label>
+                            <input asp-for="name" placeholder="Shop Name" class="form-control" />
+                            <span asp-validation-for="name" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="address" class="control-label">Address</label>
+                            <input asp-for="address" class="form-control" />
+                            <span asp-validation-for="address" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="district" class="control-label">District</label>
+                            <input asp-for="district" class="form-control" />
+                            <span asp-validation-for="district" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="state" class="control-label">State</label>
+                            <input asp-for="state" class="form-control" />
+                            <span asp-validation-for="state" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label asp-for="country" class="control-label">Country</label>
+                            <input asp-for="country" class="form-control" />
+                            <span asp-validation-for="country" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="pincode" class="control-label">Pincode</label>
+                            <input asp-for="pincode" class="form-control" />
+                            <span asp-validation-for="pincode" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="phoneNumber" class="control-label">PhoneNumber</label>
+                            <input asp-for="phoneNumber" class="form-control" />
+                            <span asp-validation-for="phoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="text-center">
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
