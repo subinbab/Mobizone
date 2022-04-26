@@ -43,6 +43,7 @@ namespace ApiLayer.Controllers
         Login _login;
         ICheckOutOperation _checkOutOperation;
         IEnumerable<Checkout> _checkout;
+        Address _addresData;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
@@ -171,14 +172,14 @@ namespace ApiLayer.Controllers
             }
             
         }
-        [HttpGet("addressoperation")]
-        public IActionResult AddressOperations()
+        [HttpGet("Address")]
+        public IActionResult Address()
         {
             try
             {
                 /*  _addressList = _addressOperations.Get().Result;*/
                 _addressList = _addressOperations.get().Result;
-                if (_userList == null)
+                if (_addressList == null)
                 {
                     ResponseModel<string> _response = new ResponseModel<string>();
                     string message = _userMessages.Null + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -203,6 +204,49 @@ namespace ApiLayer.Controllers
                 _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
                 _log.Error("log4net : error in the post controller", ex);
                 return new JsonResult(_response);
+            }
+        }
+
+        [HttpPut("Address")]
+        public IActionResult Address(Address address)
+        {
+            try
+            {
+                /*  _addressList = _addressOperations.Get().Result;*/
+                _addressOperations.Edit(address);
+
+                    return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("Address/{id}")]
+        public IActionResult Address(int id)
+        {
+            try
+            {
+                /*  _addressList = _addressOperations.Get().Result;*/
+                _addresData = _addressOperations.get().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
+                _addressOperations.delete(_addresData);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return BadRequest();
             }
         }
         [HttpPost]
