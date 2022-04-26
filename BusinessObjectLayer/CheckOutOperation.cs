@@ -29,7 +29,7 @@ namespace BusinessObjectLayer
             _repo.Add(data);
             _repo.Save();
         }
-        public async Task EditProduct(Checkout entity)
+        public async Task Edit(Checkout entity)
         {
             _repo.Update(entity);
             _repo.Save();

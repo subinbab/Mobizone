@@ -1,20 +1,24 @@
-﻿<div class="" style="padding-top:60px;">
+﻿<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
+
+<div class="" style="padding-top:60px;">
     <div class="sidebar">
         <a class="" asp-action="">Dashboard</a>
         <div id="product">
-        <a  class="@(Context.Request.Path == "/Admin" ? "active" : "")">Products</a>
+        <a  class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create" ? "active" : "")">Products</a>
         <div id="dropdown1" class="dropdown">
-            <a asp-action="Create" class="@(Context.Request.Path == "/Admin/Product/Create" ? "active " : "")">Create</a>
+            <a asp-action="Create" class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Create</a>
         </div>
         </div>
         <div id="settings">
-        <a   class="@(Context.Request.Path == "/Admin/Settings" ? "active" : "")">Settings</a>
+        <a   class="@(Context.Request.Path == "/Admin/About" || Context.Request.Path == "/Admin/Privacy"  || Context.Request.Path == "/Admin/Contact"  ? "active" : "")">Settings</a>
         <div id="dropdown2" class="dropdown">
             <a asp-action="Contact" id="dropdown2" class="@(Context.Request.Path == "/Admin/Contact" ? "active " : "")">Contact Us</a>
 
             <a asp-action="About" id="dropdown2" class="@(Context.Request.Path == "/Admin/About" ? "active " : "")">About</a>
             <a asp-action="Privacy" id="dropdown2" class="@(Context.Request.Path == "/Admin/Privacy" ? "active " : "")">Privacy  and Policy</a>
-            <a asp-action="MasterData" id="dropdown2" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Master</a>
+            <a asp-action="MasterData" id="dropdown2" class="@(Context.Request.Path == "/Admin/MasterData" ? "active " : "")">Master</a>
 
         </div>
         </div>
@@ -25,12 +29,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-  $("#product").mouseenter(function(){
-    $("#dropdown1").show();
+  $("#product").click(function(){
+    $("#dropdown1").toggle();
   });
-  $("#product").mouseleave(function(){
-    $("#dropdown1").hide();
-  });
+ 
 });
 
  $(document).ready(function(){
@@ -42,7 +44,13 @@
     <style>
         .dropdown {
             display: none;
-            background-color: #19bb7b;
-            padding-left: 8px;
+        background-color: #275e4900;
+          padding-left: 8px;
+        text-align: center;
+        font-size: medium;
+        }
+        a{
+            cursor:pointer;
         }
     </style>
+ </div>

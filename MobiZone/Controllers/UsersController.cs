@@ -252,7 +252,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-        #region Post Method for Product
+        #region Post Method for Checkout
         [HttpPost("CheckOutData")]
         public IActionResult CheckOutData([FromBody] Checkout checkoutData)
         {
@@ -275,7 +275,7 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
-        #region GetDetails Method for product
+        #region GetDetails Method for Checkout
         [HttpGet("CheckOutData")]
         public ResponseModel<IEnumerable<Checkout>> CheckOutData(int id)
         {
@@ -305,6 +305,28 @@ namespace ApiLayer.Controllers
                 return _response;
             }
 
+        }
+        #endregion
+
+        #region Update Method for Users
+        [HttpPut("CheckoutPut")]
+        public IActionResult CheckoutPut([FromBody] Checkout checkout)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _checkOutOperation.Edit(checkout);
+                string message = "Updated" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, _userMessages.Updated, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message ="Error occured" + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
         }
         #endregion
     }

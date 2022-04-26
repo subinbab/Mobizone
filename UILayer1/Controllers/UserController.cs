@@ -147,6 +147,14 @@ namespace UILayer.Controllers
         {
             return View();
         }
+        public IActionResult AddtoCart()
+        {
+            return View();
+        }
+        public IActionResult CartPage()
+        {
+            return View();
+        }
         public IActionResult Account()
         {
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();

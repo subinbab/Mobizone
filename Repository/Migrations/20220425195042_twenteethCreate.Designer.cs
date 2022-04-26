@@ -3,38 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425195042_twenteethCreate")]
+    partial class twenteethCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
-
-            modelBuilder.Entity("DomainLayer.About", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("content")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("content");
-
-                    b.HasKey("id");
-
-                    b.ToTable("About");
-                });
 
             modelBuilder.Entity("DomainLayer.Checkout", b =>
                 {
@@ -73,42 +58,6 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.ToTable("checkOut");
-                });
-
-            modelBuilder.Entity("DomainLayer.Contact", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("district")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("pincode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("shopName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("state")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
@@ -276,9 +225,6 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IsActive")
-                        .HasColumnType("int");
-
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
@@ -386,20 +332,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(3980),
+                            createdOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(6959),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4351),
-
+                            modifiedOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7317),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-
-                            createdOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4646),
+                            createdOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7601),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4648),
+                            modifiedOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7603),
                             name = "Admin"
                         });
                 });

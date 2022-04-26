@@ -11,6 +11,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+ 
 
 namespace ApiLayer.Controllers
 {
@@ -21,22 +22,33 @@ namespace ApiLayer.Controllers
         private readonly ILog _log;
         ProductDbContext _context;
         IPrivacyOperation _privacyOperation;
-        IAboutOperations _aboutOperations;
+     
+<<<<<<< .mine
         IContactOperations _contactOperations;
         IEnumerable<About> _about;
         IEnumerable<PrivacyPolicy> _privacyPolicy;
         IEnumerable<Contact> _contact;
+=======
+        ResponseModel<ProductEntity> _response;
+        IEnumerable<ProductEntity> _productDataList;
+      
+        PrivacyPolicy _privacyPolicy;
+>>>>>>> .theirs
         IMessages _productMessages;
         IWebHostEnvironment _webHostEnvironment;
         IMapper _mapper;
 
+<<<<<<< .mine
         public SettingsController(ProductDbContext context, IPrivacyOperation privacyOperation, IAboutOperations aboutOperations, IContactOperations contactOperations, IWebHostEnvironment web, IMapper mapper)
+=======
+        public SettingsController(ProductDbContext context, IPrivacyOperation privacyOperation,  IWebHostEnvironment web, IMapper mapper)
+>>>>>>> .theirs
         {
             #region Object Assigning
             _context = context;
             _webHostEnvironment = web;
             _privacyOperation = privacyOperation;
-            _aboutOperations = aboutOperations;
+         
             _contactOperations = contactOperations;
             _log = LogManager.GetLogger(typeof(ProductController));
             _productMessages = new ProductMessages(_webHostEnvironment);

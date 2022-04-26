@@ -15,7 +15,7 @@
     <!-- As a link -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <img src="~/css/Images/MobiZone-logos_black.png" alt=" Mobizone" style="height:100px; width:100px;"
+            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:100px; width:100px;"
      class="float-left" />
             <a class="navbar-brand justify-content-start" asp-action="Index"style="margin-left:-6px;">MOBIZONE</a>
             <div>
@@ -31,7 +31,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
 
-                    <a asp-controller="User" asp-action="account"> Welcome @User.Identity.Name </a>
+                    <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
                     <a asp-controller="User" asp-action="Logout">Logout</a>
 
 

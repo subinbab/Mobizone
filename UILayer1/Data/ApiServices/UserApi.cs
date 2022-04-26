@@ -110,5 +110,12 @@ namespace UILayer.Data.ApiServices
             return _requestHandler.Get();
 
         }
+        public bool EditCheckout(Checkout checkout)
+        {
+            RequestHandler<Checkout> _requestHandler = new RequestHandler<Checkout>(Configuration);
+            _requestHandler.url = "api/users/CheckoutPut";
+            return _requestHandler.Edit(checkout);
+
+        }
     }
 }

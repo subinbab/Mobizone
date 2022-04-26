@@ -134,6 +134,6 @@ namespace UILayer.Data.ApiServices
             _requestHandler.url = "api/Settings/ContactPut";
             return _requestHandler.Edit(contact);
         }
-
+       
     }
 }

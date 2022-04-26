@@ -34,5 +34,6 @@ namespace DomainLayer.ProductModel
         public int quantity { get; set; }
         public Specificatiion specs { get; set; }
         public string description { get; set; }
+        public int IsActive { get; set; }
     }
 }

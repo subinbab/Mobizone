@@ -432,6 +432,7 @@ namespace UIlayer.Controllers
             if (check)
             {
                 var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, user.userName));
                 claims.Add(new Claim("email", user.userName));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
                 claims.Add(new Claim("password", user.password));
@@ -460,15 +461,16 @@ namespace UIlayer.Controllers
         public async Task<IActionResult> OrderUpdate(List<string> status , List<int> orderId)
         {
             Checkout checkout = new Checkout();
+            UserApi userApi = new UserApi(Configuration);   
             OrderStatus statuses = new OrderStatus();
-            foreach (var item in status)
+            for (int i = 0;i<status.Count();i++)
             {
-                OrderStatus MyStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), item, true);
+                OrderStatus MyStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), status[i], true);
+                var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId[i])).FirstOrDefault();
+                checkoutData.status = MyStatus;
+                userApi.EditCheckout(checkoutData);
 
             }
-
-
-            UserApi userApi = new UserApi(Configuration);
             var data = await userApi.GetCheckOut();
             return View("OrderList",data);
         }
