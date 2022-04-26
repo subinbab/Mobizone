@@ -40,8 +40,8 @@ namespace ApiLayer.Controllers
             _context = context;
             _webHostEnvironment = web;
             _privacyOperation = privacyOperation;
-         
-            _contactOperations = contactOperations;
+            _aboutOperations = aboutOperations;
+               _contactOperations = contactOperations;
             _log = LogManager.GetLogger(typeof(ProductController));
             _productMessages = new ProductMessages(_webHostEnvironment);
             _mapper = mapper;
