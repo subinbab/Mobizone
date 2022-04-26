@@ -1,5 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+<<<<<<< HEAD
 using AutoMapper;
+=======
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
 using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
@@ -28,14 +31,23 @@ namespace UILayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         UserRegistration _user { get; set; }
+<<<<<<< HEAD
         public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+=======
+        INotyfService _notyfService;
+        public UserController(IConfiguration configuration, INotyfService notyf)
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
+<<<<<<< HEAD
             _notyf = notyf;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
+=======
+            _notyfService = notyf;
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
         }
         public IActionResult Index()
         {
@@ -142,12 +154,22 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult checkout(Checkout checkout)
         {
-            Random rnd = new Random();
-            checkout.orderId = rnd.Next();
-            checkout.status = OrderStatus.orderplaced;
-            bool result = userApi.CreateCheckOut(checkout);
-            ViewBag.orderId = checkout.orderId;
-            return View("Orderplaced");
+            if(checkout == null)
+            {
+                _notyfService.Error("Not Added");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                Random rnd = new Random();
+                checkout.orderId = rnd.Next();
+                checkout.status = OrderStatus.orderplaced;
+                bool result = userApi.CreateCheckOut(checkout);
+                ViewBag.orderId = checkout.orderId;
+                _notyfService.Success("succesfully orderd");
+                return View("Orderplaced");
+            }
+            
         }
         public IActionResult Orderplaced()
         {
