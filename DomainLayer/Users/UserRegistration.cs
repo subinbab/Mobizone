@@ -29,7 +29,7 @@ namespace DomainLayer.Users
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }*/
-
+        [Display(Name = "Created On")]
         [Column("CreatedOn")]
         public DateTime createdOn { get; set; }
         [Column("CreatedBy", TypeName = "nvarchar")]

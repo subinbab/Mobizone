@@ -9,6 +9,6 @@ namespace BusinessObjectLayer
         void delete(Checkout data);
         Task<IEnumerable<Checkout>> get();
         Task Add(Checkout data);
-        Task EditProduct(Checkout entity);
+        Task Edit(Checkout entity);
     }
 }

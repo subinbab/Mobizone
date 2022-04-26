@@ -1,4 +1,6 @@
-﻿body {
+﻿
+
+body {
     margin: 0;
     font-family: "Lato", sans-serif;
 }
@@ -19,12 +21,17 @@
         color: black;
         padding: 16px;
         text-decoration: none;
+        font-size: larger;
+        font-family: 'Oswald', sans-serif;
+        font-variant: all-petite-caps;
+        font-size: 26px;
     }
 
         .sidebar a.active {
-            background-color: #aba09f;
-            color: #4f4a4a;
+            background-color: #aba09f00;
+            color: #eb4545;
         }
+        
 
         .sidebar a:hover:not(.active) {
             background-color: transparent;

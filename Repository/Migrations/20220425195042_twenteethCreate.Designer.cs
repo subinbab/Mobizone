@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425195042_twenteethCreate")]
+    partial class twenteethCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,9 +225,6 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IsActive")
-                        .HasColumnType("int");
-
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
@@ -333,18 +332,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(3980),
+                            createdOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(6959),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4351),
+                            modifiedOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7317),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4646),
+                            createdOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7601),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 26, 1, 24, 25, 725, DateTimeKind.Local).AddTicks(4648),
+                            modifiedOn = new DateTime(2022, 4, 26, 1, 20, 42, 203, DateTimeKind.Local).AddTicks(7603),
                             name = "Admin"
                         });
                 });

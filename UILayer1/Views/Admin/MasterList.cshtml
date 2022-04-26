@@ -3,9 +3,13 @@
 @{
     ViewData["Title"] = "MasterList";
 }
+<div class="row container-fluid pr-6">
+    <div class="container-fluid mt-3 align-middle">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="">
 
-
-<table class="table table-bordered">
+<table  id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
     <thead>
         <tr>
             
@@ -25,13 +29,15 @@
             </td>
             
             <td>
-               <button class="btn btn-light mr-2">@Html.ActionLink("MasterEdit", "MasterEdit", new {  id=item.id  })</button>  
+              @* <button class="btn btn-light mr-2">@Html.ActionLink("MasterEdit", "MasterEdit", new {  id=item.id  })</button> *@ 
                 <button class="btn btn-light">@Html.ActionLink("MasterDelete", "Delete", new {  id=item.id  })</button> 
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div></div></div></div></div>
+
 <p>
     <a asp-action="MasterData">Back </a>
 </p>
