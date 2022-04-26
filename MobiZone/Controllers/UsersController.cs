@@ -145,9 +145,9 @@ namespace ApiLayer.Controllers
         {
             try
             {
-                ResponseModel<UserRegistration> _response = new ResponseModel<UserRegistration>();
+                ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
-                UserRegistration check = _userCreate.Authenticate(data.userName, data.password).Result;
+                Login check = _loginOperations.Get().Result.Where(c=> c.username.Equals(data.userName)&&c.password.Equals(data.password)&&c.roleId.Equals((int)RoleTypes.User)).FirstOrDefault();
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK) ;
