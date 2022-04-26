@@ -36,6 +36,10 @@ namespace UILayer.Controllers
             _opApi = new ProductOpApi(_configuration);
 
             _notyfService = notyf;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d495a200267f00fe39c73a5da8124ba9d7d44651
         }
         public IActionResult Index()
         {

@@ -41,6 +41,7 @@ namespace UIlayer.Controllers
         ProductApi pr;
         MasterApi _masterApi;
         ProductOpApi _opApi;
+        UserApi _userApi;
         private readonly INotyfService _notyf;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -53,6 +54,7 @@ namespace UIlayer.Controllers
             data = new Product();
             _masterApi = new MasterApi(Configuration);
             _opApi = new ProductOpApi(Configuration);
+            _userApi = new UserApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -474,17 +476,15 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return View("OrderList",data);
         }
-        public IActionResult OrderDetails(int id)
+        public IActionResult orderDetails(int id)
         {
-            UserApi userApi = new UserApi(Configuration);
-            var checkoutList = userApi.GetCheckOut().Result;
+            var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
             ProductOpApi product = new ProductOpApi(Configuration);
             var ProductDetails = product.GetProduct(checkout.productId).Result;
             ViewData["ProuductDetails"] = ProductDetails;
-
-
-            return View();
+            ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
+            return View(checkout);
         }
 
         public IActionResult Contact()
