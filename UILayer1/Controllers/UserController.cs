@@ -1,8 +1,4 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-<<<<<<< HEAD
-using AutoMapper;
-=======
->>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
 using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
@@ -28,26 +24,18 @@ namespace UILayer.Controllers
         UserApi userApi;
         ProductOpApi _opApi;
         private readonly INotyfService _notyf;
-        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         UserRegistration _user { get; set; }
-<<<<<<< HEAD
-        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
-=======
+
         INotyfService _notyfService;
         public UserController(IConfiguration configuration, INotyfService notyf)
->>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
+
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
-<<<<<<< HEAD
-            _notyf = notyf;
-            _mapper = mapper;
-            _webHostEnvironment = webHostEnvironment;
-=======
+
             _notyfService = notyf;
->>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
         }
         public IActionResult Index()
         {
