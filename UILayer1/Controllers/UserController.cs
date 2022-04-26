@@ -1,10 +1,15 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+<<<<<<< HEAD
+using AutoMapper;
+=======
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
 using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -22,14 +27,27 @@ namespace UILayer.Controllers
         IConfiguration _configuration;
         UserApi userApi;
         ProductOpApi _opApi;
+        private readonly INotyfService _notyf;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         UserRegistration _user { get; set; }
+<<<<<<< HEAD
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+=======
         INotyfService _notyfService;
         public UserController(IConfiguration configuration, INotyfService notyf)
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
+<<<<<<< HEAD
+            _notyf = notyf;
+            _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
+=======
             _notyfService = notyf;
+>>>>>>> 98d0918653f369f37a8b0b67dc11e97274820c73
         }
         public IActionResult Index()
         {
@@ -87,7 +105,16 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult Registration(UserViewModel user)
         {
-             
+            bool result = userApi.CreateUser(user);
+            if (result)
+            {
+                _notyf.Success("Successfully Registered new user");
+            }
+            else
+            {
+                _notyf.Error("UserAddedError");
+
+            }
             userApi.CreateUser(user);
             return View("Index");
         }

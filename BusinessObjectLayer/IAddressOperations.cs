@@ -8,5 +8,6 @@ namespace BusinessObjectLayer
     {
         void delete(Address data);
         Task<IEnumerable<Address>> get();
+        Task Edit(Address address);
     }
 }
