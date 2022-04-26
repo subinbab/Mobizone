@@ -68,39 +68,41 @@
   
     <section class="ftco-section col-6">
 
-        <div class="row justify-content-center card">
-            <div class="col-md-12 col-lg-10">
-                <div class="wrap d-md-flex ">
-                    <div class="img" style="background-image:url(images/xbg-1.jpg.pagespeed.ic.3OAd9jZTMD.webp)">
-                        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" width="350px" />
-                    </div>
-                    <div class="login-wrap p-4 p-md-5 ">
-                        <div class="d-flex">
-                            <div class="w-100">
-                                <h3 class="mb-4">Login</h3>
-                            </div>
-
+        <div class="row justify-content-center ">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="col-md-12 col-lg-10">
+                    <div class="wrap d-md-flex ">
+                        <div class="img" style="background-image:url(images/xbg-1.jpg.pagespeed.ic.3OAd9jZTMD.webp)">
+                            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" width="350px" />
                         </div>
-                        <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
-                            <div class="form-group mb-3 ">
-                                <label asp-for="userName" class="control-label">Username</label>
-                                <input asp-for="userName" type="email" class="form-control" placeholder="Username" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label asp-for="password" class="control-label">Password</label>
-                                <input asp-for="password" class="form-control" placeholder=" Password" minlength="8" required>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="form-control button rounded submit px-3">Login</button>
-                            </div>
+                        <div class="login-wrap p-4 p-md-5 ">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">Login</h3>
+                                </div>
 
-                        </form>
+                            </div>
+                            <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
+                                <div class="form-group mb-3 ">
+                                    <label asp-for="userName" class="control-label">Username</label>
+                                    <input asp-for="userName" type="email" class="form-control" placeholder="Username" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="password" class="control-label">Password</label>
+                                    <input asp-for="password" class="form-control" placeholder=" Password" minlength="8" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="form-control button rounded submit px-3">Login</button>
+                                </div>
+
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
-        </div>
-    </section>
+            </div>
+</section>
    
 </div>
 <div>
