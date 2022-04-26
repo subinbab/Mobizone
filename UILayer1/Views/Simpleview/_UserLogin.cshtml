@@ -51,26 +51,7 @@
         </div>
     </nav>
 
-    <div class="sidebar" style="position: fixed; padding-top: 114px;">
-        <div id="filter">
-            <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter</a>
-        </div>
-        <div id="dropdown1" class="dropdown">
-            <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
-                </select>
-
-                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit"></input>
-            </form>
-        </div>
-
-        <div id="sort">
-            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort</a>
-            <div id="dropdown2" class="dropdown">
-                <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
-            </div>
-        </div>
-    </div>
+    
 
 
 
