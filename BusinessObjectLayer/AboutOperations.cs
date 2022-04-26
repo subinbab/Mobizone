@@ -2,7 +2,6 @@
 using Repository;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -17,8 +16,15 @@ namespace BusinessObjectLayer
 
         public async Task Add(About data)
         {
-            _repo.Add(data);
-            _repo.Save();
+            try
+            {
+                await _repo.Add(data);
+                await _repo.Save();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         public  async Task Edit(About data)
@@ -27,9 +33,10 @@ namespace BusinessObjectLayer
             _repo.Save();
         }
 
-        public async Task Get(About data)
+       
+        public Task<IEnumerable<About>> Get()
         {
-            _repo.Get();
+            return _repo.Get();
         }
     }
 }
