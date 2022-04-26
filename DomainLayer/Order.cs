@@ -1,8 +1,5 @@
 ﻿using DomainLayer.ProductModel;
 using DomainLayer.Users;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DomainLayer
 {

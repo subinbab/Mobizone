@@ -30,7 +30,7 @@ namespace UILayer.Data.ApiServices
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
                 if (result.Result.IsSuccessStatusCode)
                 {
-                    
+                    return true;
                 }
                 return false;
             }

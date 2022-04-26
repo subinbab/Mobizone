@@ -1,4 +1,5 @@
-﻿using DomainLayer;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
@@ -22,11 +23,13 @@ namespace UILayer.Controllers
         UserApi userApi;
         ProductOpApi _opApi;
         UserRegistration _user { get; set; }
-        public UserController(IConfiguration configuration)
+        INotyfService _notyfService;
+        public UserController(IConfiguration configuration, INotyfService notyf)
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
+            _notyfService = notyf;
         }
         public IActionResult Index()
         {
@@ -124,12 +127,22 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult checkout(Checkout checkout)
         {
-            Random rnd = new Random();
-            checkout.orderId = rnd.Next();
-            checkout.status = OrderStatus.orderplaced;
-            bool result = userApi.CreateCheckOut(checkout);
-            ViewBag.orderId = checkout.orderId;
-            return View("Orderplaced");
+            if(checkout == null)
+            {
+                _notyfService.Error("Not Added");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                Random rnd = new Random();
+                checkout.orderId = rnd.Next();
+                checkout.status = OrderStatus.orderplaced;
+                bool result = userApi.CreateCheckOut(checkout);
+                ViewBag.orderId = checkout.orderId;
+                _notyfService.Success("succesfully orderd");
+                return View("Orderplaced");
+            }
+            
         }
         public IActionResult Orderplaced()
         {

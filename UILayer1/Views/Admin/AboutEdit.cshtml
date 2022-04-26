@@ -1,22 +1,27 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+
+
+@model DomainLayer.About
+
 <div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
         <div class="card-body">
             <div class="">
+
 <div class="text-center">
 
     <form asp-action="AboutEdit" method="post">
         <h2>About</h2>
-
-        <textarea name="about" rows="10" cols="50"></textarea>
+        <input asp-for="id" value="@Model.id" type="hidden"/>
+        <textarea asp-for="content" rows="10" cols="50"></textarea>
         <br />
         <div>
-            <input type="submit" value="Save"  class="btn btn-primary" />
+            <input type="submit" value="Save" class="btn btn-primary" />
+
+            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
         </div>
 
     </form>
