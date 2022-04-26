@@ -1,12 +1,13 @@
 ﻿<header>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar  navbar-fixed-top">
         <div class="navbar-brand ">
-            MOBIZONE
+            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:42px; width:77px;"
+     class="float-left" />
         </div>
         @if (User.Identity.IsAuthenticated)
                         {
-            <div>
-                @User.Claims?.FirstOrDefault(x => x.Type.Equals("UserName", StringComparison.OrdinalIgnoreCase))?.Value
+            <div style="text-align: end;     font-weight: 700;" class="col-10">
+                @User.Identity.Name
             </div>
                             <div><a class="nav-link text-dark" asp-area="" asp-controller="admin" asp-action="Logout">Logout</a></div>
                             
@@ -25,6 +26,13 @@
 <style>
     header{
         z-index:999;
+        background-color : white;
 
+    }
+    .card{
+        font-variant: all-small-caps;
+    text-align-last: center;
+    font-weight: 500;
+    font-size: 18px;
     }
 </style>

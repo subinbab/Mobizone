@@ -8,7 +8,18 @@
      var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
 }
 
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="paging.js"></script> 
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://www.solodev.com/assets/pagination/jquery.twbsPagination.js"></script>
+<script src="paging.js"></script>
 <style>
+
+
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
@@ -27,6 +38,26 @@
             padding-bottom : 100px;
             padding-left : 100px;
         }
+
+        .paging-nav {
+  text-align: right;
+  padding-top: 2px;
+}
+
+.paging-nav a {
+  margin: auto 1px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 1px 7px;
+  background: #91b9e6;
+  color: white;
+  border-radius: 3px;
+}
+
+.paging-nav .selected-page {
+  background: #187ed5;
+  font-weight: bold;
+}
 </style>
 
 <form asp-action="OrderUpdate" method="post" id="order_form">
@@ -35,16 +66,21 @@
     <tr>
         <th>Filter</th>
         <th>All</th>
-        <th><button onclick="submit-form()">submit</button></th>
+        <th><button onclick="submitform()">submit</button></th>
 </table>
         </tr>
+<div class="container-fluid mt-3 align-middle">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="">
 
-
-<table>
+<table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
     <tr>
         <th>SL</th>
         <th>Order Id</th>
+        <th>Quantity</th>
         <th>Cancel Requested</th>
+        <th>Product Id</th>
         <th>Status</th>
     </tr>
 
@@ -61,27 +97,48 @@
                 @Html.DisplayFor(modelItem => item.quatity)
             </td>
             <td>
+
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.productId)
             </td>
             <td>
             
-            <select name="status[]" asp-items="new SelectList(values)" value="@item.status"></select>
+            <select  name="status[]" asp-items="new SelectList(values)" >
+                <option >@item.status</option>
+            </select>
            
             </td>
         </tr>
 }
 
 </table>
+</div>
+</div>
+</div>
+</div>
 <div class="text-center">
    <br />
     <br />
-    <button class="alert-primary"> Save </button>
 </div>
 </form>
 <script>
-    function submit-form(){
+    function submitform(){
         document.getElementById("order_form").submit();
     }
+     $(document).ready(function() {
+    $('#tableDemo').twbsPagination(
+       totalPages: 5,
+  // the current page that show on start
+  startPage: 1,
+
+  // maximum visible pages
+  visiblePages: 5,
+
+  initiateStartPageClick: true,
+    );
+     });
+
 </script>
 
 
