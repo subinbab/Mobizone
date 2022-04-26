@@ -126,16 +126,26 @@ namespace UILayer.Controllers
         }
         public IActionResult Contact()
         {
-            return View();
+            adminApi _adminApi = new adminApi(_configuration);
+            var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
+            return View(contactData);
+            
         }
         public IActionResult Privacy()
         {
-            return View();
+            adminApi _adminApi = new adminApi(_configuration);
+            var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
+            return View(privacyData);
+
+            
         }
 
         public IActionResult About()
         {
-            return View();
+            adminApi _adminApi = new adminApi(_configuration);
+            var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
+            return View(aboutData);
+           
         }
         public IActionResult Company()
         {
