@@ -2,61 +2,70 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model DomainLayer.Contact
-<section class=" flex-fill">
-    <div class=" text-center">
+    <div class="container-fluid mt-3 align-middle">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="">
+                    <section class=" flex-fill">
+                        <div class=" text-center">
 
-        <h1>Contact Us</h1>
+                            <h1>Contact Us</h1>
 
-        <div class=" " container>
-            <div class=" contact us"></div>
-            <div class="box"></div>
-            <div class="icon"></div>
-            <div class=" text">
-                <h3>Address</h3>
-                <p>@Model.shopName<br>@Model.district <br> @Model.state <br>Pin:@Model.pincode</p>
+                            <div class=" " container>
+                                <div class=" contact us"></div>
+                                <div class="box"></div>
+                                <div class="icon"></div>
+                                <div class=" text">
+                                    <h3>Address</h3>
+                                    <p>@Model.shopName<br>@Model.district <br> @Model.state <br>Pin:@Model.pincode</p>
+                                </div>
+                                <div class="box"></div>
+                                <div class="icon"></div>
+                                <div class=" text">
+                                    <h3>Email</h3>
+                                    <p> @Model.email</p>
+                                </div>
+                            </div>
+                            <div class="box"></div>
+                            <div class="icon"></div>
+                            <div class=" text">
+                                <h3>Phone</h3>
+                                <p>@Model.phoneNumber</p>
+                            </div>
+                        </div>
+
+                        <div class=" text-center">
+                            <div class="form-group">
+                                <a asp-action="ContactEdit"><button class=" btn btn-primary">Edit</button></a>
+                            </div>
+                        </div>
+
+                        <style>
+                            .container {
+                                width: 100%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                margin-top: 30px;
+                            }
+
+                            .flex-fill {
+                                margin-left: -86px;
+                            }
+
+                            .container-fluid {
+                                width: 100%;
+                                padding-right: 15px;
+                                padding-left: 15px;
+                                margin-right: auto;
+                                margin-left: -86px;
+                            }
+                        </style>
+                    </section>
+                    
+                </div>
             </div>
-            <div class="box"></div>
-            <div class="icon"></div>
-            <div class=" text">
-                <h3>Email</h3>
-                <p> @Model.email</p>
-            </div>
         </div>
-        <div class="box"></div>
-        <div class="icon"></div>
-        <div class=" text">
-            <h3>Phone</h3>
-            <p>@Model.phoneNumber</p>
-        </div>
-    </div>
-
-    <div class=" text-center">
-        <div class="form-group">
-            <a asp-action="ContactEdit"><button class=" btn btn-primary">Edit</button></a>
-        </div>
-    </div>
-
-    <style>
-        .container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .flex-fill {
-            margin-left: -86px;
-        }
-
-        .container-fluid {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: -86px;
-        }
-    </style>
-</section>
+</div>
 
 
