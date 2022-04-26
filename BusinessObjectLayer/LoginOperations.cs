@@ -27,9 +27,10 @@ namespace BusinessObjectLayer
             throw new NotImplementedException();
         }
 
-        public Task Edit(Login entity)
+        public async Task Edit(Login entity)
         {
-            throw new NotImplementedException();
+            _repo.Update(entity);
+            _repo.Save();
         }
 
         public Task<IEnumerable<Login>> Get()

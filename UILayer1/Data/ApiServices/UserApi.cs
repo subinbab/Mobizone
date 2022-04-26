@@ -122,5 +122,13 @@ namespace UILayer.Data.ApiServices
             return _requestHandler.Edit(checkout);
 
         }
+
+        public async Task<IEnumerable<Address>> GetAddress()
+        {
+            RequestHandler<IEnumerable<Address>> _requestHandler = new RequestHandler<IEnumerable<Address>>(Configuration);
+            _requestHandler.url = "api/users/address";
+            return _requestHandler.Get();
+
+        }
     }
 }

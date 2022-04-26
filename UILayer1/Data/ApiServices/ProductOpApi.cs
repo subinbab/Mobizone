@@ -33,6 +33,14 @@ namespace UILayer.Data.ApiServices
             return _requestHandler.Get();
             
         }
+        public async Task<IEnumerable<ProductEntity>> Filter(string name)
+
+        {
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(Configuration);
+            _requestHandler.url = "api/productop/SortByBrand/" + name;
+            return _requestHandler.Get();
+
+        }
         public  async Task<ProductEntity> GetProduct(int id)
         {
             RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(Configuration);

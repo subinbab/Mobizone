@@ -41,6 +41,7 @@ namespace UIlayer.Controllers
         ProductApi pr;
         MasterApi _masterApi;
         ProductOpApi _opApi;
+        UserApi _userApi;
         private readonly INotyfService _notyf;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -53,6 +54,7 @@ namespace UIlayer.Controllers
             data = new Product();
             _masterApi = new MasterApi(Configuration);
             _opApi = new ProductOpApi(Configuration);
+            _userApi = new UserApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -69,6 +71,7 @@ namespace UIlayer.Controllers
             {
 
             }
+           
             return View(productList);
         }
         #endregion
@@ -245,15 +248,24 @@ namespace UIlayer.Controllers
         [HttpPost]
         public ActionResult MasterData(MasterTable data)
         {
-            bool result = _masterApi.Add(data);
-            if (result)
+            IEnumerable<MasterTable> masterData = _masterApi.GetAll();
+            if (masterData.Any(c=> c.masterData.Equals(data.masterData)))
             {
-                _notyf.Success(Configuration.GetSection("Master")["MasterAdded"].ToString());
+                _notyf.Error("data already exist");
             }
             else
             {
-                _notyf.Error(Configuration.GetSection("Master")["MasterAddedError"].ToString());
+                bool result = _masterApi.Add(data);
+                if (result)
+                {
+                    _notyf.Success(Configuration.GetSection("Master")["MasterAdded"].ToString());
+                }
+                else
+                {
+                    _notyf.Error(Configuration.GetSection("Master")["MasterAddedError"].ToString());
+                }
             }
+           
             ModelState.Clear();
             return View();
         }
@@ -370,9 +382,9 @@ namespace UIlayer.Controllers
         {
             ProductViewModel data = new ProductViewModel();
             data = product;
-            var datalist = await _opApi.GetProduct();
+            var datalist = await _opApi.GetAll();
             ProductEntity products = new ProductEntity();
-        /*    products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault(); */
+            products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();
             Images image;
             List<Images> images = new List<Images>();
             images = products.images.ToList();
@@ -474,9 +486,15 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return View("OrderList",data);
         }
-        public IActionResult OrderDetails()
+        public IActionResult orderDetails(int id)
         {
-            return View();
+            var checkoutList = _userApi.GetCheckOut().Result;
+            var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
+            ProductOpApi product = new ProductOpApi(Configuration);
+            var ProductDetails = product.GetProduct(checkout.productId).Result;
+            ViewData["ProuductDetails"] = ProductDetails;
+            ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
+            return View(checkout);
         }
 
         public IActionResult Contact()

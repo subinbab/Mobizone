@@ -1,16 +1,29 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div class=" " container>
+@model DomainLayer.Checkout;
 
-    <div class="box"></div>
-    <div class="icon"></div>
-    <div class=" text">
-        <p>
-            OrderId:12345432<br>
-            CustomerId:34564<br>
-            Samsung<br>Galaxy M12(Blue, 6GB RAM,128GB Storage)<br>Quantity:1<br>Price:124999/-<br>John Doe<br>Flat no:120<br>California,USA<br>Phone Number: 012-34323212
-        </p>
+@{ 
+    var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
+    var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
+}
+<div class="container-fluid mt-3 align-middle">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="">
+                <div class=" " container>
+
+                    <div class="box"></div>
+                    <div class="icon"></div>
+                    <div class=" text">
+                        <div class="card-title">OrderId:@Model.orderId</div>
+                            <hr />
+                            @productDetails.productBrand<br>@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)<br>Quantity:@Model.quatity<br>Price:@Model.price/-<br>@addressDetails.name<br>@addressDetails.address <br>@addressDetails.pincode,@addressDetails.district,@addressDetails.country<br>@addressDetails.phoneNumber
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

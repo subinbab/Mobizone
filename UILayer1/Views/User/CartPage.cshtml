@@ -56,10 +56,10 @@
     </body>
     </html>*@
 <div class="" style="padding-top:60px;">
-    <div class="sidebar">
+    <div class="sidebar" style="">
 
         <div id="filter">
-            <a class="@(Context.Request.Path == "/User" ? "active" : "")">Filter</a>
+            <a class="@(Context.Request.Path == "/User/" ? "active" : "")">Filter</a>
             <div id="dropdown1" class="dropdown">
                 <a asp-action="brand" class="@(Context.Request.Path == "/User/Filter/Brand" ? "active " : "")">Brand</a>
             </div>
@@ -67,7 +67,7 @@
         <div id="sort">
             <a class="@(Context.Request.Path == "/User/Sort" ? "active" : "")">Sort</a>
             <div id="dropdown2" class="dropdown">
-                <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/price" ? "active " : "")">Price</a>
+                <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/" ? "active " : "")">Price</a>
             </div>
         </div>
 

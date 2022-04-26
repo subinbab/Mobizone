@@ -2,7 +2,9 @@
 
 header {
     height: 60px;
-    background-color: #e9967a00 !important;
+    background-color: #ffffff !important;
     position: fixed;
     width: 100%;
+    border-bottom: #ffffffe8;
+    background-image: linear-gradient(white,#f3f3f300
 }
