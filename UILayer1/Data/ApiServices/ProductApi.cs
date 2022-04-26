@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using DomainLayer.Users;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,11 @@ namespace UIlayer.Data.ApiServices
         }
         public IEnumerable<Product> GetProduct()
         {
-            ResponseModel<IEnumerable<Product>> _responseModel = null;
+            RequestHandler<IEnumerable<Product>> _requestHandler = new RequestHandler<IEnumerable<Product>>(Configuration);
+            _requestHandler.url = "api/product";
+            return _requestHandler.Get();
+
+            /*ResponseModel<IEnumerable<Product>> _responseModel = null;
             using (HttpClient httpclient = new HttpClient())
             {
                 _responseModel = null;
@@ -33,11 +38,14 @@ namespace UIlayer.Data.ApiServices
                     _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<Product>>>(response.Result);
                 }
                 return _responseModel.result;
-            }
+            }*/
         }
         public  Product GetProduct(int id)
         {
-            ResponseModel<Product> _responseModel = null;
+            RequestHandler<Product> _requestHandler = new RequestHandler<Product>(Configuration);
+            _requestHandler.url = "api/product";
+            return _requestHandler.Get();
+            /*ResponseModel<Product> _responseModel = null;
             using (HttpClient httpclient = new HttpClient())
             {
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/product/"+id;
@@ -49,7 +57,7 @@ namespace UIlayer.Data.ApiServices
                     _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<Product>>(response.Result);
                 }
                 return _responseModel.result;
-            }
+            }*/
         }
         public  bool EditProduct(Product product)
         {

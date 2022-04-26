@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using DomainLayer.ProductModel;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.Extensions.Configuration;
@@ -41,8 +42,12 @@ namespace UILayer.Data.ApiServices
         //getuser data
         public IEnumerable<UserRegistration> GetUserData()
         {
-            
-            ResponseModel<IEnumerable<UserRegistration>> _responseModel = null;
+
+            RequestHandler<IEnumerable<UserRegistration>> _requestHandler = new RequestHandler<IEnumerable<UserRegistration>>(Configuration);
+            _requestHandler.url = "api/users/userdata";
+            return _requestHandler.Get();
+
+          /*  ResponseModel<IEnumerable<UserRegistration>> _responseModel = null;
             using (HttpClient httpclient = new HttpClient())
             {
                 _responseModel = null;
@@ -56,7 +61,7 @@ namespace UILayer.Data.ApiServices
                 }
 
                 return _responseModel.result;
-            }
+            }*/
         }
         //Authenticate
         public bool Authenticate(LoginViewModel user)
