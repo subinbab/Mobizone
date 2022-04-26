@@ -29,21 +29,24 @@ namespace ApiLayer.Controllers
         ProductDbContext _userContext;
         IUserCreate _userCreate;
         UserRegistration _user;
+        AddressOperations _address;
         IMessages _userMessages;
         ResponseModel<UserDataViewModel> _userResponse;
         IMapper _mapper;
-        IEnumerable<UserRegistration> _userList;
+        IEnumerable<UserRegistration> _userList; 
+        IEnumerable<Address> _addressList;
         List<UserDataViewModel> _userDataList;
         IWebHostEnvironment _webHostEnvironment;
         Security _sec;
         ILoginOperations _loginOperations;
+        IAddressOperations _addressOperations;
         Login _login;
         ICheckOutOperation _checkOutOperation;
         IEnumerable<Checkout> _checkout;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,
+        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, ICheckOutOperation checkOutOperation)
@@ -51,7 +54,9 @@ namespace ApiLayer.Controllers
             _webHostEnvironment = web;
             _userContext = userContext;
             _userCreate = userCreate;
+            _addressOperations = addressOperations;
             _user = new UserRegistration();
+            _configuration = configuration;
             _login = new Login();
             _userMessages = new UserMessages(_webHostEnvironment);
             _userResponse = new ResponseModel<UserDataViewModel>();
@@ -62,7 +67,7 @@ namespace ApiLayer.Controllers
             _loginOperations = loginOperations;
             _userManager = userManager;
             _roleManager = roleManager;
-            _configuration = configuration;
+            
             _checkOutOperation = checkOutOperation;
         }
         [HttpPost("UserCreate")]
@@ -165,6 +170,40 @@ namespace ApiLayer.Controllers
                 return new JsonResult(_response);
             }
             
+        }
+        [HttpGet("addressoperation")]
+        public IActionResult AddressOperations()
+        {
+            try
+            {
+                /*  _addressList = _addressOperations.Get().Result;*/
+                _addressList = _addressOperations.get().Result;
+                if (_userList == null)
+                {
+                    ResponseModel<string> _response = new ResponseModel<string>();
+                    string message = _userMessages.Null + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _userMessages.Null, message);
+                    return new JsonResult(_response);
+                }
+                else
+                {
+                    ResponseModel<IEnumerable<Address>> _response = new ResponseModel<IEnumerable<Address>>();
+                    /*_userDataList = (List< UserDataViewModel>)_mapper.Map<List<UserDataViewModel>>(_userList);*/
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _addressList, message);
+
+                    return new JsonResult(_response);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
         }
         [HttpPost]
         [Route("register")]

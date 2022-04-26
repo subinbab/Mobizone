@@ -474,8 +474,16 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return View("OrderList",data);
         }
-        public IActionResult OrderDetails()
+        public IActionResult OrderDetails(int id)
         {
+            UserApi userApi = new UserApi(Configuration);
+            var checkoutList = userApi.GetCheckOut().Result;
+            var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
+            ProductOpApi product = new ProductOpApi(Configuration);
+            var ProductDetails = product.GetProduct(checkout.productId).Result;
+            ViewData["ProuductDetails"] = ProductDetails;
+
+
             return View();
         }
 

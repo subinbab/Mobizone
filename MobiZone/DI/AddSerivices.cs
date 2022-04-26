@@ -21,7 +21,8 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(ILoginOperations), typeof(LoginOperations));
             services.AddScoped(typeof(IProductImageOperations),typeof(ProductImageOperations));
             services.AddScoped(typeof(IPrivacyOperation), typeof(PrivacyOperations));
-            services.AddScoped(typeof(ICheckOutOperation), typeof(CheckOutOperation));
-    }
+            services.AddScoped(typeof(ICheckOutOperation), typeof(CheckOutOperation)); 
+            services.AddScoped(typeof(IAddressOperations), typeof(AddressOperations));
+        }
     }
 }
