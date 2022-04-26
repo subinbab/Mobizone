@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20220421225333_ninenthCreate")]
-    partial class ninenthCreate
+    [Migration("20220425124543_seventeenthCreate")]
+    partial class seventeenthCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,98 @@ namespace Repository.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
+
+            modelBuilder.Entity("DomainLayer.About", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("content")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
+
+                    b.HasKey("id");
+
+                    b.ToTable("About");
+                });
+
+            modelBuilder.Entity("DomainLayer.Checkout", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("addressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("cancelRequested")
+                        .HasColumnType("int");
+
+                    b.Property<int>("orderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("paymentModeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quatity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("checkOut");
+                });
+
+            modelBuilder.Entity("DomainLayer.Contact", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("district")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("pincode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("shopName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("state")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Contact");
+                });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
                 {
@@ -96,10 +188,12 @@ namespace Repository.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("id")
                         .UseIdentityColumn();
 
                     b.Property<string>("content")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
 
                     b.HasKey("id");
 
@@ -291,18 +385,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(656),
+                            createdOn = new DateTime(2022, 4, 25, 18, 15, 42, 939, DateTimeKind.Local).AddTicks(9738),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1025),
+                            modifiedOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(386),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1312),
+                            createdOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(957),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 22, 4, 23, 33, 580, DateTimeKind.Local).AddTicks(1315),
+                            modifiedOn = new DateTime(2022, 4, 25, 18, 15, 42, 940, DateTimeKind.Local).AddTicks(962),
                             name = "Admin"
                         });
                 });

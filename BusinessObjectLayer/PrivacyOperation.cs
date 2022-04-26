@@ -1,8 +1,6 @@
 ﻿using DomainLayer;
 using Repository;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -27,9 +25,11 @@ namespace BusinessObjectLayer
             _repo.Save();
         }
 
-        public async  Task Get(PrivacyPolicy data)
+        
+
+        public Task<IEnumerable<PrivacyPolicy>> Get()
         {
-            _repo.Get();
+             return _repo.Get();
         }
     }
 }

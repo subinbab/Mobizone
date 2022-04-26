@@ -67,7 +67,7 @@
                 <br />
                 <div class="text-center">
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />  <input type="submit" value="Cancel" class="btn btn-primary" />
+                        <input type="submit" value="Save" class="btn btn-primary" />  <a asp-action="index" value="Cancel" class="btn btn-primary" />Cancel</a>
                     </div>
                    
 
@@ -77,9 +77,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

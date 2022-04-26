@@ -1,13 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<div class="row container-fluid pr-6">
-    <div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <div class="">
-    <div class="col">
-        <section class=" flex-fill">
+@model DomainLayer.Contact
+<section class=" flex-fill">
     <div class=" text-center">
 
         <h1>Contact Us</h1>
@@ -18,37 +13,28 @@
             <div class="icon"></div>
             <div class=" text">
                 <h3>Address</h3>
-                <p> MobiZone store <br>Eranakulam <br> Kakkanad <br>Pin:654432</p>
+                <p>@Model.shopName<br>@Model.district <br> @Model.state <br>Pin:@Model.pincode</p>
             </div>
             <div class="box"></div>
             <div class="icon"></div>
             <div class=" text">
                 <h3>Email</h3>
-                <p> Mobizone@gmail.com</p>
+                <p> @Model.email</p>
             </div>
         </div>
         <div class="box"></div>
         <div class="icon"></div>
         <div class=" text">
             <h3>Phone</h3>
-            <p>9744321234</p>
+            <p>@Model.phoneNumber</p>
         </div>
     </div>
 
     <div class=" text-center">
         <div class="form-group">
-            <a asp-action="ContactEdit"><button  class="btn btn-primary">Edit</button></a>
+            <a asp-action="ContactEdit"><button class=" btn btn-primary">Edit</button></a>
         </div>
     </div>
-
-
-</section>
-    </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
 
     <style>
         .container {
@@ -60,25 +46,17 @@
         }
 
         .flex-fill {
-            margin-left: 0;
+            margin-left: -86px;
         }
 
         .container-fluid {
             width: 100%;
-            padding-right: 0;
+            padding-right: 15px;
             padding-left: 15px;
             margin-right: auto;
-            margin-left: 0;
-        }
-        .contactUsImage{
-            position: fixed;
-    margin-left: 142px;
-    margin-top: 119px;
-        }
-        .contactUsImage img{
-
+            margin-left: -86px;
         }
     </style>
-
+</section>
 
 

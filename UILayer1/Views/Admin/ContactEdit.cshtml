@@ -18,16 +18,10 @@
     </form>
 </div>*@
 
-@model DomainLayer.Users.Address
-
+@model DomainLayer.Contact
 @{
-    ViewData["Title"] = "Address";
+    ViewData["Title"] = "Contact";
 }
-<div class="row container-fluid pr-6">
-    <div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <div class="">
 <div class="row align-item-center">
     <div class="col"></div>
     <div class="col-md-8 mb-4">
@@ -35,15 +29,15 @@
             <form asp-action="ContactEdit" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
+                <input asp-for="id" value="@Model.id" type="hidden" />
                 <input asp-for="id" class="form-control" type="hidden" />
 
                 <div class="center">
                     <div class="form-group row mb-4">
                         <div class="col-md-12">
-                            <label asp-for="name" class="control-label">Shop Name</label>
-                            <input asp-for="name" placeholder="Shop Name" class="form-control" />
-                            <span asp-validation-for="name" class="text-danger"></span>
+                            <label asp-for="shopName" class="control-label">Shop Name</label>
+                            <input asp-for="shopName" placeholder="Shop Name" class="form-control" />
+                            <span asp-validation-for="shopName" class="text-danger"></span>
                         </div>
 
 
@@ -85,9 +79,9 @@
                             <span asp-validation-for="phoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-md-12">
-                            <label asp-for="additionalInfo" class="control-label">Email</label>
-                            <input asp-for="additionalInfo" class="form-control" />
-                            <span asp-validation-for="additionalInfo" class="text-danger"></span>
+                            <label asp-for="email" class="control-label">Email</label>
+                            <input asp-for="email" class="form-control" />
+                            <span asp-validation-for="email" class="text-danger"></span>
                         </div>
                     </div>
                     <br />
@@ -95,6 +89,9 @@
                     <div class="text-center">
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
+
+                            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
+
                         </div>
                     </div>
                 </div>
@@ -102,7 +99,6 @@
         </div>
     </div>
 </div>
-</div></div></div></div></div>
 
 <div>
     <a asp-action="Index">Back to List</a>
