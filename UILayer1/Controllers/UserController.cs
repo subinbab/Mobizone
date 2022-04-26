@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using DomainLayer;
+using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
@@ -25,6 +26,7 @@ namespace UILayer.Controllers
         ProductOpApi _opApi;
         private readonly INotyfService _notyf;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        MasterApi _masterApi;
         UserRegistration _user { get; set; }
 
         INotyfService _notyfService;
@@ -34,15 +36,15 @@ namespace UILayer.Controllers
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
-
+            _masterApi = new MasterApi(_configuration);
             _notyfService = notyf;
-<<<<<<< HEAD
-=======
 
->>>>>>> d495a200267f00fe39c73a5da8124ba9d7d44651
+
+
         }
         public IActionResult Index()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var data = _opApi.GetAll().Result;
             return View(data);
         }
@@ -153,9 +155,11 @@ namespace UILayer.Controllers
             }
             else
             {
+                var data = _opApi.GetProduct(checkout.productId).Result;
                 Random rnd = new Random();
                 checkout.orderId = rnd.Next();
                 checkout.status = OrderStatus.orderplaced;
+                checkout.price = checkout.quatity * data.price;
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
                 _notyfService.Success("succesfully orderd");
@@ -207,6 +211,13 @@ namespace UILayer.Controllers
             _user.address = addresses; 
             bool result = userApi.EditUser(_user);
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult filter(string brandName)
+        {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var filteredData = _opApi.Filter(brandName).Result;
+            return View("Index", filteredData);
         }
     }
 }

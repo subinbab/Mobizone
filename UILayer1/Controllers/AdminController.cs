@@ -71,6 +71,7 @@ namespace UIlayer.Controllers
             {
 
             }
+           
             return View(productList);
         }
         #endregion
@@ -247,15 +248,24 @@ namespace UIlayer.Controllers
         [HttpPost]
         public ActionResult MasterData(MasterTable data)
         {
-            bool result = _masterApi.Add(data);
-            if (result)
+            IEnumerable<MasterTable> masterData = _masterApi.GetAll();
+            if (masterData.Any(c=> c.masterData.Equals(data.masterData)))
             {
-                _notyf.Success(Configuration.GetSection("Master")["MasterAdded"].ToString());
+                _notyf.Error("data already exist");
             }
             else
             {
-                _notyf.Error(Configuration.GetSection("Master")["MasterAddedError"].ToString());
+                bool result = _masterApi.Add(data);
+                if (result)
+                {
+                    _notyf.Success(Configuration.GetSection("Master")["MasterAdded"].ToString());
+                }
+                else
+                {
+                    _notyf.Error(Configuration.GetSection("Master")["MasterAddedError"].ToString());
+                }
             }
+           
             ModelState.Clear();
             return View();
         }
@@ -372,9 +382,9 @@ namespace UIlayer.Controllers
         {
             ProductViewModel data = new ProductViewModel();
             data = product;
-            var datalist = await _opApi.GetProduct();
+            var datalist = await _opApi.GetAll();
             ProductEntity products = new ProductEntity();
-        /*    products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault(); */
+            products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();
             Images image;
             List<Images> images = new List<Images>();
             images = products.images.ToList();
