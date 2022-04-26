@@ -5,7 +5,7 @@
 @model IEnumerable<DomainLayer.Checkout>
 
 @{
-     var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
+    var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
 }
 
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -83,14 +83,16 @@
         <th>Product Id</th>
         <th>Status</th>
     </tr>
-
-   @foreach (var item in Model) {
+    @{int i =0; }
+   @foreach (var item in Model)
+   {
+       i += 1; 
         <tr>
             <td>
-                1
+              @i
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.orderId)
+                <a asp-action="orderDetails" asp-route-id="@item.orderId">@Html.DisplayFor(modelItem => item.orderId)</a>
                 <input name="orderId[]" value="@item.orderId" type="hidden"/>
             </td>
             <td>
