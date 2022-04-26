@@ -1,9 +1,12 @@
-﻿using DomainLayer;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
+using DomainLayer;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -21,12 +24,18 @@ namespace UILayer.Controllers
         IConfiguration _configuration;
         UserApi userApi;
         ProductOpApi _opApi;
+        private readonly INotyfService _notyf;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         UserRegistration _user { get; set; }
-        public UserController(IConfiguration configuration)
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
+            _notyf = notyf;
+            _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -84,7 +93,16 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult Registration(UserViewModel user)
         {
-             
+            bool result = userApi.CreateUser(user);
+            if (result)
+            {
+                _notyf.Success("Successfully Registered new user");
+            }
+            else
+            {
+                _notyf.Error("UserAddedError");
+
+            }
             userApi.CreateUser(user);
             return View("Index");
         }
