@@ -269,7 +269,7 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
         }
