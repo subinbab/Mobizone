@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "ProductList";
 }
+@{
+    var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
+}
 <link rel="stylesheet" href=
 "https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 
@@ -63,7 +66,7 @@
                             {'data':'quantity'},
                             {'data':'price'},
                             {  
-                                "render": function (data, type, full, meta) { return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div><div class="col"><a class="" href="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a></div></div>'; }
+                                "render": function (data, type, full, meta) { return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div><div><select><option>Enable</option><option>Disable</option></select></div><div class="col"><a class="" href="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a></div></div>'; }
                 }
                  
                                        ]

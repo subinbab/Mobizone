@@ -53,12 +53,12 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
-            return await _repo.Get(n1=> n1.specs,n2=> n2.images);
+            return await _repo.Get(n1=> n1.specs,n2=> n2.images , n3=> n3.specs.rams,n4=> n4.specs.storages);
         }
 
         public async Task<ProductEntity> GetById(int id)
         {
-            var datalist =  _repo.Get(n1 => n1.specs, n2 => n2.images).Result.ToList();
+            var datalist = _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams,n4=> n4.specs.storages).Result;
             return  datalist.Where(c => c.id.Equals(id)).FirstOrDefault();
         }
 

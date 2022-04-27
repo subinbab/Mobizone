@@ -123,19 +123,41 @@ namespace UIlayer.Controllers
         {
             if (product.id == 0)
             {
+                
+                List<Ram> rams = new List<Ram>();
+                foreach (var ramData in product.specs.ram)
+                {
+                    Ram ram = new Ram();
+                    ram.ram = ramData;
+                    rams.Add(ram);
+                }
+                List<Storage> storages = new List<Storage>();
+                foreach(var storageData in product.specs.storage)
+                {
+                    Storage storage = new Storage();
+                    storage.storage = storageData;
+                    storages.Add(storage);
+                }
+                product.specs.rams = rams;
+                product.specs.storages = storages;
                 ProductViewModel data = new ProductViewModel();
                 data = product;
                 ProductEntity products = new ProductEntity();
                 products = (ProductEntity)_mapper.Map<ProductEntity>(data);
+                products.status = ProductStatus.enable;
                 Images image;
                 List<Images> images = new List<Images>();
-                foreach (IFormFile files in data.imageFile)
+                if(product.imageFile != null)
                 {
+                    foreach (IFormFile files in data.imageFile)
+                    {
 
-                    image = new Images();
-                    image.imagePath = files.FileName;
-                    images.Add(image);
+                        image = new Images();
+                        image.imagePath = files.FileName;
+                        images.Add(image);
+                    }
                 }
+                
                 products.images = images;
 
 
@@ -165,6 +187,23 @@ namespace UIlayer.Controllers
             }
             else
             {
+                
+                List<Ram> rams = new List<Ram>();
+                foreach (var ramData in product.specs.ram)
+                {
+                    Ram ram = new Ram();
+                    ram.ram = ramData;
+                    rams.Add(ram);
+                }
+                List<Storage> storages = new List<Storage>();
+                foreach (var storageData in product.specs.storage)
+                {
+                    Storage storage = new Storage();
+                    storage.storage = storageData;
+                    storages.Add(storage);
+                }
+                product.specs.storages = storages;
+                product.specs.rams = rams;
                 var data = _opApi.GetProduct(product.id).Result;
                 List<Images> images = new List<Images>();
                 images = data.images.ToList();
@@ -584,9 +623,9 @@ namespace UIlayer.Controllers
         [HttpPost]
         public async Task<ActionResult> quatity(ProductEntity product, string newQuantity)
         {
-            var datalist = await _opApi.GetProduct();
+            var datalist = await _opApi.GetAll();
             ProductEntity products = new ProductEntity();
-            /* products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();*/
+            products = datalist.ToList().Where(c => c.model.Equals(product.model)).FirstOrDefault();
             products.quantity = product.quantity + Convert.ToInt32(newQuantity);
             bool result = _opApi.EditProduct(products);
             return RedirectToAction("Index");

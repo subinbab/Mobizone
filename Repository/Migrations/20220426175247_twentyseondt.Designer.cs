@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220426175247_twentyseondt")]
+    partial class twentyseondt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -332,9 +334,8 @@ namespace Repository.Migrations
                     b.Property<int?>("Specificatiionid")
                         .HasColumnType("int");
 
-                    b.Property<string>("ram")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ram")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
@@ -365,29 +366,12 @@ namespace Repository.Migrations
                     b.Property<string>("simType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("storage")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
                     b.ToTable("Specificatiion");
-                });
-
-            modelBuilder.Entity("DomainLayer.ProductModel.Storage", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("Specificatiionid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("storage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Specificatiionid");
-
-                    b.ToTable("Storage");
                 });
 
             modelBuilder.Entity("DomainLayer.Roles", b =>
@@ -421,18 +405,18 @@ namespace Repository.Migrations
                         {
                             id = 1,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 27, 0, 50, 51, 451, DateTimeKind.Local).AddTicks(1005),
+                            createdOn = new DateTime(2022, 4, 26, 23, 22, 47, 29, DateTimeKind.Local).AddTicks(212),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 27, 0, 50, 51, 451, DateTimeKind.Local).AddTicks(1551),
+                            modifiedOn = new DateTime(2022, 4, 26, 23, 22, 47, 29, DateTimeKind.Local).AddTicks(596),
                             name = "User"
                         },
                         new
                         {
                             id = 2,
                             createdBy = "Subin",
-                            createdOn = new DateTime(2022, 4, 27, 0, 50, 51, 451, DateTimeKind.Local).AddTicks(2003),
+                            createdOn = new DateTime(2022, 4, 26, 23, 22, 47, 29, DateTimeKind.Local).AddTicks(888),
                             modifiedBy = "Subin",
-                            modifiedOn = new DateTime(2022, 4, 27, 0, 50, 51, 451, DateTimeKind.Local).AddTicks(2006),
+                            modifiedOn = new DateTime(2022, 4, 26, 23, 22, 47, 29, DateTimeKind.Local).AddTicks(890),
                             name = "Admin"
                         });
                 });
@@ -760,13 +744,6 @@ namespace Repository.Migrations
                         .HasForeignKey("Specificatiionid");
                 });
 
-            modelBuilder.Entity("DomainLayer.ProductModel.Storage", b =>
-                {
-                    b.HasOne("DomainLayer.ProductModel.Specificatiion", null)
-                        .WithMany("storages")
-                        .HasForeignKey("Specificatiionid");
-                });
-
             modelBuilder.Entity("DomainLayer.Users.Address", b =>
                 {
                     b.HasOne("DomainLayer.Users.UserRegistration", null)
@@ -833,8 +810,6 @@ namespace Repository.Migrations
             modelBuilder.Entity("DomainLayer.ProductModel.Specificatiion", b =>
                 {
                     b.Navigation("rams");
-
-                    b.Navigation("storages");
                 });
 
             modelBuilder.Entity("DomainLayer.Users.UserRegistration", b =>

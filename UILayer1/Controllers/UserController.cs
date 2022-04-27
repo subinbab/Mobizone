@@ -143,6 +143,7 @@ namespace UILayer.Controllers
             ViewData["ProductDetails"] = data;
             _user = userApi.GetUserData().Where(c=> c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
             ViewData["userData"] = _user;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         [HttpPost]
@@ -151,6 +152,7 @@ namespace UILayer.Controllers
             if(checkout == null)
             {
                 _notyfService.Error("Not Added");
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return RedirectToAction("Index");
             }
             else
@@ -163,6 +165,7 @@ namespace UILayer.Controllers
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
                 _notyfService.Success("succesfully orderd");
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return View("Orderplaced");
             }
             

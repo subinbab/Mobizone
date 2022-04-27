@@ -53,7 +53,7 @@ namespace ApiLayer.Controllers
         }
 
         #region Post Method for Product
-        [Authorize]
+        
         [HttpPost]
         public IActionResult Post([FromBody] ProductEntity product)
         {
