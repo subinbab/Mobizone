@@ -39,11 +39,17 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region Get Method for Master Data
-        public async Task<IEnumerable<MasterTable>> GetList(int id)
+        public async Task<List<string>> GetList(int id)
         {
+            List<string> brandList = new List<string>();
             RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
             _requestHandler.url = "api/master";
-            return _requestHandler.Get();
+            var data = _requestHandler.Get().ToList().Where(s => s.parantId == id);
+            foreach (var item in data)
+            {
+                brandList.Add(item.masterData.ToString());
+            }
+            return brandList;
 
            /* ResponseModel<IEnumerable<MasterTable>> _responseModel = null;
             List<string> brandList = new List<string>();
