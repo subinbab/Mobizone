@@ -29,7 +29,8 @@ namespace UILayer.Controllers
         MasterApi _masterApi;
         UserRegistration _user { get; set; }
 
-        INotyfService _notyfService;
+
+
         public UserController(IConfiguration configuration, INotyfService notyf)
 
         {
@@ -37,7 +38,7 @@ namespace UILayer.Controllers
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
             _masterApi = new MasterApi(_configuration);
-            _notyfService = notyf;
+            _notyf = notyf;
 
 
 
@@ -52,7 +53,7 @@ namespace UILayer.Controllers
         [HttpGet]
         public IActionResult Login(string loginUrl)
         {
-            
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             ViewData["LoginUrl"] = loginUrl;
             return View();
             
@@ -80,6 +81,7 @@ namespace UILayer.Controllers
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect("Index");
             }
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             TempData["Error"] = "Invalid Email or Password";
             return View("Login");
         }
@@ -87,6 +89,7 @@ namespace UILayer.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return Redirect("/");
         }
     
@@ -94,21 +97,33 @@ namespace UILayer.Controllers
         public IActionResult Registration()
         
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         [HttpPost]
         public IActionResult Registration(UserViewModel user)
         {
-            bool result = userApi.CreateUser(user);
-            if (result)
+            UserApi userApi = new UserApi(_configuration);
+            var userList = userApi.GetUserData();
+            if(userList.Any(c=> c.Email.Equals(user.Email)))
             {
-                _notyf.Success("Successfully Registered new user");
+                _notyf.Error("User Already Registered");
             }
             else
             {
-                _notyf.Error("UserAddedError");
+                bool result = userApi.CreateUser(user);
+                if (result)
+                {
+                    _notyf.Success("Successfully Registered new user");
+                }
+                else
+                {
+                    _notyf.Error("UserAddedError");
 
+                }
             }
+            
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             userApi.CreateUser(user);
             return View("Index");
         }
@@ -116,23 +131,28 @@ namespace UILayer.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult Contact()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult Privacy()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
 
         public IActionResult About()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult Company()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         [Authorize]
@@ -151,7 +171,7 @@ namespace UILayer.Controllers
         {
             if(checkout == null)
             {
-                _notyfService.Error("Not Added");
+                _notyf.Error("Not Added");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return RedirectToAction("Index");
             }
@@ -164,7 +184,7 @@ namespace UILayer.Controllers
                 checkout.price = checkout.quatity * data.price;
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
-                _notyfService.Success("succesfully orderd");
+                _notyf.Success("succesfully orderd");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return View("Orderplaced");
             }
@@ -172,30 +192,37 @@ namespace UILayer.Controllers
         }
         public IActionResult Orderplaced()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult OrderList()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult DetailedOrderPage()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult order()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult AddtoCart()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult CartPage()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult Account()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
@@ -203,6 +230,7 @@ namespace UILayer.Controllers
         [HttpGet]
         public IActionResult Address()
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         [HttpPost]
@@ -213,6 +241,7 @@ namespace UILayer.Controllers
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
             _user.address = addresses; 
             bool result = userApi.EditUser(_user);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -221,6 +250,12 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ProductDetails(int id)
+        {
+           var details = await _opApi.GetProduct(id); details = await _opApi.GetProduct(id);
+            return View(details);
         }
     }
 }

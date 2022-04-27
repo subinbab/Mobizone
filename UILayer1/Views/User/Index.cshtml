@@ -15,7 +15,7 @@
 @model IEnumerable<DomainLayer.ProductModel.ProductEntity>
 @if (Model == null|| Model.Count().Equals(0))
 {
-    <img src="css//Images/no-data-concept-illustration_114360-2506.png"/>
+    <img src="/css/Images/no-data-concept-illustration_114360-2506.png"/>
     <h3>No Product avialable</h3>
 }
 else
@@ -35,7 +35,7 @@ else
                 {
                     @foreach (var data in item.images)
                     {
-                        <div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" width="149" height="301" style="align-items:center"></div>
+                        <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" width="149" height="301" style="align-items:center"></div></a>
                         break;
                     }
                 }
@@ -44,7 +44,7 @@ else
             <div class="col-12">
                 
                 <h5 class="m-2"> Price : <span style="color: green; font-family: fantasy; font-size: larger;">@item.price &#8377</span> 0% off</h5>
-                <p>@item.description</p>
+                
                 <div class="row">
                     <div class="col buynow"><a asp-action="checkout" asp-route-id="@item.id"><button class="btn btn-orange">Buy Now</button></a></div>
                     <div class="col"><a asp-action="cartpage" asp-route-id="@item.id"><button class="btn btn-indigo" style="font-size: 9px;">Add to Cart</button></a></div>
