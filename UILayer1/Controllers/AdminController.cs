@@ -105,14 +105,14 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
-            ViewBag.SimType = _masterApi.GetList((int)Master.SimType).Result;
-            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType).Result;
-            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor).Result;
-            ViewBag.Core = _masterApi.GetList((int)Master.OsCore).Result;
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram).Result;
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage).Result;
-            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
             return View();
         }
         #endregion
@@ -343,14 +343,14 @@ namespace UIlayer.Controllers
         [HttpGet("ProductCreate")]
         public ActionResult ProductCreate()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result; 
-            ViewBag.SimType = _masterApi.GetList((int)Master.SimType).Result;
-            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType).Result;
-            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor).Result;
-            ViewBag.Core = _masterApi.GetList((int)Master.OsCore).Result;
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram).Result;
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage).Result;
-            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); 
+            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
             return View();
         }
         [HttpPost("ProductCreate")]
