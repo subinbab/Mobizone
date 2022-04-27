@@ -1,4 +1,5 @@
 ﻿using DomainLayer.ProductModel;
+using DomainLayer.ProductModel.Master;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,12 @@ namespace UILayer.Data.ApiServices
         {
             Configuration = configuration;
         }
-        public IEnumerable<Images> GetProduct()
+        public IEnumerable<Images> GetImage()
         {
-            ResponseModel<IEnumerable<Images>> _responseModel = new ResponseModel<IEnumerable<Images>>();
+            RequestHandler<IEnumerable<Images>> _requestHandler = new RequestHandler<IEnumerable<Images>>(Configuration);
+            _requestHandler.url = "api/productop";
+            return _requestHandler.Get();
+           /* ResponseModel<IEnumerable<Images>> _responseModel = new ResponseModel<IEnumerable<Images>>();
             using (HttpClient httpclient = new HttpClient())
             {
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
@@ -32,7 +36,7 @@ namespace UILayer.Data.ApiServices
                     _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<Images>>>(response.Result);
                 }
                 return _responseModel.result;
-            }
+            }*/
         }
 
         public bool DeleteProduct(int id)

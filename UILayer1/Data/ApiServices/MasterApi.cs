@@ -1,11 +1,13 @@
 ﻿using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
+using DomainLayer.Users;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
@@ -37,9 +39,13 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region Get Method for Master Data
-        public List<string> GetList(int id)
+        public async Task<IEnumerable<MasterTable>> GetList(int id)
         {
-            ResponseModel<IEnumerable<MasterTable>> _responseModel = null;
+            RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
+            _requestHandler.url = "api/master";
+            return _requestHandler.Get();
+
+           /* ResponseModel<IEnumerable<MasterTable>> _responseModel = null;
             List<string> brandList = new List<string>();
             using (HttpClient httpclient = new HttpClient())
             {
@@ -58,30 +64,18 @@ namespace UILayer.Data.ApiServices
                     }
                 }
                 return brandList;
-            }
+            }*/
         }
         #endregion
 
         #region Get Method for Master Data
         public IEnumerable<MasterTable> GetAll()
         {
-            ResponseModel<IEnumerable<MasterTable>> _responseModel = null;
-            List<string> brandList = new List<string>();
-            using (HttpClient httpclient = new HttpClient())
-            {
-                _responseModel = null;
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/master";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<MasterTable>>>(response.Result);
-                    return _responseModel.result;
+            RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
+            _requestHandler.url = "api/master";
+            return _requestHandler.Get();
 
-                }
-                return _responseModel.result;
-            }
+           
         }
         #endregion
 
