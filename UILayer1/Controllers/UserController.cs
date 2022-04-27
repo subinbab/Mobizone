@@ -1,4 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+
+
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
@@ -30,6 +32,10 @@ namespace UILayer.Controllers
         UserRegistration _user { get; set; }
 
 
+<<<<<<< HEAD
+=======
+        INotyfService _notyfService;
+>>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
 
         public UserController(IConfiguration configuration, INotyfService notyf)
 
@@ -37,15 +43,17 @@ namespace UILayer.Controllers
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
             _opApi = new ProductOpApi(_configuration);
+
             _masterApi = new MasterApi(_configuration);
             _notyf = notyf;
+
 
 
 
         }
         public IActionResult Index()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
             var data = _opApi.GetAll().Result;
             return View(data);
         }
@@ -136,6 +144,7 @@ namespace UILayer.Controllers
         }
         public IActionResult Contact()
         {
+<<<<<<< HEAD
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
@@ -143,12 +152,33 @@ namespace UILayer.Controllers
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
+=======
+            adminApi _adminApi = new adminApi(_configuration);
+            var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
+            return View(contactData);
+            
+        }
+        public IActionResult Privacy()
+        {
+            adminApi _adminApi = new adminApi(_configuration);
+            var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
+            return View(privacyData);
+
+            
+>>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
         }
 
         public IActionResult About()
         {
+<<<<<<< HEAD
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
+=======
+            adminApi _adminApi = new adminApi(_configuration);
+            var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
+            return View(aboutData);
+           
+>>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
         }
         public IActionResult Company()
         {

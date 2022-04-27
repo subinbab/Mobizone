@@ -620,7 +620,7 @@ namespace UIlayer.Controllers
         {
             ImageApi imageApi = new ImageApi(Configuration);
             bool result = imageApi.DeleteProduct(id);
-            var data = imageApi.GetProduct();
+            var data = imageApi.GetImage();
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
             var products = await _opApi.GetProduct();
             var product = products.Where(c=> c.id.Equals(sample.ProductEntityId)).FirstOrDefault();

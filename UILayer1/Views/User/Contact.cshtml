@@ -1,33 +1,42 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<<<<<<< HEAD
 @{
 }
+<<<<<<< HEAD
 <section class=" flex-fill" style="margin-left: 0px;">
+=======
+=======
+@model DomainLayer.Contact
+>>>>>>> 3bf12a8cff9859334141e25851c8ec0e4bcc8e4c
+<section class=" flex-fill">
+>>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
     <div class=" text-center">
 
         <h1>Contact Us</h1>
-
+        <br />
+        <br />
         <div class=" " container>
             <div class=" contact us"></div>
             <div class="box"></div>
             <div class="icon"></div>
             <div class=" text">
                 <h3>Address</h3>
-                <p> MobiZone store <br>Eranakulam <br> Kakkanad <br>Pin:654432</p>
+                <p>@Model.shopName<br>@Model.district <br> @Model.state <br>Pin:@Model.pincode</p>
             </div>
             <div class="box"></div>
             <div class="icon"></div>
             <div class=" text">
                 <h3>Email</h3>
-                <p> Mobizone@gmail.com</p>
+                <p> @Model.email</p>
             </div>
         </div>
         <div class="box"></div>
         <div class="icon"></div>
         <div class=" text">
             <h3>Phone</h3>
-            <p>9744321234</p>
+            <p>@Model.phoneNumber</p>
         </div>
     </div>
     
