@@ -51,7 +51,7 @@ namespace UILayer.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var data = _opApi.GetAll().Result;
             return View(data);
         }
