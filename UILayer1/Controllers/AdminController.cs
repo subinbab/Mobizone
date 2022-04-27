@@ -506,6 +506,12 @@ namespace UIlayer.Controllers
         {
             UserApi userApi = new UserApi(Configuration);
             var data = userApi.GetCheckOut().Result;
+            List<string> productName = new List<string>();
+            foreach(var checkoutData in data)
+            {
+                productName.Add(_opApi.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault().name);
+            }
+            ViewData["ProductList"] = productName;
             return View(data);
         }
         [HttpPost]
