@@ -61,7 +61,7 @@ namespace UILayer.Controllers
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             ViewData["LoginUrl"] = loginUrl;
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
             
         }
@@ -146,7 +146,7 @@ namespace UILayer.Controllers
 
             adminApi _adminApi = new adminApi(_configuration);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(contactData);
             
         }
@@ -154,7 +154,7 @@ namespace UILayer.Controllers
         {
             adminApi _adminApi = new adminApi(_configuration);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(privacyData);
 
             
@@ -166,7 +166,7 @@ namespace UILayer.Controllers
 
             adminApi _adminApi = new adminApi(_configuration);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(aboutData);
            
 
@@ -174,7 +174,7 @@ namespace UILayer.Controllers
         public IActionResult Company()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         [Authorize]
@@ -269,7 +269,7 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
         }
@@ -277,7 +277,7 @@ namespace UILayer.Controllers
         public async Task<IActionResult> ProductDetails(int id)
         {
            var details = await _opApi.GetProduct(id); details = await _opApi.GetProduct(id);
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand).Result;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
     }
