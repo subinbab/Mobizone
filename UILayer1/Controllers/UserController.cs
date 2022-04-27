@@ -32,10 +32,8 @@ namespace UILayer.Controllers
         UserRegistration _user { get; set; }
 
 
-<<<<<<< HEAD
-=======
+
         INotyfService _notyfService;
->>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
 
         public UserController(IConfiguration configuration, INotyfService notyf)
 
@@ -144,15 +142,7 @@ namespace UILayer.Controllers
         }
         public IActionResult Contact()
         {
-<<<<<<< HEAD
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
-=======
+
             adminApi _adminApi = new adminApi(_configuration);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             return View(contactData);
@@ -165,20 +155,17 @@ namespace UILayer.Controllers
             return View(privacyData);
 
             
->>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
+
         }
 
         public IActionResult About()
         {
-<<<<<<< HEAD
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
-=======
+
             adminApi _adminApi = new adminApi(_configuration);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
             return View(aboutData);
            
->>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
+
         }
         public IActionResult Company()
         {
