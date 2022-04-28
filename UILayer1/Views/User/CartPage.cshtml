@@ -1,7 +1,4 @@
-﻿
-@{}
-<<<<<<< HEAD
-@*<html>
+﻿@*<html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -57,19 +54,16 @@
     </body>
     </html>*@
 
-=======
+
 @model DomainLayer.ProductModel.ProductEntity
 <div class="" style="padding-top:60px;">
-<<<<<<< HEAD
     <div class="sidebar">
         <div >
             <a id="filter" class="@(Context.Request.Path == "/Admin/Brand"   ? "active" : "")">Filter</a>
-=======
     <div class="sidebar" style="">
 
         <div id="filter">
             <a class="@(Context.Request.Path == "/User/" ? "active" : "")">Filter</a>
->>>>>>> 782e88a108d960afb96434480d900d8ed93e4f97
             <div id="dropdown1" class="dropdown">
                 <a asp-action="Brand" id="dropdown1" class="@(Context.Request.Path == "/User/Brand" ? "active " : "")">Brand</a>
             </div>
@@ -78,11 +72,11 @@
         <div id="sort">
             <a class="@(Context.Request.Path == "/Admin/Price"   ? "active" : "")">Sort</a>
             <div id="dropdown2" class="dropdown">
-<<<<<<< HEAD
+
                 <a asp-action="Brand" id="dropdown2" class="@(Context.Request.Path == "/User/Price" ? "active " : "")">Price</a>
-=======
+
                 <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/" ? "active " : "")">Price</a>
->>>>>>> 782e88a108d960afb96434480d900d8ed93e4f97
+
             </div>
         </div>
 
@@ -126,7 +120,7 @@
             position: fixed;
         }
     </style>
->>>>>>> e27d4c0e9544c875a5231933ba77e4eb4d496240
+
     <div class="row">
         <div class="text-center col-8">
             <h3>Shopping Cart</h3>
