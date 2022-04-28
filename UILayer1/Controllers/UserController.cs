@@ -101,7 +101,7 @@ namespace UILayer.Controllers
             return Redirect("/");
         }
     
-        [HttpGet]
+        [HttpGet("registration")]
         public IActionResult Registration()
         
         {

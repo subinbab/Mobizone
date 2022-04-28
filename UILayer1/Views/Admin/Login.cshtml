@@ -18,55 +18,15 @@
 </script>
 
 
-@*<div style="text-align: center;">
-       <div style="width: 500px; margin-left: auto; margin-right:auto;">
-           <h1>Admin Panel Login</h1>
-       </div>
-    </div>
-       <br />
-       <br />
-       <br />
-       <br />
-
-           <div class="row">
-               <div class="col-md-4" style="width: 500px; margin-left: auto; margin-right:auto;">
-                   <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
-                       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                       <div class="form-group">
-                           <label asp-for="userName" class="control-label"></label>
-                           <input asp-for="userName" class="form-control" name="userName" placeholder="User name " required />
-                           <span asp-validation-for="userName" class="text-danger"></span>
-                       </div>
-                       <div class="form-group">
-                           <label asp-for="password" class="control-label"></label>
-                           <input asp-for="password" class="form-control" placeholder=" Password" minlength="8" required />
-                           <span asp-validation-for="password" class="text-danger"></span>
-                       </div>
-                       <div class="text-center">
-                           <div class="form-group">
-                               <input type="submit" value="Login" class="btn btn-primary" />
-                           </div>
-                       </div>
-
-                   </form>
-               </div>
-           </div>
-*@
-
-
 <script src="./Login 04_files/jquery.min.js.download"></script>
 <script src="./Login 04_files/popper.js+bootstrap.min.js+main.js.pagespeed.jc.JD3obyg0WD.js.download"></script>
 <script>eval(mod_pagespeed_YYCwSj$83H);</script>
 <script>eval(mod_pagespeed_fUKQzxht9j);</script>
 <script>eval(mod_pagespeed_lpntivnFUb);</script>
-<script defer="" src="./css/Images/Mobizone-logos_black.png"></script>
-
-
-
 
 <div class="row">
-  
-    <section class="ftco-section col-6" >
+
+    <section class="ftco-section col-6">
 
         <div class="row justify-content-center ">
             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
@@ -84,32 +44,39 @@
                             </div>
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                                 <div class="form-group mb-3 ">
-                                    <label asp-for="userName" class="control-label">Username</label>
-                                    <input asp-for="userName" type="email" class="form-control" placeholder="Username" required>
+                                    <label asp-for="userName" class="control-label">Email</label>
+                                    <input asp-for="userName" type="text" class="form-control" placeholder="Username" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
-                                    <input asp-for="password" class="form-control" placeholder=" Password" minlength="8" required>
+                                    <input asp-for="password" class="form-control" placeholder=" Password" required>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="form-control button rounded submit px-3">Login</button>
                                 </div>
 
-                            </form>
-                        </div>
 
+                            </form>
+
+                        </div>
                     </div>
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @error <a href="register" class="alert-link">Register</a>. Give it a click if you like.
+                        </div>
+                    }
                 </div>
             </div>
-            </div>
-</section>
-   
+        </div>
+    </section>
+
 </div>
 <div>
 
 </div>
-    <br />
-<br/>
+<br />
+<br />
 
 
 <style>
@@ -125,19 +92,17 @@
     .button {
         background-color: indianred;
     }
+
     section {
         margin-left: 386px;
-        margin-top:90px;
+        margin-top: 90px;
     }
+
     .form-control {
-        display:inline-block;
+        display: inline-block;
     }
 </style>
-
 <div class="row" style="width: 400px; margin-left: 644px; margin-right:auto;">
 
-    @if (!string.IsNullOrEmpty(error))
-    {
-        <span class="alert-danger" style="padding:20px;">@error</span>
-    }
+    
 </div>
