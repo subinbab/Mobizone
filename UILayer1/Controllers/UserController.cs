@@ -21,7 +21,7 @@ using UILayer.Data.ApiServices;
 
 namespace UILayer.Controllers
 {
-    [Authorize(Roles = "User")]
+    
     public class UserController : Controller
     {
         IConfiguration _configuration;
@@ -100,7 +100,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return Redirect("/");
         }
-    
+        
         [HttpGet("registration")]
         public IActionResult Registration()
         
@@ -135,6 +135,7 @@ namespace UILayer.Controllers
             userApi.CreateUser(user);
             return View("Index");
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -213,6 +214,7 @@ namespace UILayer.Controllers
             }
             
         }
+        [Authorize(Roles = "User")]
         public IActionResult Orderplaced()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);

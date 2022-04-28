@@ -314,6 +314,7 @@ namespace UIlayer.Controllers
         {
             IEnumerable < MasterTable > data  = _masterApi.GetAll();
             var masterdata = data.Where(c=> id.Equals(c.parantId));
+            ViewBag.MasterTitle = (Master)id;
             return View(masterdata);
         }
         [HttpGet("MasterDelete")]
