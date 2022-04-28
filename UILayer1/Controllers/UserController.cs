@@ -177,7 +177,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        [Authorize]
+        [Authorize(Roles ="user")]
         [HttpGet]
         public IActionResult checkout(int id)
         {
