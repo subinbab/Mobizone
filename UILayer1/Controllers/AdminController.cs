@@ -458,6 +458,7 @@ namespace UIlayer.Controllers
             _userDataList = userApi.GetUserData();
             return View(_userDataList);
         }
+        
         public IActionResult _ImagePreview()
         {
             return PartialView();
