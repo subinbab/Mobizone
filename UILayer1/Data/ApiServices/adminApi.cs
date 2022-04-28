@@ -20,10 +20,11 @@ namespace UILayer.Data.ApiServices
             Configuration = configuration;
         }
         //Authenticate
-        public bool Authenticate(LoginViewModel user)
+        public Login Authenticate(LoginViewModel user)
         {
             using (HttpClient httpclient = new HttpClient())
             {
+                ResponseModel<Login> _responseModel = new ResponseModel<Login>();
                 string data = Newtonsoft.Json.JsonConvert.SerializeObject(user);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/auth/admin";
@@ -32,9 +33,12 @@ namespace UILayer.Data.ApiServices
                 System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
                 if (result.Result.IsSuccessStatusCode)
                 {
-                    return true;
+
+                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<Login>>(response.Result);
+                    return _responseModel.result;
                 }
-                return false;
+                return null;
 
             }
         }
