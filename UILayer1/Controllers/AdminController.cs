@@ -33,7 +33,7 @@ using Repository;
 namespace UIlayer.Controllers
 {
     
-    [Authorize]
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         Product data = null;
@@ -59,7 +59,7 @@ namespace UIlayer.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
         #region Index page
-        [Authorize]
+        [Authorize(Roles="Admin")]
         public async Task<ActionResult> Index(int? i)
         {
             IEnumerable<ProductListViewModel> productList = null;
@@ -479,18 +479,32 @@ namespace UIlayer.Controllers
             LoginViewModel user = new LoginViewModel();
             user.userName = userName;
             user.password = password;
-            bool check = userApi.Authenticate(user);
-            if (check)
+            Login check = userApi.Authenticate(user);
+            if (check.roleId==(int)RoleTypes.Admin)
             {
                 var claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, user.userName));
                 claims.Add(new Claim("email", user.userName));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
                 claims.Add(new Claim("password", user.password));
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
                 return Redirect("/admin");
+            }
+            else{
+                var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, user.userName));
+                claims.Add(new Claim("email", user.userName));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                claims.Add(new Claim("password", user.password));
+                claims.Add(new Claim(ClaimTypes.Role, "User"));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return Redirect("/user");
+
             }
             TempData["Error"] = "Invalid Email or Password";
             return View("login");
@@ -636,7 +650,12 @@ namespace UIlayer.Controllers
             bool result = _opApi.EditProduct(products);
             return RedirectToAction("Index");
         }
-
-       
+        [RequestFormLimits(MultipartBodyLengthLimit = 104857600)]
+        [HttpGet("denied")]
+        [AllowAnonymous]
+        public IActionResult denied(string returnUrl)
+        {
+            return View();
+        }
     }
 }
