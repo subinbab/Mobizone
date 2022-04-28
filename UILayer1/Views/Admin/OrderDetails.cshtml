@@ -3,27 +3,35 @@
 *@
 @model DomainLayer.Checkout;
 
-@{ 
+@{
     var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
 }
 <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
         <div class="card-body">
-            <div class="">
-                <div class=" " container>
+            
+                <div class="card-title">
+                    <div class="align-content-center">
+                        OrderId:   @Model.orderId,<br> ProductName:  @productDetails.productBrand<br>@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)<br />Quantity:   @Model.quatity<br>Price:    @Model.price/-<br /> Address: @addressDetails.name<br />@addressDetails.address,<br />@addressDetails.district,@addressDetails.state<br />Pincode:@addressDetails.pincode<br />Phone Number:@addressDetails.phoneNumber
+                    </div>                   
+                </div>
 
-                    <div class="box"></div>
-                    <div class="icon"></div>
-                    <div class=" text">
-                        <div class="card-title">OrderId:@Model.orderId</div>
-                        <hr />
-                        @productDetails.productBrand<br>@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)<br>Quantity:@Model.quatity<br>Price:@Model.price/-<br>@addressDetails.name<br>@addressDetails.address <br>@addressDetails.district,@addressDetails.state,<br />@addressDetails.pincode,@addressDetails.country<br>@addressDetails.phoneNumber
 
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 

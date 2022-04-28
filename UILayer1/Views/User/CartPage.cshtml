@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿@*<html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,108 +59,111 @@
 @model DomainLayer.ProductModel.ProductEntity
 <div class="" style="padding-top:60px;">
     <div class="sidebar">
-        <div >
+        <div>
             <a id="filter" class="@(Context.Request.Path == "/Admin/Brand"   ? "active" : "")">Filter</a>
 
-﻿
+            ﻿
 
 
-@model DomainLayer.ProductModel.ProductEntity
-<div class="" style="padding-top:60px;">
-
-    <div class="sidebar" style="">
-
-        <div id="filter">
-            <a class="@(Context.Request.Path == "/User/" ? "active" : "")">Filter</a>
-
-            <div id="dropdown1" class="dropdown">
-                <a asp-action="Brand" id="dropdown1" class="@(Context.Request.Path == "/User/Brand" ? "active " : "")">Brand</a>
-            </div>
         </div>
+        <div class="" style="padding-top:60px;">
 
-        <div id="sort">
-            <a class="@(Context.Request.Path == "/Admin/Price"   ? "active" : "")">Sort</a>
-            <div id="dropdown2" class="dropdown">
+            <div class="sidebar" style="">
+
+                <div id="filter">
+                    <a class="@(Context.Request.Path == "/User/" ? "active" : "")">Filter</a>
+
+                    <div id="dropdown1" class="dropdown">
+                        <a asp-action="Brand" id="dropdown1" class="@(Context.Request.Path == "/User/Brand" ? "active " : "")">Brand</a>
+                    </div>
+                </div>
+
+                <div id="sort">
+                    <a class="@(Context.Request.Path == "/Admin/Price"   ? "active" : "")">Sort</a>
+                    <div id="dropdown2" class="dropdown">
 
 
-                <a asp-action="Brand" id="dropdown2" class="@(Context.Request.Path == "/User/Price" ? "active " : "")">Price</a>
+                        <a asp-action="Brand" id="dropdown2" class="@(Context.Request.Path == "/User/Price" ? "active " : "")">Price</a>
 
-                <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/" ? "active " : "")">Price</a>
+                        <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/" ? "active " : "")">Price</a>
+
+                    </div>
+                </div>
+
+
+
+                @*  <div id="filter">
+                        <a class="@(Context.Request.Path == "/User" ? "active" : "")">Filter</a>
+                        <div id="dropdown1" class="dropdown">
+                            <a asp-action="brand" class="@(Context.Request.Path == "/User/Filter/Brand" ? "active " : "")">Brand</a>
+                        </div>
+                    </div>
+                    <div id="sort">
+                        <a class="@(Context.Request.Path == "/User/Sort" ? "active" : "")">Sort</a>
+                        <div id="dropdown2" class="dropdown">
+                            <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/price" ? "active " : "")">Price</a>
+                        </div>
+                    </div>*@
+
 
             </div>
-        </div>
 
 
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#filter").click(function () {
+                        $("#dropdown1").toggle();
+                    });
+                });
+                $(document).ready(function () {
+                    $("#sort").click(function () {
+                        $("#dropdown2").toggle();
+                    });
+                });
+            </script>
+            <style>
+                .dropdown {
+                    display: none;
+                    background-color: #19bb7b;
+                    padding-left: 8px;
+                    position: fixed;
+                }
+            </style>
 
-        @*  <div id="filter">
-                <a class="@(Context.Request.Path == "/User" ? "active" : "")">Filter</a>
-                <div id="dropdown1" class="dropdown">
-                    <a asp-action="brand" class="@(Context.Request.Path == "/User/Filter/Brand" ? "active " : "")">Brand</a>
+            <div class="row">
+                <div class="text-center col-8">
+                    <h3>Shopping Cart</h3>
+                    <img src="~/css/Images/samsung image.jpg" alt="samsung" />
+                    <h5>Samsung Galaxy M12(Blue,6GBRAM ,128GB Storage)</h5>
+                    <h4>17,499/-</h4>
+                    @*<a href="#" class="btn btn-primary" style="margin-left">Qty</a>*@
+                    <div class=>Qty:<input asp-for="quantity" type="number" style="width:50px; height:20px;background-color:azure;" value="1"></div>
+                    <div class="col"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
+                    <a href="">Delete</a>
+                </div>
+                <div class="col-1">
+                    <!-- Card with center text alignment -->
+                    <div class="card text-center" style="width:400px;">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <hr />
+                            <p class="">Sub Total :17,499/- </p>
+                            <p class="">Shipping Charge : 0</p>
+                            <h5 class="">Total Cost:17,499/-</h5>
+                            <a asp-action="checkout" asp-route-id=" "><button class="btn-primary ">Proceed to Buy</button></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="sort">
-                <a class="@(Context.Request.Path == "/User/Sort" ? "active" : "")">Sort</a>
-                <div id="dropdown2" class="dropdown">
-                    <a asp-action="price" id="dropdown2" class="@(Context.Request.Path == "/User/price" ? "active " : "")">Price</a>
-                </div>
-            </div>*@
-
-
+        </div>
     </div>
-
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#filter").click(function () {
-                $("#dropdown1").toggle();
-            });
-        });
-        $(document).ready(function () {
-            $("#sort").click(function () {
-                $("#dropdown2").toggle();
-            });
-        });
-    </script>
-    <style>
-        .dropdown {
-            display: none;
-            background-color: #19bb7b;
-            padding-left: 8px;
-            position: fixed;
-        }
-    </style>
-
-    <div class="row">
-        <div class="text-center col-8">
-            <h3>Shopping Cart</h3>
-            <img src="~/css/Images/samsung image.jpg" alt="samsung" />
-            <h5>Samsung Galaxy M12(Blue,6GBRAM ,128GB Storage)</h5>
-            <h4>17,499/-</h4>
-            @*<a href="#" class="btn btn-primary" style="margin-left">Qty</a>*@
-            <div class=>Qty:<input asp-for="quantity" type="number" style="width:50px; height:20px;background-color:azure;" value="1"></div>
-             <div class="col"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
-            <a href="">Delete</a>
-        </div>
-        <div class="col-1">
-            <!-- Card with center text alignment -->
-            <div class="card text-center" style="width:400px;">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <hr />
-                    <p class="">Sub Total :17,499/- </p>
-                    <p class="">Shipping Charge : 0</p>
-                    <h5 class="">Total Cost:17,499/-</h5>
-                    <a asp-action="checkout" asp-route-id=" "><button class="btn-primary ">Proceed to Buy</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 
 
 
 
-</div>
+
 
 
 
