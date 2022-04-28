@@ -21,6 +21,7 @@ using UILayer.Data.ApiServices;
 
 namespace UILayer.Controllers
 {
+    [Authorize(Roles = "User")]
     public class UserController : Controller
     {
         IConfiguration _configuration;
@@ -177,7 +178,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        [Authorize(Roles ="user")]
+        [Authorize(Roles ="User")]
         [HttpGet]
         public IActionResult checkout(int id)
         {

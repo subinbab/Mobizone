@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@*<html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,10 +61,18 @@
     <div class="sidebar">
         <div >
             <a id="filter" class="@(Context.Request.Path == "/Admin/Brand"   ? "active" : "")">Filter</a>
+
+﻿
+
+
+@model DomainLayer.ProductModel.ProductEntity
+<div class="" style="padding-top:60px;">
+
     <div class="sidebar" style="">
 
         <div id="filter">
             <a class="@(Context.Request.Path == "/User/" ? "active" : "")">Filter</a>
+
             <div id="dropdown1" class="dropdown">
                 <a asp-action="Brand" id="dropdown1" class="@(Context.Request.Path == "/User/Brand" ? "active " : "")">Brand</a>
             </div>
@@ -72,6 +81,7 @@
         <div id="sort">
             <a class="@(Context.Request.Path == "/Admin/Price"   ? "active" : "")">Sort</a>
             <div id="dropdown2" class="dropdown">
+
 
                 <a asp-action="Brand" id="dropdown2" class="@(Context.Request.Path == "/User/Price" ? "active " : "")">Price</a>
 
