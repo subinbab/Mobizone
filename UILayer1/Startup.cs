@@ -32,6 +32,7 @@ namespace UILayer1
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.LoginPath = "/login";
+                options.AccessDeniedPath = "/denied";
                 options.Events = new CookieAuthenticationEvents()
                 {
                     OnSigningIn = async context =>
