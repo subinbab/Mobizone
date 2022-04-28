@@ -475,39 +475,57 @@ namespace UIlayer.Controllers
         [HttpPost("/Login")]
         public async Task<IActionResult> Validate(string userName, string password, string ReturnUrl)
         {
-            adminApi userApi = new adminApi(Configuration);
-            LoginViewModel user = new LoginViewModel();
-            user.userName = userName;
-            user.password = password;
-            Login check = userApi.Authenticate(user);
-            if (check.roleId==(int)RoleTypes.Admin)
+            try
             {
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, user.userName));
-                claims.Add(new Claim("email", user.userName));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
-                claims.Add(new Claim("password", user.password));
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                await HttpContext.SignInAsync(claimsPrincipal);
-                return Redirect("/admin");
-            }
-            else{
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, user.userName));
-                claims.Add(new Claim("email", user.userName));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
-                claims.Add(new Claim("password", user.password));
-                claims.Add(new Claim(ClaimTypes.Role, "User"));
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                await HttpContext.SignInAsync(claimsPrincipal);
-                return Redirect("/user");
+                adminApi userApi = new adminApi(Configuration);
+                LoginViewModel user = new LoginViewModel();
+                user.userName = userName;
+                user.password = password;
+                Login check = userApi.Authenticate(user);
+                if (check != null)
+                {
+                    if (check.roleId == (int)RoleTypes.Admin)
+                    {
+                        var claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.userName));
+                        claims.Add(new Claim("email", user.userName));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                        claims.Add(new Claim("password", user.password));
+                        claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(claimsPrincipal);
+                        return Redirect("/admin");
+                    }
+                    else
+                    {
+                        var claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.userName));
+                        claims.Add(new Claim("email", user.userName));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                        claims.Add(new Claim("password", user.password));
+                        claims.Add(new Claim(ClaimTypes.Role, "User"));
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(claimsPrincipal);
+                        return Redirect("/user");
+
+
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "Invalid Email or Password";
+                    return Redirect("login");
+                }
 
             }
-            TempData["Error"] = "Invalid Email or Password";
-            return View("login");
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Load error please try again";
+                return Redirect("login");
+            }
+
         }
         [Authorize]
         public async Task<IActionResult> Logout()
