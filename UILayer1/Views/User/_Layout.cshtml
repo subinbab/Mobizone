@@ -43,24 +43,25 @@
 
             <div class="col">
                 <div class="row">
+                    
+                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
+                            <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+
+
+
+                        }
+                        else
+                        {
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         <a href="registration">Register</a>
                     </div>
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                @if (User.Identity.IsAuthenticated)
-                {
 
-                    <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
-                    <a  asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-
-
-
-                }
-                else
-                {
-
-                    <a href="login">Login</a>
-                }
+                            <a href="login">Login</a>
+                        }
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         <i class="fa-solid fa-cart-shopping"></i>
