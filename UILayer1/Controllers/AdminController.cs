@@ -79,12 +79,12 @@ namespace UIlayer.Controllers
         #region Product Details page
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult> ProductDetails(int id)
+        public ActionResult ProductDetails(int id)
         {
             ProductEntity details = null;
             try
             {
-                details = await _opApi.GetProduct(id);
+                details =  _opApi.GetProduct(id).Result;
             }
             catch (Exception ex)
             {
@@ -121,103 +121,111 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
-            if (product.id == 0)
+            if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
             {
-                
-                List<Ram> rams = new List<Ram>();
-                foreach (var ramData in product.specs.ram)
-                {
-                    Ram ram = new Ram();
-                    ram.ram = ramData;
-                    rams.Add(ram);
-                }
-                List<Storage> storages = new List<Storage>();
-                foreach(var storageData in product.specs.storage)
-                {
-                    Storage storage = new Storage();
-                    storage.storage = storageData;
-                    storages.Add(storage);
-                }
-                product.specs.rams = rams;
-                product.specs.storages = storages;
-                ProductViewModel data = new ProductViewModel();
-                data = product;
-                ProductEntity products = new ProductEntity();
-                products = (ProductEntity)_mapper.Map<ProductEntity>(data);
-                products.status = ProductStatus.enable;
-                Images image;
-                List<Images> images = new List<Images>();
-                if(product.imageFile != null)
-                {
-                    foreach (IFormFile files in data.imageFile)
-                    {
-
-                        image = new Images();
-                        image.imagePath = files.FileName;
-                        images.Add(image);
-                    }
-                }
-                
-                products.images = images;
-
-
-
-
-                string uniqueFileName = null;
-                if (data.imageFile != null && data.imageFile.Count > 0)
-                {
-                    foreach (IFormFile files in data.imageFile)
-                    {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(uniqueFileName, serverFolder);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                    }
-                }
-                bool result = _opApi.CreateProduct(products);
-                if (result)
-                {
-                    _notyf.Success("Prduct added");
-                }
-                else
-                {
-                    _notyf.Error("Not Added");
-                }
+                _notyf.Error("Product Alraedy Exist");
             }
             else
             {
-                
-                List<Ram> rams = new List<Ram>();
-                foreach (var ramData in product.specs.ram)
+                if (product.id == 0)
                 {
-                    Ram ram = new Ram();
-                    ram.ram = ramData;
-                    rams.Add(ram);
-                }
-                List<Storage> storages = new List<Storage>();
-                foreach (var storageData in product.specs.storage)
-                {
-                    Storage storage = new Storage();
-                    storage.storage = storageData;
-                    storages.Add(storage);
-                }
-                product.specs.storages = storages;
-                product.specs.rams = rams;
-                var data = _opApi.GetProduct(product.id).Result;
-                List<Images> images = new List<Images>();
-                images = data.images.ToList();
-                var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(product);
-                mapperData.images = images;
-                bool result = _opApi.EditProduct(mapperData);
-                if (result)
-                {
-                    _notyf.Success("Product Updated");
+
+                    List<Ram> rams = new List<Ram>();
+                    foreach (var ramData in product.specs.ram)
+                    {
+                        Ram ram = new Ram();
+                        ram.ram = ramData;
+                        rams.Add(ram);
+                    }
+                    List<Storage> storages = new List<Storage>();
+                    foreach (var storageData in product.specs.storage)
+                    {
+                        Storage storage = new Storage();
+                        storage.storage = storageData;
+                        storages.Add(storage);
+                    }
+                    product.specs.rams = rams;
+                    product.specs.storages = storages;
+                    ProductViewModel data = new ProductViewModel();
+                    data = product;
+                    ProductEntity products = new ProductEntity();
+                    products = (ProductEntity)_mapper.Map<ProductEntity>(data);
+                    products.status = ProductStatus.enable;
+                    Images image;
+                    List<Images> images = new List<Images>();
+                    if (product.imageFile != null)
+                    {
+                        foreach (IFormFile files in data.imageFile)
+                        {
+
+                            image = new Images();
+                            image.imagePath = files.FileName;
+                            images.Add(image);
+                        }
+                    }
+
+                    products.images = images;
+
+
+
+
+                    string uniqueFileName = null;
+                    if (data.imageFile != null && data.imageFile.Count > 0)
+                    {
+                        foreach (IFormFile files in data.imageFile)
+                        {
+                            string folder = "Product/Images";
+                            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                            string folderPath = Path.Combine(uniqueFileName, serverFolder);
+                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                        }
+                    }
+                    bool result = _opApi.CreateProduct(products);
+                    if (result)
+                    {
+                        _notyf.Success("Prduct added");
+                    }
+                    else
+                    {
+                        _notyf.Error("Not Added");
+                    }
                 }
                 else
                 {
-                    _notyf.Error("Not Updated");
+
+                    List<Ram> rams = new List<Ram>();
+                    foreach (var ramData in product.specs.ram)
+                    {
+                        Ram ram = new Ram();
+                        ram.ram = ramData;
+                        rams.Add(ram);
+                    }
+                    List<Storage> storages = new List<Storage>();
+                    foreach (var storageData in product.specs.storage)
+                    {
+                        Storage storage = new Storage();
+                        storage.storage = storageData;
+                        storages.Add(storage);
+                    }
+                    product.specs.storages = storages;
+                    product.specs.rams = rams;
+                    var data = _opApi.GetProduct(product.id).Result;
+                    List<Images> images = new List<Images>();
+                    images = data.images.ToList();
+                    var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(product);
+                    mapperData.images = images;
+                    bool result = _opApi.EditProduct(mapperData);
+                    if (result)
+                    {
+                        _notyf.Success("Product Updated");
+                    }
+                    else
+                    {
+                        _notyf.Error("Not Updated");
+                    }
                 }
+            
             }
             
 
@@ -420,35 +428,51 @@ namespace UIlayer.Controllers
         [HttpPost("AddImages")]
         public async Task<IActionResult> AddImages(ProductViewModel product)
         {
-            ProductViewModel data = new ProductViewModel();
-            data = product;
-            var datalist = await _opApi.GetAll();
-            ProductEntity products = new ProductEntity();
-            products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();
-            Images image;
-            List<Images> images = new List<Images>();
-            images = products.images.ToList();
-            foreach (IFormFile files in data.imageFile)
+            try
             {
-                string folder = "Product/Images";
-                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                image = new Images();
-                image.imagePath = uniqueFileName;
-                images.Add(image);
+                if (_opApi.GetAll().Result.Any(c => c.id.Equals(product.id)))
+                {
+                    _notyf.Error("Please check is there is any duplicate product exists");
+                }
+                else
+                {
+                    ProductViewModel data = new ProductViewModel();
+                    data = product;
+                    var datalist = _opApi.GetAll().Result.ToList();
+                    ProductEntity products = new ProductEntity();
+                    products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();
+                    Images image;
+                    List<Images> images = new List<Images>();
+                    images = products.images.ToList();
+                    foreach (IFormFile files in data.imageFile)
+                    {
+                        string folder = "Product/Images";
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
+                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                        image = new Images();
+                        image.imagePath = uniqueFileName;
+                        images.Add(image);
+                    }
+                    products.images = images;
+                    bool result = _opApi.EditProduct(products);
+                    if (result)
+                    {
+                        _notyf.Success("Prduct added");
+                    }
+                    else
+                    {
+                        _notyf.Error("Not Added");
+                    }
+                }
+                
             }
-            products.images = images;
-            bool result = _opApi.EditProduct(products);
-            if (result)
+            catch(Exception ex)
             {
-                _notyf.Success("Prduct added");
+
             }
-            else
-            {
-                _notyf.Error("Not Added");
-            }
+            
             return View("index");
         }
         [Authorize]
