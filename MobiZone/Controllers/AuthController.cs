@@ -90,7 +90,7 @@ namespace ApiLayer.Controllers
 
         }
         [HttpPost("admin")]
-        public async Task<IActionResult> admin(LoginViewModel data)
+        public async Task<ResponseModel<Login>> admin(LoginViewModel data)
         {
             try
             {
@@ -98,23 +98,23 @@ namespace ApiLayer.Controllers
                 string message;
                 string password = _sec.Encrypt("subin", data.password);
                 var list = await _loginOperations.Get();
-                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)&& c.roleId.Equals(2)).FirstOrDefault();
+                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)).FirstOrDefault();
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);
-                    return Ok();
+                    return _response;
                 }
                 message = _userMessages.Null;
                 _response.AddResponse(false, 0, null, message);
-                return NotFound();
+                return _response;
             }
             catch (Exception ex)
             {
-                ResponseModel<string> _response = new ResponseModel<string>();
+                ResponseModel<Login> _response = new ResponseModel<Login>();
                 _response.AddResponse(false, 0, null, ex.Message);
-                return BadRequest();
+                return _response;
             }
 
         }
