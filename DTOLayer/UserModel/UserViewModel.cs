@@ -22,10 +22,12 @@ namespace DTOLayer.UserModel
         [Required(ErrorMessage = "This Field is Required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
+        [StringLength(30, MinimumLength = 8, ErrorMessage = "Your password must be at least 8 characters long")]
         public string Password { get; set; }
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [StringLength(30, MinimumLength = 8, ErrorMessage = "Your password must be at least 8 characters long")]
         public string ConfirmPassword { get; set; }
     }
 }

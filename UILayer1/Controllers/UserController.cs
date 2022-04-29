@@ -52,9 +52,26 @@ namespace UILayer.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var data = _opApi.GetAll().Result;
-            return View(data);
+            try
+            {
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+                var data = _opApi.GetAll().Result;
+                if(data != null)
+                {
+                    return View(data);
+                }
+                else
+                {
+                    return View(null);
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                return View(null);
+            }
+            
+           
         }
         [AllowAnonymous]
         [HttpGet]
@@ -108,7 +125,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        [HttpPost]
+        [HttpPost("registration")]
         public IActionResult Registration(UserViewModel user)
         {
             UserApi userApi = new UserApi(_configuration);
@@ -133,7 +150,7 @@ namespace UILayer.Controllers
             
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             userApi.CreateUser(user);
-            return View("Index");
+            return Redirect("/");
         }
 
         [HttpGet]

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "MasterList";
 }
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
@@ -25,7 +26,10 @@
         <tr>
             
             <td>
-                @Html.DisplayFor(modelItem => item.masterData)
+                <div class="col">
+                    @Html.DisplayFor(modelItem => item.masterData)
+                    <a asp-action="MasterEdit" asp-route-id="@item.id"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                </div>
             </td>
             
             
@@ -38,3 +42,13 @@
 <p>
     <a asp-action="MasterData">Back </a>
 </p>
+<style>
+    span{
+        margin-left:100px;
+
+    }
+    .glyphicon {
+        font-size: x-large;
+        color: black;
+    }
+</style>

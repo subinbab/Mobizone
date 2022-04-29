@@ -99,7 +99,6 @@ namespace ApiLayer.Controllers
             }
             catch (Exception ex)
             {
-                _userCreate.AddUserRegistration(_user);
                 string message = _userMessages.ExceptionError + ",Respons Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                 _userResponse.AddResponse(false, 0, _userMessages.ExceptionError, message);
                 _log.Error("log4net:Error in post controller", ex);

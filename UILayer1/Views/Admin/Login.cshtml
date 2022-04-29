@@ -59,15 +59,16 @@
                             </form>
 
                         </div>
+
                     </div>
-                    @if (!string.IsNullOrEmpty(error))
-                    {
-                        <div class="alert alert-danger" role="alert">
-                            @error <a href="registration" class="alert-link">Register</a>. Give it a click if you like.
-                        </div>
-                    }
                 </div>
             </div>
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @error@* <a href="registration" class="alert-link">Register</a>. Give it a click if you like.*@
+                </div>
+            }
         </div>
     </section>
 
