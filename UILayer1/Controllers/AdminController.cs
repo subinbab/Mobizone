@@ -46,6 +46,11 @@ namespace UIlayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         IEnumerable<UserRegistration> _userDataList;
+
+        private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
+        private static string Bucket = "mobizone-55ea5.appspot.com";
+        private static string AuthEmail = "sub";
+        private static string AuthPassword;
         public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _notyf = notyf;
