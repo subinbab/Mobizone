@@ -317,7 +317,34 @@ namespace UIlayer.Controllers
             ViewBag.MasterTitle = (Master)id;
             return View(masterdata);
         }
-        [HttpGet("MasterDelete")]
+       /* [HttpGet]
+        [Authorize]*/
+       /* public async Task<ActionResult> MasterEdit(int id)
+        {
+           *//* var product = await _opApi.GetProduct(id);
+            var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
+            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
+
+            return *//*Redirect("Index");*/
+       /* }
+        [HttpPost]
+        public ActionResult MasterEdit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = pr.EditProduct(product);
+            }
+            return RedirectToAction("");
+        }*/
+
+       /* [HttpGet("MasterDelete")]
         public ActionResult MasterDelete(int id)
         {
            
@@ -331,7 +358,7 @@ namespace UIlayer.Controllers
                 _notyf.Error(Configuration.GetSection("Master")["MasterDeletedError"].ToString());
             }
             return RedirectToAction("MasterList");
-        }
+        }*/
         [HttpGet("ProductList")]
         [Authorize]
         public async Task<ActionResult> ProductList()
