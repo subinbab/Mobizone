@@ -375,7 +375,7 @@ namespace UIlayer.Controllers
             
             var data = await _opApi.GetProduct();
             List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
-            return new JsonResult(productList);
+            return new JsonResult(productList.OrderByDescending(c=>c.id));
         }
         [HttpGet("ProductCreate")]
         public ActionResult ProductCreate()
