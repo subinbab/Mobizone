@@ -52,9 +52,26 @@ namespace UILayer.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var data = _opApi.GetAll().Result;
-            return View(data);
+            try
+            {
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+                var data = _opApi.GetAll().Result;
+                if(data != null)
+                {
+                    return View(data);
+                }
+                else
+                {
+                    return View(null);
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                return View(null);
+            }
+            
+           
         }
         [AllowAnonymous]
         [HttpGet]

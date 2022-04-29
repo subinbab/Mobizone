@@ -3,13 +3,21 @@
 @{
     ViewData["Title"] = "ProductCreate";
 }
+
+  ...
+@*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*@
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
       <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="~/dist/fastselect.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 
+<script src="~/dist/fastselect.standalone.js"></script>
       <style type="text/css">
 		 .image_container {
 		 	height: 120px;
@@ -31,88 +39,125 @@
 		 	font-weight: normal;
 		 	cursor: pointer;
 		 }
+         select{
+             
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit; 
+         }
+         .chosen-container {
+             display:none;
+         }
+         
+element.style {
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: #333;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+        margin-right: 16px;
+            border: 0px solid #aaa;
+}
+.row{
+    margin-left: -5px;
+}
 	</style>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
+<div class="container-fluid mt-3 align-middle">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="">
+    <div class="col-md-12">
+        <form asp-action="Create" class="row" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="id" runat="server" type="hidden"/>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="productType" class="control-label"></label>
-                <select class="form-control master" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
+                <select class="form-control master js-select2" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
                 <span asp-validation-for="productType" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="productBrand" class="control-label"></label>
-                <select asp-for="productBrand" class="form-control master"   asp-items="new SelectList(ViewBag.BrandList)"></select>
+                <select asp-for="productBrand" class="form-control master js-select2"   asp-items="new SelectList(ViewBag.BrandList)"></select>
                 <span asp-validation-for="productBrand" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
+                <input asp-for="name" class="form-control " />
                 <span asp-validation-for="name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="model" class="control-label"></label>
                 <input asp-for="model" class="form-control" />
                 <span asp-validation-for="model" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="price" class="control-label"></label>
                 <input asp-for="price" class="form-control" />
                 <span asp-validation-for="price" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="quantity" class="control-label"></label>
                 <input asp-for="quantity" class="form-control" />
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.processor" class="control-label"></label>
-                <select asp-for="specs.processor" class="form-control master" asp-items="new SelectList(ViewBag.Processor)"></select>
+                <select asp-for="specs.processor" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Processor)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.ram" class="control-label"></label>
-                <select asp-for="specs.ram" multiple class="form-control master" asp-items="new SelectList(ViewBag.Ram)"></select>
+                <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.storage" class="control-label"></label>
-                <select asp-for="specs.storage" multiple class="form-control master" asp-items="new SelectList(ViewBag.Storage)"></select>
+                <select asp-for="specs.storage" multiple class="form-control js-select2 " asp-items="new SelectList(ViewBag.Storage)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.core" class="control-label"></label>
-                <select asp-for="specs.core" class="form-control master" asp-items="new SelectList(ViewBag.Core)"></select>
+                <select asp-for="specs.core" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Core)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.camFeatures" class="control-label"></label>
-                <select asp-for="specs.camFeatures" class="form-control master" asp-items="new SelectList(ViewBag.camFeatures)"></select>
+                <select asp-for="specs.camFeatures" class="form-control master js-select2" asp-items="new SelectList(ViewBag.camFeatures)"></select>
                 <span asp-validation-for="quantity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label asp-for="specs.simType" class="control-label"></label>
-                <select asp-for="specs.simType" class="form-control master" asp-items="new SelectList(ViewBag.SimType) "></select>
+                <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12">
                 <label asp-for="description" class="control-label"></label>
                 <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary" />
+            <div class="form-group col-12 row">
+                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
+                <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
             </div>
         </form>
+        
     </div>
 </div>
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+<script src="/js/main.js"></script>
+
 <script>
    
     $(".master").chosen();
+    $('.demo').fastselect();
+
     /*  ==========================================
         SHOW UPLOADED IMAGE NAME
     * ========================================== 

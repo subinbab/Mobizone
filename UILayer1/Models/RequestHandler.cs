@@ -23,20 +23,31 @@ namespace UILayer.Models
         public  T Get()
         {
             ResponseModel<T> _responseModel = new ResponseModel<T>();
-            using (HttpClient httpclient = new HttpClient())
+            _responseModel = null;
+            try
             {
-                string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;
-                Uri uri = new Uri(url);
-                httpclient.DefaultRequestHeaders.Authorization =
-    new AuthenticationHeaderValue("Basic", "hello");
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
+                
+                using (HttpClient httpclient = new HttpClient())
                 {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                    string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;
+                    Uri uri = new Uri(url);
+                    httpclient.DefaultRequestHeaders.Authorization =
+        new AuthenticationHeaderValue("Basic", "hello");
+                    System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
+                    if (result.Result.IsSuccessStatusCode)
+                    {
+                        System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                        _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                    }
+                    return _responseModel.result;
                 }
-                return _responseModel.result;
             }
+            catch (Exception ex)
+            {
+                return default(T);
+
+            }
+            
         }
 
         public bool Edit(T entity)
