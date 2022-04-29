@@ -121,14 +121,15 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
-            if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
+            if (product.id == 0)
             {
-                _notyf.Error("Product Alraedy Exist");
-            }
-            else
-            {
-                if (product.id == 0)
+                if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                 {
+                    _notyf.Error("Product Alraedy Exist");
+                }
+                else
+                {
+
 
                     List<Ram> rams = new List<Ram>();
                     foreach (var ramData in product.specs.ram)
@@ -168,7 +169,6 @@ namespace UIlayer.Controllers
 
 
 
-
                     string uniqueFileName = null;
                     if (data.imageFile != null && data.imageFile.Count > 0)
                     {
@@ -191,44 +191,40 @@ namespace UIlayer.Controllers
                         _notyf.Error("Not Added");
                     }
                 }
+            }
+            else
+            {
+                List<Ram> rams = new List<Ram>();
+                foreach (var ramData in product.specs.ram)
+                {
+                    Ram ram = new Ram();
+                    ram.ram = ramData;
+                    rams.Add(ram);
+                }
+                List<Storage> storages = new List<Storage>();
+                foreach (var storageData in product.specs.storage)
+                {
+                    Storage storage = new Storage();
+                    storage.storage = storageData;
+                    storages.Add(storage);
+                }
+                product.specs.storages = storages;
+                product.specs.rams = rams;
+                var data = _opApi.GetProduct(product.id).Result;
+                List<Images> images = new List<Images>();
+                images = data.images.ToList();
+                var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(product);
+                mapperData.images = images;
+                bool result = _opApi.EditProduct(mapperData);
+                if (result)
+                {
+                    _notyf.Success("Product Updated");
+                }
                 else
                 {
-
-                    List<Ram> rams = new List<Ram>();
-                    foreach (var ramData in product.specs.ram)
-                    {
-                        Ram ram = new Ram();
-                        ram.ram = ramData;
-                        rams.Add(ram);
-                    }
-                    List<Storage> storages = new List<Storage>();
-                    foreach (var storageData in product.specs.storage)
-                    {
-                        Storage storage = new Storage();
-                        storage.storage = storageData;
-                        storages.Add(storage);
-                    }
-                    product.specs.storages = storages;
-                    product.specs.rams = rams;
-                    var data = _opApi.GetProduct(product.id).Result;
-                    List<Images> images = new List<Images>();
-                    images = data.images.ToList();
-                    var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(product);
-                    mapperData.images = images;
-                    bool result = _opApi.EditProduct(mapperData);
-                    if (result)
-                    {
-                        _notyf.Success("Product Updated");
-                    }
-                    else
-                    {
-                        _notyf.Error("Not Updated");
-                    }
+                    _notyf.Error("Not Updated");
                 }
-            
             }
-            
-
             return RedirectToAction("");
         }
         [HttpGet]
