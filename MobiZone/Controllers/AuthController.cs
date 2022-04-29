@@ -69,7 +69,7 @@ namespace ApiLayer.Controllers
                 string message;
                 string password = _sec.Encrypt("subin", data.password);
                 var list = await _loginOperations.Get();
-                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)).FirstOrDefault();
+                Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(data.password)).FirstOrDefault();
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {
@@ -98,7 +98,7 @@ namespace ApiLayer.Controllers
                 string message;
                 string password = _sec.Encrypt("subin", data.password);
                 var list = await _loginOperations.Get();
-                Login check = list.Where(c => c.username.Equals(data.userName) && c.password.Equals(data.password)).FirstOrDefault();
+                Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(data.password)).FirstOrDefault();
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {

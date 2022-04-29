@@ -531,9 +531,9 @@ namespace UIlayer.Controllers
         {
             try
             {
-                adminApi userApi = new adminApi(Configuration);
+                adminApi userApi = new adminApi(Configuration,_mapper);
                 LoginViewModel user = new LoginViewModel();
-                user.userName = userName;
+                user.username = userName;
                 user.password = password;
                 Login check = userApi.Authenticate(user);
                 if (check != null)
@@ -541,9 +541,9 @@ namespace UIlayer.Controllers
                     if (check.roleId == (int)RoleTypes.Admin)
                     {
                         var claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.userName));
-                        claims.Add(new Claim("email", user.userName));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                        claims.Add(new Claim(ClaimTypes.Name, user.username));
+                        claims.Add(new Claim("email", user.username));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.username));
                         claims.Add(new Claim("password", user.password));
                         claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -554,9 +554,9 @@ namespace UIlayer.Controllers
                     else
                     {
                         var claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.userName));
-                        claims.Add(new Claim("email", user.userName));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
+                        claims.Add(new Claim(ClaimTypes.Name, user.username));
+                        claims.Add(new Claim("email", user.username));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.username));
                         claims.Add(new Claim("password", user.password));
                         claims.Add(new Claim(ClaimTypes.Role, "User"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -631,7 +631,7 @@ namespace UIlayer.Controllers
         public IActionResult Contact()
         {
 
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             return View(contactData);
            
@@ -639,7 +639,7 @@ namespace UIlayer.Controllers
         [HttpGet]
         public IActionResult ContactEdit()
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
           var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             return View(contactData);
          
@@ -647,7 +647,7 @@ namespace UIlayer.Controllers
         [HttpPost]
         public IActionResult ContactEdit(Contact contact)
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
             _adminApi.EditContact(contact);
             return RedirectToAction("Contact");
         }
@@ -656,7 +656,7 @@ namespace UIlayer.Controllers
 
         public IActionResult Privacy()
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             return View(privacyData);
            
@@ -664,14 +664,14 @@ namespace UIlayer.Controllers
         [HttpGet]
         public IActionResult PrivacyEdit()
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             return View(privacyData);
         }
         [HttpPost]
         public IActionResult PrivacyEdit(PrivacyPolicy privacy)
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration,_mapper);
             _adminApi.EditPrivacy(privacy);
             return RedirectToAction("Privacy");
            
@@ -679,21 +679,21 @@ namespace UIlayer.Controllers
 
         public IActionResult About()
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
             return View(aboutData);
         }
         [HttpGet]
         public IActionResult AboutEdit()
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
             return View(aboutData);
         }
         [HttpPost]
         public IActionResult AboutEdit(About about)
         {
-            adminApi _adminApi = new adminApi(Configuration);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             _adminApi.EditAbout(about);
             return RedirectToAction("About");
         }

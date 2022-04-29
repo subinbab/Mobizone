@@ -10,7 +10,7 @@ namespace DomainLayer.Users
         [Required]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name ="Username")]
-        public string userName { get; set; }
+        public string username { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name ="Password")]

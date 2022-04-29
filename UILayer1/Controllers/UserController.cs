@@ -1,6 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-
-
+using AutoMapper;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
@@ -28,6 +27,7 @@ namespace UILayer.Controllers
         UserApi userApi;
         ProductOpApi _opApi;
         private readonly INotyfService _notyf;
+        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
         UserRegistration _user { get; set; }
@@ -36,7 +36,7 @@ namespace UILayer.Controllers
 
         INotyfService _notyfService;
 
-        public UserController(IConfiguration configuration, INotyfService notyf)
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper)
 
         {
             _configuration = configuration;
@@ -45,6 +45,7 @@ namespace UILayer.Controllers
 
             _masterApi = new MasterApi(_configuration);
             _notyf = notyf;
+            _mapper = mapper;
 
 
 
@@ -99,8 +100,8 @@ namespace UILayer.Controllers
                 var claims = new List<Claim>();
                
                 claims.Add(new Claim("password", user.password));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.userName));
-                claims.Add(new Claim(ClaimTypes.Name, user.userName));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.username));
+                claims.Add(new Claim(ClaimTypes.Name, user.username));
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
@@ -163,7 +164,7 @@ namespace UILayer.Controllers
         public IActionResult Contact()
         {
 
-            adminApi _adminApi = new adminApi(_configuration);
+            adminApi _adminApi = new adminApi(_configuration,_mapper);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(contactData);
@@ -171,7 +172,7 @@ namespace UILayer.Controllers
         }
         public IActionResult Privacy()
         {
-            adminApi _adminApi = new adminApi(_configuration);
+            adminApi _adminApi = new adminApi(_configuration,_mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(privacyData);
@@ -183,7 +184,7 @@ namespace UILayer.Controllers
         public IActionResult About()
         {
 
-            adminApi _adminApi = new adminApi(_configuration);
+            adminApi _adminApi = new adminApi(_configuration,_mapper);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(aboutData);

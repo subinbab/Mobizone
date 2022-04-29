@@ -152,7 +152,7 @@ namespace ApiLayer.Controllers
             {
                 ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
-                Login check = _loginOperations.Get().Result.Where(c=> c.username.Equals(data.userName)&&c.password.Equals(data.password)&&c.roleId.Equals((int)RoleTypes.User)).FirstOrDefault();
+                Login check = _loginOperations.Get().Result.Where(c=> c.username.Equals(data.username)&&c.password.Equals(data.password)&&c.roleId.Equals((int)RoleTypes.User)).FirstOrDefault();
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK) ;

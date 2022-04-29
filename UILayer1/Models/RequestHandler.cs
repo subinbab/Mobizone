@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DomainLayer;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -66,6 +69,27 @@ namespace UILayer.Models
                     return true;
                 }
                 return false;
+            }
+        }
+        public T Post(T entity)
+        {
+            using (HttpClient httpclient = new HttpClient())
+{
+                ResponseModel<T> _responseModel = new ResponseModel<T>();
+                string data = Newtonsoft.Json.JsonConvert.SerializeObject(entity);
+                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;
+                Uri uri = new Uri(url);
+                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
+                if (result.Result.IsSuccessStatusCode)
+                {
+
+                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                    return _responseModel.result;
+                }
+                return default(T);
+
             }
         }
     }
