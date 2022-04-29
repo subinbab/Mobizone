@@ -108,7 +108,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        [HttpPost]
+        [HttpPost("registration")]
         public IActionResult Registration(UserViewModel user)
         {
             UserApi userApi = new UserApi(_configuration);
@@ -133,7 +133,7 @@ namespace UILayer.Controllers
             
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             userApi.CreateUser(user);
-            return View("Index");
+            return Redirect("/");
         }
 
         [HttpGet]

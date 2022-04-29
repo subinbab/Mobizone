@@ -1,4 +1,5 @@
-﻿using DomainLayer.Users;
+﻿using DomainLayer.ProductModel;
+using DomainLayer.Users;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,9 @@ namespace BusinessObjectLayer.User
     {
         ProductDbContext _userContext;
         IRepositoryOperations<UserRegistration> _userRepo;
-        public UserCreate(ProductDbContext userContext)
+        public UserCreate(IRepositoryOperations<UserRegistration> repo)
         {
-            _userContext = userContext;
-            _userRepo = new RepositoryOperations<UserRegistration>(_userContext);
+            _userRepo = repo;
         }
         public async Task AddUserRegistration(UserRegistration user)
         {
