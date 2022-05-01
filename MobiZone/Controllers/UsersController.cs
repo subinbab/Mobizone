@@ -72,7 +72,7 @@ namespace ApiLayer.Controllers
             _checkOutOperation = checkOutOperation;
         }
         [HttpPost("UserCreate")]
-        public IActionResult post([FromBody] UserViewModel users)
+        public ResponseModel<UserViewModel> post([FromBody] UserViewModel users)
         {
             _user = (UserRegistration)_mapper.Map<UserRegistration>(users);
             string myDateTime = DateTime.Now.ToString();
@@ -88,21 +88,21 @@ namespace ApiLayer.Controllers
             _login.modifiedOn = DateTime.Now;
             _login.modifiedBy = users.FirstName + " " + users.LastName;
             _login.roleId = (int)RoleTypes.User;
-            ResponseModel<string> _userResponse = new ResponseModel<string>();
+            ResponseModel<UserViewModel> _userResponse = new ResponseModel<UserViewModel>();
             try
             {
                 _userCreate.AddUserRegistration(_user);
                 _loginOperations.Add(_login);
                 string message = _userMessages.Added + ",Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _userResponse.AddResponse(true, 0, null, message);
-                return new JsonResult(_userResponse);
+                return _userResponse;
             }
             catch (Exception ex)
             {
                 string message = _userMessages.ExceptionError + ",Respons Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
-                _userResponse.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _userResponse.AddResponse(false, 0, null, message);
                 _log.Error("log4net:Error in post controller", ex);
-                return new JsonResult(_userResponse);
+                return _userResponse;
             }
 
 
