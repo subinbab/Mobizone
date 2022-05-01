@@ -46,11 +46,12 @@ namespace UIlayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         IEnumerable<UserRegistration> _userDataList;
-
+        // for testing ////////////////////////////firebase//////////////////////////////////
         private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
         private static string Bucket = "mobizone-55ea5.appspot.com";
-        private static string AuthEmail = "sub";
-        private static string AuthPassword;
+        private static string AuthEmail = "subinbabusd720@gmail.com";
+        private static string AuthPassword = "Subin@1999";
+        //////////////////////////////////////////////////////
         public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _notyf = notyf;
@@ -58,26 +59,37 @@ namespace UIlayer.Controllers
             pr = new ProductApi(Configuration);
             data = new Product();
             _masterApi = new MasterApi(Configuration);
-            _opApi = new ProductOpApi(Configuration);
+            _opApi = new ProductOpApi(Configuration,mapper,webHostEnvironment);
             _userApi = new UserApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
+        }
+
+        public IActionResult Dashboard()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return View("Home");
         }
         #region Index page
         [Authorize(Roles="Admin")]
         public async Task<ActionResult> Index(int? i)
         {
-            IEnumerable<ProductListViewModel> productList = null;
             try
-            {
-                productList = await _opApi.GetProduct();
-            }
-            catch(Exception ex)
             {
 
             }
-           
-            return View(productList);
+           catch(Exception ex)
+            {
+
+            }
+            return View();
         }
         #endregion
 
@@ -93,15 +105,8 @@ namespace UIlayer.Controllers
             }
             catch (Exception ex)
             {
-
-            }
-
-          /*  ProductEntity productEntity = new ProductEntity();
-            productEntity =  lisdatas.Where(c => c.id.Equals(id)).FirstOrDefault();
-            ViewData["images"] = productEntity.images;
-            IEnumerable<ProductEntity> products = await _opApi.GetProduct();*/
-/*            ProductEntity data =  products.Where(c => c.id.Equals(id)).FirstOrDefault();*/
-            
+                details = null;
+            }      
             return View(details);
         }
         #endregion
@@ -110,125 +115,74 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
-            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
-            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
-            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
-            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
+            try
+            {
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+                ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+                ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+                ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+                ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+                ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+                ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+                ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
+            }
+            catch(Exception ex)
+            {
+                ViewBag.BrandList = null;
+                ViewBag.SimType = null;
+                ViewBag.ProductType = null;
+                ViewBag.Processor = null;
+                ViewBag.Core = null;
+                ViewBag.Ram = null;
+                ViewBag.Storage = null;
+                ViewBag.camFeatures = null;
+            }
             return View();
         }
         #endregion
-
         [HttpPost]
         [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
-            if (product.id == 0)
+            try
             {
-                if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
+                if (product.id == 0)
                 {
-                    _notyf.Error("Product Alraedy Exist");
-                }
-                else
-                {
-
-
-                    List<Ram> rams = new List<Ram>();
-                    foreach (var ramData in product.specs.ram)
+                    if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                     {
-                        Ram ram = new Ram();
-                        ram.ram = ramData;
-                        rams.Add(ram);
-                    }
-                    List<Storage> storages = new List<Storage>();
-                    foreach (var storageData in product.specs.storage)
-                    {
-                        Storage storage = new Storage();
-                        storage.storage = storageData;
-                        storages.Add(storage);
-                    }
-                    product.specs.rams = rams;
-                    product.specs.storages = storages;
-                    ProductViewModel data = new ProductViewModel();
-                    data = product;
-                    ProductEntity products = new ProductEntity();
-                    products = (ProductEntity)_mapper.Map<ProductEntity>(data);
-                    products.status = ProductStatus.enable;
-                    Images image;
-                    List<Images> images = new List<Images>();
-                    if (product.imageFile != null)
-                    {
-                        foreach (IFormFile files in data.imageFile)
-                        {
-
-                            image = new Images();
-                            image.imagePath = files.FileName;
-                            images.Add(image);
-                        }
-                    }
-
-                    products.images = images;
-
-
-
-                    string uniqueFileName = null;
-                    if (data.imageFile != null && data.imageFile.Count > 0)
-                    {
-                        foreach (IFormFile files in data.imageFile)
-                        {
-                            string folder = "Product/Images";
-                            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                            uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                            string folderPath = Path.Combine(uniqueFileName, serverFolder);
-                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                        }
-                    }
-                    bool result = _opApi.CreateProduct(products);
-                    if (result)
-                    {
-                        _notyf.Success("Prduct added");
+                        _notyf.Error("Product Alraedy Exist");
                     }
                     else
                     {
-                        _notyf.Error("Not Added");
+                        
+                        bool result = _opApi.CreateProduct(product);
+                        if (result)
+                        {
+                            _notyf.Success("Prduct added");
+                        }
+                        else
+                        {
+                            _notyf.Error("Not Added");
+                        }
                     }
-                }
-            }
-            else
-            {
-                List<Ram> rams = new List<Ram>();
-                foreach (var ramData in product.specs.ram)
-                {
-                    Ram ram = new Ram();
-                    ram.ram = ramData;
-                    rams.Add(ram);
-                }
-                List<Storage> storages = new List<Storage>();
-                foreach (var storageData in product.specs.storage)
-                {
-                    Storage storage = new Storage();
-                    storage.storage = storageData;
-                    storages.Add(storage);
-                }
-                product.specs.storages = storages;
-                product.specs.rams = rams;
-                var data = _opApi.GetProduct(product.id).Result;
-                List<Images> images = new List<Images>();
-                images = data.images.ToList();
-                var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(product);
-                mapperData.images = images;
-                bool result = _opApi.EditProduct(mapperData);
-                if (result)
-                {
-                    _notyf.Success("Product Updated");
                 }
                 else
                 {
-                    _notyf.Error("Not Updated");
+                    
+                    bool result = _opApi.EditProduct(product);
+                    if (result)
+                    {
+                        _notyf.Success("Product Updated");
+                    }
+                    else
+                    {
+                        _notyf.Error("Not Updated");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
             return RedirectToAction("");
         }
@@ -260,7 +214,24 @@ namespace UIlayer.Controllers
         }
         
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
+        {
+
+            /*bool result = _opApi.DeleteProduct(id);*/
+            /*if (result)
+            {
+                _notyf.Success("deleted");
+            }
+            else
+            {
+                _notyf.Error("Not deleted");
+
+            }*/
+
+            return PartialView("Delete", _opApi.GetProduct(id).Result);
+        }
+        [HttpPost("Delete")]
+        public IActionResult DeleteProduct(int id)
         {
             bool result = _opApi.DeleteProduct(id);
             if (result)
@@ -272,8 +243,7 @@ namespace UIlayer.Controllers
                 _notyf.Error("Not deleted");
 
             }
-
-            return RedirectToAction("Index");
+            return RedirectToAction("");
         }
         public ActionResult prductmodel()
         {
@@ -377,72 +347,6 @@ namespace UIlayer.Controllers
             List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
             return new JsonResult(productList.OrderByDescending(c=>c.id));
         }
-        [HttpGet("ProductCreate")]
-        public ActionResult ProductCreate()
-        {
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); 
-            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
-            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
-            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
-            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
-            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
-            return View();
-        }
-        [HttpPost("ProductCreate")]
-        [Authorize]
-        public ActionResult ProductCreate(ProductViewModel product )
-        {
-            if(!_opApi.GetProduct().Result.Any(c=> c.model.Equals(product.model)))
-            {
-                ProductViewModel data = new ProductViewModel();
-                data = product;
-                ProductEntity products = new ProductEntity();
-                products = (ProductEntity)_mapper.Map<ProductEntity>(data);
-                Images image;
-                List<Images> images = new List<Images>();
-
-
-
-
-
-                string uniqueFileName = null;
-                if (data.imageFile != null && data.imageFile.Count > 0)
-                {
-                    foreach (IFormFile files in data.imageFile)
-                    {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                        image = new Images();
-                        image.imagePath = uniqueFileName;
-                        images.Add(image);
-                    }
-                    
-                }
-
-                bool result = _opApi.CreateProduct(products);
-                if (result)
-                {
-                    _notyf.Success("Prduct added");
-                }
-                else
-                {
-                    _notyf.Error("Not Added");
-                }
-               
-                return RedirectToAction("index");
-            }
-            else
-            {
-                _notyf.Error("Product already existed");
-                return RedirectToAction("Index");
-            }
-        
-        }
         [HttpGet]
         public async Task<IActionResult> AddImage(int  id)
         {
@@ -458,13 +362,8 @@ namespace UIlayer.Controllers
         {
             try
             {
-                if (_opApi.GetAll().Result.Any(c => c.id.Equals(product.id)))
-                {
-                    _notyf.Error("Please check is there is any duplicate product exists");
-                }
-                else
-                {
-                    ProductViewModel data = new ProductViewModel();
+                
+/*                    ProductViewModel data = new ProductViewModel();
                     data = product;
                     var datalist = _opApi.GetAll().Result.ToList();
                     ProductEntity products = new ProductEntity();
@@ -483,8 +382,8 @@ namespace UIlayer.Controllers
                         image.imagePath = uniqueFileName;
                         images.Add(image);
                     }
-                    products.images = images;
-                    bool result = _opApi.EditProduct(products);
+                    products.images = images;*/
+                    bool result = _opApi.EditProduct(product);
                     if (result)
                     {
                         _notyf.Success("Prduct added");
@@ -493,7 +392,7 @@ namespace UIlayer.Controllers
                     {
                         _notyf.Error("Not Added");
                     }
-                }
+                
                 
             }
             catch(Exception ex)
@@ -592,12 +491,15 @@ namespace UIlayer.Controllers
         {
             UserApi userApi = new UserApi(Configuration);
             var data = userApi.GetCheckOut().Result;
-            List<string> productName = new List<string>();
-            foreach(var checkoutData in data)
+            if(data != null)
             {
-                productName.Add(_opApi.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault().name);
+                List<string> productName = new List<string>();
+                foreach (var checkoutData in data)
+                {
+                    productName.Add(_opApi.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault().name);
+                }
+                ViewData["ProductList"] = productName;
             }
-            ViewData["ProductList"] = productName;
             return View(data);
         }
         [HttpPost]
@@ -621,8 +523,7 @@ namespace UIlayer.Controllers
         {
             var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
-            ProductOpApi product = new ProductOpApi(Configuration);
-            var ProductDetails = product.GetProduct(checkout.productId).Result;
+            var ProductDetails = _opApi.GetProduct(checkout.productId).Result;
             ViewData["ProuductDetails"] = ProductDetails;
             ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
             return View(checkout);
@@ -705,8 +606,8 @@ namespace UIlayer.Controllers
         public async Task<IActionResult> ImageDelete(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);
-            bool result = imageApi.DeleteProduct(id);
-            var data = imageApi.GetImage();
+            bool result = imageApi.Delete(id);
+            var data = imageApi.Get();
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
             var products = await _opApi.GetProduct();
             var product = products.Where(c=> c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
@@ -719,7 +620,8 @@ namespace UIlayer.Controllers
             ProductEntity products = new ProductEntity();
             products = datalist.ToList().Where(c => c.model.Equals(product.model)).FirstOrDefault();
             products.quantity = product.quantity + Convert.ToInt32(newQuantity);
-            bool result = _opApi.EditProduct(products);
+            var productEntity = (ProductViewModel)_mapper.Map<ProductViewModel>(products);
+            bool result = _opApi.EditProduct(productEntity);
             return RedirectToAction("Index");
         }
         [RequestFormLimits(MultipartBodyLengthLimit = 104857600)]

@@ -22,64 +22,80 @@ namespace UILayer.Data.ApiServices
         #region Add method for master data
         public bool Add(MasterTable masterData)
         {
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(masterData);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/Master";
-                //string url = "http://subin9408-001-site1.ftempurl.com/api/product";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<MasterTable> request = new RequestHandler<MasterTable>(Configuration);
+                request.url = "api/Master";
+                var result = request.Post(masterData);
+                if (result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
         }
         #endregion
+
+
         #region Get Method for Master Data
         public List<string> GetList(int id)
         {
-            List<string> brandList = new List<string>();
-            RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
-            _requestHandler.url = "api/master";
-            var data = _requestHandler.Get().ToList().Where(s => s.parantId == id);
-            foreach (var item in data)
+            try
             {
-                brandList.Add(item.masterData.ToString());
-            }
-            return brandList;
-
-           /* ResponseModel<IEnumerable<MasterTable>> _responseModel = null;
-            List<string> brandList = new List<string>();
-            using (HttpClient httpclient = new HttpClient())
-            {
-                _responseModel = null;
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/master";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
+                List<string> brandList = new List<string>();
+                RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
+                _requestHandler.url = "api/master";
+                var result = _requestHandler.Get();
+                if(result != null)
                 {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<MasterTable>>>(response.Result);
-                    var data = _responseModel.result.ToList().Where(s => s.parantId == id);
+                    var data = result.result.ToList().Where(s => s.parantId == id);
                     foreach (var item in data)
                     {
                         brandList.Add(item.masterData.ToString());
                     }
                 }
+                else
+                {
+                    brandList = null;
+                }
                 return brandList;
-            }*/
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+           
         }
         #endregion
 
         #region Get Method for Master Data
         public IEnumerable<MasterTable> GetAll()
         {
-            RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
-            _requestHandler.url = "api/master";
-            return _requestHandler.Get();
+            try
+            {
+                RequestHandler<IEnumerable<MasterTable>> _requestHandler = new RequestHandler<IEnumerable<MasterTable>>(Configuration);
+                _requestHandler.url = "api/master";
+                return _requestHandler.Get().result;
+            }
+           catch (Exception ex)
+            {
+                return null;
+            }
 
            
         }
@@ -88,36 +104,51 @@ namespace UILayer.Data.ApiServices
 
         public bool Delete(int id)
         {
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(id);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/master/"
-                + id;
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.DeleteAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<string> requestHandler = new RequestHandler<string>(Configuration);
+                requestHandler.url = "api/master/";
+                var result = requestHandler.Delete(id);
+                if(result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
         }
         public bool EditProduct(MasterTable product)
         {
-
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(product);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/prouctop/MasterData";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> response = httpclient.PutAsync(uri, content);
-
-                if (response.Result.IsSuccessStatusCode)
+                RequestHandler<MasterTable> requestHandler = new RequestHandler<MasterTable>(Configuration);
+                requestHandler.url = "api/prouctop/MasterData";
+                var result = requestHandler.Edit(product);
+                if (result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
                 return false;
             }
         }

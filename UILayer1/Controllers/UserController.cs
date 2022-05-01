@@ -36,12 +36,12 @@ namespace UILayer.Controllers
 
         INotyfService _notyfService;
 
-        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper)
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
 
         {
             _configuration = configuration;
             userApi  = new UserApi(_configuration);
-            _opApi = new ProductOpApi(_configuration);
+            _opApi = new ProductOpApi(_configuration,mapper, webHostEnvironment);
 
             _masterApi = new MasterApi(_configuration);
             _notyf = notyf;
@@ -84,14 +84,14 @@ namespace UILayer.Controllers
             return View();
             
         }
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost]
         public async Task <IActionResult> Login(LoginViewModel data)
         {
             UserApi userApi = new UserApi(_configuration);
             LoginViewModel user = new LoginViewModel();
-            /* user.userName = userName;
-             user.password = password;*/
+            *//* user.userName = userName;
+             user.password = password;*//*
             _user = userApi.GetUserData().ToList().Where(c=> c.Email.Equals(c.Email)).FirstOrDefault();
             user = data;
             bool check = userApi.Authenticate(user);
@@ -110,7 +110,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             TempData["Error"] = "Invalid Email or Password";
             return View("Login");
-        }
+        }*/
         [Authorize]
         public async Task<IActionResult> Logout()
         {

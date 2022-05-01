@@ -3,7 +3,39 @@
 @{
     ViewData["Title"] = "ProductCreate";
 }
+@{
+    if(ViewBag.BrandList == null)
+    {
+        ViewBag.BrandList = "";
 
+    }
+    if(ViewBag.SimType == null){
+        ViewBag.SimType = "";
+    }
+    if(ViewBag.ProductType == null)
+    {
+        ViewBag.ProductType = "";
+    }
+    if(ViewBag.Processor == null)
+    {
+        ViewBag.Processor = "";
+    }
+    if(ViewBag.Core == null)
+    {
+        ViewBag.Core = "";
+    }
+    if( ViewBag.Ram == null)
+    {
+        ViewBag.Ram = "";
+    }
+    if(ViewBag.Storage == null)
+    {
+        ViewBag.Storage = "";
+    }
+    if(ViewBag.camFeatures == null){
+        ViewBag.camFeatures = "";
+    }
+}
   ...
 @*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*@
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -105,32 +137,32 @@ element.style {
             <div class="form-group col-6">
                 <label asp-for="specs.processor" class="control-label"></label>
                 <select asp-for="specs.processor" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Processor)"></select>
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <span asp-validation-for="specs.processor" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.ram" class="control-label"></label>
                 <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <span asp-validation-for="specs.ram" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.storage" class="control-label"></label>
                 <select asp-for="specs.storage" multiple class="form-control js-select2 " asp-items="new SelectList(ViewBag.Storage)"></select>
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <span asp-validation-for="specs.storage" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.core" class="control-label"></label>
                 <select asp-for="specs.core" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Core)"></select>
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <span asp-validation-for="specs.core" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.camFeatures" class="control-label"></label>
                 <select asp-for="specs.camFeatures" class="form-control master js-select2" asp-items="new SelectList(ViewBag.camFeatures)"></select>
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <span asp-validation-for="specs.camFeatures" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.simType" class="control-label"></label>
                 <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
-                <span asp-validation-for="description" class="text-danger"></span>
+                <span asp-validation-for="specs.simType" class="text-danger"></span>
             </div>
             <div class="form-group col-12">
                 <label asp-for="description" class="control-label"></label>
@@ -139,8 +171,17 @@ element.style {
             </div>
 
             <div class="form-group col-12 row">
-                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
-                <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+                            @if(Model == null)
+                            {
+                                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
+
+                            }
+                            else
+                            {
+                                <input type="submit" value="Edit" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
+
+                            }
+                            <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
             </div>
         </form>
         

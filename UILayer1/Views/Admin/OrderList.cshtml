@@ -61,7 +61,10 @@
   font-weight: bold;
 }
 </style>
-
+@if(Model == null)
+{
+    <h1> no orders</h1>
+}
 <form asp-action="OrderUpdate" method="post" id="order_form">
 
 <table>

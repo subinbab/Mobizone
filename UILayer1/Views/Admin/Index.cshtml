@@ -75,25 +75,7 @@
             })
         })
 
-        function someFunction(data) {
-    var id = data;
-    $(document).ready(function (e) {
-        if (confirm("please confirm") == true) {
-            $.ajax({
-                url: 'admin/Delete/' + id,
-                type: 'delete',
-                dataType: 'json',
-                success: function (data) {
-                    alert(data["result"])
-                }
-            })
-        }
-        else (
-            alert("thankyou"))
-
-
-    });
-}
+        
 
 </script>
 <style>
@@ -102,3 +84,44 @@
             color:black;
     }
 </style>
+
+
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please Confirm Your Action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function someFunction(data) {
+    var id = data;
+    $(document).ready(function (e) {
+        $.ajax({
+                url: 'admin/Delete/' + id,
+                type: 'delete',
+                success: function (response) {
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal('show');
+                },
+                failure: function (response) {
+                        alert("fail");
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+            })
+        
+    });
+}
+    </script>

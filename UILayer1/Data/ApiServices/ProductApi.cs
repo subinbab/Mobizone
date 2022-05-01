@@ -1,4 +1,5 @@
-﻿using DomainLayer;
+﻿// this class is not using
+using DomainLayer;
 using DomainLayer.Users;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -23,41 +24,14 @@ namespace UIlayer.Data.ApiServices
         {
             RequestHandler<IEnumerable<Product>> _requestHandler = new RequestHandler<IEnumerable<Product>>(Configuration);
             _requestHandler.url = "api/product";
-            return _requestHandler.Get();
+            return _requestHandler.Get().result;
 
-            /*ResponseModel<IEnumerable<Product>> _responseModel = null;
-            using (HttpClient httpclient = new HttpClient())
-            {
-                _responseModel = null;
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString()+"api/product";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<Product>>>(response.Result);
-                }
-                return _responseModel.result;
-            }*/
         }
         public  Product GetProduct(int id)
         {
             RequestHandler<Product> _requestHandler = new RequestHandler<Product>(Configuration);
             _requestHandler.url = "api/product";
-            return _requestHandler.Get();
-            /*ResponseModel<Product> _responseModel = null;
-            using (HttpClient httpclient = new HttpClient())
-            {
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/product/"+id;
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<Product>>(response.Result);
-                }
-                return _responseModel.result;
-            }*/
+            return _requestHandler.Get().result;
         }
         public  bool EditProduct(Product product)
         {

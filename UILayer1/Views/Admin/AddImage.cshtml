@@ -32,7 +32,7 @@
 	</style>
 <form asp-action="AddImages" method="post" enctype="multipart/form-data">
     <div class="mb-3">
-                <input asp-for="model" type="hidden" value="@Model.model">
+                <input asp-for="id" type="hidden" value="@Model.id">
                 <label for="formFileMultiple" class="form-label">Uplaod product images</label>
                 <input id="image" asp-for="imageFile" accept="image/*"   class="form-control" type="file" onchange="imageselect()" >
                 <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>

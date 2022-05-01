@@ -27,58 +27,108 @@ namespace UILayer.Data.ApiServices
         //Authenticate
         public Login Authenticate(LoginViewModel user)
         {
-            _login = (Login)_mapper.Map<Login>(user);
-            RequestHandler<Login> requestHandler = new RequestHandler<Login>(_configuration);
-            requestHandler.url = "api/auth/admin";
-            return requestHandler.Post(_login);
+            try
+            {
+                _login = (Login)_mapper.Map<Login>(user);
+                RequestHandler<Login> requestHandler = new RequestHandler<Login>(_configuration);
+                requestHandler.url = "api/auth/admin";
+                return requestHandler.Post(_login).result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         public bool CreateAbout(About about)
         {
-            RequestHandler<About> requestHandler = new RequestHandler<About>(_configuration);
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(about);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = _configuration.GetSection("Development")["BaseApi"].ToString() + "api/users/UserCreate";
-                //string url = "http://subin9408-001-site1.ftempurl.com/api/Settings/AboutPost";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<About> requestHandler = new RequestHandler<About>(_configuration);
+                requestHandler.url = "api/users/UserCreate";
+                var result = requestHandler.Post(about);
+                if (result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
         }
 
         public async Task<IEnumerable<About>> AboutGet()
-
         {
-            RequestHandler<IEnumerable<About>> _requestHandler = new RequestHandler<IEnumerable<About>>(_configuration);
-            _requestHandler.url = "api/Settings/AboutGet";
-            return _requestHandler.Get();
+            try
+            {
+                RequestHandler<IEnumerable<About>> _requestHandler = new RequestHandler<IEnumerable<About>>(_configuration);
+                _requestHandler.url = "api/Settings/AboutGet";
+                return _requestHandler.Get().result;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
 
         }
         public bool EditAbout (About about)
         {
             RequestHandler<About> _requestHandler = new RequestHandler<About>(_configuration);
-            _requestHandler.url = "api/Settings/AboutPut";
-            return _requestHandler.Edit(about);
+            try
+            {
+                _requestHandler.url = "api/Settings/AboutPut";
+                var result = _requestHandler.Get();
+                if(result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public bool CreatePrivacy(PrivacyPolicy privacy)
         {
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(privacy);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = _configuration.GetSection("Development")["BaseApi"].ToString() + "api/users/UserCreate";
-                //string url = "http://subin9408-001-site1.ftempurl.com/api/Settings/PrivacyPost";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<PrivacyPolicy> requestHandler = new RequestHandler<PrivacyPolicy>(_configuration);
+                requestHandler.url = "api/users/UserCreate";
+                var result = requestHandler.Post(privacy);
+                if(result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
         }
@@ -86,31 +136,68 @@ namespace UILayer.Data.ApiServices
         public async Task<IEnumerable<PrivacyPolicy>> PrivacyGet()
 
         {
-            RequestHandler<IEnumerable<PrivacyPolicy>> _requestHandler = new RequestHandler<IEnumerable<PrivacyPolicy>>(_configuration);
-            _requestHandler.url = "api/Settings/PrivacyGet";
-            return _requestHandler.Get();
+            try
+            {
+                RequestHandler<IEnumerable<PrivacyPolicy>> _requestHandler = new RequestHandler<IEnumerable<PrivacyPolicy>>(_configuration);
+                _requestHandler.url = "api/Settings/PrivacyGet";
+                return _requestHandler.Get().result;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
 
         }
         public bool EditPrivacy(PrivacyPolicy privacy)
         {
             RequestHandler<PrivacyPolicy> _requestHandler = new RequestHandler<PrivacyPolicy>(_configuration);
-            _requestHandler.url = "api/Settings/PrivacyPut";
-            return _requestHandler.Edit(privacy);
+            try
+            {
+                _requestHandler.url = "api/Settings/PrivacyPut";
+                var result = _requestHandler.Edit(privacy);
+                if(result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public bool CreateContact(Contact contact)
         {
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(contact);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = _configuration.GetSection("Development")["BaseApi"].ToString() + "api/users/UserCreate";
-                //string url = "http://subin9408-001-site1.ftempurl.com/api/Settings/ContactPost";
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.PostAsync(uri, content);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<Contact> requestHandler = new RequestHandler<Contact>(_configuration);
+                requestHandler.url = "api/users/UserCreate";
+                var result = requestHandler.Post(contact);
+                if( result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
         }
@@ -118,16 +205,46 @@ namespace UILayer.Data.ApiServices
         public async Task<IEnumerable<Contact>> ContactGet()
 
         {
-            RequestHandler<IEnumerable<Contact>> _requestHandler = new RequestHandler<IEnumerable<Contact>>(_configuration);
-            _requestHandler.url = "api/Settings/ContactGet";
-            return _requestHandler.Get();
+            try
+            {
+                RequestHandler<IEnumerable<Contact>> _requestHandler = new RequestHandler<IEnumerable<Contact>>(_configuration);
+                _requestHandler.url = "api/Settings/ContactGet";
+                return _requestHandler.Get().result;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
 
         }
         public bool EditContact(Contact contact)
         {
             RequestHandler<Contact> _requestHandler = new RequestHandler<Contact>(_configuration);
-            _requestHandler.url = "api/Settings/ContactPut";
-            return _requestHandler.Edit(contact);
+            try
+            {
+                _requestHandler.url = "api/Settings/ContactPut";
+                var result = _requestHandler.Edit(contact);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
         }
        
     }

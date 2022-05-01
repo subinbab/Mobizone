@@ -17,42 +17,42 @@ namespace UILayer.Data.ApiServices
         {
             Configuration = configuration;
         }
-        public IEnumerable<Images> GetImage()
+        public IEnumerable<Images> Get()
         {
-            RequestHandler<IEnumerable<Images>> _requestHandler = new RequestHandler<IEnumerable<Images>>(Configuration);
-            _requestHandler.url = "api/productop";
-            return _requestHandler.Get();
-           /* ResponseModel<IEnumerable<Images>> _responseModel = new ResponseModel<IEnumerable<Images>>();
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/productop";
-                Uri uri = new Uri(url);
-                httpclient.DefaultRequestHeaders.Authorization =
-    new AuthenticationHeaderValue("Basic", "hello");
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
-                {
-                    System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
-                    _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<IEnumerable<Images>>>(response.Result);
-                }
-                return _responseModel.result;
-            }*/
+                RequestHandler<IEnumerable<Images>> _requestHandler = new RequestHandler<IEnumerable<Images>>(Configuration);
+                _requestHandler.url = "api/productop";
+                return _requestHandler.Get().result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
-        public bool DeleteProduct(int id)
+        public bool Delete(int id)
         {
-            using (HttpClient httpclient = new HttpClient())
+            try
             {
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(id);
-                StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                string url = Configuration.GetSection("Development")["BaseApi"].ToString() + "api/imagesoperations/"
-                + id;
-                Uri uri = new Uri(url);
-                System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.DeleteAsync(uri);
-                if (result.Result.IsSuccessStatusCode)
+                RequestHandler<string> requestHandler = new RequestHandler<string>(Configuration);
+                requestHandler.url = "api/imagesoperations/";
+                var result = requestHandler.Delete(id);
+                if(result != null)
                 {
-                    return true;
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
                 return false;
             }
         }
