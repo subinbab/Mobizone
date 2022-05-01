@@ -54,8 +54,8 @@ namespace ApiLayer.Controllers
 
         #region Post Method for Product
         
-        [HttpPost]
-        public IActionResult Post([FromBody] ProductEntity product)
+        [HttpPost("CreateProduct")]
+        public IActionResult CreateProduct([FromBody] ProductEntity product)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
@@ -283,47 +283,46 @@ namespace ApiLayer.Controllers
         #endregion
         #region Delete Method for Product
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public ResponseModel<ProductEntity> Delete(int id)
         {
+            ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
             try
-            {
-                ResponseModel<string> _response = new ResponseModel<string>();
+            { 
                 List<ProductEntity> data = new List<ProductEntity>(); 
                 data = _productOperations.GetAll().Result.ToList();
                 _productData = data.Where(c => c.id.Equals(id)).FirstOrDefault();
                 _productOperations.DeleteProduct(_productData);
                 string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                _response.AddResponse(true, 0, _productMessages.Deleted, message);
-                return new JsonResult(_response);
+                _response.AddResponse(true, 0, null, message);
+                return _response;
             }
             catch (Exception ex)
             {
-                ResponseModel<string> _response = new ResponseModel<string>();
                 string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                _response.AddResponse(false, 0, _productMessages.ExceptionError, message);
+                _response.AddResponse(false, 0, null, message);
                 _log.Error("log4net : error in the post controller", ex);
-                return new JsonResult(_response);
+                return _response;
             }
         }
         #endregion
         #region Update Method for Product
         [HttpPut]
-        public IActionResult Put([FromBody] ProductEntity product)
+        public ResponseModel<ProductEntity> Put([FromBody] ProductEntity product)
         {
-            ResponseModel<string> _response = new ResponseModel<string>();
+            ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
             try
             {
                 _productOperations.EditProduct(product);
                 string message = _productMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                _response.AddResponse(true, 0, _productMessages.Updated, message);
-                return new JsonResult(_response);
+                _response.AddResponse(true, 0,null, message);
+                return _response;
             }
             catch (Exception ex)
             {
                 string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
-                _response.AddResponse(false, 0, _productMessages.ExceptionError, message);
+                _response.AddResponse(false, 0,null, message);
                 _log.Error("log4net : error in the post controller", ex);
-                return new JsonResult(_response);
+                return _response;
             }
         }
         #endregion
