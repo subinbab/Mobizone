@@ -608,7 +608,7 @@ namespace UIlayer.Controllers
             {
                 _notyf.Error("Not deleted");
             }
-            return View("ProductDetails", product);
+            return RedirectToAction("ProductDetails", new {id=sample.ProductEntityId});
         }
         [HttpPost]
         public async Task<ActionResult> quatity(ProductEntity product, string newQuantity)
