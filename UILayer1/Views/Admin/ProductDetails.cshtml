@@ -3,38 +3,43 @@
 *@
 @{
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 @model DomainLayer.ProductModel.ProductEntity
 
 @{
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
 }
-
-
-<div class="row container-fluid pr-6">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+@if(Model != null)
+{
+    <div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
         <div class="card-body">
             <div class="row">
                 <div class="col-1">
             <table class="table ">
-@if(Model.images == null){
+@{if(Model.images == null){
         <h1>No iamges</h1>}
 else{
     foreach (var item in Model.images)
     {
                 <div class="card" style="width : 50px; height:100px;">
                      <img src="~/Product/Images/@item.imagePath" width="50" height="100" onclick="showImage('@item.imagePath');"/>
-                     
+                     <span  class="glyphicon glyphicon-remove  position-absolute" style="background-color: cornsilk;width: 39%;height: 19%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
+
                 </div>
-               
+                               
             } 
-        }
+            <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px blacl;border: 2px solid;margin-top: 11px;"></i>
+        }}
     
 </table>
         </div>
         <div class="col-4">
-            @if (Model.images != null && Model.images.Any())
+            @{if (Model.images != null && Model.images.Any())
             {
                 
                  <img class="showimage"  src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=250 height=500/>
@@ -43,7 +48,7 @@ else{
             else
             {
                <p>No Image</p>
-            }
+            }}
                     </div>
 
                     
@@ -56,7 +61,7 @@ else{
         <div class="col-6">
         <p class="card-text ">Brand : @Model.productBrand</p>
         <p class="card-text ">Model : @Model.model</p>
-        <p class="card-text ">Quatity : @Model.quantity</p><span><form asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
+        <p class="card-text ">Quatity : @Model.quantity</p><span><form onsubmit="return false" asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
         </div>
         <div class="col-6">
         <p class="card-text "> Operating System : @Model.specs.os</p>
@@ -82,16 +87,103 @@ else{
 </div>
 </div>
 </div>
-</div>
+
+
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <div id="deleteModel" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
 <script>
+
     function showImage(data){
         
         $(".showimage").attr('src','/Product/Images/'+data);
     }
+     function someFunction(data) {
+    var id = data;
+    $(document).ready(function (e) {
+        $.ajax({
+                url: 'admin/AddImage/' + id,
+                type: 'get',
+                success: function (response) {
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal('show');
+                },
+                failure: function (response) {
+                        alert("fail");
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+            })
+        
+    });
+     }   
+     
+
+   
 </script>
 <style>
     p{
         display:block;
     }
 </style>
+
+<script>
+      function deleteImage(data) {    
+    var id = data;
+    $.ajax({
+                url: 'DeleteImage/' + id,
+                type: 'get',
+                success: function (response) {
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal('show');
+                },
+                failure: function (response) {
+                        alert("fail");
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+            })
+    
+}
+
+
+if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+}
+else{
+    <p>No details</p>
+}

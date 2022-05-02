@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ApiLayer.Controllers
 {
@@ -36,7 +37,9 @@ namespace ApiLayer.Controllers
         IMapper _mapper;
         IEnumerable<MasterTable> _masterDataList;
         IMasterDataOperations _masterOperations;
-        public ProductOpController(ProductDbContext context, IProductOperations productOperations, IWebHostEnvironment web, IMapper mapper, IMasterDataOperations masterDataOperations)
+        IStorageOperations _storageOperations;
+        IRamOperations _ramOperations;
+        public ProductOpController(ProductDbContext context, IProductOperations productOperations, IWebHostEnvironment web, IMapper mapper, IMasterDataOperations masterDataOperations , IStorageOperations storageOperations , IRamOperations ramOperations)
         {
             #region Object Assigning
             _context = context;
@@ -49,6 +52,8 @@ namespace ApiLayer.Controllers
             _masterMessages = new MasterMessages(_webHostEnvironment);
             _mapper = mapper;
             _masterOperations = masterDataOperations;
+            _storageOperations = storageOperations;
+            _ramOperations = ramOperations;
             #endregion
         }
 
@@ -116,12 +121,12 @@ namespace ApiLayer.Controllers
         #endregion
         #region GetList Method for Products
         [HttpGet("GetAll")]
-        public ResponseModel<IEnumerable<ProductEntity>> GetAll()
+        public async  Task<ResponseModel<IEnumerable<ProductEntity>>> GetAll()
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
             try
             {
-                _productDataList = _productOperations.GetAll().Result;
+                _productDataList = await _productOperations.GetAll();
                 if (_productDataList == null)
                 {
                     string message = _productMessages.Null + " " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -312,6 +317,17 @@ namespace ApiLayer.Controllers
             ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
             try
             {
+               
+                foreach(Ram data in product.specs.rams)
+                {
+                    _ramOperations.Edit(data);
+                }
+                foreach(Storage data in product.specs.storages)
+                {
+                    _storageOperations.Edit(data);
+                }
+                product.specs.rams = null;
+                product.specs.storages = null;
                 _productOperations.EditProduct(product);
                 string message = _productMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0,null, message);

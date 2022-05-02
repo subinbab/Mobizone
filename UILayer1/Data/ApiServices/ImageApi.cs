@@ -22,7 +22,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<IEnumerable<Images>> _requestHandler = new RequestHandler<IEnumerable<Images>>(Configuration);
-                _requestHandler.url = "api/productop";
+                _requestHandler.url = "api/imagesoperations";
                 return _requestHandler.Get().result;
             }
             catch (Exception ex)

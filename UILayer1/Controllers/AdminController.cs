@@ -347,7 +347,7 @@ namespace UIlayer.Controllers
             List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
             return new JsonResult(productList.OrderByDescending(c=>c.id));
         }
-        [HttpGet]
+        [HttpGet("admin/ProductDetails/admin/AddImage/{id}")]
         public async Task<IActionResult> AddImage(int  id)
         {
             var productEntity = await _opApi.GetProduct(id);
@@ -355,38 +355,19 @@ namespace UIlayer.Controllers
 
             ViewData["images"] = productEntity.images;
             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(productEntity);
-            return View(data);
+            return PartialView(data);
         }
         [HttpPost("AddImages")]
         public async Task<IActionResult> AddImages(ProductViewModel product)
         {
+            ProductEntity details = null;
             try
             {
-                
-/*                    ProductViewModel data = new ProductViewModel();
-                    data = product;
-                    var datalist = _opApi.GetAll().Result.ToList();
-                    ProductEntity products = new ProductEntity();
-                    products = datalist.Where(c => c.model.Equals(product.model)).FirstOrDefault();
-                    Images image;
-                    List<Images> images = new List<Images>();
-                    images = products.images.ToList();
-                    foreach (IFormFile files in data.imageFile)
-                    {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                        image = new Images();
-                        image.imagePath = uniqueFileName;
-                        images.Add(image);
-                    }
-                    products.images = images;*/
                     bool result = _opApi.EditProduct(product);
-                    if (result)
+                     details = _opApi.GetProduct(product.id).Result;
+                if (result)
                     {
-                        _notyf.Success("Prduct added");
+                        _notyf.Success("Image added");
                     }
                     else
                     {
@@ -400,7 +381,7 @@ namespace UIlayer.Controllers
 
             }
             
-            return View("index");
+            return View("ProductDetails", details);
         }
         [Authorize]
         public IActionResult Userdata()
@@ -602,16 +583,32 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("Admin/AddImage/ImageDelete/{id}")]
+        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            ImageApi imageApi = new ImageApi(Configuration);
+            var data = imageApi.Get();
+            var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
+            return PartialView("ImageDelete", sample);
+        }
+        [HttpPost]
         public async Task<IActionResult> ImageDelete(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);
-            bool result = imageApi.Delete(id);
             var data = imageApi.Get();
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
-            var products = await _opApi.GetProduct();
-            var product = products.Where(c=> c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
-            return RedirectToAction("AddImages",product);
+            var products = await _opApi.GetAll();
+            var product = products.Where(c => c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
+            bool result = imageApi.Delete(id);
+            if (result)
+            {
+                _notyf.Success("Image deleted");
+            }
+            else
+            {
+                _notyf.Error("Not deleted");
+            }
+            return View("ProductDetails", product);
         }
         [HttpPost]
         public async Task<ActionResult> quatity(ProductEntity product, string newQuantity)

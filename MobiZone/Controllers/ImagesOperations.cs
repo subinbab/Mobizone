@@ -41,7 +41,7 @@ namespace ApiLayer.Controllers
             #endregion
         }
 
-        #region Delete Method for Product
+        #region Get Method for Images
         [HttpGet]
         public IActionResult Get()
         {
