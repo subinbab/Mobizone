@@ -3,6 +3,7 @@ using AutoMapper;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
+using DTOLayer.Product;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -220,6 +221,13 @@ namespace UILayer.Controllers
             else
             {
                 var data = _opApi.GetProduct(checkout.productId).Result;
+                data.quantity = data.quantity - checkout.quatity;
+                if(data.quantity == 0)
+                {
+                    data.status = ProductStatus.disable;
+                }
+                var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+                _opApi.EditProduct(mappedData);
                 Random rnd = new Random();
                 checkout.orderId = rnd.Next();
                 checkout.status = OrderStatus.orderplaced;

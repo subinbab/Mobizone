@@ -47,8 +47,18 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task EditProduct(ProductEntity entity)
         {
-            _repo.Update(entity);
-            _repo.Save();
+            if(entity.quantity == 0)
+            {
+                entity.status = ProductStatus.disable;
+                await _repo.Update(entity);
+                await _repo.Save();
+            }
+            else
+            {
+                await _repo.Update(entity);
+                await _repo.Save();
+            }
+            
         }
 
         public async Task<IEnumerable<ProductEntity>> GetAll()

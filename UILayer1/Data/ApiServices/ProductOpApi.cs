@@ -131,6 +131,7 @@ namespace UILayer.Data.ApiServices
             {
                 var datas = GetAll().Result;
                 var data = datas.Where(c=> c.id.Equals(product.id)).FirstOrDefault();
+                data.quantity = product.quantity;
                 data.status = product.status;
                 List<Ram> rams = new List<Ram>();
                 foreach (var ramData in data.specs.rams)
@@ -139,15 +140,19 @@ namespace UILayer.Data.ApiServices
                     ram.ram = ramData.ram;
                     rams.Add(ram);
                 }
-                if(product.specs != null)
+                if (product.specs != null)
                 {
-                    foreach (var ramData in product.specs.ram)
+                    if (product.specs.ram != null)
                     {
-                        Ram ram = new Ram();
-                        ram.ram = ramData;
-                        rams.Add(ram);
+                        foreach (var ramData in product.specs.ram)
+                        {
+                            Ram ram = new Ram();
+                            ram.ram = ramData;
+                            rams.Add(ram);
+                        }
                     }
                 }
+                
                 List<Storage> storages = new List<Storage>();
                 foreach (var storage1 in data.specs.storages)
                 {
@@ -157,13 +162,17 @@ namespace UILayer.Data.ApiServices
                 }
                 if(product.specs != null)
                 {
-                    foreach (var storageData in product.specs.storage)
+                    if (product.specs.storage != null)
                     {
-                        Storage storage = new Storage();
-                        storage.storage = storageData;
-                        storages.Add(storage);
+                        foreach (var storageData in product.specs.storage)
+                        {
+                            Storage storage = new Storage();
+                            storage.storage = storageData;
+                            storages.Add(storage);
+                        }
                     }
                 }
+                
                 data.specs.storages = storages;
                 data.specs.rams = rams;
                 
