@@ -34,7 +34,6 @@ namespace UILayer.Models
             _responseModel = null;
             try
             {
-
                 using (HttpClient httpclient = new HttpClient())
                 {
                     string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;

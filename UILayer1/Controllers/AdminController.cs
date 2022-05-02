@@ -344,8 +344,7 @@ namespace UIlayer.Controllers
         {
             
             var data = await _opApi.GetProduct();
-            List<ProductListViewModel> productList = (List<ProductListViewModel>)_mapper.Map<List<ProductListViewModel>>(data);
-            return new JsonResult(productList.OrderByDescending(c=>c.id));
+            return new JsonResult(data.OrderByDescending(c=>c.id));
         }
         [HttpGet("admin/ProductDetails/admin/AddImage/{id}")]
         public async Task<IActionResult> AddImage(int  id)
@@ -627,6 +626,24 @@ namespace UIlayer.Controllers
         public IActionResult denied(string returnUrl)
         {
             return View();
+        }
+        public async  Task<IActionResult> Disable(int id)
+        {
+            var datas = await _opApi.GetProduct();
+            var data = datas.Where(c => c.id == id).FirstOrDefault();
+            data.status = 1;
+            var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+            _opApi.EditProduct(mappedData);
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Enable(int id)
+        {
+            var datas = await _opApi.GetProduct();
+            var data = datas.Where(c => c.id == id).FirstOrDefault();
+            data.status = 0;
+            var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+            _opApi.EditProduct(mappedData);
+            return RedirectToAction("Index");
         }
     }
 }

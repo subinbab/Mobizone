@@ -53,20 +53,20 @@
     
             
             $.ajax({
-                url:'productList',
+                url:'http://localhost:22888/api/productop/getlist',
                 type:'get',
                 datatype:'json',
                 success:function(data){
                     console.log(data);
                     $('#datatable').dataTable({
-                        data:data,
+                        data:data.result,
                         columns:[
                             {'data':'productBrand'},
                             {'data':'model'},
                             {'data':'quantity'},
                             {'data':'price'},
                             {  
-                                "render": function (data, type, full, meta) { return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div><div><select><option>Enable</option><option>Disable</option></select></div><div class="col"><a class="" href="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a></div></div>'; }
+                                "render": function (data, type, full, meta) { if(full.status == 0){return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div><div><a href="/admin/disable/'+ full.id +'"><button class="btn btn-danger">Disable</button></a></div><div class="col"><a class="" href="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a></div></div>';} else{ return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div><div><a href="/admin/enable/'+ full.id +'"><button class="btn btn-success">Enable</button></a></div><div class="col"><a class="" href="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a></div></div>'; } }
                 }
                  
                                        ]

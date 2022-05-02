@@ -170,7 +170,7 @@ element.style {
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
 
-            <div class="form-group col-12 row">
+            <div class="form-group col-2">
                             @if(Model == null)
                             {
                                 <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
@@ -181,10 +181,12 @@ element.style {
                                 <input type="submit" value="Edit" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
 
                             }
-                            <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+                            
             </div>
         </form>
-        
+        <div class="form-group col-2" style="margin: -45px;float: right;position: absolute;padding: 0px;margin-left: 782px;">
+        <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+        </div>
     </div>
 </div>
 </div>

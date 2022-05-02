@@ -1,4 +1,5 @@
-﻿using DomainLayer.ProductModel;
+﻿using DomainLayer;
+using DomainLayer.ProductModel;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -37,5 +38,6 @@ namespace DTOLayer.Product
         public Specificatiion specs { get; set; }
         [DisplayName("Description")]
         public string description { get; set; }
+        public ProductStatus status { get; set; }
     }
 }

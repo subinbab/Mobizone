@@ -56,7 +56,7 @@ namespace UILayer.Controllers
             try
             {
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-                var data = _opApi.GetAll().Result;
+                var data = _opApi.GetAll().Result.Where(c=>c.status.Equals(ProductStatus.enable));
                 if(data != null)
                 {
                     return View(data);

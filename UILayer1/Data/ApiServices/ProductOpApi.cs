@@ -131,6 +131,7 @@ namespace UILayer.Data.ApiServices
             {
                 var datas = GetAll().Result;
                 var data = datas.Where(c=> c.id.Equals(product.id)).FirstOrDefault();
+                data.status = product.status;
                 List<Ram> rams = new List<Ram>();
                 foreach (var ramData in data.specs.rams)
                 {
@@ -169,16 +170,23 @@ namespace UILayer.Data.ApiServices
                 Images image;
                 List<Images> images = new List<Images>();
                 images = data.images.ToList();
-                foreach (IFormFile files in product.imageFile)
+                if(product.imageFile != null)
                 {
-                    string folder = "Product/Images";
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                    string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                    files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                    image = new Images();
-                    image.imagePath = uniqueFileName;
-                    images.Add(image);
+                    foreach (IFormFile files in product.imageFile)
+                    {
+                        string folder = "Product/Images";
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
+                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                        image = new Images();
+                        image.imagePath = uniqueFileName;
+                        images.Add(image);
+                    }
+                }
+                else
+                {
+                    images = null;
                 }
                 data.images = images;
                 var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);

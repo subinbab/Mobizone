@@ -11,9 +11,12 @@ namespace UILayer.Models
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductViewModel, ProductEntity>();
+            CreateMap<ProductViewModel, ProductEntity>()
+                .ForMember(d => d.status,
+                op => op.MapFrom("status"));
             CreateMap<ProductEntity, ProductListViewModel>();
             CreateMap<ProductEntity, ProductViewModel>();
+            CreateMap<ProductListViewModel, ProductViewModel>();
             CreateMap<LoginViewModel, Login>();
         }
     }

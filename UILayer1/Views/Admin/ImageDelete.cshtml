@@ -1,0 +1,18 @@
+﻿@model DomainLayer.ProductModel.Images
+
+@{
+    ViewData["Title"] = "ImageDelete";
+}
+
+
+<h3>Are you sure you want to delete this?</h3>
+
+    
+    <div class="modal-footer col">
+        <form asp-action="ImageDelete" method="post" style="text-align: left;margin-right: 277px;">
+        <input type="hidden" asp-for="id" value="@Model.id"/>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+

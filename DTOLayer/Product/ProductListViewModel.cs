@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace DTOLayer.Product
         public int quantity { get; set; }
         [DisplayName("Price")]
         public int price { get; set; }
+        public int status { get; set; }
     }
 }
