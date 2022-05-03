@@ -4,7 +4,7 @@
     Layout = "~/Views/Simpleview/_UserLogin.cshtml";
     ViewData["Title"] = "Registration";
 }
-<div style="width: 400px; margin-left: auto; margin-right:auto;">
+@*<div style="width: 400px; margin-left: auto; margin-right:auto;">
 
     <h1>Sign Up</h1>
 
@@ -47,7 +47,64 @@
             </div>
         </form>
     </div>
+</div>*@
+<div class="col-lg-6 mb-5 mb-lg-0 position-relative" style=" margin-left: inherit; margin-right:auto;right: auto;margin-bottom: 0px;top: 0px;left: 126px;">
+    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+    <div class="card bg-glass">
+        <div class="card-body px-4 py-5 px-md-5">
+            <form asp-action="Registration" method="post">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-4">
+                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+                <div>
+                    <a asp-controller="admin" asp-action="login">Already have an account.Click here to Login</a>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
 </div>
+    
 
 
 
