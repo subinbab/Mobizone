@@ -28,25 +28,28 @@
                 <div class="row-bordered">
                     <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:177px; width:182px;"
                          class="float-left" />
-                    <a class="float-xl-left" asp-action="Index" style="margin-right:8000px">MOBIZONE</a>
-                    </li>
-                    <li class="about">
-                        <a asp-controller="Admin" asp-action="Company" style="margin-right:-86px">Company</a>
-                    </li>
-                    <li class="about">
-                        <a asp-controller="Admin" asp-action="About" style="margin-right:-86px">About</a>
-                    </li>
+                    <ul class="list">
+                        <a class="float-xl-left" asp-action="Index" style="margin-right:8000px">MOBIZONE</a>
+                        </li>
+                        <li class="about">
+                            <a asp-controller="Admin" asp-action="Company" style="margin-right:-86px">Company</a>
+                        </li>
+                        <li class="about">
+                            <a asp-controller="Admin" asp-action="About" style="margin-right:-86px">About</a>
+                        </li>
 
-                    <li class="about">
-                        <a asp-controller="Admin" asp-action="Privacy" style="margin-right:-86px">Privacy and Policy</a>
-                    </li>
+                        <li class="about">
+                            <a asp-controller="Admin" asp-action="Privacy" style="margin-right:-86px">Privacy and Policy</a>
+                        </li>
 
-                    <li class="about">
+                        <li class="about">
 
-                        <a asp-controller="Admin" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+                            <a asp-controller="Admin" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
-                    </li>
+                        </li>
+                    </ul>
+                  
                 </div>
                
 
@@ -84,6 +87,10 @@
     .card{
          font-variant: common-ligatures !important;
     }
+    li{
+        display:inline;
+    }
+
    
 </style>
 

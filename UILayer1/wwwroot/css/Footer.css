@@ -1,18 +1,21 @@
 ﻿
 footer {
     text-align: center;
-    margin-top: 180px;
+   /* margin-top: 180px;*/
     position: relative;
     bottom: 0;
     width: 100%;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
     line-height: 58px;
-    margin-top: 524px;
+   /* margin-top: 524px;*/
 }
 
     footer ul {
         list-style-type: none;
     }
+/*body {
+    overflow-x: hidden;
+}*/
 
 .about {
     padding-right: 250px;
