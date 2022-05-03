@@ -23,6 +23,28 @@
 <script>eval(mod_pagespeed_YYCwSj$83H);</script>
 <script>eval(mod_pagespeed_fUKQzxht9j);</script>
 <script>eval(mod_pagespeed_lpntivnFUb);</script>
+<head>
+    <script type="text/javascript">
+
+        function validate() {
+
+            username = document.getElementById("username").value;
+            password = document.getElementById("password").value;
+
+            if (username == null || username == "") {
+                alert("Please enter a username");
+                return false;
+            }
+
+            if (password == null || password == "") {
+                alert("Please enter a password");
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+</head>
 
 <div class="row">
 
@@ -45,14 +67,14 @@
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
-                                    <input asp-for="username" type="text" class="form-control" placeholder="Username" required>
+                                    <input name="Email" input asp-for="username" type="text" class="form-control" placeholder="Username" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
-                                    <input asp-for="password" class="form-control" placeholder=" Password" required>
+                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control button rounded submit px-3">Login</button>
+                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3">Login</button>
                                 </div>
 
 
@@ -105,5 +127,31 @@
 </style>
 <div class="row" style="width: 400px; margin-left: 644px; margin-right:auto;">
 
-    
+
 </div>
+
+
+<script>
+
+   
+    var field = document.querySelector('[name="Email"]');
+
+    field.addEventListener('keypress', function (event) {
+        var key = event.keyCode;
+        if (key === 32) {
+            event.preventDefault();
+        }
+    });
+    var field = document.querySelector('[name="Password"]');
+
+    field.addEventListener('keypress', function (event) {
+        var key = event.keyCode;
+        if (key === 32) {
+            event.preventDefault();
+        }
+    });
+    
+    
+
+
+</script>
