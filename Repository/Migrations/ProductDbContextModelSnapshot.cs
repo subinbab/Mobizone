@@ -476,7 +476,8 @@ namespace Repository.Migrations
                         .HasColumnName("ModifiedOn");
 
                     b.HasKey("UserId");
-
+                  
+                    
                     b.ToTable("userRegistrations");
                 });
 

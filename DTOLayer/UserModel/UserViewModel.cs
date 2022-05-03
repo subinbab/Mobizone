@@ -9,7 +9,7 @@ namespace DTOLayer.UserModel
 {
   public  class UserViewModel
     {
-        [Required(ErrorMessage = "This Field is Required")]
+        [Required (ErrorMessage = "This Field is Required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "This Field is Required")]
