@@ -645,7 +645,7 @@ namespace UIlayer.Controllers
             _opApi.EditProduct(mappedData);
             return RedirectToAction("Index");
         }
-        [HttpGet("admin/EditMaster/{id}")]
+        [HttpGet]
         public IActionResult EditMaster(int id)
         {
             var datas = _masterApi.GetAll();
