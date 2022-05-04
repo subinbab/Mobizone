@@ -49,7 +49,7 @@
 
             <div class="col">
                 <div class="row">
-                    
+
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -62,12 +62,16 @@
                         }
                         else
                         {
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                        <a href="registration">Register</a>
-                    </div>
+                            <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                                <a href="registration">Register</a>
+                            </div>
 
                             <a href="login">Login</a>
                         }
+                    </div>
+                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                        <a href="registration">Account</a>
+                       
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         <i class="fa-solid fa-cart-shopping"></i>
