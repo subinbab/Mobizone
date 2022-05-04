@@ -11,9 +11,11 @@ namespace DTOLayer.UserModel
     {
         [Required (ErrorMessage = "This Field is Required")]
         [Display(Name = "First Name")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$",ErrorMessage ="This field should not contain any numbers or special characters")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "This Field is Required")]
         [Display(Name = "Last Name")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "This field should not contain any numbers or special characters")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "This Field is Required")]
         [Display(Name = "Email")]
