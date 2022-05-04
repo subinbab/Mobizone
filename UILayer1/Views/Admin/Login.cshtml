@@ -43,17 +43,17 @@
 
 <div class="row">
 
-    <section class="ftco-section col-6">
+    <section class="ftco-section col-12" style="margin-top: 145px;">
 
         <div class="row justify-content-center ">
             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div class="col-md-12 col-lg-10">
-                    <div class="wrap d-md-flex ">
-                        <div class="img" style="background-image:url(images/xbg-1.jpg.pagespeed.ic.3OAd9jZTMD.webp)">
+                <div class="col-12">
+                    <div class="row ">
+                        <div class="img col" style="background-image:url(images/xbg-1.jpg.pagespeed.ic.3OAd9jZTMD.webp)">
                             <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" width="250px" />
                         </div>
-                        <div class="login-wrap p-4 p-md-5 ">
-                            <div class="d-flex">
+                        <div class="col-12  ">
+                            <div class="d-flex"style="text-align: center;">
                                 <div class="w-100">
                                     <h3 class="mb-4">Login</h3>
                                 </div>
@@ -62,11 +62,11 @@
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
-                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Username" required>
+                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Username" required >
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
-                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required>
+                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required >
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3">Login</button>
@@ -105,13 +105,16 @@
         vertical-align: middle;
         border-style: none;
         background-color: white;
+        margin-left: 30px;
+        margin-top: 50px;
+        display:none;
     }
     .button {
         background-color: indianred;
     }
     section {
-        margin-left: 386px;
-        margin-top: 90px;
+        margin-left: 0px;
+        margin-top: 0px;
     }
     .form-control {
         display: inline-block;
