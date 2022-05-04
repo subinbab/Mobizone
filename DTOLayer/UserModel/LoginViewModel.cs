@@ -10,6 +10,7 @@ namespace DomainLayer.Users
         [Required]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name ="Username")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "This field should not contain any numbers or special characters")]
         public string username { get; set; }
         [Required]
         [DataType(DataType.Password)]
