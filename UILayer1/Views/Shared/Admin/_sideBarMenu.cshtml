@@ -9,7 +9,7 @@
             <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create"  ? "active" : "")">Products</a>
             <div id="dropdown1" class="dropdown">
                 <a asp-action="" class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
-                <a asp-action="Create" class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Create</a>
+                <a asp-action="Create" class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Add</a>
             </div>
         </div>
 
