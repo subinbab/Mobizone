@@ -128,7 +128,7 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpPost("registration")]
-        public IActionResult Registration(UserViewModel user)
+        public async Task<IActionResult> Registration(UserViewModel user)
         {
             UserApi userApi = new UserApi(_configuration);
             var userList = userApi.GetUserData();
@@ -151,7 +151,6 @@ namespace UILayer.Controllers
             }
             
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            userApi.CreateUser(user);
             return Redirect("/");
         }
 

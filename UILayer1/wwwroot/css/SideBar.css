@@ -19,12 +19,12 @@ body {
     .sidebar a {
         display: block;
         color: black;
-        padding: 16px;
+        padding: 10px;
         text-decoration: none;
         font-size: larger;
-        font-family: 'Oswald', sans-serif;
+        font-family: monospace;
         font-variant: all-petite-caps;
-        font-size: 26px;
+        font-size: 22px;
     }
 
         .sidebar a.active {

@@ -32,7 +32,7 @@ namespace DomainLayer.ProductModel
         public int price { get; set; }
         public ICollection<Images> images { get; set; }
         public int quantity { get; set; }
-        public Specificatiion specs { get; set; }
+        public Specificatiion? specs { get; set; }
         public string description { get; set; }
         
         private int IsActive { get; set; }

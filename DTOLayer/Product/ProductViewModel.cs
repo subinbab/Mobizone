@@ -35,7 +35,7 @@ namespace DTOLayer.Product
         [Required]
         public int quantity { get; set; }
         [Required]
-        public Specificatiion specs { get; set; }
+        public Specificatiion? specs { get; set; }
         [DisplayName("Description")]
         public string description { get; set; }
         public ProductStatus status { get; set; }

@@ -38,7 +38,7 @@
 }
   ...
 @*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*@
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+@*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js">
 
 </script>
@@ -49,7 +49,7 @@
 <link rel="stylesheet" href="~/dist/fastselect.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 
-<script src="~/dist/fastselect.standalone.js"></script>
+
       <style type="text/css">
 		 .image_container {
 		 	height: 120px;
@@ -142,12 +142,79 @@ element.style {
             <div class="form-group col-6">
                 <label asp-for="specs.ram" class="control-label"></label>
                 <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
+                 @{
+                                try
+                                {
+                                    if (Model == null)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        if (Model.specs == null)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (Model.specs.rams == null)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                foreach (var item in Model.specs.rams)
+                                                {
+                                                    <option value="@item.ram">@item.ram <span onclick="DeleteMaster(@item.id)">&times;</span></option>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                            }
                 <span asp-validation-for="specs.ram" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.storage" class="control-label"></label>
-                <select asp-for="specs.storage" multiple class="form-control js-select2 " asp-items="new SelectList(ViewBag.Storage)"></select>
-                <span asp-validation-for="specs.storage" class="text-danger"></span>
+                <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
+                            @{
+                                try
+                                {
+                                    if (Model == null)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        if (Model.specs == null)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (Model.specs.storages == null)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                foreach (var item in Model.specs.storages)
+                                                {
+                                                    <option value="@item.storage">@item.storage  <span  onclick="DeleteMaster()">&times; @item.id</span></option>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                            }
+
+                            <span asp-validation-for="specs.storage" class="text-danger"></span>
             </div>
             <div class="form-group col-6">
                 <label asp-for="specs.core" class="control-label"></label>
@@ -192,93 +259,36 @@ element.style {
 </div>
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"></script>
+
+
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="/js/main.js"></script>
 
 <script>
    
     $(".master").chosen();
-    $('.demo').fastselect();
+    
 
-    /*  ==========================================
-        SHOW UPLOADED IMAGE NAME
-    * ========================================== 
-    var input = document.getElementById('upload');
-    var infoArea = document.getElementById('upload-label');
+    
 
-    input.addEventListener('change', showFileName);
-    function showFileName(event) {
-        var input = event.srcElement;
-        var fileName = input.files[0].name;
-        infoArea.textContent = 'File name: ' + fileName;
-    }
-    $(document).ready(function(){
-        $('input[name=imageFile]').change(function(){
-            filesize();
-        })
-    })
-  
-   function filesize(){
-       alert("clicked");
-   }
-   */
-   // this variable will store images for preview
-   var images = [];
-   var image = [];
 
-   function imageselect() {
-       alert("hello");
-   	  	  image = Array.from(document.getElementById('image').files);
-   	  	  for (i = 0; i < image.length; i++) {
-   	  	  	  if (check_duplicate(image[i].name)) {
-                images.push({
-   	  	  	  	    "name" : image[i].name,
-   	  	  	  	    "url" : URL.createObjectURL(image[i]),
-   	  	  	  	    "file" : image[i],
-   	  	  	    })
-   	  	  	  } else 
-   	  	  	  {
-   	  	  	  	 alert(image[i].name + " is already added to the list");
-   	  	  	  }
-   	  	  }
-   	  	  document.getElementById('container').innerHTML = imageshow();
-   	  }
-
-         function imageshow() {
-             alert("helo");
-   	  	  var image = "";
-   	  	  images.forEach((i) => {
-   	  	  	 image += `<div class="image_container d-flex justify-content-center position-relative">
-   	  	  	  	  <img src="`+ i.url +`" alt="Image">
-   	  	  	  	  <span class="position-absolute" onclick="delete_image(`+ images.indexOf(i) +`)">&times;</span>
-   	  	  	  </div>`;
-   	  	  })
-   	  	  return image;
-   	  }
-         function check_duplicate(name) {
-   	  	var image = true;
-   	  	if (images.length > 0) {
-   	  		for (e = 0; e < images.length; e++) {
-   	  			if (images[e].name == name) {
-   	  				image = false;
-   	  				break;
-   	  			}
-   	  		}
-   	  	}
-   	  	return image;
-   	  }
-
-                
-    function delete_image(e) {
-   	  	  images.splice(e, 1);
-          alert(e);
-          image.splice(e,1);
-   	  	  document.getElementById('container').innerHTML = imageshow();
-   	}
-       function getFiles(){
-           return image;
-       }
+     
 
 </script>
 

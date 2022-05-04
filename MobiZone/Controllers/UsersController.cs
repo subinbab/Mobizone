@@ -72,7 +72,7 @@ namespace ApiLayer.Controllers
             _checkOutOperation = checkOutOperation;
         }
         [HttpPost("UserCreate")]
-        public ResponseModel<UserViewModel> post([FromBody] UserViewModel users)
+        public async Task<ResponseModel<UserViewModel>> post([FromBody] UserViewModel users)
         {
             _user = (UserRegistration)_mapper.Map<UserRegistration>(users);
             string myDateTime = DateTime.Now.ToString();
@@ -92,6 +92,7 @@ namespace ApiLayer.Controllers
             try
             {
                 _userCreate.AddUserRegistration(_user);
+                await Task.Delay(1000);
                 _loginOperations.Add(_login);
                 string message = _userMessages.Added + ",Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _userResponse.AddResponse(true, 0, null, message);

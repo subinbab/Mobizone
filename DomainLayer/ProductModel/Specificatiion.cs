@@ -12,8 +12,8 @@ namespace DomainLayer.ProductModel
         public int id { get; set; }
         [NotMapped]
         public List<string> ram { get; set; }
-        public ICollection<Ram>? rams { get; set; }
-        public ICollection<Storage>? storages { get; set; }
+        public ICollection<Ram> rams { get; set; }
+        public ICollection<Storage> storages { get; set; }
         [NotMapped]
         public List<string> storage { get; set; }
         [Required]

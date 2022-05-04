@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class intialcreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -339,14 +339,14 @@ namespace Repository.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ram = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Specificatiionid = table.Column<int>(type: "int", nullable: true)
+                    specificatiionid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ram", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Ram_Specificatiion_Specificatiionid",
-                        column: x => x.Specificatiionid,
+                        name: "FK_Ram_Specificatiion_specificatiionid",
+                        column: x => x.specificatiionid,
                         principalTable: "Specificatiion",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -359,17 +359,17 @@ namespace Repository.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     storage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Specificatiionid = table.Column<int>(type: "int", nullable: true)
+                    specificationid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Storage", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Storage_Specificatiion_Specificatiionid",
-                        column: x => x.Specificatiionid,
+                        name: "FK_Storage_Specificatiion_specificationid",
+                        column: x => x.specificationid,
                         principalTable: "Specificatiion",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -515,14 +515,14 @@ namespace Repository.Migrations
                 column: "specsid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ram_Specificatiionid",
+                name: "IX_Ram_specificatiionid",
                 table: "Ram",
-                column: "Specificatiionid");
+                column: "specificatiionid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Storage_Specificatiionid",
+                name: "IX_Storage_specificationid",
                 table: "Storage",
-                column: "Specificatiionid");
+                column: "specificationid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

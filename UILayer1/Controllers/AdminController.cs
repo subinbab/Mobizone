@@ -645,5 +645,31 @@ namespace UIlayer.Controllers
             _opApi.EditProduct(mappedData);
             return RedirectToAction("Index");
         }
+        [HttpGet("admin/EditMaster/{id}")]
+        public IActionResult EditMaster(int id)
+        {
+            var datas = _masterApi.GetAll();
+            var data = datas.Where(c => c.id.Equals(id)).FirstOrDefault();
+            return PartialView("EditMaster1", data);
+        }
+        [HttpPost]
+        public IActionResult MasterEdit(MasterTable data)
+        {
+            bool result = _masterApi.Edit(data);
+            return RedirectToAction("MasterList", new { id = data.parantId });
+        }
+        [HttpGet("admin/EditMaster/{id}")]
+        public IActionResult DeleteMaster(int id)
+        {
+            var datas = _masterApi.GetAll();
+            var data = datas.Where(c => c.id.Equals(id)).FirstOrDefault();
+            return PartialView("EditMaster1", data);
+        }
+        [HttpPost]
+        public IActionResult DeleteMaster(MasterTable data)
+        {
+            bool result = _masterApi.Edit(data);
+            return RedirectToAction("MasterList", new { id = data.parantId });
+        }
     }
 }
