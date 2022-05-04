@@ -11,6 +11,7 @@ namespace DomainLayer
         public int id { get; set; }
         [Column("content", Order = 2)]
         [MaxLength]
+        [Required]
         public string content { get; set; }
     }
 }  
