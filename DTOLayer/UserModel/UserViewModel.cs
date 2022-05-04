@@ -19,7 +19,7 @@ namespace DTOLayer.UserModel
         public string LastName { get; set; }
         [Required(ErrorMessage = "This Field is Required")]
         [Display(Name = "Email")]
-        [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",ErrorMessage="Invalid Email format")]
+        [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z\s]+\.[a-zA-Z\s.]+$",ErrorMessage="Invalid Email format")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
         [Required(ErrorMessage = "This Field is Required")]

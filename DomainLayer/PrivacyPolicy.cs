@@ -11,7 +11,7 @@ namespace DomainLayer
         public int id { get; set; }
         [Column("content", Order = 2)]
         [MaxLength]
-        [Required]
+        [Required(ErrorMessage = "This Field is Required")]
         public string content { get; set; }
     }
 }
