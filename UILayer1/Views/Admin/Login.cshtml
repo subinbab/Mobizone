@@ -62,16 +62,21 @@
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
-                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Username" required >
+                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Username" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
-                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required >
+                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3">Login</button>
                                 </div>
-
+                                @if (!string.IsNullOrEmpty(error))
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @error
+                                    </div>
+                                }
 
                             </form>
 
@@ -80,12 +85,7 @@
                     </div>
                 </div>
             </div>
-            @if (!string.IsNullOrEmpty(error))
-            {
-                <div class="alert alert-danger" role="alert">
-                    @error@* <a href="registration" class="alert-link">Register</a>. Give it a click if you like.*@
-                </div>
-            }
+          
         </div>
     </section>
 
