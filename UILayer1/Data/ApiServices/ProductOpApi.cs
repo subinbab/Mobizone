@@ -130,7 +130,33 @@ namespace UILayer.Data.ApiServices
             try
             {
                 var datas = GetAll().Result;
-                var data = datas.Where(c=> c.id.Equals(product.id)).FirstOrDefault();
+                var data = datas.Where(c => c.id.Equals(product.id)).FirstOrDefault();
+                if (product.imageFile != null)
+                {
+                    Images image;
+                    List<Images> images = new List<Images>();
+                    images = data.images.ToList();
+                    if (product.imageFile != null)
+                    {
+                        foreach (IFormFile files in product.imageFile)
+                        {
+                            string folder = "Product/Images";
+                            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                            string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                            string folderPath = Path.Combine(serverFolder, uniqueFileName);
+                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                            image = new Images();
+                            image.imagePath = uniqueFileName;
+                            images.Add(image);
+                        }
+                    }
+                    else
+                    {
+                        images = null;
+                    }
+                    data.images = images;
+                }
+                
                 data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
                 data.status = product.status;
@@ -179,28 +205,7 @@ namespace UILayer.Data.ApiServices
                 data.specs.storages = storages;
                 data.specs.rams = rams;
                 
-                Images image;
-                List<Images> images = new List<Images>();
-                images = data.images.ToList();
-                if(product.imageFile != null)
-                {
-                    foreach (IFormFile files in product.imageFile)
-                    {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                        image = new Images();
-                        image.imagePath = uniqueFileName;
-                        images.Add(image);
-                    }
-                }
-                else
-                {
-                    images = null;
-                }
-                data.images = images;
+                
                 /*var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);
                 mapperData.images = images;*/
                 RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(_configuration);
