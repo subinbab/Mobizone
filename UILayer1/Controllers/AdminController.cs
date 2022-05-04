@@ -362,8 +362,12 @@ namespace UIlayer.Controllers
             ProductEntity details = null;
             try
             {
-                    bool result = _opApi.EditProduct(product);
-                     details = _opApi.GetProduct(product.id).Result;
+                   
+                var data = _opApi.GetAll().Result.Where(c => c.id.Equals(product.id)).FirstOrDefault();
+                var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+                mappedData.imageFile = product.imageFile;
+                bool result = _opApi.EditProduct(mappedData);
+                details = _opApi.GetProduct(product.id).Result;
                 if (result)
                     {
                         _notyf.Success("Image added");
@@ -380,7 +384,7 @@ namespace UIlayer.Controllers
 
             }
             
-            return View("ProductDetails", details);
+            return RedirectToAction("ProductDetails", new { id = product.id });
         }
         [Authorize]
         public IActionResult Userdata()
