@@ -6,7 +6,9 @@ namespace DomainLayer
 {
     public enum PaymentModes : int
     {
-        cashOnDelivery = 1
+        cashOnDelivery = 1,
+        DebitCard = 2
+
     }
     public class PaymentMode
     {

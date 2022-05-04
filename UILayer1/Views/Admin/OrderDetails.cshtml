@@ -13,9 +13,21 @@
             
                 <div class="card-title">
                     <div class="align-content-center">
-                        OrderId:   @Model.orderId,<br> ProductName:  @productDetails.productBrand<br>@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)<br />Quantity:   @Model.quatity<br>Price:    @Model.price/-<br /> Address: @addressDetails.name<br />@addressDetails.address,<br />@addressDetails.district,@addressDetails.state<br />Pincode:@addressDetails.pincode<br />Phone Number:@addressDetails.phoneNumber
-                    </div>                   
-                </div>
+                        @* OrderId:   @Model.orderId,<br> ProductName:  @productDetails.productBrand<br>@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)<br />Quantity:   @Model.quatity<br>Price:    @Model.price/-<br /> Address: @addressDetails.name<br />@addressDetails.address,<br />@addressDetails.district,@addressDetails.state<br />Pincode:@addressDetails.pincode<br />Phone Number:@addressDetails.phoneNumber*@
+                       <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
+                       <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+                        <div style="margin-left:-120px">Quantity:   @Model.quatity</div>
+                        <div style="margin-left:-43px">Price:@Model.price/-</div>
+                        <div style="margin-left:-50px">
+                            Address: @addressDetails.name</div>
+
+                            <div style="margin-left:135px">@addressDetails.address,</div>
+                            <div style="margin-left:85px">@addressDetails.district,@addressDetails.state</div>
+                            <div style="margin-left:-105px">Pincode:@addressDetails.pincode</div>
+                            <div style="margin-left:-105px">Phone Number:@addressDetails.phoneNumber</div>
+
+                        </div>
+                    </div>
 
 
                     </div>
