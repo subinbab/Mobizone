@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ApiLayer.Controllers
 {
@@ -27,8 +28,8 @@ namespace ApiLayer.Controllers
         MasterTable _masterData;
         IMessages _masterMessages;
         IWebHostEnvironment _webHostEnvironment;
-
-        public MasterController(ProductDbContext context, IMasterDataOperations masterOperations, IWebHostEnvironment web)
+        IProductOperations _productOperations;
+        public MasterController(ProductDbContext context, IMasterDataOperations masterOperations, IWebHostEnvironment web, IProductOperations productOperations)
         {
             _context = context;
             _webHostEnvironment = web;
@@ -37,6 +38,7 @@ namespace ApiLayer.Controllers
             _masterData = new MasterTable();
             _log = LogManager.GetLogger(typeof(ProductController));
             _masterMessages = new MasterMessages(_webHostEnvironment);
+            _productOperations = productOperations;
         }
         [HttpPost]
         public IActionResult Post([FromBody] MasterTable masterData)
@@ -121,12 +123,21 @@ namespace ApiLayer.Controllers
         #endregion
         #region Update Method for Product
         [HttpPut]
-        public IActionResult Put([FromBody] MasterTable product)
+        public async Task<IActionResult> Put([FromBody] MasterTable product)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
             {
-                _masterOperations.Edit(product);
+                 _masterOperations.Edit(product);
+                await Task.Delay(1000);
+                var products = _productOperations.GetAll().Result;
+                foreach(var data in products)
+                {
+                    var datas = _productOperations.GetAll().Result;
+                    await Task.Delay(1000);
+                    var getById = datas.Where(c=> c.id.Equals(data.id)).FirstOrDefault();
+                    _productOperations.EditProduct(getById);
+                }
                 string message = _masterMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, _masterMessages.Updated, message);
                 return new JsonResult(_response);

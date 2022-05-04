@@ -329,16 +329,16 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("Specificatiionid")
-                        .HasColumnType("int");
-
                     b.Property<string>("ram")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("specificatiionid")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
-                    b.HasIndex("Specificatiionid");
+                    b.HasIndex("specificatiionid");
 
                     b.ToTable("Ram");
                 });
@@ -380,7 +380,7 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("Specificatiionid")
+                    b.Property<int>("specificationid")
                         .HasColumnType("int");
 
                     b.Property<string>("storage")
@@ -388,7 +388,7 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Specificatiionid");
+                    b.HasIndex("specificationid");
 
                     b.ToTable("Storage");
                 });
@@ -476,8 +476,7 @@ namespace Repository.Migrations
                         .HasColumnName("ModifiedOn");
 
                     b.HasKey("UserId");
-                  
-                    
+
                     b.ToTable("userRegistrations");
                 });
 
@@ -712,16 +711,22 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("DomainLayer.ProductModel.Ram", b =>
                 {
-                    b.HasOne("DomainLayer.ProductModel.Specificatiion", null)
+                    b.HasOne("DomainLayer.ProductModel.Specificatiion", "specificatiion")
                         .WithMany("rams")
-                        .HasForeignKey("Specificatiionid");
+                        .HasForeignKey("specificatiionid");
+
+                    b.Navigation("specificatiion");
                 });
 
             modelBuilder.Entity("DomainLayer.ProductModel.Storage", b =>
                 {
-                    b.HasOne("DomainLayer.ProductModel.Specificatiion", null)
+                    b.HasOne("DomainLayer.ProductModel.Specificatiion", "specification")
                         .WithMany("storages")
-                        .HasForeignKey("Specificatiionid");
+                        .HasForeignKey("specificationid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("specification");
                 });
 
             modelBuilder.Entity("DomainLayer.Users.Address", b =>

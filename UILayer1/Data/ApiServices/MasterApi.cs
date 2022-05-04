@@ -127,12 +127,12 @@ namespace UILayer.Data.ApiServices
                 return false;
             }
         }
-        public bool EditProduct(MasterTable product)
+        public bool Edit(MasterTable product)
         {
             try
             {
                 RequestHandler<MasterTable> requestHandler = new RequestHandler<MasterTable>(Configuration);
-                requestHandler.url = "api/prouctop/MasterData";
+                requestHandler.url = "api/master";
                 var result = requestHandler.Edit(product);
                 if (result != null)
                 {

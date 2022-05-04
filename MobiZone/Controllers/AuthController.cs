@@ -61,7 +61,7 @@ namespace ApiLayer.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        public async Task<IActionResult> post(LoginViewModel data)
+        public async Task<IActionResult> post(Login data)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace ApiLayer.Controllers
 
         }
         [HttpPost("admin")]
-        public async Task<ResponseModel<Login>> admin(LoginViewModel data)
+        public async Task<ResponseModel<Login>> admin(Login data)
         {
             try
             {

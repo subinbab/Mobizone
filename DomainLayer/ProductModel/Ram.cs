@@ -11,5 +11,7 @@ namespace DomainLayer.ProductModel
         public int id { get; set; }
         [Required]
         public string ram { get; set; }
+        public int? specificatiionid { get; set; }
+        public Specificatiion specificatiion { get; set; }
     }
 }

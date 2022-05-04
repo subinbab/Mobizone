@@ -315,19 +315,50 @@ namespace ApiLayer.Controllers
         public ResponseModel<ProductEntity> Put([FromBody] ProductEntity product)
         {
             ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
+            ProductEntity entity = new ProductEntity();
+            entity = product;
+            List<Ram> rams = new List<Ram>();
+            List<Storage> storages = new List<Storage>();
             try
             {
                
                 foreach(Ram data in product.specs.rams)
                 {
-                    _ramOperations.Edit(data);
+                    if (data.id != 0)
+                    {
+                        _ramOperations.Edit(data);
+                        /*entity.specs.rams.Remove(data);*/
+                    }
+                    else {
+                        Ram ramAdd = new Ram();
+                        ramAdd.id = 0;
+                        ramAdd.ram = data.ram;
+                        ramAdd.specificatiionid = data.specificatiionid;
+                        rams.Add(ramAdd);
+                    }
+                    
                 }
                 foreach(Storage data in product.specs.storages)
                 {
-                    _storageOperations.Edit(data);
+                    if(data.id != 0)
+                    {
+                        _storageOperations.Edit(data);
+                        /*entity.specs.storages.Remove(data);*/
+                    }
+                    else
+                    {
+                        Storage ramAdd = new Storage();
+                        ramAdd.id = 0;
+                        ramAdd.storage = data.storage;
+                        ramAdd.specificationid = data.specificationid;
+                        storages.Add(ramAdd);
+                    }
+                    
                 }
                 product.specs.rams = null;
                 product.specs.storages = null;
+                product.specs.rams = rams;
+                product.specs.storages = storages;
                 _productOperations.EditProduct(product);
                 string message = _productMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0,null, message);

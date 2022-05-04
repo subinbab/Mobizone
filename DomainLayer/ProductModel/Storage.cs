@@ -8,5 +8,7 @@ namespace DomainLayer.ProductModel
     {
         public int id { get; set; }
         public string storage { get; set; }
+        public int specificationid { get; set; }
+        public Specificatiion specification { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿@{
     var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
 }
-
+@{
+    Layout = null;
+}
 <!DOCTYPE html>
 
 <html>
@@ -9,15 +11,15 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+   @* <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/SideBar.css" />
-    <link rel="stylesheet" href="~/css/navigation-bar.css" />
+    <link rel="stylesheet" href="~/css/navigation-bar.css" />*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
 </head>
 <body>
     <!-- As a link -->
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%;     background-color: white;">
+    @*<nav class="navbar navbar-light " style="position: fixed; width: 100%;     background-color: white;">
 
         <div class="container-fluid row">
             <div class="col">
@@ -70,13 +72,13 @@
             </div>
 
         </div>
-    </nav>
+    </nav>*@
 
     
 
 
 
-    <div class="content " style=" padding: 143px 16px;">
+    <div class="content " style=" padding: 0px;">
         <div class="container-fluid">
             <main role="main" class="pb-3">
                 <div id="mypartialview"></div>
@@ -87,7 +89,7 @@
         </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
 
 
         <ul class="list">
@@ -159,7 +161,7 @@
                 cursor: pointer;
             }
         </style>
-    </footer>
+    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         $(document).ready(function () {

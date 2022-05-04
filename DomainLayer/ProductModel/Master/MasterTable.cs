@@ -12,7 +12,7 @@ namespace DomainLayer.ProductModel.Master
         [Key]
         [Column("id", Order = 1)]
         public int id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This Field is Required")]
         [Column("MasterData",Order =2,TypeName ="nvarchar")]
         [MaxLength(150)]
         public string masterData { get; set; }

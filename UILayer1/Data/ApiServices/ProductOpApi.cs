@@ -131,14 +131,17 @@ namespace UILayer.Data.ApiServices
             {
                 var datas = GetAll().Result;
                 var data = datas.Where(c=> c.id.Equals(product.id)).FirstOrDefault();
+                data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
                 data.status = product.status;
+                data.price = product.price;
+                data.model = product.model;
                 List<Ram> rams = new List<Ram>();
                 foreach (var ramData in data.specs.rams)
                 {
                     Ram ram = new Ram();
-                    ram.ram = ramData.ram;
-                    rams.Add(ram);
+                   /* ram.ram = ramData.ram;*/
+                    rams.Add(ramData);
                 }
                 if (product.specs != null)
                 {
@@ -157,8 +160,8 @@ namespace UILayer.Data.ApiServices
                 foreach (var storage1 in data.specs.storages)
                 {
                     Storage storage = new Storage();
-                    storage.storage = storage1.storage;
-                    storages.Add(storage);
+                    /*storage.storage = storage1.storage;*/
+                    storages.Add(storage1);
                 }
                 if(product.specs != null)
                 {
@@ -198,11 +201,11 @@ namespace UILayer.Data.ApiServices
                     images = null;
                 }
                 data.images = images;
-                var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);
-                mapperData.images = images;
+                /*var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);
+                mapperData.images = images;*/
                 RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(_configuration);
                 _requestHandler.url = "api/productop";
-                var result = _requestHandler.Edit(mapperData);
+                var result = _requestHandler.Edit(data);
                 if (result != null)
                 {
                     if (result.IsSuccess)
