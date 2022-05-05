@@ -29,12 +29,10 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
-<<<<<<< HEAD
-                        .HasColumnType("nvarchar(max)")
-=======
+
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)")
->>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
+
                         .HasColumnName("content");
 
                     b.HasKey("id");
@@ -101,37 +99,7 @@ namespace Repository.Migrations
 
                     b.Property<string>("address")
                         .IsRequired()
-<<<<<<< HEAD
-                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("district")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("pincode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("shopName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("state")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-=======
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
                         .HasColumnName("Address");
@@ -175,7 +143,7 @@ namespace Repository.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
                         .HasColumnName("State");
->>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
+
 
                     b.HasKey("id");
 
@@ -264,12 +232,10 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
-<<<<<<< HEAD
-                        .HasColumnType("nvarchar(max)")
-=======
+
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)")
->>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
+
                         .HasColumnName("content");
 
                     b.HasKey("id");
