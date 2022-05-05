@@ -414,11 +414,11 @@ namespace UIlayer.Controllers
         {
             try
             {
-                adminApi userApi = new adminApi(Configuration,_mapper);
+                adminApi adminApi = new adminApi(Configuration,_mapper);
                 LoginViewModel user = new LoginViewModel();
                 user.username = userName;
                 user.password = password;
-                Login check = userApi.Authenticate(user);
+                Login check = adminApi.Authenticate(user);
                 if (check != null)
                 {
                     if (check.rolesId == (int)RoleTypes.Admin)

@@ -29,7 +29,12 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
+<<<<<<< HEAD
                         .HasColumnType("nvarchar(max)")
+=======
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+>>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
                         .HasColumnName("content");
 
                     b.HasKey("id");
@@ -96,6 +101,7 @@ namespace Repository.Migrations
 
                     b.Property<string>("address")
                         .IsRequired()
+<<<<<<< HEAD
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
@@ -125,6 +131,51 @@ namespace Repository.Migrations
                     b.Property<string>("state")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+=======
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Address");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Country");
+
+                    b.Property<string>("district")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("District");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("email");
+
+                    b.Property<int>("phoneNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("int")
+                        .HasColumnName("PhoneNumber");
+
+                    b.Property<int>("pincode")
+                        .HasMaxLength(10)
+                        .HasColumnType("int")
+                        .HasColumnName("Pincode");
+
+                    b.Property<string>("shopName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)")
+                        .HasColumnName("Shopname");
+
+                    b.Property<string>("state")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("State");
+>>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
 
                     b.HasKey("id");
 
@@ -213,7 +264,12 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
+<<<<<<< HEAD
                         .HasColumnType("nvarchar(max)")
+=======
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+>>>>>>> b88dff8ff045884b4720912fe1c1172663a40ca2
                         .HasColumnName("content");
 
                     b.HasKey("id");
@@ -300,7 +356,9 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Description");
 
                     b.Property<string>("model")
                         .IsRequired()
@@ -314,8 +372,9 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(150)")
                         .HasColumnName("Name");
 
-                    b.Property<int>("price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Price");
 
                     b.Property<string>("productBrand")
                         .IsRequired()
@@ -330,7 +389,8 @@ namespace Repository.Migrations
                         .HasColumnName("Type");
 
                     b.Property<int>("quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Quantity");
 
                     b.Property<int?>("specsid")
                         .HasColumnType("int");
