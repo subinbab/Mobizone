@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,40 +60,19 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "checkOut",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    orderId = table.Column<int>(type: "int", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    productId = table.Column<int>(type: "int", nullable: false),
-                    quatity = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
-                    paymentModeId = table.Column<int>(type: "int", nullable: false),
-                    addressId = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    cancelRequested = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_checkOut", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Contact",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    shopName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    district = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    shopName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    district = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    state = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,7 +118,7 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -378,13 +357,13 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    district = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    district = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    state = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     additionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserRegistrationUserId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -450,6 +429,52 @@ namespace Repository.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "checkOut",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    orderId = table.Column<int>(type: "int", nullable: false),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    productId = table.Column<int>(type: "int", nullable: false),
+                    MyPropertyid = table.Column<int>(type: "int", nullable: true),
+                    quatity = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<int>(type: "int", nullable: false),
+                    paymentModeId = table.Column<int>(type: "int", nullable: false),
+                    addressId = table.Column<int>(type: "int", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    cancelRequested = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_checkOut", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_checkOut_Address_addressId",
+                        column: x => x.addressId,
+                        principalTable: "Address",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_checkOut_order_orderId",
+                        column: x => x.orderId,
+                        principalTable: "order",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_checkOut_ProductModel_MyPropertyid",
+                        column: x => x.MyPropertyid,
+                        principalTable: "ProductModel",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_checkOut_userRegistrations_userId",
+                        column: x => x.userId,
+                        principalTable: "userRegistrations",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Address_UserRegistrationUserId",
                 table: "Address",
@@ -495,6 +520,26 @@ namespace Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_checkOut_addressId",
+                table: "checkOut",
+                column: "addressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_MyPropertyid",
+                table: "checkOut",
+                column: "MyPropertyid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_orderId",
+                table: "checkOut",
+                column: "orderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_userId",
+                table: "checkOut",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_ProductEntityId",
                 table: "Images",
                 column: "ProductEntityId");
@@ -531,9 +576,6 @@ namespace Repository.Migrations
                 name: "About");
 
             migrationBuilder.DropTable(
-                name: "Address");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -564,9 +606,6 @@ namespace Repository.Migrations
                 name: "Master");
 
             migrationBuilder.DropTable(
-                name: "order");
-
-            migrationBuilder.DropTable(
                 name: "Privacy");
 
             migrationBuilder.DropTable(
@@ -583,6 +622,12 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "order");
 
             migrationBuilder.DropTable(
                 name: "ProductModel");

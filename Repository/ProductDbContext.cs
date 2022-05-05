@@ -28,12 +28,13 @@ namespace Repository
         public DbSet<About> about { get; set; }
         public DbSet<Checkout> checkOut { get; set; }
         public DbSet<Contact> contact { get; set; }
-       /* protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            this.SeedUser(builder);
+        public DbSet<Roles> roles { get; set; }
+        /* protected override void OnModelCreating(ModelBuilder builder)
+         {
+             base.OnModelCreating(builder);
+             this.SeedUser(builder);
 
-        }*/
+         }*/
         /*public void SeedUser(ModelBuilder builder)
         {
             Roles role1 = new Roles()

@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20220503194536_initialCreate")]
-    partial class initialCreate
+    [Migration("20220505131800_thirdCreate")]
+    partial class thirdCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,7 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("content");
 
@@ -44,6 +45,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int?>("MyPropertyid")
+                        .HasColumnType("int");
 
                     b.Property<int>("addressId")
                         .HasColumnType("int");
@@ -74,6 +78,14 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("MyPropertyid");
+
+                    b.HasIndex("addressId");
+
+                    b.HasIndex("orderId");
+
+                    b.HasIndex("userId");
+
                     b.ToTable("checkOut");
                 });
 
@@ -85,27 +97,35 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("district")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pincode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("shopName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("state")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -135,13 +155,15 @@ namespace Repository.Migrations
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("roleId")
+                    b.Property<int>("rolesId")
                         .HasColumnType("int");
 
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("rolesId");
 
                     b.ToTable("login");
                 });
@@ -192,6 +214,7 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("content");
 
@@ -395,6 +418,33 @@ namespace Repository.Migrations
                     b.ToTable("Storage");
                 });
 
+            modelBuilder.Entity("DomainLayer.Roles", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("createdBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("modifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("roles");
+                });
+
             modelBuilder.Entity("DomainLayer.Users.Address", b =>
                 {
                     b.Property<int>("id")
@@ -409,24 +459,31 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("district")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("pincode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("state")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -676,6 +733,50 @@ namespace Repository.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DomainLayer.Checkout", b =>
+                {
+                    b.HasOne("DomainLayer.ProductModel.ProductEntity", "MyProperty")
+                        .WithMany()
+                        .HasForeignKey("MyPropertyid");
+
+                    b.HasOne("DomainLayer.Users.Address", "address")
+                        .WithMany()
+                        .HasForeignKey("addressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Order", "order")
+                        .WithMany()
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Users.UserRegistration", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("address");
+
+                    b.Navigation("MyProperty");
+
+                    b.Navigation("order");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("DomainLayer.Login", b =>
+                {
+                    b.HasOne("DomainLayer.Roles", "roles")
+                        .WithMany()
+                        .HasForeignKey("rolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("roles");
                 });
 
             modelBuilder.Entity("DomainLayer.Order", b =>

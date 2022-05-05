@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220505130859_secondCreate")]
+    partial class secondCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,7 +155,10 @@ namespace Repository.Migrations
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("rolesId")
+                    b.Property<int>("roleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("rolesid")
                         .HasColumnType("int");
 
                     b.Property<string>("username")
@@ -161,7 +166,7 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("rolesId");
+                    b.HasIndex("rolesid");
 
                     b.ToTable("login");
                 });
@@ -440,7 +445,7 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("roles");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("DomainLayer.Users.Address", b =>
@@ -770,9 +775,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("DomainLayer.Roles", "roles")
                         .WithMany()
-                        .HasForeignKey("rolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("rolesid");
 
                     b.Navigation("roles");
                 });

@@ -421,7 +421,7 @@ namespace UIlayer.Controllers
                 Login check = userApi.Authenticate(user);
                 if (check != null)
                 {
-                    if (check.roleId == (int)RoleTypes.Admin)
+                    if (check.rolesId == (int)RoleTypes.Admin)
                     {
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, user.username));
