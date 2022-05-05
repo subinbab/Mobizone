@@ -29,10 +29,17 @@ namespace DomainLayer.ProductModel
         [MaxLength(150)]
         public string model { get; set; }
         [Required]
+        [Column("Price",TypeName ="decimal(18,2)",Order =5)]
+        
         public int price { get; set; }
+        
         public ICollection<Images> images { get; set; }
+        [Column("Quantity",Order=7)]
         public int quantity { get; set; }
+        [Column("Specifications",Order=8)]
         public Specificatiion? specs { get; set; }
+        [Column("Description",TypeName ="nvarchar",Order =9)]
+        [MaxLength(100)]
         public string description { get; set; }
         
         private int IsActive { get; set; }
