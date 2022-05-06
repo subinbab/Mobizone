@@ -9,6 +9,7 @@ namespace DomainLayer.ProductModel
     [Table("ProductModel")]
     public class ProductEntity
     {
+        [Display]
         [Key]
         [Column(Order = 0)]
         public int id { get; set; }
