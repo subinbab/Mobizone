@@ -85,7 +85,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 _requestHandler.url = "api/Settings/AboutPut";
-                var result = _requestHandler.Get();
+                var result = _requestHandler.Edit(about);
                 if(result != null)
                 {
                     if (result.IsSuccess)

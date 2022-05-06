@@ -151,6 +151,7 @@ namespace UIlayer.Controllers
                     if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                     {
                         _notyf.Error("Product Alraedy Exist");
+                        return RedirectToAction("");
                     }
                     else
                     {
@@ -159,11 +160,15 @@ namespace UIlayer.Controllers
                         if (result)
                         {
                             _notyf.Success("Prduct added");
+                            var data = _opApi.GetAll().Result.Where(c => c.model.Equals(product.model)).FirstOrDefault();
+                            return RedirectToAction("ProductsSubPart", new { id = data.specsId, productId = data.id });
                         }
                         else
                         {
                             _notyf.Error("Not Added");
+                            return RedirectToAction("");
                         }
+                        
                     }
                 }
                 else
@@ -173,18 +178,22 @@ namespace UIlayer.Controllers
                     if (result)
                     {
                         _notyf.Success("Product Updated");
+                        var data = _opApi.GetAll().Result.Where(c => c.model.Equals(product.model)).FirstOrDefault();
+                        return RedirectToAction("ProductsSubPart", new { id = data.specsId, productId = data.id });
                     }
                     else
                     {
                         _notyf.Error("Not Updated");
+                        return RedirectToAction("");
                     }
+                    
                 }
             }
             catch (Exception ex)
             {
-
+                return RedirectToAction("");
             }
-            return RedirectToAction("");
+            
         }
         [HttpGet]
         [Authorize]
@@ -362,8 +371,12 @@ namespace UIlayer.Controllers
             ProductEntity details = null;
             try
             {
-                    bool result = _opApi.EditProduct(product);
-                     details = _opApi.GetProduct(product.id).Result;
+                   
+                var data = _opApi.GetAll().Result.Where(c => c.id.Equals(product.id)).FirstOrDefault();
+                var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+                mappedData.imageFile = product.imageFile;
+                bool result = _opApi.EditProduct(mappedData);
+                details = _opApi.GetProduct(product.id).Result;
                 if (result)
                     {
                         _notyf.Success("Image added");
@@ -380,7 +393,7 @@ namespace UIlayer.Controllers
 
             }
             
-            return View("ProductDetails", details);
+            return RedirectToAction("ProductDetails", new { id = product.id });
         }
         [Authorize]
         public IActionResult Userdata()
@@ -410,14 +423,14 @@ namespace UIlayer.Controllers
         {
             try
             {
-                adminApi userApi = new adminApi(Configuration,_mapper);
+                adminApi adminApi = new adminApi(Configuration,_mapper);
                 LoginViewModel user = new LoginViewModel();
                 user.username = userName;
                 user.password = password;
-                Login check = userApi.Authenticate(user);
+                Login check = adminApi.Authenticate(user);
                 if (check != null)
                 {
-                    if (check.roleId == (int)RoleTypes.Admin)
+                    if (check.rolesId == (int)RoleTypes.Admin)
                     {
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, user.username));
@@ -670,6 +683,36 @@ namespace UIlayer.Controllers
         {
             bool result = _masterApi.Edit(data);
             return RedirectToAction("MasterList", new { id = data.parantId });
+        }
+        [HttpGet]
+        public IActionResult ProductsSubPart(int id, int productId)
+        {
+            var datas = _opApi.GetRams();
+            var data = datas.Where(c => c.specificatiionid.Equals(id));
+            List<string> rams = new List<string>();
+            foreach(Ram ram in data)
+            {
+                rams.Add(ram.ram);
+            }
+            ViewBag.Rams = rams;
+            ViewBag.ProductId = productId;
+            var data2 = _opApi.GetStorages().Where(c => c.specificationid.Equals(id));
+            List<string> storages = new List<string>();
+            foreach (Storage s in data2)
+            {
+                storages.Add(s.storage);
+            }
+            ViewBag.Storages = storages;
+            return View();
+        }
+        public IActionResult ProductsSubPart(ProductSubPart productSubPart,string storage , string ram)
+        {
+            var rams = _opApi.GetRams().Where(c => c.ram.Equals(ram)).FirstOrDefault();
+            var storages = _opApi.GetStorages().Where(c => c.storage.Equals(storage)).FirstOrDefault();
+            productSubPart.ramId = rams.id;
+            productSubPart.storageId = storages.id;
+            bool result = _opApi.AddProductSubPart(productSubPart);
+            return RedirectToAction("");
         }
     }
 }

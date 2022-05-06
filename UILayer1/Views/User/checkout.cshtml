@@ -20,7 +20,7 @@ else
     <div class="container-fluid mt-3">
 
         <div class="row">
-            <form asp-action="checkout" method="post" class="col">
+            <form asp-action="checkout" method="post" class="col" id="my-form">
                 <input asp-for="id" value="0" type="hidden" />
                 <input asp-for="productId" type="hidden" value="@data.id" />
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
@@ -62,7 +62,7 @@ else
                             <div class="form-check">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     @data.name (@data.specs.ram GB , @data.specs.storage GB)<br>@data.price
-                                    <div class=>Qty:<input asp-for="quatity" type="number" style="width:50px; height:20px;" value="1"></div>
+                                    <div class=>Qty:<input onchange="price()" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag"></div>
                                 </label>
 
                             </div>
@@ -110,7 +110,7 @@ else
                     <div class="card-body">
                         <h5 class="card-title">Price Details</h5>
                         <hr />
-                        <p class="card-text">Price (1 item) : @data.price</p>
+                        <p class="card-text" id="priceField">Price (1 item) : @data.price</p>
                         <p class="card-text">Shipping Charge : 0</p>
                         <h3 class=" card p-2">Total :@data.price</h3>
                     </div>
@@ -131,6 +131,19 @@ else
         function showbutton1() {
             $(".toggle-button1").show();
         }
+
+        $('#my-form').on('change keyup paste', ':input', function (e) {
+            // The form has been changed. Your code here.
+        });
+        
+        function price() {
+           
+                var data = document.getElementById("pricetag").value
+                document.getElementById("priceField").innerHTML(data);
+           
+            }
+       
+       
     </script>
 }
 

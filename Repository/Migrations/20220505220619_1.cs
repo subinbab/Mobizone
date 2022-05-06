@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    content = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,63 +60,23 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "checkOut",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    orderId = table.Column<int>(type: "int", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    productId = table.Column<int>(type: "int", nullable: false),
-                    quatity = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
-                    paymentModeId = table.Column<int>(type: "int", nullable: false),
-                    addressId = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    cancelRequested = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_checkOut", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Contact",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    shopName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    district = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Shopname = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    District = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Pincode = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contact", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "login",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    roleId = table.Column<int>(type: "int", nullable: false),
-                    createdOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    createdBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    modifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    modifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_login", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,7 +99,7 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    content = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,6 +120,23 @@ namespace Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "roles",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    createdOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    createdBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    modifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    modifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_roles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,6 +283,31 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "login",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    rolesId = table.Column<int>(type: "int", nullable: false),
+                    createdOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    createdBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    modifiedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    modifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_login", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_login_roles_rolesId",
+                        column: x => x.rolesId,
+                        principalTable: "roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductModel",
                 columns: table => new
                 {
@@ -315,21 +317,21 @@ namespace Repository.Migrations
                     Brand = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    specsid = table.Column<int>(type: "int", nullable: true),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    specsId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductModel", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ProductModel_Specificatiion_specsid",
-                        column: x => x.specsid,
+                        name: "FK_ProductModel_Specificatiion_specsId",
+                        column: x => x.specsId,
                         principalTable: "Specificatiion",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -378,13 +380,13 @@ namespace Repository.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    district = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    district = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    state = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     additionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserRegistrationUserId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -450,6 +452,87 @@ namespace Repository.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "productSubPart",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    productId = table.Column<int>(type: "int", nullable: false),
+                    ramId = table.Column<int>(type: "int", nullable: false),
+                    storageId = table.Column<int>(type: "int", nullable: true),
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_productSubPart", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_productSubPart_ProductModel_productId",
+                        column: x => x.productId,
+                        principalTable: "ProductModel",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_productSubPart_Ram_ramId",
+                        column: x => x.ramId,
+                        principalTable: "Ram",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_productSubPart_Storage_storageId",
+                        column: x => x.storageId,
+                        principalTable: "Storage",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "checkOut",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    orderId = table.Column<int>(type: "int", nullable: false),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    productId = table.Column<int>(type: "int", nullable: false),
+                    MyPropertyid = table.Column<int>(type: "int", nullable: true),
+                    quatity = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<int>(type: "int", nullable: false),
+                    paymentModeId = table.Column<int>(type: "int", nullable: false),
+                    addressId = table.Column<int>(type: "int", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false),
+                    cancelRequested = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_checkOut", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_checkOut_Address_addressId",
+                        column: x => x.addressId,
+                        principalTable: "Address",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_checkOut_order_orderId",
+                        column: x => x.orderId,
+                        principalTable: "order",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_checkOut_ProductModel_MyPropertyid",
+                        column: x => x.MyPropertyid,
+                        principalTable: "ProductModel",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_checkOut_userRegistrations_userId",
+                        column: x => x.userId,
+                        principalTable: "userRegistrations",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Address_UserRegistrationUserId",
                 table: "Address",
@@ -495,9 +578,34 @@ namespace Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_checkOut_addressId",
+                table: "checkOut",
+                column: "addressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_MyPropertyid",
+                table: "checkOut",
+                column: "MyPropertyid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_orderId",
+                table: "checkOut",
+                column: "orderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_checkOut_userId",
+                table: "checkOut",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_ProductEntityId",
                 table: "Images",
                 column: "ProductEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_login_rolesId",
+                table: "login",
+                column: "rolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_order_productid",
@@ -510,9 +618,24 @@ namespace Repository.Migrations
                 column: "usersUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductModel_specsid",
+                name: "IX_ProductModel_specsId",
                 table: "ProductModel",
-                column: "specsid");
+                column: "specsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_productSubPart_productId",
+                table: "productSubPart",
+                column: "productId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_productSubPart_ramId",
+                table: "productSubPart",
+                column: "ramId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_productSubPart_storageId",
+                table: "productSubPart",
+                column: "storageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ram_specificatiionid",
@@ -529,9 +652,6 @@ namespace Repository.Migrations
         {
             migrationBuilder.DropTable(
                 name: "About");
-
-            migrationBuilder.DropTable(
-                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -564,25 +684,34 @@ namespace Repository.Migrations
                 name: "Master");
 
             migrationBuilder.DropTable(
-                name: "order");
-
-            migrationBuilder.DropTable(
                 name: "Privacy");
 
             migrationBuilder.DropTable(
                 name: "products");
 
             migrationBuilder.DropTable(
-                name: "Ram");
-
-            migrationBuilder.DropTable(
-                name: "Storage");
+                name: "productSubPart");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "order");
+
+            migrationBuilder.DropTable(
+                name: "roles");
+
+            migrationBuilder.DropTable(
+                name: "Ram");
+
+            migrationBuilder.DropTable(
+                name: "Storage");
 
             migrationBuilder.DropTable(
                 name: "ProductModel");

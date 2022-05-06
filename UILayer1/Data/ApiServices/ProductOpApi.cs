@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessObjectLayer.ProductOperations;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DTOLayer.Product;
@@ -130,7 +131,33 @@ namespace UILayer.Data.ApiServices
             try
             {
                 var datas = GetAll().Result;
-                var data = datas.Where(c=> c.id.Equals(product.id)).FirstOrDefault();
+                var data = datas.Where(c => c.id.Equals(product.id)).FirstOrDefault();
+                if (product.imageFile != null)
+                {
+                    Images image;
+                    List<Images> images = new List<Images>();
+                    images = data.images.ToList();
+                    if (product.imageFile != null)
+                    {
+                        foreach (IFormFile files in product.imageFile)
+                        {
+                            string folder = "Product/Images";
+                            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                            string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                            string folderPath = Path.Combine(serverFolder, uniqueFileName);
+                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                            image = new Images();
+                            image.imagePath = uniqueFileName;
+                            images.Add(image);
+                        }
+                    }
+                    else
+                    {
+                        images = null;
+                    }
+                    data.images = images;
+                }
+                
                 data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
                 data.status = product.status;
@@ -179,28 +206,7 @@ namespace UILayer.Data.ApiServices
                 data.specs.storages = storages;
                 data.specs.rams = rams;
                 
-                Images image;
-                List<Images> images = new List<Images>();
-                images = data.images.ToList();
-                if(product.imageFile != null)
-                {
-                    foreach (IFormFile files in product.imageFile)
-                    {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                        image = new Images();
-                        image.imagePath = uniqueFileName;
-                        images.Add(image);
-                    }
-                }
-                else
-                {
-                    images = null;
-                }
-                data.images = images;
+                
                 /*var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);
                 mapperData.images = images;*/
                 RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(_configuration);
@@ -324,6 +330,49 @@ namespace UILayer.Data.ApiServices
             catch(Exception ex)
             {
                 _log.Error(ex.Message);
+                return false;
+            }
+        }
+        #endregion
+
+        public IEnumerable<Ram> GetRams()
+        {
+            RequestHandler<IEnumerable<Ram>> _requestHandler = new RequestHandler<IEnumerable<Ram>>(_configuration);
+            _requestHandler.url = "api/productop/getrams";
+            return _requestHandler.Get().result;
+        }
+        public IEnumerable<Storage> GetStorages()
+        {
+            RequestHandler<IEnumerable<Storage>> _requestHandler = new RequestHandler<IEnumerable<Storage>>(_configuration);
+            _requestHandler.url = "api/productop/getstorages";
+            return _requestHandler.Get().result;
+        }
+        #region Add method for master data
+        public bool AddProductSubPart(ProductSubPart productSubPart)
+        {
+            try
+            {
+                RequestHandler<ProductSubPart> request = new RequestHandler<ProductSubPart>(_configuration);
+                request.url = "api/productop/PostProductSubPart";
+                var result = request.Post(productSubPart);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
                 return false;
             }
         }
