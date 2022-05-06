@@ -9,30 +9,29 @@
 }
 <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            
-                <div class="card-title">
-                    <div class="align-content-center">
-                        
-                       <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
-                       <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
-                        <div style="margin-left:-120px">Quantity:   @Model.quatity</div>
-                        <div style="margin-left:-43px">Price:@Model.price/-</div>
-                        <div style="margin-left:-50px">
-                            Address: @addressDetails.name</div>
 
-                            <div style="margin-left:135px">@addressDetails.address,</div>
-                            <div style="margin-left:85px">@addressDetails.district,@addressDetails.state</div>
-                            <div style="margin-left:-105px">Pincode:@addressDetails.pincode</div>
-                            <div style="margin-left:-105px">Phone Number:@addressDetails.phoneNumber</div>
+            <div class="card-title">
+                <div class="align-content-center">
 
-                        </div>
-                    </div>
-
-
-                    </div>
+                    <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
+                    <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+                    <div style="margin-left:-120px">Quantity:   @Model.quantity</div>
+                    <div style="margin-left:-43px">Price:@Model.price/-</div>
+                    <div style="margin-left:-50px"> Address: @addressDetails.name</div> <div style="margin-left:135px">@addressDetails.address,</div>
+                    <div style="margin-left:85px">@addressDetails.district,@addressDetails.state</div>
+                    <div style="margin-left:-105px">Pincode:@addressDetails.pincode</div>
+                    <div style="margin-left:-105px">Phone Number:@addressDetails.phoneNumber</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
 
 
 

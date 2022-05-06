@@ -87,7 +87,7 @@ namespace ApiLayer.Controllers
             _login.createdBy = users.FirstName + " " + users.LastName;
             _login.modifiedOn = DateTime.Now;
             _login.modifiedBy = users.FirstName + " " + users.LastName;
-            _login.roleId = (int)RoleTypes.User;
+            _login.rolesId = (int)RoleTypes.User;
             ResponseModel<UserViewModel> _userResponse = new ResponseModel<UserViewModel>();
             try
             {
@@ -153,7 +153,7 @@ namespace ApiLayer.Controllers
             {
                 ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
-                Login check = _loginOperations.Get().Result.Where(c=> c.username.Equals(data.username)&&c.password.Equals(data.password)&&c.roleId.Equals((int)RoleTypes.User)).FirstOrDefault();
+                Login check = _loginOperations.Get().Result.Where(c=> c.username.Equals(data.username)&&c.password.Equals(data.password)&&c.rolesId.Equals((int)RoleTypes.User)).FirstOrDefault();
                 if (check != null)
                 {
                     message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK) ;

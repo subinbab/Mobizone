@@ -220,7 +220,7 @@ namespace UILayer.Controllers
             else
             {
                 var data = _opApi.GetProduct(checkout.productId).Result;
-                data.quantity = data.quantity - checkout.quatity;
+                data.quantity = data.quantity - checkout.quantity;
                 if(data.quantity == 0)
                 {
                     data.status = ProductStatus.disable;
@@ -230,7 +230,7 @@ namespace UILayer.Controllers
                 Random rnd = new Random();
                 checkout.orderId = rnd.Next();
                 checkout.status = OrderStatus.orderplaced;
-                checkout.price = checkout.quatity * data.price;
+                checkout.price = checkout.quantity * data.price;
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
                 _notyf.Success("succesfully orderd");
@@ -245,6 +245,8 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        
+   
         public IActionResult OrderList()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);

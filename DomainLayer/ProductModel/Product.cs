@@ -37,6 +37,8 @@ namespace DomainLayer.ProductModel
         public ICollection<Images> images { get; set; }
         [Column("Quantity",Order=7)]
         public int quantity { get; set; }
+
+        public int specsId { get; set; }
         [Column("Specifications",Order=8)]
         public Specificatiion? specs { get; set; }
         [Column("Description",TypeName ="nvarchar",Order =9)]

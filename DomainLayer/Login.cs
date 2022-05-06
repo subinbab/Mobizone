@@ -12,7 +12,8 @@ namespace DomainLayer
         
         public string username { get; set; }
         public string password { get; set; }
-        public int roleId { get; set; }
+        public int rolesId { get; set; }
+        public Roles roles { get; set; }
         public DateTime createdOn { get; set; }
         public string createdBy { get; set; }
         public DateTime modifiedOn { get; set; }

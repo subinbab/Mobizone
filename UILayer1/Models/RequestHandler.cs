@@ -13,7 +13,7 @@ namespace UILayer.Models
     public class RequestHandler<T>
     {
         private readonly ILog _log;
-        public string _url;
+        private string _url;
         public string url
         {
             get { return _url ?? String.Empty; }

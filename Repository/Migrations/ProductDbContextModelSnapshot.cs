@@ -19,6 +19,39 @@ namespace Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("BusinessObjectLayer.ProductOperations.ProductSubPart", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ramId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("storageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("productId");
+
+                    b.HasIndex("ramId");
+
+                    b.HasIndex("storageId");
+
+                    b.ToTable("productSubPart");
+                });
+
             modelBuilder.Entity("DomainLayer.About", b =>
                 {
                     b.Property<int>("id")
@@ -44,6 +77,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int?>("MyPropertyid")
+                        .HasColumnType("int");
 
                     b.Property<int>("addressId")
                         .HasColumnType("int");
@@ -74,6 +110,14 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("MyPropertyid");
+
+                    b.HasIndex("addressId");
+
+                    b.HasIndex("orderId");
+
+                    b.HasIndex("userId");
+
                     b.ToTable("checkOut");
                 });
 
@@ -87,25 +131,25 @@ namespace Repository.Migrations
                     b.Property<string>("address")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("Address");
 
                     b.Property<string>("country")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("Country");
 
                     b.Property<string>("district")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("District");
 
                     b.Property<string>("email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("email");
 
                     b.Property<int>("phoneNumber")
@@ -121,13 +165,13 @@ namespace Repository.Migrations
                     b.Property<string>("shopName")
                         .IsRequired()
                         .HasMaxLength(15)
-                        .HasColumnType("varchar(15)")
+                        .HasColumnType("nvarchar(15)")
                         .HasColumnName("Shopname");
 
                     b.Property<string>("state")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("State");
 
                     b.HasKey("id");
@@ -157,13 +201,15 @@ namespace Repository.Migrations
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("roleId")
+                    b.Property<int>("rolesId")
                         .HasColumnType("int");
 
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("rolesId");
 
                     b.ToTable("login");
                 });
@@ -339,7 +385,7 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Quantity");
 
-                    b.Property<int?>("specsid")
+                    b.Property<int>("specsId")
                         .HasColumnType("int");
 
                     b.Property<int>("status")
@@ -347,7 +393,7 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("specsid");
+                    b.HasIndex("specsId");
 
                     b.ToTable("ProductModel");
                 });
@@ -421,6 +467,33 @@ namespace Repository.Migrations
                     b.HasIndex("specificationid");
 
                     b.ToTable("Storage");
+                });
+
+            modelBuilder.Entity("DomainLayer.Roles", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("createdBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("modifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("modifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("roles");
                 });
 
             modelBuilder.Entity("DomainLayer.Users.Address", b =>
@@ -713,6 +786,75 @@ namespace Repository.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BusinessObjectLayer.ProductOperations.ProductSubPart", b =>
+                {
+                    b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.ProductModel.Ram", "ram")
+                        .WithMany()
+                        .HasForeignKey("ramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.ProductModel.Storage", "storage")
+                        .WithMany()
+                        .HasForeignKey("storageId");
+
+                    b.Navigation("product");
+
+                    b.Navigation("ram");
+
+                    b.Navigation("storage");
+                });
+
+            modelBuilder.Entity("DomainLayer.Checkout", b =>
+                {
+                    b.HasOne("DomainLayer.ProductModel.ProductEntity", "MyProperty")
+                        .WithMany()
+                        .HasForeignKey("MyPropertyid");
+
+                    b.HasOne("DomainLayer.Users.Address", "address")
+                        .WithMany()
+                        .HasForeignKey("addressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Order", "order")
+                        .WithMany()
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Users.UserRegistration", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("address");
+
+                    b.Navigation("MyProperty");
+
+                    b.Navigation("order");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("DomainLayer.Login", b =>
+                {
+                    b.HasOne("DomainLayer.Roles", "roles")
+                        .WithMany()
+                        .HasForeignKey("rolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("roles");
+                });
+
             modelBuilder.Entity("DomainLayer.Order", b =>
                 {
                     b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
@@ -741,7 +883,9 @@ namespace Repository.Migrations
                 {
                     b.HasOne("DomainLayer.ProductModel.Specificatiion", "specs")
                         .WithMany()
-                        .HasForeignKey("specsid");
+                        .HasForeignKey("specsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("specs");
                 });
