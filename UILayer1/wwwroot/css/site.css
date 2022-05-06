@@ -109,10 +109,11 @@ header {
         box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
     }
 .btn-indigo {
-    background: #6610f2;
+    background: #a52a2a;
+    
 }
 .btn-orange {
-    background: #fd7e14;
+    background: #e52d2e;
 }
 .buynow {
     position: relative;
