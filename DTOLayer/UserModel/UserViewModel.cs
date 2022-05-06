@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer.UserModel
 {
-  public  class UserViewModel
+  public  class UserViewModel  
     {
         [Required (ErrorMessage = "This Field is Required")]
         [Display(Name = "First Name")]
