@@ -28,6 +28,7 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(IAddressOperations), typeof(AddressOperations));
             services.AddScoped(typeof(IRamOperations), typeof(RamOperations));
             services.AddScoped(typeof(IStorageOperations), typeof(StorageOperations));
+            services.AddScoped(typeof(IProductSubPartOperations), typeof(ProductSubPartOperations));
         }
 
     }

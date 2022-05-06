@@ -1,4 +1,5 @@
-﻿using DomainLayer;
+﻿using BusinessObjectLayer.ProductOperations;
+using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
@@ -29,12 +30,21 @@ namespace Repository
         public DbSet<Checkout> checkOut { get; set; }
         public DbSet<Contact> contact { get; set; }
         public DbSet<Roles> roles { get; set; }
-        /* protected override void OnModelCreating(ModelBuilder builder)
-         {
-             base.OnModelCreating(builder);
-             this.SeedUser(builder);
+        public DbSet<ProductSubPart> productSubPart { get; set; }
 
-         }*/
+        /*protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            builder.Entity<Ram>().HasRequired(c => c.Stage).WithMany().WillCascadeOnDelete(false);
+
+            builder.Entity<Storage>()
+                .HasRequired(s => s.Stage)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+            *//*base.OnModelCreating(builder);
+            this.SeedUser(builder);*//*
+
+        }*/
         /*public void SeedUser(ModelBuilder builder)
         {
             Roles role1 = new Roles()
@@ -59,6 +69,6 @@ namespace Repository
             builder.Entity<Roles>().HasData(role2);
         }*/
     }
-    
-    
+
+
 }

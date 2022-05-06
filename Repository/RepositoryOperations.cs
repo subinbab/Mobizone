@@ -54,7 +54,7 @@ namespace Repository
         {
             try
             {
-                entities = await dbSet.ToListAsync();
+                entities =  dbSet.ToListAsync().Result;
             }
             catch(SqlException ex)
             {

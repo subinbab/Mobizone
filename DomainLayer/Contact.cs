@@ -9,23 +9,23 @@ namespace DomainLayer
         [Key]
         public int id { get; set; }
         [Required]
-        [Column("Shopname", TypeName = "varchar", Order = 1)]
+        [Column("Shopname", TypeName = "nvarchar", Order = 1)]
         [MaxLength(15)]
         public string shopName { get; set; }
         [Required]
-        [Column("Address", TypeName = "varchar", Order = 2)]
+        [Column("Address", TypeName = "nvarchar", Order = 2)]
         [MaxLength(50)]
         public string address { get; set; }
         [Required]
-        [Column("District", TypeName = "varchar", Order = 3)]
+        [Column("District", TypeName = "nvarchar", Order = 3)]
         [MaxLength(50)]
         public string district { get; set; }
         [Required]
-        [Column("State", TypeName = "varchar", Order = 4)]
+        [Column("State", TypeName = "nvarchar", Order = 4)]
         [MaxLength(50)]
         public string state { get; set; }
         [Required]
-        [Column("Country", TypeName = "varchar", Order = 5)]
+        [Column("Country", TypeName = "nvarchar", Order = 5)]
         [MaxLength(50)]
         public string country { get; set; }
         [Required]
@@ -39,7 +39,7 @@ namespace DomainLayer
         [MaxLength(10)]
         public int phoneNumber { get; set; }
         [Required]
-        [Column("email", TypeName = "varchar", Order = 8)]
+        [Column("email", TypeName = "nvarchar", Order = 8)]
         [MaxLength(50)]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string email { get; set; }
