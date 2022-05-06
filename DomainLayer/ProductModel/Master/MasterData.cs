@@ -4,6 +4,7 @@ using System.Text;
 
 namespace DomainLayer.ProductModel.Master
 {
+   
     public enum Master:int{
 
         Brand=1,

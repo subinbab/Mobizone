@@ -10,20 +10,28 @@ namespace DomainLayer.Users
     {
         public int id { get; set; }
         [Required]
+        [Display(Name = "Name")]
         public string name { get; set; }
         [Required]
+        [Display(Name = "Address")]
         public string address { get; set; }
         [Required]
+        [Display(Name = "District")]
         public string district { get; set; }
         [Required]
+        [Display(Name = "State")]
         public string state { get; set; }
         [Required]
+        [Display(Name = "Country")]
         public string country { get; set; }
         [Required]
+        [Display(Name = "Pincode")]
         public string pincode { get; set; }
         [Required]
-        public string phoneNumber { get; set; }
+        [Display(Name = "Phone number")]
 
+        public string phoneNumber { get; set; }
+        [Display(Name = "AdditionalInfo")]
         public string additionalInfo { get; set; }
         [NotMapped]
         public bool IsChecked { get; set; }
