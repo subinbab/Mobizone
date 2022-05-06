@@ -1,4 +1,5 @@
-﻿using DomainLayer.Users;
+﻿using DomainLayer.ProductModel;
+using DomainLayer.Users;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,21 @@ namespace DomainLayer
         [Key]
         public int id { get; set; }
         public int orderId { get; set; }
+        public Order order { get; set; }
         public int userId { get; set; }
+        public UserRegistration user { get; set; }
         public int productId { get; set; }
+
         public int quantity { get; set; }
+
+        public ProductEntity MyProperty { get; set; }
+
         public int price { get; set; }
         [BindProperty]
         public int paymentModeId { get; set; }
         [BindProperty]
         public int addressId { get; set; }
+        public Address address { get; set; }
         public OrderStatus status { get; set; }
         public RoleTypes? cancelRequested { get; set; }
     }

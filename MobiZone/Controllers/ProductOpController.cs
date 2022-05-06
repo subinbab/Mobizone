@@ -39,7 +39,12 @@ namespace ApiLayer.Controllers
         IMasterDataOperations _masterOperations;
         IStorageOperations _storageOperations;
         IRamOperations _ramOperations;
-        public ProductOpController(ProductDbContext context, IProductOperations productOperations, IWebHostEnvironment web, IMapper mapper, IMasterDataOperations masterDataOperations , IStorageOperations storageOperations , IRamOperations ramOperations)
+        IProductSubPartOperations _subPartOperations;
+        IEnumerable<ProductSubPart> _productSubParts;
+        ProductSubPart _productSubPart;
+        IEnumerable<Ram> _rams;
+        IEnumerable<Storage> _storages;
+        public ProductOpController(ProductDbContext context, IProductOperations productOperations, IWebHostEnvironment web, IMapper mapper, IMasterDataOperations masterDataOperations , IStorageOperations storageOperations , IRamOperations ramOperations, IProductSubPartOperations subPartOperations)
         {
             #region Object Assigning
             _context = context;
@@ -54,6 +59,7 @@ namespace ApiLayer.Controllers
             _masterOperations = masterDataOperations;
             _storageOperations = storageOperations;
             _ramOperations = ramOperations;
+            _subPartOperations = subPartOperations;
             #endregion
         }
 
@@ -409,5 +415,128 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
+        public ResponseModel<IEnumerable<ProductSubPart>> GetProductSubPart()
+        {
+            ResponseModel<IEnumerable<ProductSubPart>> _response = new ResponseModel<IEnumerable<ProductSubPart>>();
+            try
+            {
+                _productSubParts = _subPartOperations.GetProduct().Result;
+                if (_masterDataList == null)
+                {
+                    string message = _masterMessages.Null + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    return _response;
+                }
+                else
+                {
+
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _productSubParts, message);
+
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = _masterMessages.ExceptionError + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+        }
+        #region Post Method for Product
+        [HttpPost("PostProductSubPart")]
+        public IActionResult PostProductSubPart([FromBody] ProductSubPart product)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _subPartOperations.AddProduct(product);
+                string message = _productMessages.Added + ", Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, "", message);
+                var data = Newtonsoft.Json.JsonConvert.SerializeObject(_response);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = _productMessages.ExceptionError + ", Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, _productMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+
+        }
+        #endregion
+
+        #region Get Method for Master data
+        [HttpGet("GetRams")]
+        public ResponseModel<IEnumerable<Ram>> GetRams()
+        {
+            ResponseModel<IEnumerable<Ram>> _response = new ResponseModel<IEnumerable<Ram>>();
+            try
+            {
+               _rams = _ramOperations.Get().Result;
+                if (_rams == null)
+                {
+                    string message = _masterMessages.Null + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    return _response;
+                }
+                else
+                {
+
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _rams, message);
+
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = _masterMessages.ExceptionError + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
+        }
+        #endregion
+
+        #region Get Method for Master data
+        [HttpGet("GetStorages")]
+        public ResponseModel<IEnumerable<Storage>> GetStorages()
+        {
+            ResponseModel<IEnumerable<Storage>> _response = new ResponseModel<IEnumerable<Storage>>();
+            try
+            {
+                _storages = _storageOperations.Get().Result;
+                if (_storages == null)
+                {
+                    string message = _masterMessages.Null + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    return _response;
+                }
+                else
+                {
+
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _storages, message);
+
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = _masterMessages.ExceptionError + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
+        }
+        #endregion
     }
 }
