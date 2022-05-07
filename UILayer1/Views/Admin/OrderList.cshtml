@@ -82,7 +82,7 @@
         <thead>
             <tr>
                 <th>SL</th>
-                <th>OrederId</th>
+                <th>OrderId</th>
                 <th>Cancel Requset</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -98,7 +98,11 @@
 <script>
     
     $(document).ready(function(){
-        var status ; 
+        var status;
+        var dataStatus;
+        var obj;
+        const dataList = [];
+        const statusList = [1,2,3,4];
        $.ajax({
                 url:'OrderStatus',
                 type:'get',
@@ -106,6 +110,10 @@
                 success:function(data){
                     status = data;
                     console.log(status);
+                    obj = JSON.parse(status);
+                    for (name in obj) {
+                        dataList.push(name)
+                    }
                 }
        })
 
@@ -115,26 +123,47 @@
                 url:'http://localhost:22888/api/users/CheckOutData',
                 type:'get',
                 datatype:'json',
-                success:function(data){
+                success: function (data) {
+                    var c = 0;
                     console.log(data);
                     console.log(status);
                     $('#datatable').dataTable({
                         data:data.result,
-                        columns:[
-                            {'data':'productBrand'},
+                        columns: [
+                            { 'render': function () { ++c;return c; } },
                             {'data':'orderId'},
-                            {'data':'cancelRequested'},
-                            {"render": function(data, type, full, meta){return '<select id="enumDropdown"><option>__select__</option></select>'}}]
+                            { 'data': 'cancelRequested' },
+                            { "render": function (data, type, full, meta) { dataStatus = full.status; return '<select id="enumDropdown"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option></select>' } }]
                             })
                             var $select = $('#enumDropdown');
-                              const obj = JSON.parse(status);
-                              var count = 0;
-                             for (name in obj) {
-                                    console.log(name);
-                                    var $option = $("<option/>").attr("value", name).text(name);
-                            $select.append($option);
-                                    ++count;
-                                    } 
+                    
+                    var data = Array.prototype.slice.call(obj, 4);
+                    console.log(obj);
+                    console.log(dataList[dataStatus])
+                    console.log(dataStatus)
+                    for (name in obj) {
+                        console.log(name);
+                    }
+                    var sliceData = dataList.slice(dataStatus)
+                    var sliceStatus = statusList.slice(dataStatus)
+                    console.log(sliceData)
+                    console.log(sliceStatus)
+                    sliceData.forEach(myFunction, sliceStatus);
+                    function callbackTester(callback) {
+                        callback(arguments[1]);
+                    }
+
+                    function myFunction(item, index, sliceStatus) {
+                        var count = 0;
+                        var $option = $("<option/>").attr("value", item ).text(item);
+                        $select.append($option);
+                        console.log(item)
+                        ++count;
+                    }
+                    
+                    
+                    
+                            
                             
 
                 }
