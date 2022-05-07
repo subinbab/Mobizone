@@ -480,20 +480,22 @@ namespace UIlayer.Controllers
 
             return View("login");
         }
+        [HttpGet]
         public IActionResult OrderList()
         {
-            UserApi userApi = new UserApi(Configuration);
-            var data = userApi.GetCheckOut().Result;
-            if(data != null)
-            {
-                List<string> productName = new List<string>();
-                foreach (var checkoutData in data)
-                {
-                    productName.Add(_opApi.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault().name);
-                }
-                ViewData["ProductList"] = productName;
-            }
-            return View(data);
+            /* UserApi userApi = new UserApi(Configuration);
+             var data = userApi.GetCheckOut().Result;
+             if(data != null)
+             {
+                 List<string> productName = new List<string>();
+                 foreach (var checkoutData in data)
+                 {
+                     productName.Add(_opApi.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault().name);
+                 }
+                 ViewData["ProductList"] = productName;
+             }*/
+            return View("OrderList");
+
         }
         [HttpPost]
         public async Task<IActionResult> OrderUpdate(List<string> status , List<int> orderId)
@@ -713,6 +715,11 @@ namespace UIlayer.Controllers
             productSubPart.storageId = storages.id;
             bool result = _opApi.AddProductSubPart(productSubPart);
             return RedirectToAction("");
+        }
+        [HttpGet]
+        public IActionResult OrderStatus()
+        {
+            return new JsonResult(EnumConvertion.EnumToString<OrderStatus>());
         }
     }
 }

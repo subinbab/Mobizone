@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220506192014_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,6 +106,8 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("addressId");
+
+                    b.HasIndex("orderId");
 
                     b.HasIndex("productId");
 
@@ -796,6 +800,12 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DomainLayer.Order", "order")
+                        .WithMany()
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
                         .WithMany()
                         .HasForeignKey("productId")
@@ -809,6 +819,8 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("address");
+
+                    b.Navigation("order");
 
                     b.Navigation("product");
 

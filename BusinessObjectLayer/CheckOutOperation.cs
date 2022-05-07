@@ -26,8 +26,15 @@ namespace BusinessObjectLayer
         }
         public async Task Add(Checkout data)
         {
-            _repo.Add(data);
-            _repo.Save();
+            try
+            {
+                _repo.Add(data);
+                _repo.Save();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public async Task Edit(Checkout entity)
         {
