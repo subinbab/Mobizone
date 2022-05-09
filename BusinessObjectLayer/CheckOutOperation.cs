@@ -20,9 +20,9 @@ namespace BusinessObjectLayer
             _repo.Delete(data);
             _repo.Save();
         }
-        public Task<IEnumerable<Checkout>> get()
+        public async Task<IEnumerable<Checkout>> get()
         {
-            return _repo.Get();
+            return await _repo.Get(c=> c.user,c1=> c1.product ,c2=> c2.address);
         }
         public async Task Add(Checkout data)
         {

@@ -1,6 +1,7 @@
 ﻿
 using BusinessObjectLayer;
 using BusinessObjectLayer.ProductOperations;
+using DTOLayer.Test;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -29,6 +30,7 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(IRamOperations), typeof(RamOperations));
             services.AddScoped(typeof(IStorageOperations), typeof(StorageOperations));
             services.AddScoped(typeof(IProductSubPartOperations), typeof(ProductSubPartOperations));
+            services.AddScoped(typeof(ITokenManager), typeof(TokenManager));
         }
 
     }

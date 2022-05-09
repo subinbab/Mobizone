@@ -497,28 +497,30 @@ namespace UIlayer.Controllers
             return View("OrderList");
 
         }
-        [HttpPost]
-        public async Task<IActionResult> OrderUpdate(List<string> status , List<int> orderId)
+        [HttpPost("Admin/user/checkout")]
+        public async Task<IActionResult> OrderUpdate(string status ,int orderId)
         {
             Checkout checkout = new Checkout();
             UserApi userApi = new UserApi(Configuration);   
             OrderStatus statuses = new OrderStatus();
-            for (int i = 0;i<status.Count();i++)
-            {
-                OrderStatus MyStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), status[i], true);
-                var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId[i])).FirstOrDefault();
-                checkoutData.status = MyStatus;
-                userApi.EditCheckout(checkoutData);
+            
+                var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
+                checkoutData.status = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
+            userApi.EditCheckout(checkoutData);
 
-            }
+            
             var data = await userApi.GetCheckOut();
-            return View("OrderList",data);
+            return RedirectToAction("OrderList");
         }
         public IActionResult orderDetails(int id)
         {
+            if(id == 0)
+            {
+                return View("Index");
+            }
             var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
-            var ProductDetails = _opApi.GetProduct(checkout.productId).Result;
+            var ProductDetails = _opApi.GetAll().Result.Where(c=> c.id.Equals(checkout.productId)).FirstOrDefault();
             ViewData["ProuductDetails"] = ProductDetails;
             ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
             return View(checkout);

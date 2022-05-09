@@ -38,7 +38,7 @@ namespace UILayer.Models
                 {
                     string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;
                     Uri uri = new Uri(url);
-                    httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "hello");
+                    httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "");
                     System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
                     if (result.Result.IsSuccessStatusCode)
                     {

@@ -197,9 +197,14 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        [HttpGet]
+        public IActionResult checkout(int ordereId , string status)
+        {
+            return View("Orderplaced");
+        }
         [Authorize(Roles ="User")]
         [HttpGet]
-        public IActionResult checkout(int id)
+        public IActionResult order(int id)
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
@@ -209,7 +214,7 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult checkout(Checkout checkout)
+        public IActionResult order(Checkout checkout)
         {
             if(checkout == null)
             {

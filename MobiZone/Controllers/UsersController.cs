@@ -2,6 +2,7 @@
 using ApiLayer.Models;
 using AutoMapper;
 using BusinessObjectLayer;
+using BusinessObjectLayer.ProductOperations;
 using BusinessObjectLayer.User;
 using DomainLayer;
 using DomainLayer.Users;
@@ -43,6 +44,7 @@ namespace ApiLayer.Controllers
         Login _login;
         ICheckOutOperation _checkOutOperation;
         IEnumerable<Checkout> _checkout;
+        IProductOperations _productOperations;
         Address _addresData;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -50,7 +52,7 @@ namespace ApiLayer.Controllers
         public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, ICheckOutOperation checkOutOperation)
+            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -70,6 +72,7 @@ namespace ApiLayer.Controllers
             _roleManager = roleManager;
             
             _checkOutOperation = checkOutOperation;
+            _productOperations = productOperations;
         }
         [HttpPost("UserCreate")]
         public async Task<ResponseModel<UserViewModel>> post([FromBody] UserViewModel users)
@@ -279,39 +282,7 @@ namespace ApiLayer.Controllers
             return Ok(_response);
         }
 
-        /*[HttpPost]
-        [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
-        {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
-            if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
-
-            IdentityUser user = new()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.User);
-            }
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
-        }*/
+        
 
         #region Update Method for Users
         [HttpPut]
@@ -342,6 +313,9 @@ namespace ApiLayer.Controllers
             ResponseModel<string> _response = new ResponseModel<string>();
             try
             {
+                checkoutData.address = _addressOperations.get().Result.Where(c=> c.id.Equals(checkoutData.addressId)).FirstOrDefault();
+                checkoutData.product = _productOperations.GetAll().Result.Where(c => c.id.Equals(checkoutData.productId)).FirstOrDefault();
+                checkoutData.user = _userCreate.Get().Result.Where(c=> c.UserId.Equals(checkoutData.userId)).FirstOrDefault();  
                 _checkOutOperation.Add(checkoutData);
                 string message = "added" + ", Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, "", message);
@@ -412,6 +386,8 @@ namespace ApiLayer.Controllers
             }
         }
         #endregion
+
+       
     }
 
 

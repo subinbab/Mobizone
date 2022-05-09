@@ -89,6 +89,7 @@ namespace ApiLayer.Controllers
         #endregion
 
         #region GetList Method for Products
+        /*[Authorize(Roles ="Admin")]*/
         [HttpGet("GetList")]
         public ResponseModel<IEnumerable<ProductListViewModel>> GetList()
         {

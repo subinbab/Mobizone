@@ -98,6 +98,9 @@
 <script>
     
     $(document).ready(function(){
+         
+
+
         var status;
         var dataStatus;
         var obj;
@@ -131,13 +134,9 @@
                         data:data.result,
                         columns: [
                             { 'render': function () { ++c;return c; } },
-                            {'data':'orderId'},
+                            {'render':function (data, type, full, meta) {return '<a href="/admin/orderDetails/'+full.orderId+'">'+full.orderId+'</a>'; }},
                             { 'data': 'cancelRequested' },
-                            { "render": function (data, type, full, meta) { dataStatus = full.status; return '<select id="enumDropdown"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option></select>' } }]
-                            })
-                            var $select = $('#enumDropdown');
-                    
-                    var data = Array.prototype.slice.call(obj, 4);
+                            { "render": function (data, type, full, meta) { dataStatus = full.status;
                     console.log(obj);
                     console.log(dataList[dataStatus])
                     console.log(dataStatus)
@@ -148,18 +147,27 @@
                     var sliceStatus = statusList.slice(dataStatus)
                     console.log(sliceData)
                     console.log(sliceStatus)
-                    sliceData.forEach(myFunction, sliceStatus);
+                    
+                    var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="'+ full.orderId+'"/><select id="enumDropdown" name="status"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
+                    var endData = '</select><input type="submit" value="update"/></form>'
+                    sliceData.forEach(function(element){ 
+                        console.log("-----------")
+                        console.log(element)
+                    var option = '<option value="'+element+'">'+element+'</option>';
+                    formData = formData + option;
+                    });
+                    formData = formData + endData;
+                    return formData;
+                    }}]
+                            })
+                            var $select = $('#enumDropdown');
+                    
+                   
                     function callbackTester(callback) {
                         callback(arguments[1]);
                     }
 
-                    function myFunction(item, index, sliceStatus) {
-                        var count = 0;
-                        var $option = $("<option/>").attr("value", item ).text(item);
-                        $select.append($option);
-                        console.log(item)
-                        ++count;
-                    }
+                    
                     
                     
                     
@@ -168,12 +176,41 @@
 
                 }
             })
+           
         })
 
     function submitform(){
         document.getElementById("order_form").submit();
     }
      
+    $(document).ready(function(){
+       
+    })
+    
+
+    function orderSubmit(){
+         $("#orderStatus").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var actionUrl = form.attr('user/checkout');
+    
+    $.ajax({
+        type: "POST",
+        url: actionUrl,
+        data: form.serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+          alert(data); // show response from the php script.
+        },
+        error: function(data){
+            alert(data)
+        }
+    });
+    
+});
+    }
 
 </script>
 
