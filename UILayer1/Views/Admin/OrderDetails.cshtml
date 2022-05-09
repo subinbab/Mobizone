@@ -7,7 +7,7 @@
 @{
     var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
-}
+}<h3>Order Details Page</h3>
 <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
 
@@ -23,35 +23,40 @@
                                                       <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
                         
                         </div>
-                        <div class="col row  " style="align-items: center;"> 
+                        <div class="col row  " style="align-items: center;">
                             <div class="col  align-items-end">
-                                <div class="orderDetails col"> Address: @addressDetails.name</div> 
+                                <div class="orderDetails col"> Address: @addressDetails.name</div>
                                 <div class="orderDetails col">@addressDetails.address,</div>
                                 <div class="orderDetails col">@addressDetails.district,@addressDetails.state</div>
-                                 <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
+                                <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
                                 <div class="orderDetails col">Phone Number:@addressDetails.phoneNumber</div>
 
                             </div>
-                            <div class="col">
-                               @Model.status
-                               <div class="progress-track">
-                <ul id="progressbar">
-                    <li class="orderplaced  " id="step1">orderplaced</li>
-                    <li class="dispatched  text-center" id="step2">dispatched</li>
-                    <li class="delivered  text-right" id="step3">delivered</li>
-                </ul>
-            </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                             <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
-                                  <div style="margin-left:-120px">Quantity:   @Model.quantity</div>
-                    <div style="margin-left:-43px">Price:@Model.price/-</div>
-   
+                            
+                    </div>
+                    <div class="col">
+                         <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
+                              <div style="margin-left:-119px">Quantity:   @Model.quantity</div>
+                <div style="margin-left:-35px">Price:@Model.price/-</div>
+
+                    </div>
+                </div>
+                   
+
+                    <div class="progress-track">
+                        <div class="col" style="margin-right:-50px">
+                            Progress Track:  @Model.status
+
+                            <ul id="progressbar">
+                                <li class="orderplaced  " id="step1">orderplaced</li>
+                                <li class="dispatched  text-center" id="step2">dispatched</li>
+                                <li class="delivered  text-right" id="step3">delivered</li>
+                            </ul>
                         </div>
                     </div>
+                   
 
-                                                                      </div>
+                        </div>
             </div>
         </div>
     </div>
