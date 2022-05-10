@@ -543,7 +543,7 @@ namespace UIlayer.Controllers
          
         }
         [HttpPost]
-        public IActionResult ContactEdit(Contact contact)
+        public IActionResult ContactEdit(AdminContact contact)
         {
             adminApi _adminApi = new adminApi(Configuration,_mapper);
             _adminApi.EditContact(contact);
@@ -551,7 +551,7 @@ namespace UIlayer.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             adminApi _adminApi = new adminApi(Configuration,_mapper);

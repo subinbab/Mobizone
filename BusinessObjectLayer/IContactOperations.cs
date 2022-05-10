@@ -6,8 +6,8 @@ namespace BusinessObjectLayer
 {
     public interface IContactOperations
     {
-        Task Add(Contact data);
-        Task Edit(Contact data);
-        Task<IEnumerable<Contact>> Get();
+        Task Add(AdminContact data);
+        Task Edit(AdminContact data);
+        Task<IEnumerable<AdminContact>> Get();
     }
 }

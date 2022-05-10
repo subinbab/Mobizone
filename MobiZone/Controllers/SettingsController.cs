@@ -26,7 +26,7 @@ namespace ApiLayer.Controllers
         IContactOperations _contactOperations;
         IEnumerable<About> _about;
         IEnumerable<PrivacyPolicy> _privacyPolicy;
-        IEnumerable<Contact> _contact;
+        IEnumerable<AdminContact> _contact;
 
         IMessages _productMessages;
         IWebHostEnvironment _webHostEnvironment;
@@ -100,7 +100,7 @@ namespace ApiLayer.Controllers
 
         }
 
-        #region Update Method for Product
+        #region Update Method for Privacy
         [HttpPut("PrivacyPut")]
         public IActionResult PrivacyPut([FromBody] PrivacyPolicy privacyPolicy)
         {
@@ -175,7 +175,7 @@ namespace ApiLayer.Controllers
 
         }
 
-        #region Update Method for Product
+        #region Update Method for About
         [HttpPut("AboutPut")]
         public IActionResult AboutPut([FromBody] About about)
         {
@@ -199,7 +199,7 @@ namespace ApiLayer.Controllers
 
 
         [HttpPost("ContactPost")]
-        public IActionResult ContactPost([FromBody] Contact contact)
+        public IActionResult ContactPost([FromBody] AdminContact contact)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
@@ -220,9 +220,9 @@ namespace ApiLayer.Controllers
 
         }
         [HttpGet("ContactGet")]
-        public ResponseModel<IEnumerable<Contact>> ContactGet()
+        public ResponseModel<IEnumerable<AdminContact>> ContactGet()
         {
-            ResponseModel<IEnumerable<Contact>> _response = new ResponseModel<IEnumerable<Contact>>();
+            ResponseModel<IEnumerable<AdminContact>> _response = new ResponseModel<IEnumerable<AdminContact>>();
             try
             {
                 _contact = _contactOperations.Get().Result;
@@ -248,9 +248,9 @@ namespace ApiLayer.Controllers
                 return _response;
             }
         }
-        #region Update Method for Product
+        #region Update Method for Contact
         [HttpPut("ContactPut")]
-            public IActionResult ContactPut([FromBody] Contact contact)
+            public IActionResult ContactPut([FromBody] AdminContact contact)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try

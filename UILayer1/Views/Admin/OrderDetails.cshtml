@@ -7,7 +7,7 @@
 @{
     var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
-}<h3>Order Details Page</h3>
+}<h3 style="text-align:center">Order Details Page</h3>
 <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
 
@@ -35,8 +35,8 @@
                             
                     </div>
                     <div class="col">
-                         <div style="margin-left:-30px">OrderId:   @Model.orderId</div>
-                              <div style="margin-left:-119px">Quantity:   @Model.quantity</div>
+                         <div style="margin-left:-20px">OrderId:   @Model.orderId</div>
+                              <div style="margin-left:-105px">Quantity:   @Model.quantity</div>
                 <div style="margin-left:-35px">Price:@Model.price/-</div>
 
                     </div>
