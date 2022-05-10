@@ -10,7 +10,7 @@ namespace DomainLayer
         public int id { get; set; }
         [Required]
         [Column("Shopname", TypeName = "nvarchar", Order = 1)]
-        [MaxLength(15)]
+        [MaxLength(50)]
         public string shopName { get; set; }
         [Required]
         [Column("Address", TypeName = "nvarchar", Order = 2)]
