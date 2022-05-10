@@ -61,7 +61,7 @@ else{
         <div class="col-6">
         <p class="card-text ">Brand : @Model.productBrand</p>
         <p class="card-text ">Model : @Model.model</p>
-        <p class="card-text ">Quatity : @Model.quantity</p><span><form onsubmit="return false" asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
+        <p class="card-text ">Quantity : @Model.quantity</p><span><form onsubmit="return false" asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
         </div>
         <div class="col-6">
         <p class="card-text "> Operating System : @Model.specs.os</p>
