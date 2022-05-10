@@ -100,7 +100,7 @@ namespace ApiLayer.Controllers
 
         }
 
-        #region Update Method for Product
+        #region Update Method for Privacy
         [HttpPut("PrivacyPut")]
         public IActionResult PrivacyPut([FromBody] PrivacyPolicy privacyPolicy)
         {
@@ -175,7 +175,7 @@ namespace ApiLayer.Controllers
 
         }
 
-        #region Update Method for Product
+        #region Update Method for About
         [HttpPut("AboutPut")]
         public IActionResult AboutPut([FromBody] About about)
         {
@@ -248,7 +248,7 @@ namespace ApiLayer.Controllers
                 return _response;
             }
         }
-        #region Update Method for Product
+        #region Update Method for Contact
         [HttpPut("ContactPut")]
             public IActionResult ContactPut([FromBody] Contact contact)
         {

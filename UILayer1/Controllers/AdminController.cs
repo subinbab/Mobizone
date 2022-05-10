@@ -551,7 +551,7 @@ namespace UIlayer.Controllers
         }
 
 
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             adminApi _adminApi = new adminApi(Configuration,_mapper);

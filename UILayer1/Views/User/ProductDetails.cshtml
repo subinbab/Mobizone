@@ -21,7 +21,7 @@
                         <table class="table ">
                             @if (Model.images == null)
                             {
-                                <h1>No iamges</h1>
+                                <h1>No images</h1>
 }
                             else
                             {
@@ -65,19 +65,25 @@
                                 <p class="card-text ">Brand : @Model.productBrand</p>
                                 <p class="card-text ">Model : @Model.model</p>
                                 <p class="card-text ">Quatity : @Model.quantity</p>
-                            </div>
-                            <div class="col-6">
                                 <p class="card-text "> Operating System : @Model.specs.os</p>
                                 <p class="card-text "> Processor : @Model.specs.processor</p>
                                 <p class="card-text ">Processor Core : @Model.specs.core</p>
-                            </div>
-                            <div class="col-12">
-                                <p class="card-text ">Ram : @foreach (var item in Model.specs.rams.ToList())
-                                {<span style="border-block: outset;">@item.ram </span>}</p>
-                                <p class="card-text ">Storage :@foreach (var item in Model.specs.storages.ToList())
-                                {<span style="border-block: outset;">@item.storage </span>}</p>
+                                <p class="card-text ">
+                                    Ram : @foreach (var item in Model.specs.rams.ToList())
+                                    {<span style="border-block: outset;">@item.ram </span>}
+                                </p>
+                                <p class="card-text ">
+                                    Storage :@foreach (var item in Model.specs.storages.ToList())
+                                    {<span style="border-block: outset;">@item.storage </span>}
+                                </p>
                                 <p class="card-text ">SimType : @Model.specs.simType</p>
                                 <p class="card-text ">Camera : @Model.specs.camFeatures</p>
+                            </div>
+                            <div class="col-6">
+                                
+                            </div>
+                            <div class="col-12">
+                               
                             </div>
                             <div class="col-12">
                                 <p>Description</p>

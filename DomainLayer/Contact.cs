@@ -35,8 +35,8 @@ namespace DomainLayer
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
                    ErrorMessage = "Entered phone format is not valid.")]
-        [Column("PhoneNumber", TypeName = "int", Order = 7)]
-        [MaxLength(10)]
+        [Column("PhoneNumber", TypeName = "int64", Order = 7)]
+        /*[MaxLength(10)]*/
         public int phoneNumber { get; set; }
         [Required]
         [Column("email", TypeName = "nvarchar", Order = 8)]
