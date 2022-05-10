@@ -122,7 +122,7 @@ else
                     <div class="card-body">
                         <h5 class="card-title">Price Details</h5>
                         <hr />
-                        <p class="card-text" id="priceField"></p>
+                        <p class="card-text" id="priceField"> </p>
                         <div class="card-text">Shipping Charge : 0</div>
                         <div id="price"></div>
                     </div>
@@ -141,7 +141,7 @@ else
             document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
         }
         $(document).ready(function () {
-            document.getElementById("priceField").innerHTML = '<p> '+sourcearray.price+' </p>';
+            document.getElementById("priceField").innerHTML = '<p> Price:'+sourcearray.price+' </p>';
         })
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value

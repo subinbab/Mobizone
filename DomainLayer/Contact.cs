@@ -39,9 +39,7 @@ namespace DomainLayer
         [Column("PhoneNumber", TypeName = "int", Order = 7)]
         [MaxLength(20)]
 
-        [Column("PhoneNumber", TypeName = "int64", Order = 7)]
-        /*[MaxLength(10)]*/
-
+       
         public int phoneNumber { get; set; }
         [Required]
         [Column("email", TypeName = "nvarchar", Order = 8)]
