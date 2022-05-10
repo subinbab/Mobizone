@@ -27,7 +27,7 @@
     <nav class="navbar navbar-light " style="position: fixed; width: 100%;     background-color: white;">
 
         <div class="container-fluid row">
-            <div class="col">
+            <div class="col-3"style="padding-top: 2%; margin-left: -3%;">
               <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:46px; width:58px;"
                  class="float-left" />
               <a class="" asp-action="Index" style="margin-left: 0px; font-size: 23px;
@@ -91,20 +91,20 @@
 
     <div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99;background-color: white;">
         <div id="filter">
-            <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter</a>
+            <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
         <div id="dropdown1" class="dropdown">
             <form asp-action="filter" method="post">
                 <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
-                    <option disabled selected>--- SELECT ---</option>
+                    <option disabled selected>--- Select ---</option>
                 </select>
 
-                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit"></input>
+                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit" value="Filter"></input>
             </form>
         </div>
 
         <div id="sort">
-            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort</a>
+            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort By</a>
             <div id="dropdown2" class="dropdown">
                 <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
             </div>

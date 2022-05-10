@@ -12,154 +12,229 @@
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
 }
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<h3> Product Details </h3>
 @if(Model != null)
 {
-    <div class="row container-fluid pr-6">
+<div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-1">
-            <table class="table ">
-@{if(Model.images == null){
-        <h1>No iamges</h1>}
-else{
-    foreach (var item in Model.images)
-    {
-                <div class="card" style="width : 50px; height:100px;">
-                     <img src="~/Product/Images/@item.imagePath" width="50" height="100" onclick="showImage('@item.imagePath');"/>
-                     <span  class="glyphicon glyphicon-remove  position-absolute" style="background-color: cornsilk;width: 39%; cursor: pointer; height: 19%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-1">
+                        <table class="table ">
+                            @{if (Model.images == null)
+                                {
+                                    <h1>No iamges</h1>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.images)
+                                    {
+                                        <div class="card" style="width : 50px; height:100px;">
+                                            <img src="~/Product/Images/@item.imagePath" width="50" height="100" onclick="showImage('@item.imagePath');" />
+                                            <span class="glyphicon glyphicon-remove  position-absolute" style="background-color: cornsilk;width: 39%; cursor: pointer; height: 19%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
+
+                                        </div>
+
+                                    }
+                                    <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px blacl;border: 2px solid;margin-top: 11px;"></i>
+                                }}
+
+                        </table>
+                    </div>
+
+
+                    <div class="col-4" style="margin-top:7%">
+                        @{if (Model.images != null && Model.images.Any())
+                            {
+
+                                <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=300 height=450 />
+
+                            }
+                            else
+                            {
+                                <p>No Image</p>
+                            }}
+                    </div>
+
+
+                    <div class="col-6 pb-3">
+                        <div>
+                            <h2 class="card-title ">@Model.name</h2>
+                        </div>
+                        <div>
+                            <h3 class="card-subtitle">Price :  @Model.price &#8377</h3>
+                        </div>
+                        <div class="col-12">
+                            <div class="row  card">
+
+                                <div class="col-3">
+                                    <p>Highlights</p>
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <p class="card-text col-6">Brand :</p>
+                                        <p class="col-6"> @Model.productBrand</p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="card-text col-6">Model :</p>
+                                        <p class="col-6">  @Model.model</p>
+                                    </div>
+                                    @* <p class="card-text ">Model : @Model.model</p>*@
+                                </div>
+                            </div>
+                            <div class="row card">
+
+                                <div class="col-3">
+                                    <p>Specification</p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="card-text "> Operating System : @Model.specs.os</p>
+                                    <p class="card-text "> Processor : @Model.specs.processor</p>
+                                    <p class="card-text ">Processor Core : @Model.specs.core</p>
+                                    <p class="card-text ">
+                                        Ram : @foreach (var item in Model.specs.rams.ToList())
+                                        {<span style="border-block: outset;">@item.ram </span>}
+                                    </p>
+                                    <p class="card-text ">
+                                        Storage :@foreach (var item in Model.specs.storages.ToList())
+                                        {<span style="border-block: outset;">@item.storage </span>}
+                                    </p>
+                                    <p class="card-text ">SimType : @Model.specs.simType</p>
+                                    <p class="card-text ">Camera : @Model.specs.camFeatures</p>
+                                    <p class="card-text ">Quantity : @Model.quantity</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+                        </div>
+
+                    </div>
+
 
                 </div>
-                               
-            } 
-            <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px blacl;border: 2px solid;margin-top: 11px;"></i>
-        }}
-    
-</table>
+            </div>
         </div>
         <div class="col-4">
             @{if (Model.images != null && Model.images.Any())
-            {
-                
-                 <img class="showimage"  src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=250 height=500/>
+                {
 
-            }
-            else
-            {
-               <p>No Image</p>
-            }}
-                    </div>
+                    <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=250 height=500 />
 
-                    
+                }
+                else
+                {
+                    <p>No Image</p>
+                }}
+        </div>
+
+
         <div class="col-6 pb-3">
             <h2 class="card-title ">@Model.name</h2>
-        <h3 class="card-subtitle" > @Model.price &#8377</h3>
-        <h4>Model:@Model.model</h4>
-        <div class="row mt-3">
-            
-        <div class="col-6">
-        <p class="card-text ">Brand : @Model.productBrand</p>
-        <p class="card-text ">Model : @Model.model</p>
-        <p class="card-text ">Quantity : @Model.quantity</p><span><form onsubmit="return false" asp-action="quatity" method="post"><input asp-for="model" type="hidden"/><input asp-for="quantity" type="hidden"/><input name="newQuantity"/><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
-        </div>
-        <div class="col-6">
-        <p class="card-text "> Operating System : @Model.specs.os</p>
-        <p class="card-text "> Processor : @Model.specs.processor</p>
-        <p class="card-text ">Processor Core : @Model.specs.core</p>
-        </div>
-        <div class="col-12">
-        <p class="card-text ">Ram : @foreach(var item in Model.specs.rams.ToList()){ <span style="border-block: outset;">@item.ram </span>}</p>
-        <p class="card-text ">Storage :@foreach(var item in Model.specs.storages.ToList()){ <span style="border-block: outset;">@item.storage </span>}</p>
-        <p class="card-text ">SimType : @Model.specs.simType</p>
-        <p class="card-text ">Camera : @Model.specs.camFeatures</p>
-        </div>
-        </div>
-        
-    </div>
-</div>
+            <h3 class="card-subtitle"> @Model.price &#8377</h3>
+            <h4>Model:@Model.model</h4>
+            <div class="row mt-3">
 
-
-<button class="btn btn-light"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
-</div>
-</div>
-</div>
-</div>
-
-
-<div id="partialModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="col-6">
+                    <p class="card-text ">Brand : @Model.productBrand</p>
+                    <p class="card-text ">Model : @Model.model</p>
+                    <p class="card-text ">Quantity : @Model.quantity</p><span><form onsubmit="return false" asp-action="quatity" method="post"><input asp-for="model" type="hidden" /><input asp-for="quantity" type="hidden" /><input name="newQuantity" /><input type="submit" value="ADD" class="btn btn-light btn-rounded"></input></form></span>
                 </div>
-                <div class="modal-body">
+                <div class="col-6">
+                    <p class="card-text "> Operating System : @Model.specs.os</p>
+                    <p class="card-text "> Processor : @Model.specs.processor</p>
+                    <p class="card-text ">Processor Core : @Model.specs.core</p>
                 </div>
-                
+                <div class="col-12">
+                    <p class="card-text ">Ram : @foreach (var item in Model.specs.rams.ToList())
+                    {<span style="border-block: outset;">@item.ram </span>}</p>
+                    <p class="card-text ">Storage :@foreach (var item in Model.specs.storages.ToList())
+                    {<span style="border-block: outset;">@item.storage </span>}</p>
+                    <p class="card-text ">SimType : @Model.specs.simType</p>
+                    <p class="card-text ">Camera : @Model.specs.camFeatures</p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div id="partialModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div id="deleteModel" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
+</div>
 
+    <script>
 
-    <div id="deleteModel" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                </div>
-                
-            </div>
-        </div>
-    </div>
+        function showImage(data) {
 
-<script>
-
-    function showImage(data){
-        
-        $(".showimage").attr('src','/Product/Images/'+data);
-    }
-     function someFunction(data) {
-    var id = data;
-    $(document).ready(function (e) {
-        $.ajax({
-                url: 'admin/AddImage/' + id,
-                type: 'get',
-                success: function (response) {
-                    $("#partialModal").find(".modal-body").html(response);
-                    $("#partialModal").modal('show');
-                },
-                failure: function (response) {
+            $(".showimage").attr('src', '/Product/Images/' + data);
+        }
+        function someFunction(data) {
+            var id = data;
+            $(document).ready(function (e) {
+                $.ajax({
+                    url: 'admin/AddImage/' + id,
+                    type: 'get',
+                    success: function (response) {
+                        $("#partialModal").find(".modal-body").html(response);
+                        $("#partialModal").modal('show');
+                    },
+                    failure: function (response) {
                         alert("fail");
                     },
                     error: function (response) {
                         console.log(response);
                     }
-            })
-        
-    });
-     }   
-     
+                })
 
-   
-</script>
-<style>
-    p{
-        display:block;
-    }
-</style>
+            });
+        }
 
-<script>
-      function deleteImage(data) {    
-    var id = data;
-    $.ajax({
+
+
+    </script>
+    <style>
+        p {
+            display: block;
+        }
+    </style>
+
+    <script>
+        function deleteImage(data) {
+            var id = data;
+            $.ajax({
                 url: 'DeleteImage/' + id,
                 type: 'get',
                 success: function (response) {
@@ -167,21 +242,22 @@ else{
                     $("#partialModal").modal('show');
                 },
                 failure: function (response) {
-                        alert("fail");
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
+                    alert("fail");
+                },
+                error: function (response) {
+                    console.log(response);
+                }
             })
-    
-}
+
+        }
 
 
-if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
-</script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 }
-else{
+else
+{
     <p>No details</p>
 }
