@@ -7,30 +7,30 @@ namespace BusinessObjectLayer
 {
     public class ContactOperations : IContactOperations
     {
-        IRepositoryOperations<Contact> _repo;
-        public ContactOperations(IRepositoryOperations<Contact>  repo)
+        IRepositoryOperations<AdminContact> _repo;
+        public ContactOperations(IRepositoryOperations<AdminContact>  repo)
         {
             _repo = repo;
         }
-        public async Task Add(Contact data)
+        public async Task Add(AdminContact data)
         {
             _repo.Add(data);
             _repo.Save();
 
         }
 
-        public async Task Edit(Contact data)
+        public async Task Edit(AdminContact data)
         {
             _repo.Update(data);
             _repo.Save();
         }
 
-        public async Task Get(Contact data)
+        public async Task Get(AdminContact data)
         {
             _repo.Get();
         }
 
-        public Task<IEnumerable<Contact>> Get()
+        public Task<IEnumerable<AdminContact>> Get()
         {
           return  _repo.Get();
         }

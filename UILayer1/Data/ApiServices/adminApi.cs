@@ -176,11 +176,11 @@ namespace UILayer.Data.ApiServices
                 return false;
             }
         }
-        public bool CreateContact(Contact contact)
+        public bool CreateContact(AdminContact contact)
         {
             try
             {
-                RequestHandler<Contact> requestHandler = new RequestHandler<Contact>(_configuration);
+                RequestHandler<AdminContact> requestHandler = new RequestHandler<AdminContact>(_configuration);
                 requestHandler.url = "api/users/UserCreate";
                 var result = requestHandler.Post(contact);
                 if( result != null)
@@ -202,12 +202,12 @@ namespace UILayer.Data.ApiServices
             }
         }
 
-        public async Task<IEnumerable<Contact>> ContactGet()
+        public async Task<IEnumerable<AdminContact>> ContactGet()
 
         {
             try
             {
-                RequestHandler<IEnumerable<Contact>> _requestHandler = new RequestHandler<IEnumerable<Contact>>(_configuration);
+                RequestHandler<IEnumerable<AdminContact>> _requestHandler = new RequestHandler<IEnumerable<AdminContact>>(_configuration);
                 _requestHandler.url = "api/Settings/ContactGet";
                 return _requestHandler.Get().result;
             }
@@ -217,11 +217,12 @@ namespace UILayer.Data.ApiServices
             }
 
         }
-        public bool EditContact(Contact contact)
+        public bool EditContact(AdminContact contact)
         {
-            RequestHandler<Contact> _requestHandler = new RequestHandler<Contact>(_configuration);
+            RequestHandler<AdminContact> _requestHandler = new RequestHandler<AdminContact>(_configuration);
             try
             {
+                contact.country = "India";
                 _requestHandler.url = "api/Settings/ContactPut";
                 var result = _requestHandler.Edit(contact);
                 if (result != null)
