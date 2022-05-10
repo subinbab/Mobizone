@@ -10,7 +10,7 @@ namespace DomainLayer
         public int id { get; set; }
         [Required]
         [Column("Shopname", TypeName = "nvarchar", Order = 1)]
-        [MaxLength(15)]
+        [MaxLength(50)]
         public string shopName { get; set; }
         [Required]
         [Column("Address", TypeName = "nvarchar", Order = 2)]
@@ -30,13 +30,13 @@ namespace DomainLayer
         public string country { get; set; }
         [Required]
         [Column("Pincode", TypeName = "int", Order = 6)]
-        [MaxLength(10)]
+        [MaxLength(20)]
         public int pincode { get; set; }
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
                    ErrorMessage = "Entered phone format is not valid.")]
         [Column("PhoneNumber", TypeName = "int", Order = 7)]
-        [MaxLength(10)]
+        [MaxLength(20)]
         public int phoneNumber { get; set; }
         [Required]
         [Column("email", TypeName = "nvarchar", Order = 8)]
