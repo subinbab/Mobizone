@@ -26,7 +26,7 @@ else
                 <input asp-for="productId" type="hidden" value="@data.id" />
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
                 <div>
-                    <div class="card">
+                    <div class="card ">
                         <div class="">
                             <div class="address"><p class="card-title">Delivery Address</p></div>
                             
@@ -36,9 +36,10 @@ else
                             }
                             else
                             {
+                                <div class="addressDetails">
                                 @foreach (var address in @user.address)
                                 {
-                                    <div class="form-check">
+                                    <div class="form-check ">
                                         <input class="form-check-input" name="addressId" type="checkbox" value="@address.id" id="flexCheckDefault" onchange="showbutton1()" />
                                         <label class="form-check-label" for="flexCheckDefault">
                                             @address.name <br> @address.address<br> @address.district
@@ -46,43 +47,45 @@ else
                                     </div>
                                     <hr />
                                 }
+                                </div>
                             }
 
 
                             <div class="row">
-                                <div class="col"><a asp-action="address" class="btn btn-primary">Add New Address</a></div>
-                                <div class="col cancel1"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
-                                <div class="col col d-flex justify-content-end "><a style="display:none" href="#" class="btn btn-primary toggle-button1" onclick="orderDetails()">continue</a></div>
+                                <div class="col"><a asp-action="address" class="btn btn-orange">Add New Address</a></div>
+                                                   <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display:none" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
                             </div>
 
                         </div>
                     </div>
                     <div class="card order mt-3" style="display:none">
-                        <div class="card-body">
-
-                            <h5 class="card-title">Order Summary</h5>
-
-                            <div class="form-check">
+                        <div class="">
+                            
+                            <h5 class="card-title address">Order Summary</h5>
+                            <div class="orderDetails">
+                                <div class="form-check">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     @data.name (@data.specs.ram GB , @data.specs.storage GB)<br>@data.price
-                                    <div class=>Qty:<input name="quantity" onchange="price()" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag"/></div>
+                                    <div class=>Qty:<input name="quantity"  asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag"/></div>
                                 </label>
 
                             </div>
+                            </div>
+                            
 
 
 
                             <div class="row">
-                                <div class="col cancel2"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
-                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-primary toggle-button2" onclick="paymentDetails()">continue</a></div>
+                               
+                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" onclick="paymentDetails()">continue</a></div>
                             </div>
 
                         </div>
                     </div>
 
                     <div class="card payment mt-3" style="display:none">
-                        <div class="card-body">
-                            <h5 class="card-title">Payment</h5>
+                        <div class="">
+                            <h5 class="card-title address">Payment</h5>
                             @foreach (var item in values)
                             {
 
@@ -95,9 +98,9 @@ else
                             }
                             <p class="card-text"></p>
                             <div class="row">
-                                <div class="col"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
+                                <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end"><input type="submit" class="btn btn-primary" /></div>
+                                <div class="col col d-flex justify-content-end submit" style="display:none"><input type="submit" class="btn btn-orange" /></div>
                             </div>
 
 
@@ -123,6 +126,7 @@ else
     </div>
 
     <script>
+        
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(data))');
         function changePrice(data) {
             alert(sourcearray.price)
@@ -131,24 +135,42 @@ else
             document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
         }
         $(document).ready(function () {
-            document.getElementById("priceField").innerHTML = '<p> 0 </p>';
+            document.getElementById("priceField").innerHTML = '<p> '+sourcearray.price+' </p>';
         })
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
             document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * data + '</p>';
+            if(data>0){
+                $(".toggle-button2").show();
+            }
         });
         
         console.log(sourcearray)
         function paymentDetails() {
             $(".payment").show();
             $(".cancel2").hide();
+            $(".orderDetails").hide();
+            $(".toggle-button1").hide();
         }
         function orderDetails() {
             $(".order").show();
-            $(".cancel1").hide();
+            $(".addressDetails").hide();
+            $(".toggle-button1").hide();
+            //$(document).ready(function () {
+           // document.getElementById("addressContinue").innerHtml = '';
+           //document.getElementById("addressContinue").innerHtml = '<button onclick='"'address()'"'>Change</button>';
+            //});
         }
-        function showbutton1() {
-            $(".toggle-button1").show();
+        $("input[name = 'addressId']").change(function () {
+            $(".toggle-button1").toggle();
+        })
+        $("input[name = 'paymentModeId']").change(function () {
+            $(".submit").toggle();
+        })
+       
+        function address(){
+            $(".order").hide();
+            $(".addressDetails").show();
         }
 
         $('#my-form').on('change keyup paste', ':input', function (e) {
