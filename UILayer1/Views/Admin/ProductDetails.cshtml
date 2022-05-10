@@ -44,11 +44,11 @@
                         </div>
 
 
-                        <div class="col-4">
+                        <div class="col-4"style="margin-top:7%">
                             @{if (Model.images != null && Model.images.Any())
                                 {
 
-                                    <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=250 height=250 />
+                                    <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=300 height=450 />
 
                                 }
                                 else
@@ -74,7 +74,7 @@
                                     <div class="col-8">
                                         <div class="row">
                                             <p class="card-text col-6">Brand :</p>
-                                            <p class="col-3"> @Model.productBrand</p>
+                                            <p class="col-6"> @Model.productBrand</p>
                                         </div>
                                         <div class="row">
                                             <p class="card-text col-6">Model :</p>
