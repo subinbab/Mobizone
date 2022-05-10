@@ -102,155 +102,182 @@ element.style {
     <div class="col-md-12">
         <form asp-action="Create" class="row" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="id" runat="server" type="hidden"/>
-            <div class="form-group col-6">
-                <label asp-for="productType" class="control-label"></label>
-                <select class="form-control master js-select2" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
-                <span asp-validation-for="productType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="productBrand" class="control-label"></label>
-                <select asp-for="productBrand" class="form-control master js-select2"   asp-items="new SelectList(ViewBag.BrandList)"></select>
-                <span asp-validation-for="productBrand" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control " />
-                <span asp-validation-for="name" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="model" class="control-label"></label>
-                <input asp-for="model" class="form-control" />
-                <span asp-validation-for="model" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="price" class="control-label"></label>
-                <input asp-for="price" class="form-control" />
-                <span asp-validation-for="price" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="quantity" class="control-label"></label>
-                <input asp-for="quantity" class="form-control" />
-                <span asp-validation-for="quantity" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group col-6">
-                <label asp-for="specs.processor" class="control-label"></label>
-                <select asp-for="specs.processor" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Processor)"></select>
-                <span asp-validation-for="specs.processor" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="specs.ram" class="control-label"></label>
-                <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
-                 @{
-                                try
-                                {
-                                    if (Model == null)
-                                    {
-                                    }
-                                    else
-                                    {
-                                        if (Model.specs == null)
-                                        {
+            <input asp-for="id" runat="server" type="hidden" />
 
-                                        }
-                                        else
-                                        {
-                                            if (Model.specs.rams == null)
-                                            {
-
-                                            }
-                                            else
-                                            {
-                                                foreach (var item in Model.specs.rams)
-                                                {
-                                                    <option value="@item.ram">@item.ram <span onclick="DeleteMaster(@item.id)">&times;</span></option>
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-
-                                }
-                            }
-                <span asp-validation-for="specs.ram" class="text-danger"></span>
+            <div class="form-group col-5">
+                <div class="row">
+                    <label asp-for="name" class="control-label col-2"></label>
+                    <div class="col-8">
+                        <input asp-for="name" class="form-control " />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+                    
+                </div>
+                
             </div>
-            <div class="form-group col-6">
-                <label asp-for="specs.storage" class="control-label"></label>
-                <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
-                            @{
-                                try
-                                {
-                                    if (Model == null)
-                                    {
-                                    }
-                                    else
-                                    {
-                                        if (Model.specs == null)
-                                        {
+            <div class="form-group col-3">
+                <div class="row">
+                    <label asp-for="model" class="control-label col-4"></label>
+                    <div class="col-8">
+                        <input asp-for="model" class="form-control" />
+                        <span asp-validation-for="model" class="text-danger"></span>
+                    </div>
+                </div>
+                </div>
+            <div class="form-group col-5">
+                <div class="row">
+                    <label asp-for="price" class="control-label col-4"></label>
+                    <div class="col-6">
+                        <input asp-for="price" class="form-control" />
+                        <span asp-validation-for="price" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
 
-                                        }
-                                        else
-                                        {
-                                            if (Model.specs.storages == null)
-                                            {
+            <div class="form-group col-5">
+                <div class="row">
+                    <label asp-for="quantity" class="control-label"></label>
+                    <input asp-for="quantity" class="form-control" />
+                    <span asp-validation-for="quantity" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-3">
+                    <div class="row">
+                        <label asp-for="productType" class="control-label col-3"></label>
+                        <div class="col-8">
+                            <select class="form-control master js-select2" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
+                            <span asp-validation-for="productType" class="text-danger"></span>
+                        </div>
 
-                                            }
-                                            else
-                                            {
-                                                foreach (var item in Model.specs.storages)
-                                                {
-                                                    <option value="@item.storage">@item.storage  <span  onclick="DeleteMaster()">&times; @item.id</span></option>
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
+                    </div>
 
-                                }
-                            }
-
-                            <span asp-validation-for="specs.storage" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="specs.core" class="control-label"></label>
-                <select asp-for="specs.core" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Core)"></select>
-                <span asp-validation-for="specs.core" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="specs.camFeatures" class="control-label"></label>
-                <select asp-for="specs.camFeatures" class="form-control master js-select2" asp-items="new SelectList(ViewBag.camFeatures)"></select>
-                <span asp-validation-for="specs.camFeatures" class="text-danger"></span>
-            </div>
-            <div class="form-group col-6">
-                <label asp-for="specs.simType" class="control-label"></label>
-                <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
-                <span asp-validation-for="specs.simType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-12">
-                <label asp-for="description" class="control-label"></label>
-                <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                <span asp-validation-for="description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group col-2">
-                            @if(Model == null)
+                </div>
+                <div class="form-group col-5">
+                    <div class="row">
+                        <label asp-for="productBrand" class="control-label col-3"></label>
+                        <div class="col-6">
+                            <select asp-for="productBrand" class="form-control master js-select2" asp-items="new SelectList(ViewBag.BrandList)"></select>
+                            <span asp-validation-for="productBrand" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="specs.processor" class="control-label"></label>
+                    <select asp-for="specs.processor" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Processor)"></select>
+                    <span asp-validation-for="specs.processor" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="specs.ram" class="control-label"></label>
+                    <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
+                    @{
+                        try
+                        {
+                            if (Model == null)
                             {
-                                <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
-
                             }
                             else
                             {
-                                <input type="submit" value="Update" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;"/>
+                                if (Model.specs == null)
+                                {
 
+                                }
+                                else
+                                {
+                                    if (Model.specs.rams == null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model.specs.rams)
+                                        {
+                                            <option value="@item.ram">@item.ram <span onclick="DeleteMaster(@item.id)">&times;</span></option>
+                                        }
+                                    }
+                                }
                             }
-                            
-            </div>
-        </form>
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+                    <span asp-validation-for="specs.ram" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="specs.storage" class="control-label"></label>
+                    <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
+                    @{
+                        try
+                        {
+                            if (Model == null)
+                            {
+                            }
+                            else
+                            {
+                                if (Model.specs == null)
+                                {
+
+                                }
+                                else
+                                {
+                                    if (Model.specs.storages == null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model.specs.storages)
+                                        {
+                                            <option value="@item.storage">@item.storage  <span onclick="DeleteMaster()">&times; @item.id</span></option>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+
+                    <span asp-validation-for="specs.storage" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="specs.core" class="control-label"></label>
+                    <select asp-for="specs.core" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Core)"></select>
+                    <span asp-validation-for="specs.core" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="specs.camFeatures" class="control-label"></label>
+                    <select asp-for="specs.camFeatures" class="form-control master js-select2" asp-items="new SelectList(ViewBag.camFeatures)"></select>
+                    <span asp-validation-for="specs.camFeatures" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="specs.simType" class="control-label"></label>
+                    <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
+                    <span asp-validation-for="specs.simType" class="text-danger"></span>
+                </div>
+                <div class="form-group col-12">
+                    <label asp-for="description" class="control-label"></label>
+                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <span asp-validation-for="description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-2">
+                    @if (Model == null)
+                    {
+                        <input type="submit" value="Create" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;" />
+
+                    }
+                    else
+                    {
+                        <input type="submit" value="Update" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-right: 774px;" />
+
+                    }
+
+                </div>
+</form>
         <div class="form-group col-2" style="margin: -45px;float: right;position: absolute;padding: 0px;margin-left: 782px;">
         <button class="btn btn-light col row align-items-lg-end"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
         </div>
@@ -266,7 +293,7 @@ element.style {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="model" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -276,7 +303,11 @@ element.style {
             </div>
         </div>
     </div>
-
+<style>
+    .card {
+        font-size: 15px;
+    }
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="/js/main.js"></script>
 
