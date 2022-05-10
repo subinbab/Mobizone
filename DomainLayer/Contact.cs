@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainLayer
@@ -29,15 +29,15 @@ namespace DomainLayer
         [MaxLength(50)]
         public string country { get; set; }
         [Required]
-        [Column("Pincode", TypeName = "int", Order = 6)]
+        [Column("Pincode", TypeName = "nvarchar", Order = 6)]
         [MaxLength(10)]
         public int pincode { get; set; }
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
                    ErrorMessage = "Entered phone format is not valid.")]
-        [Column("PhoneNumber", TypeName = "int64", Order = 7)]
-        /*[MaxLength(10)]*/
-        public int phoneNumber { get; set; }
+        [Column("PhoneNumber", TypeName = "nvarchar", Order = 7)]
+        *//*[MaxLength(10)]*//*
+        public long phoneNumber { get; set; }
         [Required]
         [Column("email", TypeName = "nvarchar", Order = 8)]
         [MaxLength(50)]
@@ -45,4 +45,4 @@ namespace DomainLayer
         public string email { get; set; }
 
     }
-}
+}*/

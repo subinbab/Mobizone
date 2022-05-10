@@ -28,7 +28,7 @@ namespace Repository
         public DbSet<PrivacyPolicy> privacy { get; set; }
         public DbSet<About> about { get; set; }
         public DbSet<Checkout> checkOut { get; set; }
-        public DbSet<Contact> contact { get; set; }
+        public DbSet<AdminContact> contact { get; set; }
         public DbSet<Roles> roles { get; set; }
         public DbSet<ProductSubPart> productSubPart { get; set; }
 

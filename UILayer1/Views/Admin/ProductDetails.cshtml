@@ -17,7 +17,7 @@
 {
     <div class="row container-fluid pr-6">
         <div class="container-fluid mt-3 align-middle">
-            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded"style=" font-size: 15px;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-1">
@@ -37,7 +37,7 @@
                                             </div>
 
                                         }
-                                        <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px blacl;border: 2px solid;margin-top: 11px;"></i>
+                                        <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px blacl;border: 2px solid;margin-top: 11px; margin"></i>
                                     }}
 
                             </table>
@@ -48,7 +48,7 @@
                             @{if (Model.images != null && Model.images.Any())
                                 {
 
-                                    <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" width=300 height=450 />
+                                    <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath"  alt="No images available" />
 
                                 }
                                 else
@@ -60,54 +60,80 @@
 
                         <div class="col-6 pb-3">
                             <div>
-                                <h2 class="card-title ">@Model.name</h2>
+                                <h2 class="card-title " style="margin-left: -40%;">@Model.name</h2>
                             </div>
+                            <br />
                             <div>
-                                <h3 class="card-subtitle">Price :  @Model.price &#8377</h3>
+                                <h3 class="card-subtitle" style=" margin-left: -48%; color: indianred;"><b>&#8377 @Model.price</b> </h3>
                             </div>
                             <div class="col-12">
-                                <div class="row  card">
+                                <div class="row mt-3">
 
                                     <div class="col-3">
-                                        <p>Highlights</p>
+                                        <p><h4><b>Highlights</b></h4></p>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-8" style="padding-top:9% ; margin-left:-24%">
                                         <div class="row">
-                                            <p class="card-text col-6">Brand :</p>
-                                            <p class="col-6"> @Model.productBrand</p>
+                                            <p class="card-text col-6 row ">Brand</p>
+                                            <p class="col-6 row"> @Model.productBrand</p>
                                         </div>
                                         <div class="row">
-                                            <p class="card-text col-6">Model :</p>
-                                            <p class="col-6">  @Model.model</p>
+                                            <p class="card-text col-6 row ">Model</p>
+                                            <p class="col-6 row">  @Model.model</p>
                                         </div>
-                                        @* <p class="card-text ">Model : @Model.model</p>*@
+                                       
                                     </div>
                                 </div>
-                                <div class="row card">
+                                <div class="row mt-3">
 
                                     <div class="col-3">
-                                        <p>Specification</p>
+                                        <p><h4><b>Specification</b></h4></p>
                                     </div>
-                                    <div class="col-12">
-                                        <p class="card-text "> Operating System : @Model.specs.os</p>
-                                        <p class="card-text "> Processor : @Model.specs.processor</p>
-                                        <p class="card-text ">Processor Core : @Model.specs.core</p>
-                                        <p class="card-text ">
-                                            Ram : @foreach (var item in Model.specs.rams.ToList())
-                                            {<span style="border-block: outset;">@item.ram </span>}
-                                        </p>
-                                        <p class="card-text ">
-                                            Storage :@foreach (var item in Model.specs.storages.ToList())
-                                            {<span style="border-block: outset;">@item.storage </span>}
-                                        </p>
-                                        <p class="card-text ">SimType : @Model.specs.simType</p>
-                                        <p class="card-text ">Camera : @Model.specs.camFeatures</p>
-                                        <p class="card-text ">Quantity : @Model.quantity</p>
+                                    <div class="col-8" style="padding-top:10% ; margin-left:-25%">
+                                        <div class="row">
+                                            <p class="card-text col-6 row"> Operating System </p>
+                                            <p class="col-6 row"> @Model.specs.os</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row "> Processor</p>
+                                            <p class="col-6 row"> @Model.specs.processor</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row"> Processor Core</p>
+                                            <p class="col-6 row">@Model.specs.core</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row "> Ram </p>
+                                            <p class="col-6 row">
+                                                @foreach (var item in Model.specs.rams.ToList())
+                                                {<span style="border-block: outset;">@item.ram </span>}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row"> Storage</p>
+                                            <p class="col-6 row">
+                                                @foreach (var item in Model.specs.storages.ToList())
+                                                {<span style="border-block: outset;">@item.storage </span>}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row"> SimType</p>
+                                            <p class="col-6 row">@Model.specs.simType</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row"> Camera </p>
+                                            <p class="col-6 row"> @Model.specs.camFeatures</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="card-text col-6 row "> Quantity</p>
+                                            <p class="col-6 row"> @Model.quantity</p>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div>
-                                <button class="btn btn-light"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Back</b></a></button>
+                                <button class="btn btn-light" style="margin-left: 80%"><a asp-controller="Admin" asp-action="Index" style="text-decoration: none;"><b>Back</b></a></button>
                             </div>
                          
                         </div>
@@ -184,6 +210,9 @@
 
     </script>
     <style>
+        .col-6{
+            padding-left:36px;
+        }
         p {
             display: block;
         }

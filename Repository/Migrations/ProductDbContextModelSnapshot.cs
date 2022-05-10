@@ -67,6 +67,63 @@ namespace Repository.Migrations
                     b.ToTable("About");
                 });
 
+            modelBuilder.Entity("DomainLayer.AdminContact", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Address");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Country");
+
+                    b.Property<string>("district")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("District");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("email");
+
+                    b.Property<long>("phoneNumber")
+                        .HasColumnType("Bigint")
+                        .HasColumnName("PhoneNumber");
+
+                    b.Property<long>("pincode")
+                        .HasMaxLength(10)
+                        .HasColumnType("Bigint")
+                        .HasColumnName("Pincode");
+
+                    b.Property<string>("shopName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Shopname");
+
+                    b.Property<string>("state")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("State");
+
+                    b.HasKey("id");
+
+                    b.ToTable("AdminContact");
+                });
+
             modelBuilder.Entity("DomainLayer.Checkout", b =>
                 {
                     b.Property<int>("id")
@@ -110,64 +167,6 @@ namespace Repository.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DomainLayer.Contact", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Address");
-
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Country");
-
-                    b.Property<string>("district")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("District");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("email");
-
-                    b.Property<int>("phoneNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("int")
-                        .HasColumnName("PhoneNumber");
-
-                    b.Property<int>("pincode")
-                        .HasMaxLength(10)
-                        .HasColumnType("int")
-                        .HasColumnName("Pincode");
-
-                    b.Property<string>("shopName")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnName("Shopname");
-
-                    b.Property<string>("state")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("State");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
