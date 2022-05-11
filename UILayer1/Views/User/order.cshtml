@@ -116,7 +116,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end submit" style="display:none"><input type="submit" class="btn btn-orange" /></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" class="btn btn-orange submit" onchange="displaySubmit()" style="display:none"/></div>
                             </div>
 
 
@@ -127,41 +127,25 @@ else
                 </div>
             </form>
             <div class="col">
-<<<<<<< HEAD
-                <!-- Card with center text alignment -->
-                <div class="card text-center">
-                    <div class="card-body">
-                        <div class=" priceDetails">
-                            <h5 class="card-title">Price Details</h5>
-                            <hr />
-                            <p class="card-text" id="priceField"> </p>
-                            <div class="card-text">Shipping Charge : 0</div>
-                            <div id="price"></div>
-                        </div>
-                        
-=======
+
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
-                        <div class="Price">
+                        <div class="Price" style="background-color: #993a3a;color: white;font-variant: all-small-caps;">
                             <h5 class="card-title" style="padding: 8px;">Price Details</h5>
                             <hr />
                         </div>
                         <div>
                             <p class="card-text" id="priceField">Price </p>
-                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6">  Free</p>  </div></div>
+                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
                             <div id="price"></div>
                         </div>
-                        <hr/>
+                        
                         <div class="">
                             <p class="card-text" id="totalPrice">Total Payable</p>
                             <div id="price"></div>
                         </div>
 
-
-
-
->>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250
                     </div>
                 </div>
                 <!-- Card with center text alignment -->
@@ -186,12 +170,10 @@ else
         
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
-<<<<<<< HEAD
-            document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
-=======
+
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
->>>>>>> 0b2a6f805276a5835e76bc75284391b3d183b126
+
             if(data>0){
                 $(".toggle-button2").show();
             }
@@ -203,6 +185,7 @@ else
             $(".cancel2").hide();
             $(".orderDetails").hide();
             $(".toggle-button1").hide();
+            $(".toggle-button2").hide();
         }
         function orderDetails() {
             $(".order").show();
@@ -235,10 +218,15 @@ else
                 document.getElementById("priceField").innerHTML(data);
 
             }
-
+        function displaySubmit() {
+            $(".submit").toggle();
+        }
 
     </script>
     <style>
+        .submit{
+            display:none;
+        }
         .address {
             background-color: #993a3a;
             padding: 5px;
@@ -270,6 +258,9 @@ else
             flex-wrap: wrap;
             margin-right: 0;
             margin: 11px;
+        }
+        .footer {
+            margin-top: 333px !important;
         }
 
     </style>
