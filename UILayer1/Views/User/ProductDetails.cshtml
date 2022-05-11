@@ -6,6 +6,7 @@
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
 }
 
+<<<<<<< HEAD
 
 
 <div class="row container-fluid pr-6">
@@ -205,6 +206,9 @@
                             }
                         </style>
 
+=======
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+>>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250
 <div class="row">
     <div class="sticky col-4 row card">
         <div class="col-3">
@@ -249,11 +253,42 @@
     <div class="col-8" style="position: relative;margin-left: 518px;">
         <div class="col-6 pb-3">
             <h2 class="card-title " style="font-size: 21px;">@Model.name ( Storage @Model.specs.storages.FirstOrDefault().storage; ), Ram ( @Model.specs.rams.FirstOrDefault().ram ))</h2>
-            <h3 class="card-subtitle" style="font-stretch: expanded;"> &#8377 @Model.price </h3>
+            <h3 class="card-subtitle" style="padding-left: 14px;font-weight: 600;"> &#8377 @Model.price </h3>
             <h4>Model:@Model.model</h4>
             <div class="row mt-3">
-
-                <div class="col-12">
+                <div class="col-12 row">
+                    <div class="col-3" style="color: darkgray;font-weight: 600;">Highlights</div>
+                    <table class="col-9 ">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td> Processor</td>
+                            <td>
+                                    <li>@Model.specs.processor</li>
+                               </td>
+                        </tr>
+                        <tr>
+                            <td>Ram</td>
+                            <td>
+                                @foreach (var item in Model.specs.rams.ToList())
+                                {<span >@item.ram </span>}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Storages </td>
+                            <td>
+                                @foreach (var item in Model.specs.storages.ToList())
+                                {<span >@item.storage </span>}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-12 row mt-3">
+                    <div class="col-3" style="color: darkgray;font-weight: 600;" >Specification</div>
                     <table class="col-9">
                         <thead>
                             <tr>
@@ -263,50 +298,50 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Brand :</td>
-                                <td>@Model.productBrand</td>
+                                <td>Brand </td>
+                                <td><li>@Model.productBrand</li></td>
                             </tr>
                             <tr>
-                                <td>Model :</td>
-                                <td>@Model.model</td>
+                                <td>Model </td>
+                                <td><li>@Model.model</li></td>
                             </tr>
                             <tr>
-                                <td>Quatity :</td>
-                                <td>@Model.quantity</td>
+                                <td>Quatity </td>
+                                <td><li>@Model.quantity</li></td>
                             </tr>
                             <tr>
-                                <td>Os:</td>
-                                <td> @Model.specs.os</td>
+                                <td>Os</td>
+                                <td><li> @Model.specs.os</li></td>
                             </tr>
                             <tr>
-                                <td>Processor :</td>
+                                <td>Processor </td>
                                 <td>@Model.specs.processor</td>
                             </tr>
                             <tr>
-                                <td>Processor Core :</td>
-                                <td>@Model.specs.core</td>
+                                <td>Processor Core </td>
+                                <td><li>@Model.specs.core</li></td>
                             </tr>
                             <tr>
                                 <td>Ram</td>
                                 <td>
                                     @foreach (var item in Model.specs.rams.ToList())
-                        {<span style="border-block: outset;">@item.ram </span>}
+                        {<span >@item.ram </span>}
                                 </td>
                             </tr>
                             <tr>
-                                <td>Storages :</td>
+                                <td>Storages </td>
                                 <td>
                                 @foreach (var item in Model.specs.storages.ToList())
-                        {<span style="border-block: outset;">@item.storage </span>}
+                        {<span >@item.storage </span>}
                             </td>
                             </tr>
                             <tr>
                                 <td>SimType</td>
-                                <td>: @Model.specs.simType</td>
+                                <td><li> @Model.specs.simType</li></td>
                             </tr>
                             <tr>
                                 <td>Camera</td>
-                                <td>: @Model.specs.camFeatures</td>
+                                <td><li> @Model.specs.camFeatures</li></td>
                             </tr>
                         </tbody>
                     </table>
@@ -314,7 +349,7 @@
 
                 <div class="col-12">
                     <p>Description</p>
-                    <p>@Model.description</p>
+                    <p><li>@Model.description</li></p>
                 </div>
             </div>
 
@@ -329,10 +364,10 @@
     div.sticky {
         position: -webkit-sticky;
         position: fixed;
-        height: 485px;
+        height: 587px;
         margin-top: 96px;
         top: 0;
-      
+
         padding: 9px;
         font-size: 20px;
     }
@@ -341,5 +376,15 @@
         padding: 1px 16px;
         height: 100%;
     }
+<<<<<<< HEAD
 </style>
 
+=======
+
+    li {
+        text-decoration: none;
+        list-style-type: disc;
+    }
+
+</style>
+>>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250

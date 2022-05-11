@@ -6,27 +6,27 @@ namespace Repository.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Pincode",
+                table: "AdminContact",
+                type: "nvarchar(10)",
+                maxLength: 10,
+                nullable: false,
+                oldClrType: typeof(long),
+                oldType: "Bigint",
+                oldMaxLength: 10);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.AlterColumn<long>(
                 name: "Pincode",
                 table: "AdminContact",
                 type: "Bigint",
                 maxLength: 10,
                 nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldMaxLength: 10);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<int>(
-                name: "Pincode",
-                table: "AdminContact",
-                type: "int",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(long),
-                oldType: "Bigint",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(10)",
                 oldMaxLength: 10);
         }
     }

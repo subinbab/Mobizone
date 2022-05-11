@@ -59,12 +59,18 @@
                         </div>
                         <br />
                         <div class="row">
-
-<<<<<<< HEAD
-                            <div class="col-md-4">
+        <div class="col-md-4">
                                 <label asp-for="country" class="control-label">Country</label>
                                 <input asp-for="country" class="form-control" />
                                 <span asp-validation-for="country" class="text-danger"></span>
+
+
+                            <div class="col-md-6">
+                                @*<label asp-for="email" class="control-label">Email</label>*@
+                                <input asp-for="email" placeholder="Email" class="form-control" />
+
+                                <span asp-validation-for="email" class="text-danger"></span>
+
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="pincode" class="control-label">Pincode</label>
@@ -79,23 +85,37 @@
                             <div class="col-md-12">
                                 <label asp-for="email" class="control-label">Email</label>
                                 <input asp-for="email" class="form-control" />
-=======
-                           
->>>>>>> 27042b634c342f3b8c52cc10078dc5af98e1697b
+
 
                             </div>
                         </div>
-                        <br /><div class="text-center" style="margin-left:70%">
-                            <div class="form-group">
-                                <input type="submit" value="Save" class="btn btn-primary" />
+
+ 
+
+
+
 
                                 <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
 
 
+
+                    <div class="text-center" style="margin-left:70%">
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+
+
+
+>
                             </div>
                         </div>
 
                 </form>
+                <div class="text-center">
+                    <div class="form-group">
+                        <button class="btn btn-light" style="margin-left: 90%;margin-top: -14%;"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -105,8 +125,14 @@
         <a asp-action="Index">Back to List</a>
     </div>
 *@
+<<<<<<< HEAD
 
 
 
 
 
+=======
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+>>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250
