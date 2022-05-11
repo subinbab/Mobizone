@@ -145,7 +145,7 @@ else
         })
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
-            document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * data + '</p>';
+            document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
             if(data>0){
                 $(".toggle-button2").show();
             }
