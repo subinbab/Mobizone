@@ -102,9 +102,10 @@ namespace Repository.Migrations
                         .HasColumnType("Bigint")
                         .HasColumnName("PhoneNumber");
 
-                    b.Property<long>("pincode")
+                    b.Property<string>("pincode")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("Bigint")
+                        .HasColumnType("nvarchar(10)")
                         .HasColumnName("Pincode");
 
                     b.Property<string>("shopName")

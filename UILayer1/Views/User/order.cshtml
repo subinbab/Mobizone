@@ -20,7 +20,7 @@ else
 {
     <div class="container-fluid mt-3">
 
-        <div class="row">
+        <div class="row" style="margin-right: 6%;margin-left: 7%;">
             <form asp-action="order" method="post" class="col" id="my-form">
                 <input asp-for="id" value="0" type="hidden" />
                 <input asp-for="productId" type="hidden" value="@data.id" />
@@ -117,16 +117,31 @@ else
                 </div>
             </form>
             <div class="col">
-                <!-- Card with center text alignment -->
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Price Details</h5>
-                        <hr />
-                        <p class="card-text" id="priceField"> </p>
-                        <div class="card-text">Shipping Charge : 0</div>
-                        <div id="price"></div>
+                <div class="col-6">
+                    <div class="card" style="margin-left: 19%;margin-right: -38%;">
+
+                        <div class="Price">
+                            <h5 class="card-title" style="padding: 8px;">Price Details</h5>
+                            <hr />
+                        </div>
+                        <div>
+                            <p class="card-text" id="priceField">Price </p>
+                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6">  Free</p>  </div></div>
+                            <div id="price"></div>
+                        </div>
+                        <hr/>
+                        <div class="">
+                            <p class="card-text" id="totalPrice">Total Payable</p>
+                            <div id="price"></div>
+                        </div>
+
+
+
+
                     </div>
                 </div>
+                <!-- Card with center text alignment -->
+                
             </div>
         </div>
     </div>
@@ -141,11 +156,18 @@ else
             document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
         }
         $(document).ready(function () {
-            document.getElementById("priceField").innerHTML = '<p> Price:'+sourcearray.price+' </p>';
+            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6"> Price <p class="col-6">  ₹' + sourcearray.price + ' </p>';
+            document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6" style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price + ' </p>';
         })
+        
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
+<<<<<<< HEAD
             document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
+=======
+            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+            document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
+>>>>>>> 0b2a6f805276a5835e76bc75284391b3d183b126
             if(data>0){
                 $(".toggle-button2").show();
             }

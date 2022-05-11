@@ -11,7 +11,7 @@
 }
 @*<div class="text-center">
     <div class="row align-item-center">*@
-<div class="container-fluid mt-3 align-middle" style="width:72%" >
+<div class="container-fluid mt-3 align-middle" style="width:72%">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
         <div class="col-md-12 mb-4">
             <div class="card-body">
@@ -60,7 +60,7 @@
                         <br />
                         <div class="row">
 
-                           
+
 
                             <div class="col-md-6">
                                 @*<label asp-for="email" class="control-label">Email</label>*@
@@ -74,7 +74,7 @@
                                 <span asp-validation-for="phoneNumber" class="text-danger"></span>
                             </div>
                         </div>
-                       
+
 
                     </div>
                     <br />
@@ -83,19 +83,28 @@
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
 
-                            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
-                            
+
+
 
                         </div>
                     </div>
 
                 </form>
+                <div class="text-center">
+                    <div class="form-group">
+                        <button class="btn btn-light" style="margin-left: 90%;margin-top: -14%;"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @*<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 *@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

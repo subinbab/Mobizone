@@ -39,10 +39,10 @@ namespace DomainLayer
         
         public long phoneNumber { get; set; }
         [Required]
-        [Column("Pincode", TypeName = "Bigint", Order = 6)]
-        [MaxLength(10)]
-
-        public long pincode { get; set; }
+        [Column("Pincode", TypeName = "nvarchar", Order = 6)]
+        [MaxLength(6)]
+        [RegularExpression(@"^[1-9]{1}[0-9]{5}$", ErrorMessage = "Invalid Pincode")]
+        public string pincode { get; set; }
         [Required]
         [Column("email", TypeName = "nvarchar", Order = 8)]
         [MaxLength(50)]
