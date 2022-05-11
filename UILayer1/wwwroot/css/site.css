@@ -124,4 +124,10 @@ nav {
     z-index: 999;
 }
 
-
+@media only screen and (min-width: 1644px) {
+    div.sticky {
+        
+        height: 587px !important;
+       
+    }
+}

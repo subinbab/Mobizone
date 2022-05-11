@@ -54,10 +54,8 @@ else
 
                             <div class="row">
 
-                                <div class="col"><a class="btn btn-light "><a asp-action="address" class="btn btn-primary">Add New Address</a></a></div>
-                                <div class="col cancel1"><a asp-action="index" class="btn btn-primary">Cancel</a></div>
-                                <div class="col col d-flex justify-content-end "><a style="display: none; padding-top: 8px; padding-bottom: 8px; padding-left: 12px;" href="#" class="btn btn-primary toggle-button1" onclick="orderDetails()">continue</a></div>
-
+                                
+                                
                                 <div class="col"><a asp-action="address" class="btn btn-orange">Add New Address</a></div>
                                                    <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display:none" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
 
@@ -129,6 +127,19 @@ else
                 </div>
             </form>
             <div class="col">
+<<<<<<< HEAD
+                <!-- Card with center text alignment -->
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class=" priceDetails">
+                            <h5 class="card-title">Price Details</h5>
+                            <hr />
+                            <p class="card-text" id="priceField"> </p>
+                            <div class="card-text">Shipping Charge : 0</div>
+                            <div id="price"></div>
+                        </div>
+                        
+=======
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
@@ -150,6 +161,7 @@ else
 
 
 
+>>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250
                     </div>
                 </div>
                 <!-- Card with center text alignment -->
@@ -174,8 +186,12 @@ else
         
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
+<<<<<<< HEAD
+            document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
+=======
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
+>>>>>>> 0b2a6f805276a5835e76bc75284391b3d183b126
             if(data>0){
                 $(".toggle-button2").show();
             }
