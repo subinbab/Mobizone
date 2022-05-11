@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
 }
 @model DomainLayer.Checkout
 @{
@@ -68,12 +69,23 @@ else
                         <div class="">
                             
                             <h5 class="card-title address">Order Summary</h5>
+                            
                             <div class="orderDetails">
                                 <div class="form-check">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    @data.name (@data.specs.ram GB , @data.specs.storage GB)<br>@data.price
-                                    <div class=>Qty:<input name="quantity"  asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag"/></div>
-                                </label>
+                                    <div class="">
+                                        <div class="col-12">
+                                            <img class="img-fluid" src="~/Product/Images/@data.images.FirstOrDefault().imagePath" style="width: 10%;"/>
+                                            <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                                @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
+                                                <div class=>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
+                                            </label>
+                                        </div>
+                                        
+                                        </div>
+
+
+                                   
+                                
 
                             </div>
                             </div>
