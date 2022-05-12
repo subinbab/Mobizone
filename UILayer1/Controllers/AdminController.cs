@@ -505,6 +505,10 @@ namespace UIlayer.Controllers
             OrderStatus statuses = new OrderStatus();
             
                 var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
+            if((OrderStatus)Enum.Parse(typeof(OrderStatus), status) == DomainLayer.OrderStatus.cancelled)
+            {
+                checkoutData.cancelRequested = RoleTypes.Admin;
+            }
                 checkoutData.status = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
             userApi.EditCheckout(checkoutData);
 
@@ -722,6 +726,11 @@ namespace UIlayer.Controllers
         public IActionResult OrderStatus()
         {
             return new JsonResult(EnumConvertion.EnumToString<OrderStatus>());
+        }
+        [HttpGet]
+        public IActionResult RoleType()
+        {
+            return new JsonResult(EnumConvertion.EnumToString<RoleTypes>());
         }
     }
 }

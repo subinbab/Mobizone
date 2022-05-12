@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
 }
 @model DomainLayer.Checkout
 @{
@@ -66,12 +67,23 @@ else
                         <div class="">
                             
                             <h5 class="card-title address">Order Summary</h5>
+                            
                             <div class="orderDetails">
                                 <div class="form-check">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    @data.name (@data.specs.ram GB , @data.specs.storage GB)<br>@data.price
-                                    <div class=>Qty:<input name="quantity"  asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag"/></div>
-                                </label>
+                                    <div class="">
+                                        <div class="col-12">
+                                            <img class="img-fluid" src="~/Product/Images/@data.images.FirstOrDefault().imagePath" style="width: 10%;"/>
+                                            <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                                @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
+                                                <div class=>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
+                                            </label>
+                                        </div>
+                                        
+                                        </div>
+
+
+                                   
+                                
 
                             </div>
                             </div>
@@ -104,7 +116,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end submit" style="display:none"><input type="submit" class="btn btn-orange" /></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" class="btn btn-orange submit" onchange="displaySubmit()" style="display:none"/></div>
                             </div>
 
 
@@ -116,6 +128,7 @@ else
             </form>
             <div class="col">
 
+<<<<<<< HEAD
                 <!-- Card with center text alignment -->
                 <div class="card text-center">
                     <div class="card-body">
@@ -127,27 +140,32 @@ else
                             <div id="price"></div>
                         </div>
 
+=======
+>>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
-                        <div class="Price">
+                        <div class="Price" style="background-color: #993a3a;color: white;font-variant: all-small-caps;">
                             <h5 class="card-title" style="padding: 8px;">Price Details</h5>
                             <hr />
                         </div>
                         <div>
                             <p class="card-text" id="priceField">Price </p>
-                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6">  Free</p>  </div></div>
+                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
                             <div id="price"></div>
                         </div>
-                        <hr/>
+                        
                         <div class="">
                             <p class="card-text" id="totalPrice">Total Payable</p>
                             <div id="price"></div>
                         </div>
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
                     </div>
                 </div>
                 <!-- Card with center text alignment -->
@@ -173,8 +191,12 @@ else
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
 
+<<<<<<< HEAD
             document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
    document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+=======
+            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+>>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
 
             if(data>0){
@@ -188,6 +210,7 @@ else
             $(".cancel2").hide();
             $(".orderDetails").hide();
             $(".toggle-button1").hide();
+            $(".toggle-button2").hide();
         }
         function orderDetails() {
             $(".order").show();
@@ -220,10 +243,15 @@ else
                 document.getElementById("priceField").innerHTML(data);
 
             }
-
+        function displaySubmit() {
+            $(".submit").toggle();
+        }
 
     </script>
     <style>
+        .submit{
+            display:none;
+        }
         .address {
             background-color: #993a3a;
             padding: 5px;
@@ -255,6 +283,9 @@ else
             flex-wrap: wrap;
             margin-right: 0;
             margin: 11px;
+        }
+        .footer {
+            margin-top: 333px !important;
         }
 
     </style>
