@@ -43,11 +43,12 @@
             {
                 <p>No Image</p>
             }
+
         </div>
         <div class="row  mt-3">
                     <div class="col "><a asp-action="checkout" asp-route-id="@Model.id"><button class="btn btn-orange buynow">Buy Now</button></a></div>
                     <div class="col"><a asp-action="cartpage" asp-route-id="@Model.id"><button class="btn btn-indigo buynow" style="font-size: 9px;">Add to Cart</button></a></div>
-                </div>
+        </div>
     </div>
     <div class="col-8" style="position: relative;margin-left: 518px;">
         <div class="col-6 pb-3">
@@ -73,20 +74,20 @@
                             <td>Ram</td>
                             <td>
                                 @foreach (var item in Model.specs.rams.ToList())
-                                {<span >@item.ram </span>}
+                                {<span>@item.ram </span>}
                             </td>
                         </tr>
                         <tr>
                             <td>Storages </td>
                             <td>
                                 @foreach (var item in Model.specs.storages.ToList())
-                                {<span >@item.storage </span>}
+                                {<span>@item.storage </span>}
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="col-12 row mt-3">
-                    <div class="col-3" style="color: darkgray;font-weight: 600;" >Specification</div>
+                    <div class="col-3" style="color: darkgray;font-weight: 600;">Specification</div>
                     <table class="col-9">
                         <thead>
                             <tr>
@@ -123,15 +124,15 @@
                                 <td>Ram</td>
                                 <td>
                                     @foreach (var item in Model.specs.rams.ToList())
-                        {<span >@item.ram </span>}
+                                    {<span>@item.ram </span>}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Storages </td>
                                 <td>
-                                @foreach (var item in Model.specs.storages.ToList())
-                        {<span >@item.storage </span>}
-                            </td>
+                                    @foreach (var item in Model.specs.storages.ToList())
+                                    {<span>@item.storage </span>}
+                                </td>
                             </tr>
                             <tr>
                                 <td>SimType</td>
@@ -143,15 +144,18 @@
                             </tr>
                         </tbody>
                     </table>
-                   
 
-                <div class="col-12">
-                    <p>Description</p>
-                    <p><li>@Model.description</li></p>
+
+                    <div class="col-12">
+                        <p>Description</p>
+                        <p><li>@Model.description</li></p>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <button class="btn btn-light"><a asp-controller="User" asp-action="index" style="text-decoration:none; color:indianred"><b>Back</b></a></button>
+                </div>
 
-        </div>
+            </div>
     </div>
     </div>
 </div>
@@ -174,12 +178,6 @@
         padding: 1px 16px;
         height: 100%;
     }
-<<<<<<< HEAD
-
-</style>
-=======
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
-
 
     li {
         text-decoration: none;
@@ -187,7 +185,4 @@
     }
 
 </style>
-<<<<<<< HEAD
-=======
 
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
