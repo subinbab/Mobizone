@@ -43,11 +43,12 @@
             {
                 <p>No Image</p>
             }
+
         </div>
         <div class="row  mt-3">
                     <div class="col "><a asp-action="checkout" asp-route-id="@Model.id"><button class="btn btn-orange buynow">Buy Now</button></a></div>
                     <div class="col"><a asp-action="cartpage" asp-route-id="@Model.id"><button class="btn btn-indigo buynow" style="font-size: 9px;">Add to Cart</button></a></div>
-                </div>
+        </div>
     </div>
     <div class="col-8" style="position: relative;margin-left: 518px;">
         <div class="col-7 pb-3">
@@ -89,7 +90,7 @@
                     </table>
                 </div>
                 <div class="col-12 row mt-3">
-                    <div class="col-3" style="color: darkgray;font-weight: 600;" >Specification</div>
+                    <div class="col-3" style="color: darkgray;font-weight: 600;">Specification</div>
                     <table class="col-9">
                         <thead>
                             <tr>
@@ -126,15 +127,23 @@
                                 <td class="td">Ram</td>
                                 <td class="td">
                                     @foreach (var item in Model.specs.rams.ToList())
-                        {<span >@item.ram </span>}
+                                    {<span>@item.ram </span>}
                                 </td>
                             </tr>
                             <tr>
+<<<<<<< HEAD
                                 <td class="td">Storages </td>
                                 <td class="td">
                                 @foreach (var item in Model.specs.storages.ToList())
                         {<span >@item.storage </span>}
                             </td>
+=======
+                                <td>Storages </td>
+                                <td>
+                                    @foreach (var item in Model.specs.storages.ToList())
+                                    {<span>@item.storage </span>}
+                                </td>
+>>>>>>> ddd5394192f92585bea20466125b7089ae7ad34b
                             </tr>
                             <tr>
                                 <td class="td">SimType</td>
@@ -146,15 +155,18 @@
                             </tr>
                         </tbody>
                     </table>
-                   
 
-                <div class="col-12">
-                    <p>Description</p>
-                    <p><li>@Model.description</li></p>
+
+                    <div class="col-12">
+                        <p>Description</p>
+                        <p><li>@Model.description</li></p>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <button class="btn btn-light"><a asp-controller="User" asp-action="index" style="text-decoration:none; color:indianred"><b>Back</b></a></button>
+                </div>
 
-        </div>
+            </div>
     </div>
     </div>
 </div>
@@ -177,6 +189,7 @@
         padding: 1px 16px;
         height: 100%;
     }
+<<<<<<< HEAD
     .td{
         margin-top:-10px;
         padding-top:20px;
@@ -185,12 +198,21 @@
         padding-top: 20px;
         padding-right: -20px;
         margin-left: 5px;
+=======
+
+    li {
+        text-decoration: none;
+        list-style-type: disc;
+>>>>>>> ddd5394192f92585bea20466125b7089ae7ad34b
     }
 
 </style>
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> ddd5394192f92585bea20466125b7089ae7ad34b
