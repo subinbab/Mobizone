@@ -1,6 +1,6 @@
 ﻿
 @{
-    if(ViewBag.BrandList == null)
+    if (ViewBag.BrandList == null)
     {
         ViewBag.BrandList = "";
     }
@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -27,23 +27,24 @@
     <nav class="navbar navbar-light " style="position: fixed; width: 100%;     background-color: white;">
 
         <div class="container-fluid row">
-            <div class="col-3"style="padding-top: 2%; margin-left: -3%;">
-              <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:46px; width:58px;"
-                 class="float-left" />
-              <a class="" asp-action="Index" style="margin-left: 0px; font-size: 23px;
+            <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
+                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:46px; width:58px;"
+                     class="float-left" />
+                <a class="" asp-action="Index" style="margin-left: 0px; font-size: 23px;
                    -webkit-text-stroke: thin;
-                    color: brown;">MOBIZONE
-              </a>
+                    color: brown;">
+                    MOBIZONE
+                </a>
             </div>
             <div class="col">
                 <div class="row" style="align-items: baseline;">
                     <div class="form-outline col-10 mt-2">
                         <input type="search" id="form1" class="form-control" />
-                     </div>
+                    </div>
                     <button type="button" class="btn  col-2 btn-indigo" style="width: 10px;">
-                 <i class="fas fa-search " style="font-size: 17px;"></i>
-                </button>
-               </div>
+                        <i class="fas fa-search " style="font-size: 17px;"></i>
+                    </button>
+                </div>
             </div>
 
 
@@ -82,24 +83,24 @@
                         <a class="mr-3">Cart</a>
                     </div>
                 </div>
-                
-                
+
+
             </div>
 
         </div>
     </nav>
 
-    <div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99;background-color: white;">
+    <div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99">
         <div id="filter">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
-        <div id="dropdown1" class="dropdown">
+        <div id="dropdown1" class="dropdown" >
             <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
-                    <option disabled selected>--- Select ---</option>
+                <select name="brandName"asp-items="new SelectList(ViewBag.BrandList)"style="color:indianred ">
+                    <option disabled selected >--- Select ---</option>
                 </select>
 
-                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit" value="Filter"></input>
+                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit" value="Filter" style="background-color:indianred; color:white"></input>
             </form>
         </div>
 
@@ -120,12 +121,6 @@
                 <div>
                     @RenderBody()
                     <footer class="border-top footer text-muted">
-
-
-
-
-                      
-
                         <div class="row-bordered">
                             <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
                                  class="float-left" />
@@ -157,12 +152,20 @@
 
                         <hr>
                         <div>
-                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 12px; width: 12px;" /> <a> Mobizone private limited all right reserved</a>
-
+                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 12px; width: 12px; " />
+                            <a>mobizone private limited reserved</a>
                         </div>
+                    
+
 
 
                         <style>
+                            html, body {
+                                margin: 0;
+                                padding: 0;
+                                overflow-x: hidden;
+                            }
+
                             .container-fluid {
                                 width: 100%;
                                 padding-right: 15px;
@@ -190,10 +193,9 @@
                             a {
                                 cursor: pointer;
                             }
-                            
                         </style>
                     </footer>
-    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -220,3 +222,10 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+
+
+
+
+
