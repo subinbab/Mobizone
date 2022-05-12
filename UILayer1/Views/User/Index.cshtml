@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
 }
 @if (User.Identity.IsAuthenticated!)
 {
@@ -20,10 +22,10 @@
 }
 else
 {
-    <div class="row">
+    <div class="row" style="justify-content: center;">
       @foreach (var item in Model)
 {
-        <div class="card shadow-lg  bg-white rounded mr-4 mt-4">
+        <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-3">
             <div class="card-body">
 
                 <div class="col-12">
@@ -60,3 +62,20 @@ else
 
 }
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        @for (int i = 0; i < count; i++)
+        {
+            <li class="page-item"><a class="page-link" href="user/index/@pagination">@pagination</a></li>
+            pagination = pagination + 1;
+        }
+
+      
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>

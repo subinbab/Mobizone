@@ -128,20 +128,8 @@ else
             </form>
             <div class="col">
 
-<<<<<<< HEAD
-                <!-- Card with center text alignment -->
-                <div class="card text-center">
-                    <div class="card-body">
-                        <div class=" priceDetails">
-                            <h5 class="card-title">Price Details</h5>
-                            <hr />
-                            <p class="card-text" id="priceField"> </p>
-                            <div class="card-text">Shipping Charge : 0</div>
-                            <div id="price"></div>
-                        </div>
 
-=======
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
+
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
@@ -160,12 +148,8 @@ else
                             <div id="price"></div>
                         </div>
 
-<<<<<<< HEAD
 
 
-
-=======
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
                     </div>
                 </div>
                 <!-- Card with center text alignment -->
@@ -191,12 +175,8 @@ else
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
 
-<<<<<<< HEAD
-            document.getElementById("priceField").innerHTML = '<p> Price' + sourcearray.price * data + '</p>';
-   document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
-=======
-            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
+  document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
 
             if(data>0){

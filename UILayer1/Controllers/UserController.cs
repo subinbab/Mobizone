@@ -52,15 +52,31 @@ namespace UILayer.Controllers
 
 
         }
-        public IActionResult Index()
+        public IActionResult Index(int? count )
         {
             try
             {
+                if(count == null)
+                {
+                    count = 0;
+                }
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 var data = _opApi.GetAll().Result.Where(c=>c.status.Equals(ProductStatus.enable));
+                var productCount = data.Count();
+                int cout = 0;
+                for(int i = 0; i <= 0; i++)
+                {
+                    if (productCount > 10)
+                    {
+                        cout += 1;
+                    }
+                    productCount = productCount - 10;
+                }
+                var result = data.Skip((int)count * 10).Take(((int)count + 1) * 10);
+                ViewBag.count = cout;
                 if(data != null)
                 {
-                    return View(data);
+                    return View(result);
                 }
                 else
                 {
