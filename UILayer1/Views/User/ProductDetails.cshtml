@@ -50,12 +50,12 @@
                 </div>
     </div>
     <div class="col-8" style="position: relative;margin-left: 518px;">
-        <div class="col-6 pb-3">
-            <h2 class="card-title " style="font-size: 21px;">@Model.name ( Storage @Model.specs.storages.FirstOrDefault().storage; ), Ram ( @Model.specs.rams.FirstOrDefault().ram ))</h2>
+        <div class="col-7 pb-3">
+            <h2 class="card-title " style="font-size: 21px;">@Model.name ( Storage @Model.specs.storages.FirstOrDefault().storage) Ram(@Model.specs.rams.FirstOrDefault().ram)</h2>
             <h3 class="card-subtitle" style="padding-left: 14px;font-weight: 600;"> &#8377 @Model.price </h3>
             <h4>Model:@Model.model</h4>
-            <div class="row mt-3">
-                <div class="col-12 row">
+      
+                <div class="col-12 row mt-3">
                     <div class="col-3" style="color: darkgray;font-weight: 600;">Highlights</div>
                     <table class="col-9 ">
                         <thead>
@@ -64,23 +64,26 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tr>
+                       
+                       @* <tr>
+                            <td>Processor</td>
                             <td>
-                                <li></li>@Model.specs.processor
+                                @foreach (var item in Model.specs.processor.ToList())
+                                {<span>@Model.specs.processor</span>}
                             </td>
-                        </tr>
+                        </tr>*@
                         <tr>
-                            <td>Ram</td>
-                            <td>
+                            <td class="class" >Ram</td>
+                            <td class="class">
                                 @foreach (var item in Model.specs.rams.ToList())
-                                {<span >@item.ram </span>}
+                                {<span>@item.ram </span>}
                             </td>
                         </tr>
                         <tr>
-                            <td>Storages </td>
-                            <td>
+                            <td class="class">Storages </td>
+                            <td class="class">
                                 @foreach (var item in Model.specs.storages.ToList())
-                                {<span >@item.storage </span>}
+                                {<span>@item.storage </span>}
                             </td>
                         </tr>
                     </table>
@@ -96,50 +99,50 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Brand </td>
-                                <td><li>@Model.productBrand</li></td>
+                                <td class="td">Brand </td>
+                                <td class="td"><li>@Model.productBrand</li></td>
                             </tr>
                             <tr>
-                                <td>Model </td>
-                                <td><li>@Model.model</li></td>
+                                <td class="td">Model </td>
+                                <td class="td"><li>@Model.model</li></td>
                             </tr>
                             <tr>
-                                <td>Quatity </td>
-                                <td><li>@Model.quantity</li></td>
+                                <td class="td">Quatity </td>
+                                <td class="td"><li>@Model.quantity</li></td>
                             </tr>
                             <tr>
-                                <td>Os</td>
-                                <td><li> @Model.specs.os</li></td>
+                                <td class="td">Os</td>
+                                <td class="td"><li> @Model.specs.os</li></td>
                             </tr>
                             <tr>
-                                <td>Processor </td>
-                                <td>@Model.specs.processor</td>
+                                <td class="td">Processor </td>
+                                <td class="td">@Model.specs.processor</td>
                             </tr>
                             <tr>
-                                <td>Processor Core </td>
-                                <td><li>@Model.specs.core</li></td>
+                                <td class="td">Processor Core </td>
+                                <td class="td"><li>@Model.specs.core</li></td>
                             </tr>
                             <tr>
-                                <td>Ram</td>
-                                <td>
+                                <td class="td">Ram</td>
+                                <td class="td">
                                     @foreach (var item in Model.specs.rams.ToList())
                         {<span >@item.ram </span>}
                                 </td>
                             </tr>
                             <tr>
-                                <td>Storages </td>
-                                <td>
+                                <td class="td">Storages </td>
+                                <td class="td">
                                 @foreach (var item in Model.specs.storages.ToList())
                         {<span >@item.storage </span>}
                             </td>
                             </tr>
                             <tr>
-                                <td>SimType</td>
-                                <td><li> @Model.specs.simType</li></td>
+                                <td class="td">SimType</td>
+                                <td class="td"><li> @Model.specs.simType</li></td>
                             </tr>
                             <tr>
-                                <td>Camera</td>
-                                <td><li> @Model.specs.camFeatures</li></td>
+                                <td class="td">Camera</td>
+                                <td class="td"<li> @Model.specs.camFeatures</li></td>
                             </tr>
                         </tbody>
                     </table>
@@ -174,20 +177,20 @@
         padding: 1px 16px;
         height: 100%;
     }
-<<<<<<< HEAD
-
-</style>
-=======
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
-
-
-    li {
-        text-decoration: none;
-        list-style-type: disc;
+    .td{
+        margin-top:-10px;
+        padding-top:20px;
+    }
+    .class {
+        padding-top: 20px;
+        padding-right: -20px;
+        margin-left: 5px;
     }
 
 </style>
-<<<<<<< HEAD
-=======
 
->>>>>>> 3bbada956445af54d5f0558652a229891f7f527e
+
+
+
+
+

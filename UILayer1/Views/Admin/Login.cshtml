@@ -53,16 +53,18 @@
                             <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" width="250px" />
                         </div>
                         <div class="col-12  ">
-                            <div class="d-flex"style="text-align: center;">
+                            <div class="d-flex" style="text-align: center;">
+                                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:40px; width:32px; " />
                                 <div class="w-100">
-                                    <h3 class="mb-4">Login</h3>
+
+                                    <h3 class="mb-4" style="margin-left :-15px">Login</h3>
                                 </div>
 
                             </div>
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
-                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Username" required>
+                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Email id " required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
@@ -70,7 +72,7 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3">Login</button>
+                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color:white">Login</button>
 
                                 </div>
                                 <div>
