@@ -72,7 +72,7 @@ namespace UILayer.Controllers
                     }
                     productCount = productCount - 10;
                 }
-                var result = data.Skip((int)count * 10).Take(((int)count + 1) * 10);
+                var result = data.Skip((int)count * 10).Take(10);
                 ViewBag.count = cout;
                 if(data != null)
                 {
