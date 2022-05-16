@@ -1,55 +1,63 @@
 ﻿@model BusinessObjectLayer.ProductOperations.ProductSubPart
 <div class="container-fluid mt-3 align-middle">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-            <div class="card-body">
-                <div class="">
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ProductsSubPart" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            @if(Model == null)
-                            {
-                                 <input asp-for="id" type="hidden" value="0"/>
-                            }
-                            else
-                            {
-                                 <input asp-for="id" type="hidden" value="@Model.id"/>
-                            }
-                           
-            <div class="col-md-4">
-                @*<label asp-for="productId" class="control-label"></label>*@
-                <input asp-for="productId" class="form-control" value="@ViewBag.ProductId" type="hidden"/>
-                <span asp-validation-for="productId" class="text-danger"></span>
+            <div class="col-md-12 mb-3">
+
+
+                <div class="card-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="ProductsSubPart" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    @if (Model == null)
+                                    {
+                                        <input asp-for="id" type="hidden" value="0" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="id" type="hidden" value="@Model.id" />
+                                    }
+
+                                    <div class="col-md-4">
+                                        @*<label asp-for="productId" class="control-label"></label>*@
+                                        <input asp-for="productId" class="form-control" value="@ViewBag.ProductId" type="hidden" />
+                                        <span asp-validation-for="productId" class="text-danger"></span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label asp-for="ramId" class="control-label">RAM</label>
+                                            <select name="ram" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Rams)"></select>
+                                            <span asp-validation-for="ramId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label asp-for="storageId" class="control-label">Storage</label>
+                                            <select name="storage" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Storages)"></select>
+                                            <span asp-validation-for="storageId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label asp-for="quantity" class="control-label">Quantity</label>
+                                            <input asp-for="quantity" class="form-control" />
+                                            <span asp-validation-for="quantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label asp-for="price" class="control-label">Price</label>
+                                            <input asp-for="price" class="form-control" />
+                                            <span asp-validation-for="price" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                                <div class="form">
+                                    <input type="submit" value="Update" class="btn btn-primary" style="margin-top:5%;background-color:indianred" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <label asp-for="ramId" class="control-label">RAM</label>
-                <select name="ram" class="form-control master js-select2"   asp-items="new SelectList(ViewBag.Rams)"></select>
-                <span asp-validation-for="ramId" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <label asp-for="storageId" class="control-label">Storage</label>
-                <select name="storage" class="form-control master js-select2"   asp-items="new SelectList(ViewBag.Storages)"></select>
-                <span asp-validation-for="storageId" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <label asp-for="quantity" class="control-label">Quantity</label>
-                <input asp-for="quantity" class="form-control" />
-                <span asp-validation-for="quantity" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <label asp-for="price" class="control-label">Price</label>
-                <input asp-for="price" class="form-control" />
-                <span asp-validation-for="price" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <input type="submit" value="Update" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-</div>
-</div>
+        </div>
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
