@@ -10,21 +10,21 @@ namespace DomainLayer.Users
     {
         [Key]
         public int UserId { get; set; }
-        [Required(ErrorMessage ="This Field is Required")]
+        [Required(ErrorMessage ="This field is required")]
         [Display(Name ="First Name")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage ="Invalid email address")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
+        [Required(ErrorMessage = "This field is required")]
        
         /*[Display(Name = "Password")]
         [DataType(DataType.Password)]

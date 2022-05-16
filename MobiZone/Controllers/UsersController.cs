@@ -90,7 +90,7 @@ namespace ApiLayer.Controllers
             _login.createdBy = users.FirstName + " " + users.LastName;
             _login.modifiedOn = DateTime.Now;
             _login.modifiedBy = users.FirstName + " " + users.LastName;
-            _login.rolesId = (int)RoleTypes.User;
+            _login.rolesId = 1;
             ResponseModel<UserViewModel> _userResponse = new ResponseModel<UserViewModel>();
             try
             {

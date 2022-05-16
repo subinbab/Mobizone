@@ -18,7 +18,7 @@
     <a asp-action="login"><button class="btn btn-primary">Click To Login</button></a>
 }
 else
-{
+{ }
     <div class="container-fluid mt-3">
 
         <div class="row" style="margin-right: 6%;margin-left: 7%;">
@@ -27,6 +27,7 @@ else
                 <input asp-for="productId" type="hidden" value="@data.id" />
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
                 <div>
+                    
                     <div class="card ">
                         <div class="">
                             <div class="address"><p class="card-title">Delivery Address</p></div>
@@ -79,13 +80,13 @@ else
                                             </label>
                                         </div>
                                         
-                                        </div>
+                                     </div>
 
 
                                    
                                 
 
-                            </div>
+                                 </div>
                             </div>
                             
 
@@ -126,7 +127,6 @@ else
 
                 </div>
             </form>
-            <div class="col">
 
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
@@ -146,11 +146,14 @@ else
                             <div id="price"></div>
                         </div>
 
+
+
+
                     </div>
                 </div>
                 <!-- Card with center text alignment -->
                 
-            </div>
+            
         </div>
     </div>
 
@@ -171,7 +174,11 @@ else
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("pricetag").value
 
+
+
+
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
 
             if(data>0){
@@ -265,5 +272,5 @@ else
 
     </style>
 
-}
+
 

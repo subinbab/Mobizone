@@ -195,7 +195,7 @@ namespace UIlayer.Controllers
             }
             
         }
-        [HttpGet]
+        [HttpGet("/admin/edit/{id}")]
         [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
@@ -222,7 +222,7 @@ namespace UIlayer.Controllers
             return RedirectToAction("");
         }
         
-        [HttpDelete]
+        [HttpGet("Delete/{id}")]
         public IActionResult Delete(int id)
         {
 
@@ -236,8 +236,9 @@ namespace UIlayer.Controllers
                 _notyf.Error("Not deleted");
 
             }*/
+            var data = _opApi.GetProduct(id).Result;
 
-            return PartialView("Delete", _opApi.GetProduct(id).Result);
+            return PartialView("Delete", data);
         }
         [HttpPost("Delete")]
         public IActionResult DeleteProduct(int id)
@@ -516,6 +517,7 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
+        [HttpGet("Admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
             if(id == 0)

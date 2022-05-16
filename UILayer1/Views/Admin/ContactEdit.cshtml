@@ -60,25 +60,25 @@
                         <br />
                         <div class="row">
         <div class="col-md-4">
-                                <label asp-for="country" class="control-label">Country</label>
+                               @* <label asp-for="country" class="control-label">Country</label>*@
                                 <input asp-for="country" class="form-control" />
                                 <span asp-validation-for="country" class="text-danger"></span>
 
-
-                            <div class="col-md-6">
+            </div>
+                            <!--<div class="col-md-6">-->
                                 @*<label asp-for="email" class="control-label">Email</label>*@
-                                <input asp-for="email" placeholder="Email" class="form-control" />
+                                <!--<input asp-for="email" placeholder="Email" class="form-control" />
 
                                 <span asp-validation-for="email" class="text-danger"></span>
 
-                            </div>
+                            </div>-->
                             <div class="col-md-4">
-                                <label asp-for="pincode" class="control-label">Pincode</label>
+                                @*<label asp-for="pincode" class="control-label">Pincode</label>*@
                                 <input asp-for="pincode" class="form-control" type="number" />
                                 <span asp-validation-for="pincode" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
-                                <label asp-for="phoneNumber" class="control-label">PhoneNumber</label>
+                                @*<label asp-for="phoneNumber" class="control-label">PhoneNumber</label>*@
                                 <input asp-for="phoneNumber" class="form-control" type="number" />
                                 <span asp-validation-for="phoneNumber" class="text-danger"></span>
                             </div>
@@ -90,22 +90,14 @@
                             </div>
                         </div>
 
- 
 
-
-
-
-                                <button class="btn btn-light"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
-
-
-
-                    <div class="text-center" style="margin-left:70%">
+                    <div class="text-center" style="margin-top: 4%;margin-left: 68%;">
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
 
 
 
->
+
                             </div>
                         </div>
 
@@ -125,14 +117,8 @@
         <a asp-action="Index">Back to List</a>
     </div>
 *@
-<<<<<<< HEAD
 
-
-
-
-
-=======
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
->>>>>>> e685a7fd3aa7b835c965d0b1e0b2072410786250
+

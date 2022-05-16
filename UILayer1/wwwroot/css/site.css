@@ -103,7 +103,6 @@ header {
         box-shadow: none;
         color: #fd7e14;
         background: #fff;
-        letter-spacing: .2rem;
         -webkit-box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
         box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.2);
     }

@@ -15,6 +15,7 @@ namespace DomainLayer
         [Required]
         public string Description { get; set; }
         [Required]
+        [MaxLength(6)]
         public int Price { get; set; }
     }
 }

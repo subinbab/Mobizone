@@ -88,7 +88,7 @@ namespace UILayer1
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=user}/{action=Index}/{id?}");
+                    pattern: "{controller=user}/{action=Index}/{count?}");
             });
         }
     }

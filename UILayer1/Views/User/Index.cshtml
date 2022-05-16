@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
 }
 @if (User.Identity.IsAuthenticated!)
 {
@@ -20,10 +22,10 @@
 }
 else
 {
-    <div class="row">
+    <div class="row" style="justify-content: center;">
       @foreach (var item in Model)
 {
-        <div class="card shadow-lg  bg-white rounded mr-4 mt-4">
+        <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-3">
             <div class="card-body">
 
                 <div class="col-12">
@@ -48,8 +50,8 @@ else
                         <h5 class="m-2"> Price : <span style="color: black; font-family: fantasy; font-size: larger;">  &#8377 @item.price</span></h5>
 
                         <div class="row">
-                            <div class="col buynow"><a asp-action="order" asp-route-id="@item.id"><button class="btn btn-orange" style="padding: 14px;">Buy Now</button></a></div>
-                            <div class="col"><a asp-action="cartpage" asp-route-id="@item.id"><button class="btn btn-indigo" style="padding: 14px;">Add to Cart</button></a></div>
+                            <div class="col-5 buynow"><a asp-action="order" asp-route-id="@item.id"><button class="btn btn-orange" style="padding: 14px;">Buy Now</button></a></div>
+                            <div class="col-7 buynow"><a asp-action="cartpage" asp-route-id="@item.id"><button class="btn btn-indigo" style="padding: 14px;">Add to Cart</button></a></div>
                         </div>
                     </div>
                 </div>
@@ -60,3 +62,22 @@ else
 
 }
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        
+        @for (int i = 0; i <= count; i++)
+        {
+            <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
+
+            pagination = pagination + 1;
+        }
+
+      
+  
+    </ul>
+</nav>
+<style>
+    .row {
+        margin-left: 0 !important;
+    }
+</style>
