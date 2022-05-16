@@ -434,9 +434,9 @@ namespace UIlayer.Controllers
                     if (check.rolesId == (int)RoleTypes.Admin)
                     {
                         var claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.username));
+                        claims.Add(new Claim(ClaimTypes.Name, " Admin"));
                         claims.Add(new Claim("email", user.username));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.username));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, " Admin"));
                         claims.Add(new Claim("password", user.password));
                         claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -446,10 +446,12 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
+                        UserApi userApi = new UserApi(Configuration);
+                        _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();
-                        claims.Add(new Claim(ClaimTypes.Name, user.username));
+                        claims.Add(new Claim(ClaimTypes.Name, _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("email", user.username));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.username));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, _userDataList.Where(c=>c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("password", user.password));
                         claims.Add(new Claim(ClaimTypes.Role, "User"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -517,7 +519,6 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
-        [HttpGet("Admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
             if(id == 0)
