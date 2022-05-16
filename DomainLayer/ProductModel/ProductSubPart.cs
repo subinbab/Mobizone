@@ -24,7 +24,11 @@ namespace BusinessObjectLayer.ProductOperations
         [NotMapped]
         public Storage storage { get; set; }
 
+        public Color color { get; set; }
+
         public int quantity { get; set; }
         public int price { get; set; }
+        public int IsActive { get; set; }
+        public ICollection<Images> images { get; set; }
     }
 }
