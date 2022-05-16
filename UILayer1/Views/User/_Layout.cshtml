@@ -70,6 +70,7 @@
     <div class="row" style="align-items: center;justify-content: center;display: flex;">
                         @if (User.Identity.IsAuthenticated)
                         {
+
                             <a href="/user/OrderList">Orders</a>
                             <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
                             <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>

@@ -256,18 +256,35 @@ element.style {
                                 <div class="col-md-12">
                                     <div asp-for="description" class="control-label" style="text-align-last:justify;  margin-top:30px"> Description</div>
                                     @*<textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                   <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250"/>
-                                <span asp-validation-for="description" class="text-danger"></span>
+                                    <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250" />
+                                    <span asp-validation-for="description" class="text-danger"></span>
                                 </div>
-                                
+
 
 
                     </form>
-                   
 
 
 
+
+                </div>
+                <div class="col-md-2">
+                    @if (Model == null)
+                    {
+                    <input type="submit" value="Add" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 500%; margin-top:80px;background-color: #ffffff; "  />
+
+                    }
+                    else
+                    {
+                        <input type="submit" value="Continue" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 500%; margin-top:80px;background-color: #ffffff;" />
+
+                    }
+
+
+                </div>
+                
             </div>
+<<<<<<< HEAD
              <div class="form-group col-2">
                                     @if (Model == null)
                                     {
@@ -281,11 +298,12 @@ element.style {
                                     }
                <a style="color:white;" asp-controller="Admin" asp-action="Index" > <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 957px; padding-bottom: 7px; margin-top: -54px;" ><b>Back</b></button></a>
 
+=======
+            <div class="col-md-2">
+                <a style="color:white;" asp-controller="Admin" asp-action="Index"> <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 592%; padding-bottom: 7px; margin-top: -54px;/* color: indianred; */background-color: #ce2929;"><b>Back</b></button></a>
+>>>>>>> 6fdc26b97db5e0e2ccc77a28fb449330ddc48be2
             </div>
-
-        </div>
-
-
+           
 
 
       
