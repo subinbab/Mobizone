@@ -51,7 +51,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
+                    <a asp-controller="User" asp-action="account"> Hello @User.Identity.Name </a>
                     }
                     else
                     {
@@ -67,25 +67,28 @@
   <a class="dropbtn">Account</a>
   <div class="dropdown-content">
    
-    <div class="row" style=" justify-content: center; display: flex; ">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <a href="/user/OrderList">Orders</a>
-                            <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
-                            <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+      <div class="row" style=" justify-content: center; display: flex; ">
+          @if (User.Identity.IsAuthenticated)
+          {
+              <a asp-controller="User" asp-action="account">My Account </a>
+              <hr />
+              <a href="/user/OrderList">My Orders</a>
+              <hr />
+              <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+              <hr />
 
 
 
-                        }
-                        else
-                        {
-                            <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                                <a asp-action="registration">Register</a>
-                            </div>
+          }
+          else
+          {
+              <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                  <a asp-action="registration">Register</a>
+              </div>
 
-                            <a href="login">Login</a>
-                        }
-                    </div>
+              <a href="login">Login</a>
+          }
+      </div>
   </div>
 </div>
 
@@ -120,7 +123,7 @@
 
         <div id="sort" style="padding: 0px;background-color: #c93e3e00;color: black;">
             <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort By</a>
-            <div id="dropdown2" class="dropdown">
+            <div id="dropdown2" class="dropdown" style="margin-top: -8%;margin-left: 9%;">
                 <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
             </div>
         </div>
@@ -230,7 +233,7 @@
                             .dropdown-content {
                                 display: none;
                                 position: absolute;
-                                background-color: #f1f1f1;
+                                background-color: white;
                                 min-width: 160px;
                                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                                 z-index: 1;
@@ -238,7 +241,7 @@
 
 .dropdown-content a {
   color: black;
-  padding: 12px 16px;
+  padding: 12px 26px;
   text-decoration: none;
   display: block;
 }
@@ -261,7 +264,7 @@
 .dropdown:hover .dropbtn {}*@
 
 .row{
-        margin-left: 12px !important;
+        margin-left: 0px !important;
 }
                             
                         </style>
