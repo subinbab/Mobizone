@@ -284,8 +284,24 @@ element.style {
                 </div>
                 
             </div>
+
+             <div class="form-group col-2">
+                                    @if (Model == null)
+                                    {
+                                        <input type="submit" value="Add" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 787px; margin-top:80px" />
+
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Update" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 100px; margin-top: 80px" />
+
+                                    }
+               <a style="color:white;" asp-controller="Admin" asp-action="Index" > <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 957px; padding-bottom: 7px; margin-top: -54px;" ><b>Back</b></button></a>
+
+
             <div class="col-md-2">
                 <a style="color:white;" asp-controller="Admin" asp-action="Index"> <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 592%; padding-bottom: 7px; margin-top: -54px;/* color: indianred; */background-color: #ce2929;"><b>Back</b></button></a>
+
             </div>
            
 

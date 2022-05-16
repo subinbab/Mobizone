@@ -189,7 +189,7 @@
             var id = data;
             $(document).ready(function (e) {
                 $.ajax({
-                    url: 'admin/AddImage/' + id,
+                    url: '/admin/ProductDetails/AddImage/' + id,
                     type: 'get',
                     success: function (response) {
                         $("#partialModal").find(".modal-body").html(response);
