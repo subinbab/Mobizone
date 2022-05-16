@@ -8,23 +8,30 @@
 
 <div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <div class="">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="">
 
-<div class="text-center">
+                    <div class="text-center">
 
-    <form asp-action="PrivacyEdit" method="post">
-        <h2>Privacy & Policy</h2>
-        <input asp-for="id"value="@Model.id" type="hidden"/>
-        <textarea asp-for="content" rows="10" cols="50" ></textarea>
-        <br />
-        <div>
-            <input type="submit" value="Save" class="btn btn-primary" />
+                        <form asp-action="PrivacyEdit" method="post">
+                            <h2>Privacy & Policy</h2>
+                            <input asp-for="id" value="@Model.id" type="hidden" maxlength="500" />
+                            <textarea asp-for="content" rows="10" cols="50"></textarea>
+                            <br />
+                            <div>
+                                <input type="submit" value="Save" class="btn btn-primary" />
 
-            <button class="btn btn-light"><a asp-controller="Admin" asp-action="Privacy" style="text-decoration:none;"><b>Cancel</b></a></button>
+                                <button class="btn btn-light"><a asp-controller="Admin" asp-action="Privacy" style="text-decoration:none;"><b>Cancel</b></a></button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-    </form>
+    </div>
 </div>
-</div></div></div></div></div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

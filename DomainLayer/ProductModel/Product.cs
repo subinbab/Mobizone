@@ -39,6 +39,7 @@ namespace DomainLayer.ProductModel
         public int price { get; set; }
         
         public ICollection<Images> images { get; set; }
+        public ICollection<Color> colors { get; set; }
         [Column("Quantity",Order=7)]
         [Display(Name = "Quantity")]
         public int quantity { get; set; }
@@ -47,7 +48,7 @@ namespace DomainLayer.ProductModel
         [Column("Specifications",Order=8)]
         public Specificatiion? specs { get; set; }
         [Column("Description",TypeName ="nvarchar",Order =9)]
-        [MaxLength(100)]
+        [MaxLength(250)]
         [Display(Name = "Description")]
         public string description { get; set; }
         

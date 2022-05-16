@@ -101,7 +101,7 @@ element.style {
         <div class="card-body">
             <div class="">
                 <div class="col-md-12">
-                    <form asp-action="Create" class="row" enctype="multipart/form-data" method="post">
+                    <form asp-action="Create" class="col" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input asp-for="id" runat="server" type="hidden" />
 
@@ -256,29 +256,31 @@ element.style {
                                 <div class="col-md-12">
                                     <div asp-for="description" class="control-label" style="text-align-last:justify;  margin-top:30px"> Description</div>
                                     @*<textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                   <input asp-for="description" placeholder="maximum limit upto 100-150 words" class="form-control" id="exampleFormControlTextarea1" rows="3" style="height:120%" />
+                                   <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250"/>
                                 <span asp-validation-for="description" class="text-danger"></span>
                                 </div>
-                                <div class="form-group col-2">
-                                    @if (Model == null)
-                                    {
-                                        <input type="submit" value="Add" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 879px; margin-top:80px" />
-
-                                    }
-                                    else
-                                    {
-                                        <input type="submit" value="Update" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 5px; padding-top: 80px" />
-
-                                    }
+                                
 
 
                     </form>
-                <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 1059px; padding-bottom: 7px; margin-top: -53px" ><a style="color:white;" asp-controller="Admin" asp-action="Index" ><b>Back</b></a></button>
-
+                   
 
 
 
             </div>
+             <div class="form-group col-2">
+                                    @if (Model == null)
+                                    {
+                                        <input type="submit" value="Add" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 0px; margin-top:80px" />
+
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Update" id="btn-submit" class="btn btn-primary col row align-items-lg-start" style="margin-left: 0px; margin-top: 80px" />
+
+                                    }
+               <a style="color:white;" asp-controller="Admin" asp-action="Index" > <button class="btn btn-primary col row align-items-lg-start" style="margin-left: 140px; padding-bottom: 7px; margin-top: -54px;" ><b>Back</b></button></a>
+
             </div>
 
         </div>
@@ -317,7 +319,10 @@ element.style {
 <script>
    
     $(".master").chosen();
-    
+    $(document).ready(function(){
+        CKEDITOR.replace("Description");
+    });
+   
 
     
 

@@ -14,7 +14,8 @@ namespace DomainLayer.ProductModel.Master
         OsCore=5,
         Ram=6,
         Storage=7,
-        CamFeature=8
+        CamFeature=8,
+        Color
 
     }
     public class masterModel

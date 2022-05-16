@@ -24,7 +24,7 @@
     setTimeout("preventBack()", 0);
     window.onunload = function () { null };
 </script>
-<h2 style="text-align:center">Product Listing Page</h2style="text-align:center">
+<h2 style="text-align:center" style="text-align:center">Product Listing Page</h2 >
 <div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded"style="font-size:15px;">
         <div class="card-body">
@@ -85,10 +85,16 @@
         color: black;
         font-variant: all-petite-caps;
     }
+    .modal-footer{
+            border-top: 0px solid #e5e5e5 !important
+    }
+    .modal-footer {
+    padding: 30px !important}
 </style>
 
 
-<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+<div id="partialModal" class="modal " tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -104,17 +110,43 @@
         </div>
     </div>
 
+<div class="modal " id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center" style="background-color: brown;">
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
 
     <script>
         function someFunction(data) {
     var id = data;
     $(document).ready(function (e) {
         $.ajax({
-                url: 'admin/Delete/' + id,
-                type: 'delete',
+                url: '/Delete/' + id,
+                type: 'get',
                 success: function (response) {
-                    $("#partialModal").find(".modal-body").html(response);
-                    $("#partialModal").modal('show');
+                    $("#modalConfirmDelete").find(".modal-body").html(response);
+                    $("#modalConfirmDelete").modal('show');
                 },
                 failure: function (response) {
                         alert("fail");

@@ -8,7 +8,10 @@
   var url = string.Format(
       "MasterList");
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/js/bootstrap-colorpicker.min.js">
 
+</script>
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/3.4.0/css/bootstrap-colorpicker.css"/>
 <style>
     div {
         margin-bottom: 10px;
@@ -138,5 +141,59 @@
     </form>
 </div>
 
+<div class="d-flex justify-content-center">
+    <form asp-action="MasterData" method="post" class="form-inline">
+        <div class="form-group mb-2">
+            <label>Color</label>
+        </div>
+        <input asp-for="parantId" type="hidden" value=9 />
+        <div class="form-group form-group mx-sm-3 mb-2">
+            <input asp-for="masterData" class="form-control"  id="coloInput" onchange="colorChange()" />
+        </div> 
+        <button class="btn btn-primary">submit</button>
+        <button class="btn btn-light"><a asp-action="@url" asp-route-id=8>View</a></button>
+
+    </form>
+</div>
+
+<div class="d-flex justify-content-center">
+     <div class="demo">
+      <h1>Bootstrap Colorpicker Demo (with Bootstrap)</h1>
+      <input id="demo-input" type="text" value="rgb(255, 128, 0)" />
+  </div>
+<div id="color" ></div>
+</div>
 </div></div></div></div></div>
 
+<script>
+    function colorChange(){
+var color = $("#coloInput").val()
+        //var color = document.getElementById("coloInput").val()
+        console.log(color)
+        $("#color").css("background-color",color)
+        
+    }
+    $(function () {
+      // Basic instantiation:
+      $('#demo-input').colorpicker();
+      
+      // Example using an event, to change the color of the #demo div background:
+      $('#demo-input').on('colorpickerChange', function(event) {
+        $('#demo').css('background-color', event.color.toString());
+      });
+    });
+</script>
+<style>
+    #color{
+        width: 65px;
+    content: "";
+    min-height: 65px;
+        border-radius: 51px;
+    }
+     #colorpicker{
+        width: 65px;
+    content: "";
+    min-height: 65px;
+        border-radius: 51px;
+    }
+</style>

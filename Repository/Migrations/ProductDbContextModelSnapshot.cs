@@ -26,6 +26,12 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("colorid")
+                        .HasColumnType("int");
+
                     b.Property<int>("price")
                         .HasColumnType("int");
 
@@ -43,6 +49,8 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("colorid");
+
                     b.HasIndex("productId");
 
                     b.ToTable("productSubPart");
@@ -58,8 +66,8 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("content");
 
                     b.HasKey("id");
@@ -104,8 +112,8 @@ namespace Repository.Migrations
 
                     b.Property<string>("pincode")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)")
                         .HasColumnName("Pincode");
 
                     b.Property<string>("shopName")
@@ -252,8 +260,8 @@ namespace Repository.Migrations
 
                     b.Property<string>("content")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnName("content");
 
                     b.HasKey("id");
@@ -281,11 +289,32 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Price")
+                        .HasMaxLength(6)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("DomainLayer.ProductModel.Color", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("ProductEntityid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("ProductEntityid");
+
+                    b.ToTable("Color");
                 });
 
             modelBuilder.Entity("DomainLayer.ProductModel.Images", b =>
@@ -298,6 +327,9 @@ namespace Repository.Migrations
                     b.Property<int?>("ProductEntityId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductSubPartid")
+                        .HasColumnType("int");
+
                     b.Property<string>("imagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -305,6 +337,8 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("ProductEntityId");
+
+                    b.HasIndex("ProductSubPartid");
 
                     b.ToTable("Images");
                 });
@@ -340,8 +374,8 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("description")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
                         .HasColumnName("Description");
 
                     b.Property<string>("model")
@@ -779,11 +813,17 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("BusinessObjectLayer.ProductOperations.ProductSubPart", b =>
                 {
+                    b.HasOne("DomainLayer.ProductModel.Color", "color")
+                        .WithMany()
+                        .HasForeignKey("colorid");
+
                     b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
                         .WithMany()
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("color");
 
                     b.Navigation("product");
                 });
@@ -841,11 +881,22 @@ namespace Repository.Migrations
                     b.Navigation("users");
                 });
 
+            modelBuilder.Entity("DomainLayer.ProductModel.Color", b =>
+                {
+                    b.HasOne("DomainLayer.ProductModel.ProductEntity", null)
+                        .WithMany("colors")
+                        .HasForeignKey("ProductEntityid");
+                });
+
             modelBuilder.Entity("DomainLayer.ProductModel.Images", b =>
                 {
                     b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
                         .WithMany("images")
                         .HasForeignKey("ProductEntityId");
+
+                    b.HasOne("BusinessObjectLayer.ProductOperations.ProductSubPart", null)
+                        .WithMany("images")
+                        .HasForeignKey("ProductSubPartid");
 
                     b.Navigation("product");
                 });
@@ -939,8 +990,15 @@ namespace Repository.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BusinessObjectLayer.ProductOperations.ProductSubPart", b =>
+                {
+                    b.Navigation("images");
+                });
+
             modelBuilder.Entity("DomainLayer.ProductModel.ProductEntity", b =>
                 {
+                    b.Navigation("colors");
+
                     b.Navigation("images");
                 });
 
