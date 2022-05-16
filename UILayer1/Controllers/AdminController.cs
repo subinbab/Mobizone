@@ -95,7 +95,7 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet]
+        [HttpGet("ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
             ProductEntity details = null;
@@ -150,7 +150,7 @@ namespace UIlayer.Controllers
                 {
                     if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                     {
-                        _notyf.Error("Product Alraedy Exist");
+                        _notyf.Error("Product Already Exist");
                         return RedirectToAction("");
                     }
                     else
@@ -356,7 +356,7 @@ namespace UIlayer.Controllers
             var data = await _opApi.GetProduct();
             return new JsonResult(data.OrderByDescending(c=>c.id));
         }
-        [HttpGet("admin/ProductDetails/admin/AddImage/{id}")]
+        [HttpGet("admin/ProductDetails/AddImage/{id}")]
         public async Task<IActionResult> AddImage(int  id)
         {
             var productEntity = await _opApi.GetProduct(id);
@@ -517,7 +517,6 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
-        [HttpGet("Admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
             if(id == 0)

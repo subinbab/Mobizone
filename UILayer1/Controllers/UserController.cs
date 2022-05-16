@@ -320,6 +320,7 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
+            ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
