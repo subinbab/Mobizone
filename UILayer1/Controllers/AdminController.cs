@@ -651,6 +651,7 @@ namespace UIlayer.Controllers
         {
             return View();
         }
+        [HttpGet("admin/disable/{id}")]
         public async  Task<IActionResult> Disable(int id)
         {
             var datas = await _opApi.GetProduct();
