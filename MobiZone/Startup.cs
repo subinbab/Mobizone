@@ -2,6 +2,7 @@ using ApiLayer.DI;
 using ApiLayer.Models;
 using BusinessObjectLayer;
 using BusinessObjectLayer.User;
+using DomainLayer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -47,6 +48,8 @@ namespace MobiZone
             options.SignIn.RequireConfirmedAccount = false;
 
             //Other options go here
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient(typeof(IMailService), typeof(MailService));
         }
         )
     .AddEntityFrameworkStores<ProductDbContext>();
@@ -56,6 +59,7 @@ namespace MobiZone
             services.AddScoped(typeof(IProductCatalog), typeof(ProductCatalog));
             services.AddScoped(typeof(IUserCreate), typeof(UserCreate));
             services.AddScoped(typeof(IRepositoryOperations<>), typeof(RepositoryOperations<>));
+            
             addSerivices.Initialize(services);
             services.AddCors(options =>
             options.AddDefaultPolicy(builder =>
