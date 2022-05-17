@@ -224,7 +224,7 @@ namespace UILayer.Controllers
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
-            _user = userApi.GetUserData().Where(c=> c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
+            _user = userApi.GetUserData().Where(c=> (c.Email+" "+ c.LastName).Equals(User.Identity.Name.ToString())).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
