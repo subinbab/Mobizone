@@ -31,6 +31,7 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(IStorageOperations), typeof(StorageOperations));
             services.AddScoped(typeof(IProductSubPartOperations), typeof(ProductSubPartOperations));
             services.AddScoped(typeof(ITokenManager), typeof(TokenManager));
+            services.AddTransient(typeof(IMailService), typeof(MailService));
         }
 
     }
