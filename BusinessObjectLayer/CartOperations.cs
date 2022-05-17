@@ -15,19 +15,19 @@ namespace BusinessObjectLayer
         {
             _repo = repo;
         }
-        public async Task AddProduct(Cart entity)
+        public async Task Add(Cart entity)
         {
             _repo.Add(entity);
             _repo.Save();
         }
 
-        public async Task DeleteProduct(Cart entity)
+        public async Task Delete(Cart entity)
         {
             _repo.Delete(entity);
             _repo.Save();
         }
 
-        public async Task EditProduct(Cart entity)
+        public async Task Edit(Cart entity)
         {
             _repo.Update(entity);
             _repo.Save();
@@ -38,7 +38,7 @@ namespace BusinessObjectLayer
             return _repo.GetById(id);
         }
 
-        public Task<IEnumerable<Cart>> GetProduct()
+        public Task<IEnumerable<Cart>> Get()
         {
             return _repo.Get();
         }

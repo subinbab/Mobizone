@@ -7,5 +7,6 @@ namespace UILayer.Data.ApiServices
 {
     public class CartApi
     {
+
     }
 }

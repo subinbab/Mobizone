@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DomainLayer
 {
-    public class Cart
+    public class CartDetails
     {
         public int id { get; set; }
         public int productId { get; set; }
