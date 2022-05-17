@@ -1,40 +1,46 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 *@
+
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
 
 
 
 @model DomainLayer.AdminContact
-    <section class=" flex-fill" style="margin-left: 0px;">
-        <div class=" text-center">
+<section class=" flex-fill" style="margin-left: 0px;">
+    <div class=" text-center">
 
-            <h1>Contact Us</h1>
-            <br />
-            <br />
-            <div class="text-center">
-                <div class=" " container>
-                    <div class=" contact us"></div>
-                    <div class="box"></div>
-                    <div class="icon"></div>
-                    <div class=" text">
-                        <h3 class ="card-text  col-6 row"style="margin-top:-2%;margin-left:-30%">Address</h3>
-                        <p class=" col-6 row">@Model.shopName<br>@Model.address, @Model.district <br>@Model.pincode,  @Model.state <br>@Model.country  </p>
-                    </div>
-                    <div class="box"></div>
-                    <div class="icon"></div>
-                    <div class=" text">
-                        <h3 class="card-text  col-6 row" style="margin-left:-32%">Email</h3>
-                        <p  class=" col-6 row" style="margin-top:-3%"> @Model.email</p>
-                    </div>
+        <h1>Contact Us</h1>
+        <br />
+        <br />
+        <div class="text-center">
+            <div class=" " container>
+                <div class=" contact us"></div>
+                <div class="box"></div>
+                <div class="icon"></div>
+                <div class=" text">
+                    <h3 class=" " style="margin-top:-2%;margin-left:-30%">Address</h3>
+                    <p class=" "style="margin-top:-3%;">@Model.shopName<br>@Model.address, @Model.district <br>@Model.pincode,  @Model.state <br>@Model.country  </p>
                 </div>
                 <div class="box"></div>
                 <div class="icon"></div>
                 <div class=" text">
-                    <h3  class="card-text  col-6 row" style="margin-left:-32%">Phone</h3>
-                    <p  class=" col-6 row"style="margin-top:-3%">@Model.phoneNumber</p>
+                    <h3 class="" style="margin-left:-32%">Email</h3>
+                    <p class=" style="margin-top:-3%"> @Model.email</p>
                 </div>
             </div>
-           
+            <div class="box"></div>
+            <div class="icon"></div>
+            <div class=" text">
+                <h3 class="" style="margin-left:-32%">Phone</h3>
+                <p class="" style="margin-top:-3%">@Model.phoneNumber</p>
+            </div>
         </div>
 
-    </section>
+    </div>
+
+</section>
