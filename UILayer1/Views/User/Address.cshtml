@@ -1,26 +1,29 @@
 ﻿@model DomainLayer.Users.Address
 
 @{
-   
-    ViewData["Title"] = "Address";
+
+    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+
+
+    ViewData["Title"] = "Manage Address";
 }
 
 @*<body>
-    <div class="card overflow-hidden">
-        <div class="row no-gutters row-bordered row-border-light">
-            <div class="col-md-3 pt-0">
-                <div class="list-group list-group-flush account-settings-links">
-                    <h5 class="list-group-item">
-                        Account Settings
-                    </h5>
-                    <a class="list-group-item list-group-item-action active" asp-action="account">Profile Information</a>
-                    <a class="list-group-item list-group-item-action" asp-action="address">Manage Address</a>
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <h5 class="list-group-item">
+                            Account Settings
+                        </h5>
+                        <a class="list-group-item list-group-item-action active" asp-action="account">Profile Information</a>
+                        <a class="list-group-item list-group-item-action" asp-action="address">Manage Address</a>
+                    </div>
                 </div>
+
             </div>
-           
-        </div>   
-    </div>    
-</body>*@
+        </div>
+    </body>*@
 <div class="row align-item-center">
     <div class="col-md-8 mb-4">
         <div class="card-body">
@@ -34,7 +37,7 @@
                     <div class="col-md-6">
                         <label asp-for="name" class="control-label">Name</label>
                         <input asp-for="name" class="form-control" />
-                        <span asp-validation-for="name" class="text-danger" ></span>
+                        <span asp-validation-for="name" class="text-danger"></span>
                     </div>
                     <div class="col"></div>
 
@@ -44,7 +47,7 @@
                     <div class="col-md-6">
                         <label asp-for="address" class="control-label">Address</label>
                         <input asp-for="address" class="form-control" />
-                        <span asp-validation-for="address" class="text-danger" ></span>
+                        <span asp-validation-for="address" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <label asp-for="district" class="control-label">District</label>
@@ -81,19 +84,27 @@
                         <span asp-validation-for="additionalInfo" class="text-danger"></span>
                     </div>
                 </div>
-               <br />
+                <br />
                 <br />
                 <div class="text-center">
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />  <a asp-action="index" value="Cancel" class="btn btn-primary" />Cancel</a>
                     </div>
-                   
 
-</form>
 
-    </div>
+            </form>
+
+        </div>
     </div>
 </div>
+<style>
+    .card-body{
+        margin-left:40%;
+    }
+    .text-center{
+        margin-left:73%;
+    }
+</style>
 
 
 @section Scripts {
