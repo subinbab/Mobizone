@@ -51,7 +51,7 @@ namespace UILayer.Controllers
             _notyf = notyf;
             _mapper = mapper;
             _carts = new List<Cart>();
-            HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
+           // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
 
 
 
@@ -290,10 +290,10 @@ namespace UILayer.Controllers
         public IActionResult AddtoCart(int id)
         {
             Cart cart = new Cart();
-            cart.productId = id;
-            _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
-            _carts.Add(cart);
-            HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
+            //cart.productId = id;
+           // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
+          //  _carts.Add(cart);
+           // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
