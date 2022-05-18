@@ -21,7 +21,7 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<ProductEntity>> Search(string name)
         {
-            var data = _repo.Get().Result.Where(c => c.name.StartsWith(name));
+            var data = _repo.Get().Result.Where(c => c.name.ToLower().StartsWith(name.ToLower()));
             var result = data.ToList();
             return data;
         }

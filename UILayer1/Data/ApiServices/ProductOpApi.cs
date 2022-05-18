@@ -377,5 +377,24 @@ namespace UILayer.Data.ApiServices
             }
         }
         #endregion
+
+        #region Get method for Search
+        public async Task<IEnumerable<ProductEntity>> Search(string name)
+        {
+            try
+            {
+                RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
+                _requestHandler.url = "api/productop/search/" + name;
+                return _requestHandler.Get().result;
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return null;
+            }
+
+        }
+        #endregion
     }
 }
