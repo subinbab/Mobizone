@@ -451,6 +451,28 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
+
+        #region Update Method for Users
+        [HttpPut("UpdateCart")]
+        public IActionResult UpdateCart([FromBody] Cart cart)
+        {
+            ResponseModel<Cart> _response = new ResponseModel<Cart>();
+            try
+            {
+                _cartOperations.Edit(cart);
+                string message = "Updated" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error occured" + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+        }
+        #endregion
     }
 
 

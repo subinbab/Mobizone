@@ -202,5 +202,81 @@ namespace UILayer.Data.ApiServices
                 return null;
             }
         }
+
+        #region Create an order
+        public bool Createcart(Cart cart)
+        {
+            RequestHandler<Cart> requestHandler = new RequestHandler<Cart>(_configuration);
+            try
+            {
+                requestHandler.url = "api/Users/CreateCart";
+                var result = requestHandler.Post(cart);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        public bool EditCart(Cart cart)
+        {
+            RequestHandler<Cart> _requestHandler = new RequestHandler<Cart>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/UpdateCart";
+                var result = _requestHandler.Edit(cart);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        public async Task<IEnumerable<Cart>> GetCart()
+        {
+            RequestHandler<IEnumerable<Cart>> _requestHandler = new RequestHandler<IEnumerable<Cart>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/GetCart";
+                return _requestHandler.Get().result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+       
+
     }
 }

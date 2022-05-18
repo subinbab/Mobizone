@@ -38,9 +38,9 @@ namespace BusinessObjectLayer
             return _repo.GetById(id);
         }
 
-        public Task<IEnumerable<Cart>> Get()
+        public async Task<IEnumerable<Cart>> Get()
         {
-            return _repo.Get();
+            return await  _repo.Get(n1=>n1.cartDetails);
         }
     }
 }
