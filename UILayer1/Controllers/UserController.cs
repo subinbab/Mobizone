@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using DocumentFormat.OpenXml.Bibliography;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using UILayer.Data.ApiServices;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace UILayer.Controllers
 {
@@ -289,12 +291,24 @@ namespace UILayer.Controllers
         }
         public IActionResult AddtoCart(int id)
         {
+            /*Cart cart = new Cart();*/
+            //cart.productId = id;
+            /* _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
+             _carts.Add(cart);
+             HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
+             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);*/
+            CartDetails cartDetails = new CartDetails();
+            cartDetails.productId = id;
             Cart cart = new Cart();
+<<<<<<< HEAD
             //cart.productId = id;
            // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
           //  _carts.Add(cart);
            // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+=======
+            cart.sessionId = HttpContext.Session.Id;
+>>>>>>> 06f67a2b60bea48196e40c800773e73bba5be2c0
             return View();
         }
         public IActionResult CartPage()
@@ -305,7 +319,7 @@ namespace UILayer.Controllers
         public IActionResult Account()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
         }
@@ -346,5 +360,12 @@ namespace UILayer.Controllers
 
             return Json();
         }*/
+       [HttpPost]
+       public IActionResult Search(string name)
+        {
+            ViewBag.count = 0;
+            var data = _opApi.Search(name).Result;
+            return View("Index", data);
+        }
     }
 }
