@@ -5,6 +5,7 @@ using BusinessObjectLayer;
 using BusinessObjectLayer.ProductOperations;
 using BusinessObjectLayer.User;
 using DomainLayer;
+using DomainLayer.ProductModel;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
 using log4net;
@@ -46,13 +47,14 @@ namespace ApiLayer.Controllers
         IEnumerable<Checkout> _checkout;
         IProductOperations _productOperations;
         Address _addresData;
+        ICartOperations _cartOperations;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations)
+            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -73,6 +75,7 @@ namespace ApiLayer.Controllers
             
             _checkOutOperation = checkOutOperation;
             _productOperations = productOperations;
+            _cartOperations = cartOperations;
         }
         [HttpPost("UserCreate")]
         public async Task<ResponseModel<UserViewModel>> post([FromBody] UserViewModel users)
@@ -387,7 +390,67 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-       
+        #region Post Method for Cart
+
+        [HttpPost("CreateCart")]
+        public IActionResult CreateCart([FromBody] Cart cart)
+        {
+            ResponseModel<string> _response = new ResponseModel<string>();
+            try
+            {
+                _cartOperations.Add(cart);
+                string message = " Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                var data = Newtonsoft.Json.JsonConvert.SerializeObject(_response);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = " Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+
+        }
+        #endregion
+
+        #region Get Method for cart
+        [HttpGet("GetCart")]
+        public async Task<ResponseModel<IEnumerable<Cart>>> GetCart()
+        {
+            ResponseModel<IEnumerable<Cart>> _response = new ResponseModel<IEnumerable<Cart>>();
+            try
+            {
+                var result = await _cartOperations.Get();
+                if (result == null)
+                {
+                    string message = " " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    /*                    var json = JsonConvert.SerializeObject(_response, Formatting.Indented,
+                              new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.None });*/
+                    /*                    return Content(json, "application/json");*/
+                    return _response;
+                }
+                else
+                {
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, result, message);
+
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = " " + ex.Message + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
+        }
+        #endregion
     }
 
 

@@ -8,3 +8,16 @@
         <a asp-action="CartPage"><button class="btn btn-primary">Add to Cart</button></a>
     </div>
 </div>*@
+<script>
+    $.ajax({
+        url: "/user/cartDetails",
+        method: "get",
+        dataType: "json",
+        success: function (data) {
+            console.log(data)
+        }
+        , error: function () {
+            console.log("error occured");
+        }
+    })
+</script>
