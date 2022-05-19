@@ -300,15 +300,15 @@ namespace UILayer.Controllers
             CartDetails cartDetails = new CartDetails();
             cartDetails.productId = id;
             Cart cart = new Cart();
-<<<<<<< HEAD
+
             //cart.productId = id;
            // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
           //  _carts.Add(cart);
            // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-=======
+
             cart.sessionId = HttpContext.Session.Id;
->>>>>>> 06f67a2b60bea48196e40c800773e73bba5be2c0
+
             return View();
         }
         public IActionResult CartPage()
