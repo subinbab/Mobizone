@@ -7,7 +7,7 @@
 
 @model DomainLayer.AdminContact
 @{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = " Admin- Edit Contact Us";
 }
 @*<div class="text-center">
     <div class="row align-item-center">*@
@@ -93,7 +93,7 @@
 
                     <div class="text-center" style="margin-top: 4%;margin-left: 68%;">
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <input type="submit" value="Save" class="btn btn-orange" />
 
 
 
@@ -104,7 +104,7 @@
                 </form>
                 <div class="text-center">
                     <div class="form-group">
-                        <button class="btn btn-light" style="margin-left: 90%;margin-top: -14%;"><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
+                        <button class="btn btn-indigo" ><a asp-controller="Admin" asp-action="Contact" style="text-decoration:none;"><b>Cancel</b></a></button>
                     </div>
 
                 </div>
@@ -112,7 +112,20 @@
         </div>
     </div>
 </div>
+<style>
+    .btn-orange {
+        background: #e52d2e;
+    }
 
+    .btn-indigo {
+        background: #4adba4;
+        margin-left: 90%;
+        margin-top: -11%;
+    }
+    .control-label{
+        margin-right:88%;
+    }
+</style>
 @*<div>
         <a asp-action="Index">Back to List</a>
     </div>

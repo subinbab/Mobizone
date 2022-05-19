@@ -30,7 +30,7 @@ else
                     
                     <div class="card ">
                         <div class="">
-                            <div class="address"><p class="card-title">Delivery Address</p></div>
+                            <div class="address" ><p class="card-title">Delivery Address</p></div>
                             
                             @if (user.address == null)
                             {
@@ -58,7 +58,7 @@ else
                                 
                                 
                                 <div class="col"><a asp-action="address" class="btn btn-orange">Add New Address</a></div>
-                                                   <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display:none" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
+                                                   <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display: none; background-color: #508be3;" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
 
                             </div>
 
@@ -94,7 +94,7 @@ else
 
                             <div class="row">
                                
-                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" onclick="paymentDetails()">continue</a></div>
+                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #508be3;" onclick="paymentDetails()">continue</a></div>
                             </div>
 
                         </div>
@@ -117,7 +117,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" class="btn btn-orange submit" onchange="displaySubmit()" style="display:none"/></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" value="Place Order" class="btn btn-orange submit" style="background-color: #508be3"  onchange="displaySubmit()" style="display:none"/></div>
                             </div>
 
 
@@ -131,8 +131,8 @@ else
                 <div class="col-6">
                     <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
-                        <div class="Price" style="background-color: #993a3a;color: white;font-variant: all-small-caps;">
-                            <h5 class="card-title" style="padding: 8px;">Price Details</h5>
+                        <div class="Price">
+                            <h5 class="card-title" style="">Price Details</h5>
                             <hr />
                         </div>
                         <div>
@@ -235,13 +235,12 @@ else
             display:none;
         }
         .address {
-            background-color: #993a3a;
+            background-color: #e52d2e;
             padding: 5px;
             font-variant: all-small-caps;
             font-size: 22px;
             padding-left: 16px;
             color: aliceblue;
-        
         }
         .form-check {
             position: relative;
@@ -269,7 +268,15 @@ else
         .footer {
             margin-top: 333px !important;
         }
-
+        .btn-orange {
+            background: #29a174;
+        }
+        .Price {
+            background: #e52d2e;
+            color: white;
+            font-variant: all-small-caps;
+            padding: 8px;
+        }
     </style>
 
 

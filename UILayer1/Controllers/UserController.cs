@@ -60,6 +60,7 @@ namespace UILayer.Controllers
         }
         public IActionResult Index(int? count )
         {
+            ViewBag.Title = "Mobizone - Home";
             try
             {
                 if(count == null)
@@ -305,7 +306,7 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
-<<<<<<< HEAD
+
 
             //cart.productId = id;
            // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
@@ -316,7 +317,7 @@ namespace UILayer.Controllers
             cart.sessionId = HttpContext.Session.Id;
 
             return View();
-=======
+
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
             cart.sessionId = HttpContext.Session.Id;
@@ -332,7 +333,7 @@ namespace UILayer.Controllers
                 var result = userApi.Createcart(cart);
             }
             return Redirect("/user/index");
->>>>>>> f5d649f93b881624a42cc6554925177b7ec437fd
+
         }
         public IActionResult CartPage()
         {
