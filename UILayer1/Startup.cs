@@ -1,18 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification;
-using AspNetCoreHero.ToastNotification.Extensions;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
-using System.Text.Json.Serialization;
+
 
 namespace UILayer1
 {
@@ -62,10 +59,10 @@ namespace UILayer1
             });
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
+            services.AddSession(options =>
+            options.IdleTimeout = TimeSpan.FromMinutes(15));
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -80,7 +77,7 @@ namespace UILayer1
             }
             /*app.UseHttpsRedirection();*/
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

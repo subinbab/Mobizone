@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,8 +33,9 @@ namespace UILayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
+        List<Cart> _carts;
         UserRegistration _user { get; set; }
-
+       
 
 
         INotyfService _notyfService;
@@ -47,7 +50,8 @@ namespace UILayer.Controllers
             _masterApi = new MasterApi(_configuration);
             _notyf = notyf;
             _mapper = mapper;
-
+            _carts = new List<Cart>();
+            HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
 
 
 
@@ -283,8 +287,13 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        public IActionResult AddtoCart()
+        public IActionResult AddtoCart(int id)
         {
+            Cart cart = new Cart();
+            cart.productId = id;
+            _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
+            _carts.Add(cart);
+            HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
@@ -332,5 +341,10 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
+       /* public IActionResult CartDetails()
+        {
+
+            return Json();
+        }*/
     }
 }

@@ -661,6 +661,7 @@ namespace UIlayer.Controllers
             _opApi.EditProduct(mappedData);
             return RedirectToAction("Index");
         }
+        [HttpGet("/admin/Enable/{id}")]
         public async Task<IActionResult> Enable(int id)
         {
             var datas = await _opApi.GetProduct();
