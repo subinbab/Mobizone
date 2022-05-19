@@ -13,6 +13,7 @@ namespace DomainLayer
         public string sessionId { get; set; }
         public ICollection<CartDetails> cartDetails { get; set; }
         [ForeignKey("userId")]
-        public UserRegistration? userId { get; set; }
+        public int? userId { get; set; }
+        public UserRegistration? users { get; set; }
     }
 }
