@@ -122,6 +122,25 @@
         <link rel="stylesheet" href="~/css/footer.css" />
     </head>
     <body>
+<<<<<<< HEAD
+        <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+
+          <div class="col-md-2 pt-0">
+              <div class="list-group list-group-flush account-settings-links">
+                  <h4 class="list-group-item">Account Settings</h4>
+                  <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
+              </div>
+
+              <div>
+                  <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+              </div>
+
+          </div>
+         
+        @RenderBody();
+        </div>
+=======
       
             <div class="row no-gutters row-bordered row-border-light">
 
@@ -139,6 +158,7 @@
 
                 @RenderBody();
             </div>
+>>>>>>> 2569adff33ba11c0fe383fe000a64b25db4793a8
         </div>
     </body>
 </html>

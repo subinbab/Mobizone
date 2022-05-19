@@ -307,7 +307,10 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
+<<<<<<< HEAD
 
+=======
+>>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
 
 
             //cart.productId = id;
@@ -323,9 +326,13 @@ namespace UILayer.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                cart.userId = userData;
+                cart.users = userData;
             }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
 
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
