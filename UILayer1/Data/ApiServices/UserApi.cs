@@ -79,7 +79,28 @@ namespace UILayer.Data.ApiServices
 
             }
         }*/
+        public bool ForgotPassword(UserRegistration User)
+        {
+            try
+            {
+                RequestHandler<UserRegistration> requestHandler = new RequestHandler<UserRegistration>(_configuration);
+                requestHandler.url = "api/users/UserCreate";
+                if (requestHandler.Edit(User).IsSuccess)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        
+        }
 
         #region Edit user method
         public bool EditUser(UserRegistration product)

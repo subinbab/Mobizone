@@ -11,17 +11,17 @@ namespace DTOLayer.UserModel
 {
     public class ResetPassword
     {
-        public int resetId { get; set; }
-        public UserRegistration user { get; set; }
+        public int ResetId { get; set; }
+        public UserRegistration User { get; set; }
         [Required(ErrorMessage = "*Password is required")]
         [Display(Name = "New Password")]
         [DataType(DataType.Password)]
         [RegularExpression("[^ ]{8,16}", ErrorMessage = "Password should contain a minimum of 8 characters and a capital letter")]
-        public string newPassword { get; set; }
+        public string NewPassword { get; set; }
         [Required(ErrorMessage = "*Password is required")]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
         [Compare("newPassword")]
-        public string confirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }
