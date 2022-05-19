@@ -25,6 +25,7 @@ namespace ApiLayer.Messages
                 this.Added = JsonConvert(users["UserAdded"]);
                 this.AddedError = JsonConvert(users["UserAddedError"]);
                 this.ExceptionError = JsonConvert(users["UserException"]);
+
             }
         }
         
