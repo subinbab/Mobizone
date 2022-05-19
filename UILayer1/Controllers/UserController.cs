@@ -221,7 +221,7 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult checkout(int ordereId , string status)
+        public IActionResult checkout(int orderId , string status)
         {
             return View("Orderplaced");
         }
@@ -285,6 +285,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        
         public IActionResult order()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -306,10 +307,7 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
-<<<<<<< HEAD
 
-=======
->>>>>>> ecc2407c2bcc0ee43178b2f726a686fbbeb9f87c
 
 
             //cart.productId = id;
@@ -321,20 +319,13 @@ namespace UILayer.Controllers
             cart.sessionId = HttpContext.Session.Id;
 
             return View();
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> bdbe69c56d0b48d904b82122bb6132087b248947
             if (User.Identity.IsAuthenticated)
             {
                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
                 cart.userId = userData;
             }
 
->>>>>>> ecc2407c2bcc0ee43178b2f726a686fbbeb9f87c
 
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
@@ -352,14 +343,7 @@ namespace UILayer.Controllers
             }
             return Redirect("/user/index");
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 5b8ff2932fe3e69e7bf3efab2dd724c489c400cf
->>>>>>> ecc2407c2bcc0ee43178b2f726a686fbbeb9f87c
->>>>>>> bdbe69c56d0b48d904b82122bb6132087b248947
         }
         public IActionResult CartPage()
         {
@@ -418,4 +402,5 @@ namespace UILayer.Controllers
             return View("Index", data);
         }
     }
+
 }

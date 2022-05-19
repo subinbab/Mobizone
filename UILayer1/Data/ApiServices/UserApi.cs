@@ -276,7 +276,20 @@ namespace UILayer.Data.ApiServices
                 return null;
             }
         }
-       
+
+        public async Task<IEnumerable<Checkout>> GetUserOrders()
+        {
+            RequestHandler<IEnumerable<Checkout>> _requestHandler = new RequestHandler<IEnumerable<Checkout>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/GetCheckout";
+                return _requestHandler.Get().result;
+            }
+            catch
+            {
+                return null;
+            } 
+        }
 
     }
 }
