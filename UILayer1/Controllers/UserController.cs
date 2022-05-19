@@ -305,6 +305,11 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
+            if (User.Identity.IsAuthenticated)
+            {
+                var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                cart.userId = userData;
+            }
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
             cart.sessionId = HttpContext.Session.Id;

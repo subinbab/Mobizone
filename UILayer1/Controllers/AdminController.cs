@@ -428,6 +428,8 @@ namespace UIlayer.Controllers
                 LoginViewModel user = new LoginViewModel();
                 user.username = userName;
                 user.password = password;
+                HttpContext.Session.SetString("testKey", "testValue");
+                user.sessionId = HttpContext.Session.Id;
                 Login check = adminApi.Authenticate(user);
                 if (check != null)
                 {

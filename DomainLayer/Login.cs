@@ -18,5 +18,6 @@ namespace DomainLayer
         public string createdBy { get; set; }
         public DateTime modifiedOn { get; set; }
         public string modifiedBy { get; set; }
+        public string? sessionId { get; set; }
     }
 }
