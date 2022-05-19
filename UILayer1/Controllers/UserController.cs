@@ -223,7 +223,7 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult checkout(int ordereId , string status)
+        public IActionResult checkout(int orderId , string status)
         {
             return View("Orderplaced");
         }
@@ -287,6 +287,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        
         public IActionResult order()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -316,12 +317,19 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
+<<<<<<< HEAD
             cart.cartDetails = cartList;
             cart.sessionId = HttpContext.Session.Id;
             /* if(JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart")) != null)
              {
                  _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
              }*/
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
+>>>>>>> f72498737b66b8e7d316828988f881ef0b600f57
 
             _carts.Add(cart);
              _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
@@ -340,7 +348,10 @@ namespace UILayer.Controllers
                 cart.usersId = userData.UserId;
             }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
 
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
@@ -418,4 +429,5 @@ namespace UILayer.Controllers
             return View("Index", data);
         }
     }
+
 }
