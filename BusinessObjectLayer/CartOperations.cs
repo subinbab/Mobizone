@@ -17,8 +17,15 @@ namespace BusinessObjectLayer
         }
         public async Task Add(Cart entity)
         {
-            _repo.Add(entity);
-            _repo.Save();
+            try
+            {
+                _repo.Add(entity);
+                _repo.Save();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public async Task Delete(Cart entity)
@@ -38,9 +45,9 @@ namespace BusinessObjectLayer
             return _repo.GetById(id);
         }
 
-        public Task<IEnumerable<Cart>> Get()
+        public async Task<IEnumerable<Cart>> Get()
         {
-            return _repo.Get();
+            return await  _repo.Get(n1=>n1.cartDetails);
         }
     }
 }

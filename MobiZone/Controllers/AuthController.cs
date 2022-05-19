@@ -109,6 +109,8 @@ namespace ApiLayer.Controllers
                 string password = _sec.Encrypt("subin", data.password);
                 var list = await _loginOperations.Get();
                 Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(data.password)).FirstOrDefault();
+                check.sessionId = data.sessionId;
+                _loginOperations.Edit(check);
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {

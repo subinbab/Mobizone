@@ -7,18 +7,40 @@
 @{
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
 }
+<div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99;background-color: white;">
+    <div class="card overflow-hidden">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3 pt-0">
+                <div class="list-group list-group-flush account-settings-links">
+                    <h5 class="list-group-item">
+                        Account Settings</h4>
+                        <a class="list-group-item list-group-item-action active" asp-action="account">Profile Information</a>
+                        <a class="list-group-item list-group-item-action" asp-action="address">Manage Profile</a>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
 
-    
-        <div class="col-md-9">
-            <div class="tab-content">
-                <div class="tab-pane fade active show" id="account-general">
+    <div class="col-md-9">
+        <div class="tab-content">
+            <div class="tab-pane fade active show" id="account-general">
 
-                    <div class="card-body media align-items-center">
+                <div class="card-body media align-items-center">
+
+                </div>
+                <hr class="border-light m-0">
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Username : @user.Email</label>
 
                     </div>
-                    <hr class="border-light m-0">
+                    <div class="form-group">
+                        <label class="form-label">Name : @user.FirstName</label>
 
+<<<<<<< HEAD
                     <div class="card-body"style="text-align:center">
                         <div class="form-group">
                             <label class="form-label">Username : @user.Email</label>
@@ -55,7 +77,46 @@
                         <button type="button" class="btn btn-primary">Edit</button>&nbsp;
                         <a type="button" class="btn btn-primary"asp-action="Index">Back</a>&nbsp;
                     </div>
+=======
+                    </div>
+                    @if (user.address == null)
+                    {
+                        <p>No Address available</p>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <div class="row">
+                                @foreach (var data in user.address)
+                                {
+
+                                    <div class="col">
+                                        <div class="card dark-style">
+                                            <p>@data.name</p>
+                                            <p>@data.address</p>
+                                            <p>@data.district</p>
+                                            <p>@data.country</p>
+                                        </div>
+
+                                    </div>
+
+
+
+                                }
+                            </div>
+
+                        </div>
+                    }
+
+
+>>>>>>> 5b8ff2932fe3e69e7bf3efab2dd724c489c400cf
                 </div>
+                <div class="text-right mt-3">
+                    <button type="button" class="btn btn-primary">Edit</button>&nbsp;
+                    <button type="button" class="btn btn-default"><a asp-action="Index">Return To Store</a></button>
+                </div>
+            </div>
 
 
 

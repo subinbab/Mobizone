@@ -297,10 +297,16 @@ namespace UILayer.Controllers
              _carts.Add(cart);
              HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
              ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);*/
+            var cartListFromDb = userApi.GetCart().Result;
+            
             CartDetails cartDetails = new CartDetails();
             cartDetails.productId = id;
+            List<CartDetails> cartList = new List<CartDetails>();
+
+            cartList.Add(cartDetails);
             Cart cart = new Cart();
 
+<<<<<<< HEAD
             //cart.productId = id;
            // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
           //  _carts.Add(cart);
@@ -310,6 +316,31 @@ namespace UILayer.Controllers
             cart.sessionId = HttpContext.Session.Id;
 
             return View();
+=======
+            if (User.Identity.IsAuthenticated)
+            {
+                var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                cart.userId = userData;
+            }
+
+
+            cart.cartDetails = cartList;
+            HttpContext.Session.SetString("testKey","testValue");
+            cart.sessionId = HttpContext.Session.Id;
+            if (cartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+            {
+                var existedCart = cartListFromDb.Where(c => c.sessionId.Equals(cart.sessionId)).FirstOrDefault();
+                //cartDetails.productId = id;
+                existedCart.cartDetails.Add(cartDetails);
+                userApi.EditCart(existedCart);
+            }
+            else
+            {
+                var result = userApi.Createcart(cart);
+            }
+            return Redirect("/user/index");
+
+>>>>>>> 5b8ff2932fe3e69e7bf3efab2dd724c489c400cf
         }
         public IActionResult CartPage()
         {

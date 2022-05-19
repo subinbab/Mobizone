@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220518123503_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,15 +142,10 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("sessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("cart");
                 });
@@ -248,9 +245,6 @@ namespace Repository.Migrations
 
                     b.Property<int>("rolesId")
                         .HasColumnType("int");
-
-                    b.Property<string>("sessionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
@@ -875,15 +869,6 @@ namespace Repository.Migrations
                     b.Navigation("color");
 
                     b.Navigation("product");
-                });
-
-            modelBuilder.Entity("DomainLayer.Cart", b =>
-                {
-                    b.HasOne("DomainLayer.Users.UserRegistration", "userId")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("userId");
                 });
 
             modelBuilder.Entity("DomainLayer.CartDetails", b =>
