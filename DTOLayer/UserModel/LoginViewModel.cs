@@ -16,7 +16,7 @@ namespace DomainLayer.Users
         [DataType(DataType.Password)]
         [Display(Name ="Password")]
         public string password { get; set; }
-
+        public string sessionId { get; set; }
         public string url { get; set; }
     }
 }

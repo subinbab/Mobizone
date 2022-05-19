@@ -452,7 +452,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-        #region Update Method for Users
+        #region Update Method for Cart
         [HttpPut("UpdateCart")]
         public IActionResult UpdateCart([FromBody] Cart cart)
         {

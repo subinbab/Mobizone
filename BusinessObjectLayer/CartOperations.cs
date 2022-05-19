@@ -17,8 +17,15 @@ namespace BusinessObjectLayer
         }
         public async Task Add(Cart entity)
         {
-            _repo.Add(entity);
-            _repo.Save();
+            try
+            {
+                _repo.Add(entity);
+                _repo.Save();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public async Task Delete(Cart entity)
