@@ -305,26 +305,14 @@ namespace UILayer.Controllers
 
             cartList.Add(cartDetails);
             Cart cart = new Cart();
-<<<<<<< HEAD
+
             if (User.Identity.IsAuthenticated)
             {
                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
                 cart.userId = userData;
             }
-=======
-<<<<<<< HEAD
 
-            //cart.productId = id;
-           // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
-          //  _carts.Add(cart);
-           // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
 
-            cart.sessionId = HttpContext.Session.Id;
-
-            return View();
-=======
->>>>>>> e31d42a58831d433e40204aa3a82b570c7d0e548
             cart.cartDetails = cartList;
             HttpContext.Session.SetString("testKey","testValue");
             cart.sessionId = HttpContext.Session.Id;
@@ -340,7 +328,7 @@ namespace UILayer.Controllers
                 var result = userApi.Createcart(cart);
             }
             return Redirect("/user/index");
->>>>>>> f5d649f93b881624a42cc6554925177b7ec437fd
+
         }
         public IActionResult CartPage()
         {
