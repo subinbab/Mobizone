@@ -143,15 +143,12 @@ namespace Repository.Migrations
                     b.Property<string>("sessionId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("userId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("usersUserId")
+                    b.Property<int?>("usersId")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("usersUserId");
+                    b.HasIndex("usersId");
 
                     b.ToTable("cart");
                 });
@@ -166,6 +163,9 @@ namespace Repository.Migrations
                     b.Property<int?>("Cartid")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductCartid")
+                        .HasColumnType("int");
+
                     b.Property<int?>("price")
                         .HasColumnType("int");
 
@@ -178,6 +178,8 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("Cartid");
+
+                    b.HasIndex("ProductCartid");
 
                     b.ToTable("CartDetails");
                 });
@@ -347,6 +349,24 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("DomainLayer.ProductCart", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("sessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("usersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("productCart");
                 });
 
             modelBuilder.Entity("DomainLayer.ProductModel.Color", b =>
@@ -884,7 +904,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("DomainLayer.Users.UserRegistration", "users")
                         .WithMany()
-                        .HasForeignKey("usersUserId");
+                        .HasForeignKey("usersId");
 
                     b.Navigation("users");
                 });
@@ -894,6 +914,10 @@ namespace Repository.Migrations
                     b.HasOne("DomainLayer.Cart", null)
                         .WithMany("cartDetails")
                         .HasForeignKey("Cartid");
+
+                    b.HasOne("DomainLayer.ProductCart", null)
+                        .WithMany("cartDetails")
+                        .HasForeignKey("ProductCartid");
                 });
 
             modelBuilder.Entity("DomainLayer.Checkout", b =>
@@ -1064,6 +1088,11 @@ namespace Repository.Migrations
                 });
 
             modelBuilder.Entity("DomainLayer.Cart", b =>
+                {
+                    b.Navigation("cartDetails");
+                });
+
+            modelBuilder.Entity("DomainLayer.ProductCart", b =>
                 {
                     b.Navigation("cartDetails");
                 });

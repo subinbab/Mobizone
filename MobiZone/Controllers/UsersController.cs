@@ -393,11 +393,12 @@ namespace ApiLayer.Controllers
         #region Post Method for Cart
 
         [HttpPost("CreateCart")]
-        public IActionResult CreateCart([FromBody] Cart cart)
+        public IActionResult CreateCart([FromBody] ProductCart cart)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
             {
+              
                 _cartOperations.Add(cart);
                 string message = " Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, null, message);
@@ -417,9 +418,9 @@ namespace ApiLayer.Controllers
 
         #region Get Method for cart
         [HttpGet("GetCart")]
-        public async Task<ResponseModel<IEnumerable<Cart>>> GetCart()
+        public async Task<ResponseModel<IEnumerable<ProductCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<Cart>> _response = new ResponseModel<IEnumerable<Cart>>();
+            ResponseModel<IEnumerable<ProductCart>> _response = new ResponseModel<IEnumerable<ProductCart>>();
             try
             {
                 var result = await _cartOperations.Get();
@@ -454,9 +455,9 @@ namespace ApiLayer.Controllers
 
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
-        public IActionResult UpdateCart([FromBody] Cart cart)
+        public IActionResult UpdateCart([FromBody] ProductCart cart)
         {
-            ResponseModel<Cart> _response = new ResponseModel<Cart>();
+            ResponseModel<ProductCart> _response = new ResponseModel<ProductCart>();
             try
             {
                 _cartOperations.Edit(cart);
