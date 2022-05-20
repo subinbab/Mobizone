@@ -62,6 +62,12 @@ namespace UILayer1
             services.AddSession(options =>
             options.IdleTimeout = TimeSpan.FromMinutes(15));
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddDistributedSqlServerCache(options => {
+                options.ConnectionString = Configuration.GetConnectionString("online_db_2");
+                options.SchemaName = "dbo";
+                options.TableName = "SQLSessions";
+                //options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(6);
+            });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

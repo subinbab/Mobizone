@@ -31,6 +31,8 @@ namespace Repository
         public DbSet<AdminContact> contact { get; set; }
         public DbSet<Roles> roles { get; set; }
         public DbSet<ProductSubPart> productSubPart { get; set; }
+        public DbSet<Cart> cart { get; set; }
+        public DbSet<ProductCart> productCart { get; set; }
 
         /*protected override void OnModelCreating(ModelBuilder builder)
         {

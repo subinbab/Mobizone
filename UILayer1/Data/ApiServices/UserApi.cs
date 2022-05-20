@@ -202,5 +202,99 @@ namespace UILayer.Data.ApiServices
                 return null;
             }
         }
+
+        #region Create an order
+        public bool Createcart(ProductCart cart)
+        {
+            RequestHandler<ProductCart> requestHandler = new RequestHandler<ProductCart>(_configuration);
+            try
+            {
+                requestHandler.url = "api/Users/CreateCart";
+                var result = requestHandler.Post(cart);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        public bool EditCart(ProductCart cart)
+        {
+            RequestHandler<ProductCart> _requestHandler = new RequestHandler<ProductCart>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/UpdateCart";
+                var result = _requestHandler.Edit(cart);
+                if (result != null)
+                {
+                    if (result.IsSuccess)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+        public async Task<IEnumerable<ProductCart>> GetCart()
+        {
+            RequestHandler<IEnumerable<ProductCart>> _requestHandler = new RequestHandler<IEnumerable<ProductCart>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/GetCart";
+                var result = _requestHandler.Get().result;
+                if(result == null)
+                {
+                    result = null;
+                }
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Checkout>> GetUserOrders()
+        {
+            RequestHandler<IEnumerable<Checkout>> _requestHandler = new RequestHandler<IEnumerable<Checkout>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/GetCheckout";
+                return _requestHandler.Get().result;
+            }
+            catch
+            {
+                return null;
+            } 
+        }
+
     }
 }

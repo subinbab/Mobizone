@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220519143957_10")]
+    partial class _10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,6 +367,8 @@ namespace Repository.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("usersId");
 
                     b.ToTable("productCart");
                 });
@@ -969,6 +973,15 @@ namespace Repository.Migrations
                         .HasForeignKey("usersUserId");
 
                     b.Navigation("product");
+
+                    b.Navigation("users");
+                });
+
+            modelBuilder.Entity("DomainLayer.ProductCart", b =>
+                {
+                    b.HasOne("DomainLayer.Users.UserRegistration", "users")
+                        .WithMany()
+                        .HasForeignKey("usersId");
 
                     b.Navigation("users");
                 });

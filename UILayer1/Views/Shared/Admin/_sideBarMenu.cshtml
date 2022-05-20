@@ -4,26 +4,26 @@
 
 <div class="" style="padding-top:60px;">
     <div class="sidebar">
-        <a class="" asp-action="Dashboard">Dashboard</a>
+        <a class="dashboard" asp-action="Dashboard">Dashboard</a>
         <div id="product">
-            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create"  ? "active" : "")">Products</a>
+            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create"  ? "active" : "")"style="text-decoration: none;">Products</a>
             <div id="dropdown1" class="dropdown">
-                <a asp-action="" style="margin-right:100px"class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
-                <a asp-action="Create" style="margin-right:100px"class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Add</a>
+                <a asp-action="" style="margin-right:100px;text-decoration:none;"class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
+                <a asp-action="Create" style="margin-right: 100px; text-decoration: none;"class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Add</a>
             </div>
         </div>
 
-        <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Users</a>
+        <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")"style="text-decoration: none;">Users</a>
 
-        <a asp-action="orderlist" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")">Orders</a>
+        <a asp-action="orderlist" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")"style="text-decoration: none;">Orders</a>
         <div id="settings">
-            <a class="@(Context.Request.Path == "/Admin/About" || Context.Request.Path == "/Admin/Privacy"  || Context.Request.Path == "/Admin/Contact"  ? "active" : "")">Settings</a>
+            <a class="@(Context.Request.Path == "/Admin/About" || Context.Request.Path == "/Admin/Privacy"  || Context.Request.Path == "/Admin/Contact"  ? "active" : "")"style="text-decoration: none;">Settings</a>
             <div id="dropdown2" class="dropdown">
-                <a asp-action="Contact" id="dropdown2" class="@(Context.Request.Path == "/Admin/Contact" ? "active " : "")">Contact Us</a>
+                <a asp-action="Contact" id="dropdown2" class="@(Context.Request.Path == "/Admin/Contact" ? "active " : "")"style="text-decoration: none;">Contact Us</a>
 
-                <a asp-action="About" id="dropdown2" class="@(Context.Request.Path == "/Admin/About" ? "active " : "")">About</a>
-                <a asp-action="Privacy" id="dropdown2" class="@(Context.Request.Path == "/Admin/Privacy" ? "active " : "")">Privacy & Policy</a>
-                <a asp-action="MasterData" id="dropdown2" class="@(Context.Request.Path == "/Admin/MasterData" ? "active " : "")">Master</a>
+                <a asp-action="About" id="dropdown2" class="@(Context.Request.Path == "/Admin/About" ? "active " : "")"style="text-decoration: none;">About</a>
+                <a asp-action="Privacy" id="dropdown2" class="@(Context.Request.Path == "/Admin/Privacy" ? "active " : "")"style="text-decoration: none;">Privacy & Policy</a>
+                <a asp-action="MasterData" id="dropdown2" class="@(Context.Request.Path == "/Admin/MasterData" ? "active " : "")"style="text-decoration: none;">Master</a>
 
             </div>
         </div>
@@ -53,6 +53,9 @@
         }
         a{
             cursor:pointer;
+        }
+        .dashboard{
+            text-decoration:none;
         }
     </style>
  </div>

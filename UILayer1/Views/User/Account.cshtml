@@ -3,67 +3,75 @@
 *@
 @{
     Layout = "~/Views/Simpleview/_accountLayout.cshtml";
-}
-@{
-    var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
-}
+
+   
+    }
+    @{
+        var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+    }
 
 
-    
-        <div class="col-md-9">
-            <div class="tab-content">
-                <div class="tab-pane fade active show" id="account-general">
+    <div class="col-md-9">
+        <div class="tab-content" style="margin-right:10%;padding-top:10%;padding-bottom:-15%">
+            <div class="tab-pane fade active show" id="account-general">
 
-                    <div class="card-body media align-items-center">
+                <div class="card-body media align-items-center">
 
-                    </div>
-                    <hr class="border-light m-0">
-
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label class="form-label">Username : @user.Email</label>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Name : @user.FirstName</label>
-
-                        </div>
-                        @if (user.address == null)
-                        {
-                            <p>No Address available</p>
-                        }
-                        else
-                        {
-                            <div class="form-group">
-                                <label class="form-label">Address</label>
-                                <div class="row">
-                                    @foreach (var data in user.address)
-                                    {
-
-                                        <div class="col">
-                                            <div class="card dark-style">
-                                                <p>@data.name</p>
-                                                <p>@data.address</p>
-                                                <p>@data.district</p>
-                                                <p>@data.country</p>
-                                            </div>
-
-                                        </div>
-
-
-
-                                    }
-                                </div>
-
-                            </div>
-                        }
-
-
-                    </div>
-                    <div class="text-right mt-3">
-                        <button type="button" class="btn btn-primary">Edit</button>&nbsp;
-                        <button type="button" class="btn btn-default"><a asp-action="Index">Return To Store</a></button>
-                    </div>
                 </div>
+
+               @* <hr class="border-light m-0">*@
+
+
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="form-label" style="margin-left:40%">Username : @user.Email</label>
+
+
+                </div>
+                <div class="form-group">
+                    <label class="form-label" style="margin-left:43%">Name : @user.FirstName</label>
+
+                </div>
+                @if (user.address == null)
+                {
+                    <p>No Address available</p>
+                }
+                else
+                {
+                    <div class="form-group">
+
+                        <div class="row">
+                            @foreach (var data in user.address)
+                            {
+
+                                <div class="col">
+
+                                    <p style="margin-left:41%"> Address : @data.address</p>
+                                    <p style="margin-left:42%"> District : @data.district</p>
+                                    <p style="margin-left:41%">Pincode : @data.pincode</p>
+                                    <p style="margin-left:43%">State : @data.state</p>
+                                    <p style="margin-left:41%"> Country : @data.country</p>
+                                </div>}
+                        </div>
+                    </div>}
+            <div class="text-right mt-3">
+           
+                <button type="button" value="Save" class="btn btn-orange" />Edit</button>
+                <a type="button" class="btn btn-primary" asp-action="Index">Back</a>&nbsp;
+            </div>
+            </div>
+       
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
 
 

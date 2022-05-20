@@ -1,7 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
+@{ 
+    ViewData["title"] = " Admin - Privacy & Policy";
+}
 @model DomainLayer.PrivacyPolicy
 
 <div class="row container-fluid pr-6">
@@ -21,12 +23,20 @@
 
     <div class=" text-center">
         <div class="form-group">
-            <a asp-action="PrivacyEdit"><button  class="btn btn-primary">Edit</button></a>
+            <a asp-action="PrivacyEdit"><button class="btn btn-orange">Edit</button></a>
+            <button class="btn btn-indigo"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Cancel</b></a></button>
         </div>
     </div>
         <style>
             .About {
                 margin-left: 300px;
+            }
+            .btn-indigo {
+                background: #4adba4;
+            }
+
+            .btn-orange {
+                background: #e52d2e;
             }
         </style>
 

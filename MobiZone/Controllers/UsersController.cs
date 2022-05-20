@@ -393,11 +393,12 @@ namespace ApiLayer.Controllers
         #region Post Method for Cart
 
         [HttpPost("CreateCart")]
-        public IActionResult CreateCart([FromBody] Cart cart)
+        public IActionResult CreateCart([FromBody] ProductCart cart)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
             {
+              
                 _cartOperations.Add(cart);
                 string message = " Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, null, message);
@@ -417,12 +418,71 @@ namespace ApiLayer.Controllers
 
         #region Get Method for cart
         [HttpGet("GetCart")]
-        public async Task<ResponseModel<IEnumerable<Cart>>> GetCart()
+        public async Task<ResponseModel<IEnumerable<ProductCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<Cart>> _response = new ResponseModel<IEnumerable<Cart>>();
+            ResponseModel<IEnumerable<ProductCart>> _response = new ResponseModel<IEnumerable<ProductCart>>();
             try
             {
                 var result = await _cartOperations.Get();
+                if (result == null)
+                {
+                    string message = " " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, null, message);
+                    /*                    var json = JsonConvert.SerializeObject(_response, Formatting.Indented,
+                              new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.None });*/
+                    /*                    return Content(json, "application/json");*/
+                    return _response;
+                }
+                else
+                {
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, result, message);
+
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = " " + ex.Message + " : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
+        }
+        #endregion
+
+        #region Update Method for Cart
+        [HttpPut("UpdateCart")]
+        public IActionResult UpdateCart([FromBody] ProductCart cart)
+        {
+            ResponseModel<ProductCart> _response = new ResponseModel<ProductCart>();
+            try
+            {
+                _cartOperations.Edit(cart);
+                string message = "Updated" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                return new JsonResult(_response);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error occured" + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return new JsonResult(_response);
+            }
+        }
+        #endregion
+
+        #region Get Method for users orders
+        [HttpGet("GetUserOrders/{id}")]
+        public async Task<ResponseModel<IEnumerable<Checkout>>> GetUserOrders(int id)
+        {
+            ResponseModel<IEnumerable<Checkout>> _response = new ResponseModel<IEnumerable<Checkout>>();
+            try
+            {
+                var result =  _checkOutOperation.get().Result.ToList().Where(c=> c.userId.Equals(id));
                 if (result == null)
                 {
                     string message = " " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -455,3 +515,6 @@ namespace ApiLayer.Controllers
 
 
 }
+
+
+
