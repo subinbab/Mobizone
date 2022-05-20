@@ -454,7 +454,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-<<<<<<< HEAD
+
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
         public IActionResult UpdateCart([FromBody] ProductCart cart)
@@ -513,7 +513,7 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
-=======
+
         [HttpGet]
         public IActionResult ForgotPassword(int userId)
         {
@@ -525,7 +525,7 @@ namespace ApiLayer.Controllers
             return BadRequest();
         }
 
->>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
+
     }
 
 
