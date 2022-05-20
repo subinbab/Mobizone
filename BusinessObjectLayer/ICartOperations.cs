@@ -6,10 +6,10 @@ namespace BusinessObjectLayer
 {
     public interface ICartOperations
     {
-        Task Add(Cart entity);
-        Task Delete(Cart entity);
-        Task Edit(Cart entity);
-        Task<Cart> GetById(int id);
-        Task<IEnumerable<Cart>> Get();
+        Task Add(ProductCart entity);
+        Task Delete(ProductCart entity);
+        Task Edit(ProductCart entity);
+        Task<ProductCart> GetById(int id);
+        Task<IEnumerable<ProductCart>> Get();
     }
 }

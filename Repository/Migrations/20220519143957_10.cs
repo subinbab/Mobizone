@@ -3,25 +3,42 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class _1 : Migration
+    public partial class _10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
+
+          
             migrationBuilder.CreateTable(
-                name: "About",
+                name: "productCart",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    sessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    usersId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_About", x => x.id);
+                    table.PrimaryKey("PK_productCart", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_productCart_userRegistrations_usersId",
+                        column: x => x.usersId,
+                        principalTable: "userRegistrations",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             
 
+           
+            migrationBuilder.CreateIndex(
+                name: "IX_productCart_usersId",
+                table: "productCart",
+                column: "usersId");
+
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -46,6 +63,9 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CartDetails");
 
             migrationBuilder.DropTable(
                 name: "Images");
@@ -79,6 +99,12 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "cart");
+
+            migrationBuilder.DropTable(
+                name: "productCart");
 
             migrationBuilder.DropTable(
                 name: "productSubPart");
