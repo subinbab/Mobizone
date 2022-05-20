@@ -293,7 +293,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        public IActionResult AddtoCart(int id)
+       /* public IActionResult AddtoCart(int id)
         {
 
             // IEnumerable<ProductCart> cartListFromDb;
@@ -330,6 +330,7 @@ namespace UILayer.Controllers
             
 
             return View();
+<<<<<<< HEAD
 
 
 
@@ -360,6 +361,9 @@ namespace UILayer.Controllers
 
 
         }
+=======
+        }*/
+>>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -405,11 +409,23 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
+<<<<<<< HEAD
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+<<<<<<< HEAD
+            return Json();
+=======
  /*     [HttpPost]
       public IActionResult sort(string price)
         {
             ViewBag.count = 0;
             ViewBag.PriceList = _
+>>>>>>> sp3-02-05-2022
         }*/
        [HttpPost]
        public IActionResult Search(string name)
@@ -418,6 +434,63 @@ namespace UILayer.Controllers
             var data = _opApi.Search(name).Result;
             return View("Index", data);
         }
+=======
+
+        [HttpPost]
+        public IActionResult ForgetPassword(ForgetPasswordViewModel forgotPassword)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ModelState.Clear();
+                    var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(forgotPassword.email)).FirstOrDefault();
+                    if (userDetails != null)
+                    {
+                        forgotPassword.emailSent = true;
+                        return Redirect("/user/ResetPassword?email=" + forgotPassword.email);
+                    }
+
+
+                }
+                return View(forgotPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet]
+        public ActionResult ResetPassword(string email)
+        {
+            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
+            ResetPassword reset = new ResetPassword();
+            reset.User = userDetails;
+            return View(reset);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPassword resetPassword)
+        {
+            try
+            {
+                UserRegistration register = new UserRegistration();
+                register = userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
+                register.Password = resetPassword.NewPassword;
+                var result = userApi.EditUser(register);
+                return View(resetPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        /* public IActionResult CartDetails()
+         {
+
+             return Json();
+         }*/
+>>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
     }
 
 }

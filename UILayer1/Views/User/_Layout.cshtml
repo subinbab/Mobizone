@@ -109,16 +109,17 @@
     </nav>
 
     <div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99;background-color: white;">
-        <div id="filter" style="padding: 0px;background-color: #c93e3e00;;color: black;">
+        <div id="filter" style="padding: 0px;background-color: #c93e3e00;color: black;">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
-        <div id="dropdown1" class="dropdown">
+        <div id="dropdown1" class="dropdown" >
             <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
+                <select  name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
                     <option disabled selected> Select Brand </option>
                 </select>
 
-                <input class="@(Context.Request.Path == "/User/filter" ? "active " : "")" type="submit" value="Filter"></input>
+                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color: indianred;"
+                </input>
             </form>
         </div>
 

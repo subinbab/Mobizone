@@ -48,10 +48,11 @@ namespace ApiLayer.Controllers
         IProductOperations _productOperations;
         Address _addresData;
         ICartOperations _cartOperations;
+        IForgotPassword _forgotPassword;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,
+        public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,IForgotPassword forgotPassword,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations)
@@ -72,7 +73,7 @@ namespace ApiLayer.Controllers
             _loginOperations = loginOperations;
             _userManager = userManager;
             _roleManager = roleManager;
-            
+            _forgotPassword = forgotPassword;
             _checkOutOperation = checkOutOperation;
             _productOperations = productOperations;
             _cartOperations = cartOperations;
@@ -453,6 +454,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
+
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
         public IActionResult UpdateCart([FromBody] ProductCart cart)
@@ -511,6 +513,19 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult ForgotPassword(int userId)
+        {
+            var data = _forgotPassword.forgotPassword(userId);
+            if (data != null)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+
     }
 
 

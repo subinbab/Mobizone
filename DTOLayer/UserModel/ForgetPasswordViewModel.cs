@@ -9,8 +9,12 @@ namespace DTOLayer.UserModel
 {
     public class ForgetPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public int userId { get; set; }
+
+        [Required(ErrorMessage = "*Email Address is required")]
+        [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z\s]+\.[a-zA-Z\s.]+$", ErrorMessage = "Invalid Email format")]
+        [Display(Name = "Registered Email Address")]
+        public string email { get; set; }
+        public bool emailSent { get; set; }
     }
 }
