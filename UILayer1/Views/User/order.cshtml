@@ -9,6 +9,7 @@
     var data = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
+    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
 
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -58,7 +59,7 @@ else
                                 
                                 
                                 <div class="col"><a asp-action="address" class="btn btn-orange">Add New Address</a></div>
-                                                   <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display: none; background-color: #508be3;" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
+                                                   <div class="col col d-flex justify-content-end " id="addressContinue"><a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1" onclick="orderDetails()">continue</a></div>
 
                             </div>
 
@@ -94,7 +95,7 @@ else
 
                             <div class="row">
                                
-                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #508be3;" onclick="paymentDetails()">continue</a></div>
+                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
                             </div>
 
                         </div>
@@ -117,7 +118,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" value="Place Order" class="btn btn-orange submit" style="background-color: #508be3"  onchange="displaySubmit()" style="display:none"/></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  onchange="displaySubmit()" style="display:none"/></div>
                             </div>
 
 
@@ -133,7 +134,7 @@ else
 
                         <div class="Price">
                             <h5 class="card-title" style="">Price Details</h5>
-                            <hr />
+                           
                         </div>
                         <div>
                             <p class="card-text" id="priceField">Price </p>

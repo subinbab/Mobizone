@@ -40,7 +40,7 @@ namespace ApiLayer.Messages
         public string AddedError { get; set; }
         public string UpdatedError { get; set; }
         public string DeltedError { get; set; }
-
+  
         public string DuplicateData { get; set; }
         public string ExceptionError { get; set; }
         private JArray Read()

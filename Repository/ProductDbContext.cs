@@ -33,43 +33,8 @@ namespace Repository
         public DbSet<ProductSubPart> productSubPart { get; set; }
         public DbSet<Cart> cart { get; set; }
         public DbSet<ProductCart> productCart { get; set; }
-
-        /*protected override void OnModelCreating(ModelBuilder builder)
-        {
-
-            builder.Entity<Ram>().HasRequired(c => c.Stage).WithMany().WillCascadeOnDelete(false);
-
-            builder.Entity<Storage>()
-                .HasRequired(s => s.Stage)
-                .WithMany()
-                .WillCascadeOnDelete(false);
-            *//*base.OnModelCreating(builder);
-            this.SeedUser(builder);*//*
-
-        }*/
-        /*public void SeedUser(ModelBuilder builder)
-        {
-            Roles role1 = new Roles()
-            {
-                id = 1,
-                name = "User",
-                createdOn = DateTime.Now,
-                createdBy = "Subin",
-                modifiedOn = DateTime.Now,
-                modifiedBy = "Subin"
-            };
-            Roles role2 = new Roles()
-            {
-                id = 2,
-                name = "Admin",
-                createdOn = DateTime.Now,
-                createdBy = "Subin",
-                modifiedOn = DateTime.Now,
-                modifiedBy = "Subin"
-            };
-            builder.Entity<Roles>().HasData(role1);
-            builder.Entity<Roles>().HasData(role2);
-        }*/
+        public DbSet<Address> address { get; set; }
+       
     }
 
 

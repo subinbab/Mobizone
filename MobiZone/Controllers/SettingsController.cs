@@ -78,7 +78,7 @@ namespace ApiLayer.Controllers
                 _privacyPolicy = _privacyOperation.Get().Result;
                 if (_privacyPolicy == null)
                 {
-                    string message = "Content added" + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    string message = "" + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0,null, message);
                     return _response;
                 }
@@ -92,7 +92,7 @@ namespace ApiLayer.Controllers
             }
             catch (Exception ex)
             {
-                string message = "Exception occured" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                string message = "Exception occured" + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                 _response.AddResponse(false, 0, null, message);
                 _log.Error("log4net : error in the post controller", ex);
                 return _response;
@@ -224,7 +224,7 @@ namespace ApiLayer.Controllers
         {
             ResponseModel<IEnumerable<AdminContact>> _response = new ResponseModel<IEnumerable<AdminContact>>();
             try
-            {
+            { 
                 _contact = _contactOperations.Get().Result;
                 if (_contactOperations == null)
                 {

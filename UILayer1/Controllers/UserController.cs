@@ -324,12 +324,15 @@ namespace UILayer.Controllers
             HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             
             _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
 
             
 
             return View();
 <<<<<<< HEAD
+
+
 
             if (User.Identity.IsAuthenticated)
             {
@@ -385,7 +388,7 @@ namespace UILayer.Controllers
         {
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
-            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             _user.address = addresses; 
             bool result = userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -406,6 +409,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
+<<<<<<< HEAD
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgetPassword()
@@ -415,6 +419,13 @@ namespace UILayer.Controllers
 
 <<<<<<< HEAD
             return Json();
+=======
+ /*     [HttpPost]
+      public IActionResult sort(string price)
+        {
+            ViewBag.count = 0;
+            ViewBag.PriceList = _
+>>>>>>> sp3-02-05-2022
         }*/
        [HttpPost]
        public IActionResult Search(string name)

@@ -44,7 +44,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<About> requestHandler = new RequestHandler<About>(_configuration);
-                requestHandler.url = "api/users/UserCreate";
+                requestHandler.url = "api/Settings/AboutCreate";
                 var result = requestHandler.Post(about);
                 if (result != null)
                 {
@@ -112,7 +112,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<PrivacyPolicy> requestHandler = new RequestHandler<PrivacyPolicy>(_configuration);
-                requestHandler.url = "api/users/UserCreate";
+                requestHandler.url = "api/Settings/PrivacyCreate";
                 var result = requestHandler.Post(privacy);
                 if(result != null)
                 {
@@ -181,7 +181,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<AdminContact> requestHandler = new RequestHandler<AdminContact>(_configuration);
-                requestHandler.url = "api/users/UserCreate";
+                requestHandler.url = "api/Settings/ContactCreate";
                 var result = requestHandler.Post(contact);
                 if( result != null)
                 {
