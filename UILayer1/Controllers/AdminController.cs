@@ -81,6 +81,7 @@ namespace UIlayer.Controllers
         [Authorize(Roles="Admin")]
         public async Task<ActionResult> Index(int? i)
         {
+            ViewBag.Title = "Admin - Product List";
             try
             {
 

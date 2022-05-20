@@ -263,7 +263,7 @@ namespace UILayer.Controllers
                 checkout.price = checkout.quantity * data.price;
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
-                _notyf.Success("succesfully orderd");
+                _notyf.Success("succesfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return View("Orderplaced");
             }

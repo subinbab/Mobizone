@@ -143,33 +143,30 @@
                 <div id="mypartialview"></div>
                 <div>
                     @RenderBody()
-                    <footer class="border-top footer text-muted">
+                  
 
-
-
-
-                      
-
-                        <div class="row-bordered">
+                    <footer>
+                        <div class="row justify-content-center">
                             <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
                                  class="float-left" />
+
                             <ul class="list">
 
-                               
-                                <li class="about">
-                                    <a asp-controller="user" asp-action="Company" style="margin-right: -86px; color: navy">Company</a>
                                 </li>
                                 <li class="about">
-                                    <a asp-controller="user" asp-action="About" style="margin-right: -86px; color: navy">About</a>
+                                    <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
                                 </li>
-
                                 <li class="about">
-                                    <a asp-controller="user" asp-action="Privacy" style="margin-right: -86px; color: navy">Privacy & Policy</a>
+                                    <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
                                 </li>
 
                                 <li class="about">
+                                    <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                                </li>
 
-                                    <a asp-controller="user" asp-action="Contact" style="margin-right: -86px; color: navy">Contact Us</a>
+                                <li class="about">
+
+                                    <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
                                 </li>
@@ -179,113 +176,115 @@
 
 
 
-                        <hr>
-                        <div>
-                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 12px; width: 12px; " /> <a> Mobizone private limited all right reserved</a>
+
+                        <div style="font-size: 12px; padding-bottom:10px">
+                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
 
                         </div>
 
+                    </footer>
+                    <style>
+                        .container-fluid {
+                            width: 100%;
+                            padding-right: 15px;
+                            padding-left: 15px;
+                            margin-right: auto;
+                            margin-left: 0px;
+                        }
 
-                        <style>
-                            .container-fluid {
-                                width: 100%;
-                                padding-right: 15px;
-                                padding-left: 15px;
-                                margin-right: auto;
-                                margin-left: 0px;
-                            }
+                        footer {
+                            margin-top: 100px;
+                        }
 
-                            footer {
-                                margin-top: 100px;
-                            }
+                        .dropdown {
+                            display: none;
+                            background-color: #275e4900;
+                            padding-left: 8px;
+                            text-align: center;
+                            font-size: medium;
+                        }
 
-                            .dropdown {
-                                display: none;
-                                background-color: #275e4900;
-                                padding-left: 8px;
-                                text-align: center;
-                                font-size: medium;
-                            }
+                        li {
+                            display: inline;
+                        }
 
-                            li {
-                                display: inline;
-                            }
-
-                            a {
-                                cursor: pointer;
-                            }
-                            
-
-                            .dropbtn {
-
-                              color: black;
-                              padding: 16px;
-                              font-size: 16px;
-                              border: none;
-                            }
-
-                            .dropdown {
-                              position: relative;
-                              display: inline-block;
-                            }
+                        a {
+                            cursor: pointer;
+                        }
 
 
-                            .dropdown-content {
-                                display: none;
-                                position: absolute;
-                                background-color: white;
-                                min-width: 160px;
-                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                z-index: 1;
-                            }
+                        .dropbtn {
+                            color: black;
+                            padding: 16px;
+                            font-size: 16px;
+                            border: none;
+                        }
+
+                        .dropdown {
+                            position: relative;
+                            display: inline-block;
+                        }
 
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 26px;
-  text-decoration: none;
-  display: block;
-}
+                        .dropdown-content {
+                            display: none;
+                            position: absolute;
+                            background-color: white;
+                            min-width: 160px;
+                            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                            z-index: 1;
+                        }
 
 
-
-
-                            .dropdown-content a:hover {
-                                background-color: #ddd;
-                            }                           
-.dropdown:hover .dropdown-content {display: block;}
-                           
-
-.dropdown:hover .dropbtn {}
-
-                                .dropdown-content a {
-                                  color: black;
-                                  padding: 12px 26px;
-                                  text-decoration: none;
-                                  display: block;
-                                }
-                            .dropdown-content a:hover {
-                                background-color: #ddd;
-                            }
-
-                            .dropdown:hover .dropdown-content {
+                            .dropdown-content a {
+                                color: black;
+                                padding: 12px 26px;
+                                text-decoration: none;
                                 display: block;
                             }
 
-                            .dropdown:hover .dropbtn {
-                                
+
+
+
+                                .dropdown-content a:hover {
+                                    background-color: #ddd;
+                                }
+
+                        .dropdown:hover .dropdown-content {
+                            display: block;
+                        }
+
+
+                        .dropdown:hover .dropbtn {
+                        }
+
+                        .dropdown-content a {
+                            color: black;
+                            padding: 12px 26px;
+                            text-decoration: none;
+                            display: block;
+                        }
+
+                            .dropdown-content a:hover {
+                                background-color: #ddd;
                             }
 
-                               
+                        .dropdown:hover .dropdown-content {
+                            display: block;
+                        }
+
+                        .dropdown:hover .dropbtn {
+                        }
 
 
-                            .row {
-                                margin-left: 0px !important;
-                            }
-                            
-                        </style>
-                    </footer>
-    </div>
+
+
+                        .row {
+                            margin-left: 0px !important;
+                        }
+                    </style>
+                   @* </footer>*@
+                </div>
             </main>
         </div>
     </div>
