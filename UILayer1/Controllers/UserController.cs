@@ -357,13 +357,11 @@ namespace UILayer.Controllers
             {
                 //var result = userApi.Createcart(cart);
             }*/
-            return Redirect("/user/index");
+            /*return Redirect("/user/index");
 
 
-        }
-=======
-        }*/
->>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
+        }        }*/
+
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -409,7 +407,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
-<<<<<<< HEAD
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgetPassword()
@@ -417,15 +415,15 @@ namespace UILayer.Controllers
             return View();
         }
 
-<<<<<<< HEAD
-            return Json();
-=======
+
+        /*    return Json();
+*/
  /*     [HttpPost]
       public IActionResult sort(string price)
         {
             ViewBag.count = 0;
             ViewBag.PriceList = _
->>>>>>> sp3-02-05-2022
+
         }*/
        [HttpPost]
        public IActionResult Search(string name)
@@ -434,7 +432,7 @@ namespace UILayer.Controllers
             var data = _opApi.Search(name).Result;
             return View("Index", data);
         }
-=======
+
 
         [HttpPost]
         public IActionResult ForgetPassword(ForgetPasswordViewModel forgotPassword)
@@ -490,7 +488,7 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
->>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
+
     }
 
 }

@@ -6,6 +6,7 @@ namespace BusinessObjectLayer
 {
     public interface IAddressOperations
     {
+        Task Add(Address address);
         void delete(Address data);
         Task<IEnumerable<Address>> get();
         Task Edit(Address address);

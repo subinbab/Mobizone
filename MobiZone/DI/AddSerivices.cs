@@ -32,11 +32,12 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(IProductSubPartOperations), typeof(ProductSubPartOperations));
             services.AddScoped(typeof(ITokenManager), typeof(TokenManager));
             services.AddTransient(typeof(IMailService), typeof(MailService));
-<<<<<<< HEAD
+
             services.AddScoped(typeof(ICartOperations), typeof(CartOperations));
-=======
+
             services.AddScoped(typeof(IForgotPassword), typeof(ForgotPassword));
->>>>>>> 114a69807f31864c14c463d85f0cf9efc70b5f6d
+            services.AddScoped(typeof(IAddressOperations), typeof(AddressOperations));
+
         }
 
     }

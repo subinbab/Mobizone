@@ -41,22 +41,22 @@
                     <div class="form-group">
 
                         <div class="row">
-                            @foreach (var data in user.address)
-                            {
+                          
 
                                 <div class="col">
 
-                                    <p style="margin-left:41%"> Address : @data.address</p>
-                                    <p style="margin-left:42%"> District : @data.district</p>
-                                    <p style="margin-left:41%">Pincode : @data.pincode</p>
-                                    <p style="margin-left:43%">State : @data.state</p>
-                                    <p style="margin-left:41%"> Country : @data.country</p>
+                                    <p style="margin-left:41%"> Address : @user.address.FirstOrDefault().address</p>
+                                    <p style="margin-left:42%"> District : @user.address.FirstOrDefault().district</p>
+                                    <p style="margin-left:41%">Pincode : @user.address.FirstOrDefault().pincode</p>
+                                    <p style="margin-left:43%">State : @user.address.FirstOrDefault().state</p>
+                                    <p style="margin-left:41%"> Country : @user.address.FirstOrDefault().country</p>
                                 </div>}
                         </div>
-                    </div>}
+                    </div>
+                }
             <div class="text-right mt-3">
            
-               @* <button type="button" value="Save" class="btn btn-orange" />Edit</button>*@
+               <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>
                 <a type="button" class="btn btn-primary" asp-action="Index">Back</a>&nbsp;
             </div>
             </div>
