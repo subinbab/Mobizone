@@ -82,15 +82,12 @@ namespace BusinessObjectLayer.ProductOperations
             return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderByDescending(c => c.price);
         }
 
-        public Task<IEnumerable<ProductEntity>> SortByBrand(string name)
+        public async Task<IEnumerable<ProductEntity>> SortByBrand(string name)
         {
-            throw new NotImplementedException();
+           var data = _repo.Get(n1 => n1.specs, n2 => n2.images).Result.Where(c => c.productBrand.Equals(name));
+            return data.OrderBy(c => c.productBrand);
         }
 
-        /*public async Task<IEnumerable<ProductEntity>> SortByBrand(string name)
-        {
-            var data = _repo.Get(n1 => n1.specs, n2 => n2.images).Result.Where(c => c.productBrand.Equals(name));
-            return data.OrderBy(c => c.productBrand);
-        }*/
+        
     }
 }

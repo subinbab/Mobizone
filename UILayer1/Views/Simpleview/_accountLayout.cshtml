@@ -6,6 +6,7 @@
 
 @{
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+   
 }
 
 
@@ -122,9 +123,8 @@
         <link rel="stylesheet" href="~/css/footer.css" />
     </head>
     <body>
-<<<<<<< HEAD
         <div class="card overflow-hidden">
-      <div class="row no-gutters row-bordered row-border-light">
+     @* <div class="row no-gutters row-bordered row-border-light">
 
           <div class="col-md-2 pt-0">
               <div class="list-group list-group-flush account-settings-links">
@@ -140,7 +140,7 @@
          
         @RenderBody();
         </div>
-=======
+*@
       
             <div class="row no-gutters row-bordered row-border-light">
 
@@ -151,14 +151,13 @@
                     </div>
 
                     <div>
-                        <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+                        <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: indianred ;padding-top:10px;color:white">Manage Profile</a>
                     </div>
 
                 </div>
 
                 @RenderBody();
             </div>
->>>>>>> 2569adff33ba11c0fe383fe000a64b25db4793a8
         </div>
     </body>
 </html>
