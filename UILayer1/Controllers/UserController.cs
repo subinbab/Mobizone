@@ -319,19 +319,12 @@ namespace UILayer.Controllers
             Cart cart = new Cart();
 
 
-<<<<<<< HEAD
-
-            //cart.productId = id;
-           // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
-          //  _carts.Add(cart);
-           // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
-=======
             _carts.Add(cart);
              _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
             HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             
             _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
->>>>>>> 4d8f2c88b6d439c560c469f3efa030b5187c5e80
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
 
             
