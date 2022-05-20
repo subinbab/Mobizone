@@ -38,6 +38,7 @@
       "ProductUpdatedError": "Error Occured during updating product to Cart",
       "ProductDeleted": "Successfully removed your product from Cart",
       "ProductDeltedError": "Error occured during removing product from Cart",
-     
+
     }
+  ]
 }

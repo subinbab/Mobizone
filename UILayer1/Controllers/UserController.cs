@@ -308,13 +308,7 @@ namespace UILayer.Controllers
             Cart cart = new Cart();
 
 
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
             //cart.productId = id;
            // _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
           //  _carts.Add(cart);
@@ -325,12 +319,8 @@ namespace UILayer.Controllers
 
             return View();
 
-<<<<<<< HEAD
 
 
-
-=======
->>>>>>> d016406cdcec7cdf54d9b136291ed2c82ef23be2
             if (User.Identity.IsAuthenticated)
             {
                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();

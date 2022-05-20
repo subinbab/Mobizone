@@ -230,13 +230,43 @@ namespace ApiLayer.Controllers
         }
         #endregion
         #region Sort Product By price 
-        [HttpGet("SortByPrice")]
+        [HttpGet("SortByPriceAscending")]
         public ResponseModel<IEnumerable<ProductEntity>> SortByPrice()
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
             try
             {
-                _productDataList = _productOperations.SortByPrice().Result;
+                _productDataList = _productOperations.SortByPriceAscending().Result;
+                if (_productData == null)
+                {
+                    string message = _productMessages.Null + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.NoContent);
+                    _response.AddResponse(true, 0, null, message);
+                    return _response;
+                }
+                else
+                {
+                    string message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    _response.AddResponse(true, 0, _productDataList, message);
+                    return _response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+
+        }
+        [HttpGet("SortByPriceDescending")]
+        public ResponseModel<IEnumerable<ProductEntity>> SortByPriceDescending()
+        {
+            ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
+            try
+            {
+                _productDataList = _productOperations.SortByPriceDescending().Result;
                 if (_productData == null)
                 {
                     string message = _productMessages.Null + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.NoContent);
@@ -262,7 +292,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
         #region Sort Product By name 
-        [HttpGet("SortByBrand/{name}")]
+       /* [HttpGet("SortByBrand/{name}")]
         public ResponseModel<IEnumerable<ProductEntity>> SortByBrand(string name)
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
@@ -291,7 +321,7 @@ namespace ApiLayer.Controllers
                 return _response;
             }
 
-        }
+        }*/
         #endregion
         #region Delete Method for Product
         [HttpDelete("{id}")]

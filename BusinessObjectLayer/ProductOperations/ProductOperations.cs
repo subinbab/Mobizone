@@ -73,15 +73,24 @@ namespace BusinessObjectLayer.ProductOperations
             return  datalist.Where(c => c.id.Equals(id)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<ProductEntity>> SortByPrice()
+        public async Task<IEnumerable<ProductEntity>> SortByPriceAscending()
         {
             return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderBy(c => c.price);
         }
+        public async Task<IEnumerable<ProductEntity>> SortByPriceDescending()
+        {
+            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderByDescending(c => c.price);
+        }
 
-        public async Task<IEnumerable<ProductEntity>> SortByBrand(string name)
+        public Task<IEnumerable<ProductEntity>> SortByBrand(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task<IEnumerable<ProductEntity>> SortByBrand(string name)
         {
             var data = _repo.Get(n1 => n1.specs, n2 => n2.images).Result.Where(c => c.productBrand.Equals(name));
             return data.OrderBy(c => c.productBrand);
-        }
+        }*/
     }
 }
