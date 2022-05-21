@@ -528,11 +528,7 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
-<<<<<<< HEAD
 
-
-=======
->>>>>>> b4736d4cf4f1c9c7be78191e5e5bb3d1ed0d0ff0
 
     
 
