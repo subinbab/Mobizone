@@ -124,14 +124,24 @@
         </div>
 
         <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
-            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort By</a>
-            @*<div id="dropdown2" class="dropdown" style="margin-top: -8%;margin-left: 9%;">
-                 <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
+            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
+           
+            </div>
+            <div id="dropdown1" class="dropdown">
+                <form asp-action="sort" method="post">
+                    <select name="select price">
+                        <option disabled selected> Select price</option>
+                        <option>Low to High</option>
+                        <Option>High to Low </Option>
+                    </select> 
+                    <input class=" @(Context.Request.Path == "/User/sort" ? "active " : "") " type="submit" value="sort" style="color:white; background-color: #e52d2e"
+                    </input>
+                </form>
+                  
+                   @* <a asp-action="sort"><button style="width: 101px; font-size: 14px">Low to High</button></a>
+                    <a asp-action="sort"><button style="width: 101px; font-size: 14px">High to Low</button></a>
 *@
-               <a asp-action="sort"><button style="width: 101px; font-size: 14px">Low to High</button></a>
-                <a asp-action="sort"><button style="width: 101px; font-size: 14px">High to Low</button></a>
 
-               
 
 
             </div>
