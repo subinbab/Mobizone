@@ -8,22 +8,7 @@
     ViewData["Title"] = "Manage Profile";
 }
 
-@*<body>
-        <div class="card overflow-hidden">
-            <div class="row no-gutters row-bordered row-border-light">
-                <div class="col-md-3 pt-0">
-                    <div class="list-group list-group-flush account-settings-links">
-                        <h5 class="list-group-item">
-                            Account Settings
-                        </h5>
-                        <a class="list-group-item list-group-item-action active" asp-action="account">Profile Information</a>
-                        <a class="list-group-item list-group-item-action" asp-action="address">Manage Address</a>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-    </body>*@
 <div class="row align-item-center">
     <div class="col-md-8 mb-4">
         <div class="card-body">
@@ -88,7 +73,8 @@
                 <br />
                 <div class="text-center">
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-orange" />  <a asp-action="index" value="Cancel" class="btn btn-primary" />Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-orange" asp-action="account" />  
+                        <a asp-action="account" value="Cancel" class="btn btn-primary" />Cancel</a>
                     </div>
 
 

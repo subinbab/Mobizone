@@ -37,6 +37,8 @@ namespace ApiLayer.DI
 
             services.AddScoped(typeof(IForgotPassword), typeof(ForgotPassword));
 
+
+
         }
 
     }

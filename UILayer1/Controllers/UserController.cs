@@ -334,6 +334,7 @@ namespace UILayer.Controllers
 
 
 
+
              if (User.Identity.IsAuthenticated)
              {
                  var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -362,6 +363,7 @@ namespace UILayer.Controllers
 
      }
 */
+
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -426,6 +428,7 @@ namespace UILayer.Controllers
 
         /*    return Json();
 */
+
         /*     [HttpPost]
              public IActionResult sort(string price)
                {
@@ -435,6 +438,7 @@ namespace UILayer.Controllers
                }*/
         [HttpPost]
         public IActionResult Search(string name)
+
         {
             ViewBag.count = 0;
             var data = _opApi.Search(name).Result;

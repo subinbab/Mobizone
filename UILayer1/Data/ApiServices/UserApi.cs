@@ -84,7 +84,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<UserRegistration> requestHandler = new RequestHandler<UserRegistration>(_configuration);
-                requestHandler.url = "api/users/UserCreate";
+                requestHandler.url = "api/users/userdata";
                 if (requestHandler.Edit(User).IsSuccess)
                 {
                     return true;
