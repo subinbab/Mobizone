@@ -1,28 +1,22 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using DocumentFormat.OpenXml.Bibliography;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
 using DTOLayer.Product;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using UILayer.Data.ApiServices;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace UILayer.Controllers
 {
@@ -334,27 +328,7 @@ namespace UILayer.Controllers
 
 
 
-<<<<<<< HEAD
-            cart.cartDetails = cartList;
-            HttpContext.Session.SetString("testKey","testValue");
-            cart.sessionId = HttpContext.Session.Id;
-           /* if (cartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-            {
-                var existedCart = cartListFromDb.Where(c => c.sessionId.Equals(cart.sessionId)).FirstOrDefault();
-                //cartDetails.productId = id;
-                existedCart.cartDetails.Add(cartDetails);
-                userApi.EditCart(existedCart);
-            }*/
-           /* else
-            {
-                //var result = userApi.Createcart(cart);
-            }*/
-            /*return Redirect("/user/index");
 
-
-        }        }*/
-
-=======
              if (User.Identity.IsAuthenticated)
              {
                  var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -383,10 +357,16 @@ namespace UILayer.Controllers
 
      }
 */
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
+
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            return View();
+        }
+        public IActionResult ManageAddress()
+        {
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
             return View();
         }
         public IActionResult Account()
@@ -396,12 +376,29 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             return View();
         }
+        public IActionResult DeleteAddress(int id)
+        {
+            bool result = userApi.DeleteAddress(id);
+            if (result)
+            {
+                _notyf.Success("deleted");
+            }
+            else
+            {
+                _notyf.Error("Not deleted");
+
+            }
+            return RedirectToAction("");
+        }
+
         [HttpGet]
-        public IActionResult Address()
+        public IActionResult Address(int id)
         {
 
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return View(address);
         }
         [HttpPost]
         public IActionResult Address(Address addreses)
@@ -440,17 +437,7 @@ namespace UILayer.Controllers
 
         /*    return Json();
 */
-<<<<<<< HEAD
- /*     [HttpPost]
-      public IActionResult sort(string price)
-        {
-            ViewBag.count = 0;
-            ViewBag.PriceList = _
 
-        }*/
-       [HttpPost]
-       public IActionResult Search(string name)
-=======
         /*     [HttpPost]
              public IActionResult sort(string price)
                {
@@ -460,7 +447,7 @@ namespace UILayer.Controllers
                }*/
         [HttpPost]
         public IActionResult Search(string name)
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
+
         {
             ViewBag.count = 0;
             var data = _opApi.Search(name).Result;
@@ -524,11 +511,8 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
-<<<<<<< HEAD
 
-    }
-=======
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
+
 
     
 
