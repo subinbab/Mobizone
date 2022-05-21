@@ -420,11 +420,20 @@ namespace UILayer.Controllers
             return View("Index", filteredData);
         }
 
+     
         public IActionResult Sort(string price)
         {
             ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort(price).Result;
+            return View("Index", SortedData);
+        }
+       
+        public IActionResult Sortby(string price)
+        {
+            ViewBag.count = 0;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var SortedData = _opApi.Sortby(price).Result;
             return View("Index", SortedData);
         }
         [HttpGet]

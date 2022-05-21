@@ -36,7 +36,7 @@
             @if (Model.images != null && Model.images.Any())
             {
 
-                <img class="showimage col-9" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" />
+                <img class="showimage col-9" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" style="max-width: 50%; height: 300px;" />
 
 
             }
@@ -47,8 +47,8 @@
 
         </div>
         <div class="row  mt-3">
-                    <div class="col "><a asp-action="checkout" asp-route-id="@Model.id"><button class="btn btn-orange buynow" style="background-color: #29a174 ">Buy Now</button></a></div>
-                    <div class="col"><a asp-action="cartpage" asp-route-id="@Model.id"><button class="btn btn-indigo buynow" style="font-size: 9px; background-color: #e52d2e ; padding-top:14px">Add to Cart</button></a></div>
+                    <div class="col "><a asp-action="checkout" asp-route-id="@Model.id"><button class="btn btn-orange buynow" style="background-color: #29a174; margin-top: 742%; margin-left: -85%; ">Buy Now</button></a></div>
+                    <div class="col"><a asp-action="cartpage" asp-route-id="@Model.id"><button class="btn btn-indigo buynow" style="font-size: 9px; background-color: #e52d2e; padding-top: 14px; margin-top: 724%; margin-left: -85%;">Add to Cart</button></a></div>
         </div>
 
         

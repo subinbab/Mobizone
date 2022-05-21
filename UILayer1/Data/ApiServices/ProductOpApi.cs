@@ -396,8 +396,8 @@ namespace UILayer.Data.ApiServices
 
         }
         #endregion
-
-        public async Task<IEnumerable<ProductEntity>> Sort()
+       
+        public async  Task<IEnumerable<ProductEntity>> Sort(string price)
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
@@ -411,10 +411,10 @@ namespace UILayer.Data.ApiServices
             }
 
         }
-
-        public async Task<IEnumerable<ProductEntity>> Sort(string price)
+     
+        public async  Task<IEnumerable<ProductEntity>> Sortby ( string price)
         {
-            RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler =  new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
             {
                 _requestHandler.url = "api/productop/SortByPriceDescending ";
