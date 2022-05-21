@@ -76,10 +76,10 @@
 
                                 </div>
                                 <div>
-                                    <a asp-controller="user" asp-action="ForgotPassword"> Forgot Password ?</a>
+                                    <a asp-controller="user" asp-action="ForgotPassword" style="color:black;"> Forgot Password ?</a>
                                 </div>
                                     <div>
-                                        <a asp-controller="user" asp-action="registration">If not a user,Register here</a>
+                                        <a asp-controller="user" asp-action="registration"style="color:black;">If not a user,Register here</a>
                                     </div>
                                     @if (!string.IsNullOrEmpty(error))
                                     {
@@ -128,6 +128,9 @@
     }
     .form-control {
         display: inline-block;
+    }
+    .bg-white {
+        background: linear-gradient(to bottom, #ffd0d0 0%, #0099f3 100%)!important;
     }
 </style>
 <div class="row" style="width: 400px; margin-left: 644px; margin-right:auto;">
