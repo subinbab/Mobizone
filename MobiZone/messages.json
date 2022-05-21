@@ -24,10 +24,21 @@
       "MasterAddedError": "Error Occured During Data Adding Time",
       "MasterUpdated": "Successfully Updated Your Data",
       "MasterUpdatedError": "Error Occured during Data Updation",
-      "MasterNull": "Dont Have Any Datas Now",
+      "MasterNull": "Don't have any Datas now",
       "MasterDeleted": "Successfully deleted your Data",
-      "MasterDeltedError": "Error occured during Data Deletion",
-      "MasterDuplicateData": "Entered Data is Already exist"
+      "MasterDeltedError": "Error occured during data deletion",
+      "MasterDuplicateData": "Entered Data  already exist"
+    }
+  ],
+  "CartProduct": [
+    {
+      "ProductAdded": "Successfully Added Your New Product to Cart",
+      "ProductAddedError": "Error Occured During Adding Product to Cart ",
+      "ProductUpdated": "Successfully Updated Your Product  to Cart ",
+      "ProductUpdatedError": "Error Occured during updating product to Cart",
+      "ProductDeleted": "Successfully removed your product from Cart",
+      "ProductDeltedError": "Error occured during removing product from Cart",
+
     }
   ]
 }

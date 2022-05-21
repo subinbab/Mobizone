@@ -2,28 +2,13 @@
 
 @{
 
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
+   
 
-
-    ViewData["Title"] = "Manage Address";
+    ViewData["Title"] = "Manage Profile";
 }
 
-@*<body>
-        <div class="card overflow-hidden">
-            <div class="row no-gutters row-bordered row-border-light">
-                <div class="col-md-3 pt-0">
-                    <div class="list-group list-group-flush account-settings-links">
-                        <h5 class="list-group-item">
-                            Account Settings
-                        </h5>
-                        <a class="list-group-item list-group-item-action active" asp-action="account">Profile Information</a>
-                        <a class="list-group-item list-group-item-action" asp-action="address">Manage Address</a>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-    </body>*@
 <div class="row align-item-center">
     <div class="col-md-8 mb-4">
         <div class="card-body">
@@ -33,7 +18,7 @@
 
                 <input asp-for="id" class="form-control" type="hidden" />
 
-                <div class="form-group row mb-4">
+               @* <div class="form-group row mb-4">
                     <div class="col-md-6">
                         <label asp-for="name" class="control-label">Name</label>
                         <input asp-for="name" class="form-control" />
@@ -41,7 +26,7 @@
                     </div>
                     <div class="col"></div>
 
-                </div>
+                </div>*@
 
                 <div class="row">
                     <div class="col-md-6">
@@ -88,7 +73,8 @@
                 <br />
                 <div class="text-center">
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-orange" />  <a asp-action="index" value="Cancel" class="btn btn-primary" />Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-orange" asp-action="ManageAddress" />  
+                        <a asp-action="ManageAddress" value="Cancel" class="btn btn-primary" />Cancel</a>
                     </div>
 
 

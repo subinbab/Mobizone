@@ -1,32 +1,26 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using DocumentFormat.OpenXml.Bibliography;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
 using DTOLayer.Product;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using UILayer.Data.ApiServices;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace UILayer.Controllers
 {
-    
+
     public class UserController : Controller
     {
         IConfiguration _configuration;
@@ -47,33 +41,33 @@ namespace UILayer.Controllers
 
         {
             _configuration = configuration;
-            userApi  = new UserApi(_configuration);
-            _opApi = new ProductOpApi(_configuration,mapper, webHostEnvironment);
+            userApi = new UserApi(_configuration);
+            _opApi = new ProductOpApi(_configuration, mapper, webHostEnvironment);
 
             _masterApi = new MasterApi(_configuration);
             _notyf = notyf;
             _mapper = mapper;
             _distributedCache = distributedCache;
             _carts = new List<Cart>();
-           // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
+            // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
 
 
 
         }
-        public IActionResult Index(int? count )
+        public IActionResult Index(int? count)
         {
             ViewBag.Title = "Mobizone - Home";
             try
             {
-                if(count == null)
+                if (count == null)
                 {
                     count = 0;
                 }
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-                var data = _opApi.GetAll().Result.Where(c=>c.status.Equals(ProductStatus.enable));
+                var data = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable));
                 var productCount = data.Count();
                 int cout = 0;
-                for(int i = 0; i <= 0; i++)
+                for (int i = 0; i <= 0; i++)
                 {
                     if (productCount > 10)
                     {
@@ -83,7 +77,7 @@ namespace UILayer.Controllers
                 }
                 var result = data.Skip((int)count * 10).Take(10);
                 ViewBag.count = cout;
-                if(data != null)
+                if (data != null)
                 {
                     return View(result);
                 }
@@ -91,14 +85,14 @@ namespace UILayer.Controllers
                 {
                     return View(null);
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View(null);
             }
-            
-           
+
+
         }
         [AllowAnonymous]
         [HttpGet]
@@ -108,7 +102,7 @@ namespace UILayer.Controllers
             ViewData["LoginUrl"] = loginUrl;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
-            
+
         }
         /*[AllowAnonymous]
         [HttpPost]
@@ -144,10 +138,10 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return Redirect("/");
         }
-        
+
         [HttpGet("registration")]
         public IActionResult Registration()
-        
+
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
@@ -157,7 +151,7 @@ namespace UILayer.Controllers
         {
             UserApi userApi = new UserApi(_configuration);
             var userList = userApi.GetUserData();
-            if(userList.Any(c=> c.Email.Equals(user.Email)))
+            if (userList.Any(c => c.Email.Equals(user.Email)))
             {
                 _notyf.Error("User Already Registered");
             }
@@ -174,7 +168,7 @@ namespace UILayer.Controllers
 
                 }
             }
-            
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return Redirect("/");
         }
@@ -189,31 +183,31 @@ namespace UILayer.Controllers
         public IActionResult Contact()
         {
 
-            adminApi _adminApi = new adminApi(_configuration,_mapper);
+            adminApi _adminApi = new adminApi(_configuration, _mapper);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(contactData);
-            
+
         }
         public IActionResult Privacy()
         {
-            adminApi _adminApi = new adminApi(_configuration,_mapper);
+            adminApi _adminApi = new adminApi(_configuration, _mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(privacyData);
 
-            
+
 
         }
 
         public IActionResult About()
         {
 
-            adminApi _adminApi = new adminApi(_configuration,_mapper);
+            adminApi _adminApi = new adminApi(_configuration, _mapper);
             var aboutData = _adminApi.AboutGet().Result.FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(aboutData);
-           
+
 
         }
         public IActionResult Company()
@@ -223,17 +217,17 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult checkout(int orderId , string status)
+        public IActionResult checkout(int orderId, string status)
         {
             return View("Orderplaced");
         }
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         [HttpGet]
         public IActionResult order(int id)
         {
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
-            _user = userApi.GetUserData().Where(c=> c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
@@ -241,7 +235,7 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult order(Checkout checkout)
         {
-            if(checkout == null)
+            if (checkout == null)
             {
                 _notyf.Error("Not Added");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -251,7 +245,7 @@ namespace UILayer.Controllers
             {
                 var data = _opApi.GetProduct(checkout.productId).Result;
                 data.quantity = data.quantity - checkout.quantity;
-                if(data.quantity == 0)
+                if (data.quantity == 0)
                 {
                     data.status = ProductStatus.disable;
                 }
@@ -263,11 +257,11 @@ namespace UILayer.Controllers
                 checkout.price = checkout.quantity * data.price;
                 bool result = userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
-                _notyf.Success("succesfully orderd");
+                _notyf.Success("succesfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return View("Orderplaced");
             }
-            
+
         }
         [Authorize(Roles = "User")]
         public IActionResult Orderplaced()
@@ -275,8 +269,8 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        
-   
+
+
         public IActionResult OrderList()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -287,34 +281,29 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        
+
         public IActionResult order()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        public IActionResult AddtoCart(int id)
-        {
+        /* public IActionResult AddtoCart(int id)
+         {
 
-            // IEnumerable<ProductCart> cartListFromDb;
-            try
-            {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                if(JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                {
-                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                }
-                
-            }
-            catch(Exception ex)
-            {
+             // IEnumerable<ProductCart> cartListFromDb;
+             try
+             {
+                 string name = _distributedCache.GetStringAsync("cart").Result;
+                 if(JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                 {
+                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                 }
 
-            }
-            
-            CartDetails cartDetails = new CartDetails();
-            cartDetails.productId = id;
-            List<CartDetails> cartList = new List<CartDetails>();
+             }
+             catch(Exception ex)
+             {
 
+<<<<<<< HEAD
             cartList.Add(cartDetails);
             Cart cart = new Cart();
             HttpContext.Session.SetString("testKey", "testValue");
@@ -323,12 +312,72 @@ namespace UILayer.Controllers
             _carts.Add(cart);
              _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
             return Redirect("/user/index");
+=======
+             }
+
+             CartDetails cartDetails = new CartDetails();
+             cartDetails.productId = id;
+             List<CartDetails> cartList = new List<CartDetails>();
+
+             cartList.Add(cartDetails);
+             Cart cart = new Cart();
 
 
-        }
+             _carts.Add(cart);
+              _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+             HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
+
+             _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
+
+             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+
+
+
+             return View();
+
+
+
+
+
+             if (User.Identity.IsAuthenticated)
+             {
+                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                 cart.usersId = userData.UserId;
+             }
+>>>>>>> dc85de209a520e2f170e60e554f512882b7b55c9
+
+
+
+
+             cart.cartDetails = cartList;
+             HttpContext.Session.SetString("testKey","testValue");
+             cart.sessionId = HttpContext.Session.Id;
+            /* if (cartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+             {
+                 var existedCart = cartListFromDb.Where(c => c.sessionId.Equals(cart.sessionId)).FirstOrDefault();
+                 //cartDetails.productId = id;
+                 existedCart.cartDetails.Add(cartDetails);
+                 userApi.EditCart(existedCart);
+             }*/
+        /* else
+         {
+             //var result = userApi.Createcart(cart);
+         }*/
+        /* return Redirect("/user/index");
+
+
+     }
+*/
+
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            return View();
+        }
+        public IActionResult ManageAddress()
+        {
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
             return View();
         }
         public IActionResult Account()
@@ -338,20 +387,37 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             return View();
         }
-        [HttpGet]
-        public IActionResult Address()
+        public IActionResult DeleteAddress(int id)
         {
-            
+            bool result = userApi.DeleteAddress(id);
+            if (result)
+            {
+                _notyf.Success("deleted");
+            }
+            else
+            {
+                _notyf.Error("Not deleted");
+
+            }
+            return RedirectToAction("");
+        }
+
+        [HttpGet]
+        public IActionResult Address(int id)
+        {
+
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return View(address);
         }
         [HttpPost]
         public IActionResult Address(Address addreses)
         {
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
-            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Identity.Name.ToString())).FirstOrDefault();
-            _user.address = addresses; 
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user.address = addresses;
             bool result = userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return RedirectToAction("Index");
@@ -364,25 +430,117 @@ namespace UILayer.Controllers
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
         }
+
+     
+        public IActionResult Sort(string price)
+        {
+            ViewBag.count = 0;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var SortedData = _opApi.Sort(price).Result;
+            return View("Index", SortedData);
+        }
+       
+        public IActionResult Sortby(string price)
+        {
+            ViewBag.count = 0;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var SortedData = _opApi.Sortby(price).Result;
+            return View("Index", SortedData);
+        }
         [HttpGet]
         public async Task<IActionResult> ProductDetails(int id)
         {
-           var details = await _opApi.GetProduct(id); details = await _opApi.GetProduct(id);
+            var details = await _opApi.GetProduct(id); details = await _opApi.GetProduct(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
-       /* public IActionResult CartDetails()
-        {
 
-            return Json();
-        }*/
-       [HttpPost]
-       public IActionResult Search(string name)
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+
+        /*    return Json();
+*/
+
+        /*     [HttpPost]
+             public IActionResult sort(string price)
+               {
+                   ViewBag.count = 0;
+                   ViewBag.PriceList = _
+
+               }*/
+        [HttpPost]
+        public IActionResult Search(string name)
+
         {
             ViewBag.count = 0;
             var data = _opApi.Search(name).Result;
             return View("Index", data);
         }
-    }
 
+
+        [HttpPost]
+        public IActionResult ForgetPassword(ForgetPasswordViewModel forgotPassword)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ModelState.Clear();
+                    var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(forgotPassword.email)).FirstOrDefault();
+                    if (userDetails != null)
+                    {
+                        forgotPassword.emailSent = true;
+                        return Redirect("/user/ResetPassword?email=" + forgotPassword.email);
+                    }
+
+
+                }
+                return View(forgotPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet]
+        public ActionResult ResetPassword(string email)
+        {
+            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
+            ResetPassword reset = new ResetPassword();
+            reset.User = userDetails;
+            return View(reset);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPassword resetPassword)
+        {
+            try
+            {
+                UserRegistration register = new UserRegistration();
+                register = userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
+                register.Password = resetPassword.NewPassword;
+                var result = userApi.EditUser(register);
+                return View(resetPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+    }
 }
+        /* public IActionResult CartDetails()
+         {
+
+             return Json();
+         }*/
+
+
+    
+
+

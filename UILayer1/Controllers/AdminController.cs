@@ -81,6 +81,7 @@ namespace UIlayer.Controllers
         [Authorize(Roles="Admin")]
         public async Task<ActionResult> Index(int? i)
         {
+            ViewBag.Title = "Admin - Product List";
             try
             {
 
@@ -466,7 +467,7 @@ namespace UIlayer.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = "Invalid Email or Password";
+                    TempData["Error"] = "Invalid Email or Password !";
                     return Redirect("login");
                 }
 

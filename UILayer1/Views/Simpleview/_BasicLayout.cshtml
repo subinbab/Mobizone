@@ -1,7 +1,9 @@
-﻿@*
+﻿
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
 }
 @{
     if (ViewBag.BrandList == null)
@@ -17,7 +19,7 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-   
+
     <link rel="stylesheet" href="~/css/navigation-bar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
@@ -123,7 +125,25 @@
 
             <div class="container-fluid">
                 <main role="main" class="pb-3">
-                    <div id="mypartialview"></div>
+                    <div id="mypartialview">
+                        <div class="row no-gutters row-bordered row-border-light">
+
+                            <div class="col-md-2 pt-0">
+                                <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
+                                   
+                                    <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
+                                </div>
+
+                                <div>
+                                    <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
                     <div>
                         @RenderBody()
                         <footer>

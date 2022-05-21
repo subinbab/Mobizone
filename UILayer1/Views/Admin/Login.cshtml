@@ -72,14 +72,18 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color:white">Login</button>
+<<<<<<< HEAD
+                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e">Login</button>
+=======
+                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #c72b2b">Login</button>
+>>>>>>> b307848d9bae055b72d45d7c4185d1860f1eaa0d
 
                                 </div>
                                 <div>
-                                    <a asp-controller="user" asp-action="ForgotPassword"> Forgot Password ?</a>
+                                    <a asp-controller="user" asp-action="ForgotPassword" style="color:black;"> Forgot Password ?</a>
                                 </div>
                                     <div>
-                                        <a asp-controller="user" asp-action="registration">If not a user,Register here</a>
+                                        <a asp-controller="user" asp-action="registration"style="color:black;">If not a user,Register here</a>
                                     </div>
                                     @if (!string.IsNullOrEmpty(error))
                                     {
@@ -128,6 +132,14 @@
     }
     .form-control {
         display: inline-block;
+    }
+    .bg-white {
+        background: linear-gradient(to bottom, #ffd0d0 0%, #0099f3 100%)!important;
+    }
+    .alert-danger {
+        color: #040404;
+        background-color: #f1f1f1;
+        border-color: #f5c6cb;
     }
 </style>
 <div class="row" style="width: 400px; margin-left: 644px; margin-right:auto;">

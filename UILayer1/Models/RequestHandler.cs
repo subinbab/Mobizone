@@ -1,9 +1,6 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using DomainLayer;
-using log4net;
+﻿using log4net;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;

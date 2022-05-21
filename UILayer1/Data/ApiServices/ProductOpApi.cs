@@ -396,5 +396,36 @@ namespace UILayer.Data.ApiServices
 
         }
         #endregion
+       
+        public async  Task<IEnumerable<ProductEntity>> Sort(string price)
+        {
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/productop/SortByPriceAscending ";
+                return _requestHandler.Get().result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+     
+        public async  Task<IEnumerable<ProductEntity>> Sortby ( string price)
+        {
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler =  new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/productop/SortByPriceDescending ";
+                return _requestHandler.Get().result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
     }
 }
+

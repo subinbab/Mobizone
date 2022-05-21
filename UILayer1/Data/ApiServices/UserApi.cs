@@ -2,6 +2,7 @@
 using DomainLayer.ProductModel;
 using DomainLayer.Users;
 using DTOLayer.UserModel;
+using log4net;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace UILayer.Data.ApiServices
     public class UserApi
     {
         private IConfiguration _configuration { get; }
+        private readonly ILog _log;
         public UserApi(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -79,7 +81,28 @@ namespace UILayer.Data.ApiServices
 
             }
         }*/
+        public bool ForgotPassword(UserRegistration User)
+        {
+            try
+            {
+                RequestHandler<UserRegistration> requestHandler = new RequestHandler<UserRegistration>(_configuration);
+                requestHandler.url = "api/users/userdata";
+                if (requestHandler.Edit(User).IsSuccess)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        
+        }
 
         #region Edit user method
         public bool EditUser(UserRegistration product)
@@ -159,6 +182,7 @@ namespace UILayer.Data.ApiServices
             }
 
         }
+        
         public bool EditCheckout(Checkout checkout)
         {
             RequestHandler<Checkout> _requestHandler = new RequestHandler<Checkout>(_configuration);
@@ -229,6 +253,26 @@ namespace UILayer.Data.ApiServices
             }
             catch (Exception ex)
             {
+                return false;
+            }
+        }
+        #endregion
+        #region delete method for address
+        public bool DeleteAddress(int id)
+        {
+            RequestHandler<Address> requestHandler = new RequestHandler<Address>(_configuration);
+            try
+            {
+                requestHandler.url = "api/Users/";
+                if (requestHandler.Delete(id).IsSuccess)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+{
+                _log.Error(ex.Message);
                 return false;
             }
         }
