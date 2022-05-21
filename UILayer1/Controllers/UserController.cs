@@ -334,27 +334,7 @@ namespace UILayer.Controllers
 
 
 
-<<<<<<< HEAD
-            cart.cartDetails = cartList;
-            HttpContext.Session.SetString("testKey","testValue");
-            cart.sessionId = HttpContext.Session.Id;
-           /* if (cartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-            {
-                var existedCart = cartListFromDb.Where(c => c.sessionId.Equals(cart.sessionId)).FirstOrDefault();
-                //cartDetails.productId = id;
-                existedCart.cartDetails.Add(cartDetails);
-                userApi.EditCart(existedCart);
-            }*/
-           /* else
-            {
-                //var result = userApi.Createcart(cart);
-            }*/
-            /*return Redirect("/user/index");
 
-
-        }        }*/
-
-=======
              if (User.Identity.IsAuthenticated)
              {
                  var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -383,7 +363,7 @@ namespace UILayer.Controllers
 
      }
 */
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
+
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -440,17 +420,7 @@ namespace UILayer.Controllers
 
         /*    return Json();
 */
-<<<<<<< HEAD
- /*     [HttpPost]
-      public IActionResult sort(string price)
-        {
-            ViewBag.count = 0;
-            ViewBag.PriceList = _
 
-        }*/
-       [HttpPost]
-       public IActionResult Search(string name)
-=======
         /*     [HttpPost]
              public IActionResult sort(string price)
                {
@@ -460,7 +430,7 @@ namespace UILayer.Controllers
                }*/
         [HttpPost]
         public IActionResult Search(string name)
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
+
         {
             ViewBag.count = 0;
             var data = _opApi.Search(name).Result;
@@ -524,11 +494,6 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
-<<<<<<< HEAD
-
-    }
-=======
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
 
     
 
