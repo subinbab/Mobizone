@@ -419,6 +419,14 @@ namespace UILayer.Controllers
             var filteredData = _opApi.Filter(brandName).Result;
             return View("Index", filteredData);
         }
+
+        public IActionResult Sort(string price)
+        {
+            ViewBag.count = 0;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var SortedData = _opApi.Sort(price).Result;
+            return View("Index", SortedData);
+        }
         [HttpGet]
         public async Task<IActionResult> ProductDetails(int id)
         {
@@ -511,8 +519,11 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b4736d4cf4f1c9c7be78191e5e5bb3d1ed0d0ff0
 
     
 

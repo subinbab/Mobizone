@@ -86,7 +86,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<UserRegistration> requestHandler = new RequestHandler<UserRegistration>(_configuration);
-                requestHandler.url = "api/users/UserCreate";
+                requestHandler.url = "api/users/userdata";
                 if (requestHandler.Edit(User).IsSuccess)
                 {
                     return true;
@@ -182,6 +182,7 @@ namespace UILayer.Data.ApiServices
             }
 
         }
+        
         public bool EditCheckout(Checkout checkout)
         {
             RequestHandler<Checkout> _requestHandler = new RequestHandler<Checkout>(_configuration);
