@@ -180,6 +180,7 @@ namespace UILayer.Data.ApiServices
             }
 
         }
+        
         public bool EditCheckout(Checkout checkout)
         {
             RequestHandler<Checkout> _requestHandler = new RequestHandler<Checkout>(_configuration);

@@ -108,8 +108,8 @@
         </div>
     </nav>
 
-    <div class="sidebar" style="position: fixed; padding-top:114px;z-index: 99;background-color: white;">
-        <div id="filter" style="padding: 0px;background-color: #c93e3e00;color: black;">
+    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #5be5b2 ">
+        <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
         <div id="dropdown1" class="dropdown" >
@@ -118,15 +118,22 @@
                     <option disabled selected> Select Brand </option>
                 </select>
 
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color: indianred;"
+                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e"
                 </input>
             </form>
         </div>
 
-        <div id="sort" style="padding: 0px;background-color: #c93e3e00;color: black;">
+        <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
             <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/User/sort" ? "active" : "")">Sort By</a>
-            <div id="dropdown2" class="dropdown" style="margin-top: -8%;margin-left: 9%;">
-                <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
+            @*<div id="dropdown2" class="dropdown" style="margin-top: -8%;margin-left: 9%;">
+                 <a asp-action="Create" class="@(Context.Request.Path == "/User/sort" ? "active " : "")">Price</a>
+*@
+               <a asp-action="sort"><button style="width: 101px; font-size: 14px">Low to High</button></a>
+                <a asp-action="sort"><button style="width: 101px; font-size: 14px">High to Low</button></a>
+
+               
+
+
             </div>
         </div>
     </div>
