@@ -6,7 +6,6 @@
 
 @{
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
-   
 }
 
 
@@ -123,70 +122,83 @@
         <link rel="stylesheet" href="~/css/footer.css" />
     </head>
     <body>
-        <div class="card overflow-hidden">
-     @*
-*@
+
+      @*  <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+
+          <div class="col-md-2 pt-0">
+              <div class="list-group list-group-flush account-settings-links">
+                  <h4 class="list-group-item">Account Settings</h4>
+                  <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
+              </div>
+
+              <div>
+                  <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+              </div>
+
+          </div>
+         
+        @RenderBody();
+        </div>*@
+
       
             <div class="row no-gutters row-bordered row-border-light">
 
-                <div class="col-md-2 pt-0" style="background-color: #6cdfaf; margin-bottom: -64%;">
+                <div class="col-md-2 pt-0">
                     <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
-                        @* <h4 class="list-group-item">Account Settings</h4>*@
-                        <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #e52d2e; margin-bottom: 7px; ">Profile Information</a>
+                       @* <h4 class="list-group-item">Account Settings</h4>*@
+                        <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
                     </div>
 
                     <div>
-                        <a class="list-group-item list-group-item-action" asp-action="address" style="background-color: #e52d2e; padding-top: 10px; color: white ">Manage Profile</a>
+                        <a class="list-group-item list-group-item-action" asp-action="ManageAddress" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
                     </div>
 
                 </div>
 
                 @RenderBody();
-                <footer>
-                    <div class="row justify-content-center">
-                        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                             class="float-left" />
-
-                        <ul class="list">
-
-                            </li>
-                            <li class="about">
-                                <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                            </li>
-                            <li class="about">
-                                <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                            </li>
-
-                            <li class="about">
-                                <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                            </li>
-
-                            <li class="about">
-
-                                <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
-
-
-                            </li>
-                        </ul>
-
-                    </div>
-
-
-
-
-                    <div style="font-size: 12px; padding-bottom:10px">
-                        <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-                    </div>
-
-                </footer>
             </div>
-        </div>
+
     </body>
 </html>
 
 
+<footer class="border-top footer text-muted">
 
+    <div class="row-bordered">
+        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+             class="float-left" />
+        <ul class="list">
+
+
+            <li class="about">
+                <a asp-controller="user" asp-action="Company" style="margin-right: -86px; color: navy">Company</a>
+            </li>
+            <li class="about">
+                <a asp-controller="user" asp-action="About" style="margin-right: -86px; color: navy">About</a>
+            </li>
+
+            <li class="about">
+                <a asp-controller="user" asp-action="Privacy" style="margin-right: -86px; color: navy">Privacy & Policy</a>
+            </li>
+
+            <li class="about">
+
+                <a asp-controller="user" asp-action="Contact" style="margin-right: -86px; color: navy">Contact Us</a>
+
+
+            </li>
+        </ul>
+
+    </div>
+
+
+
+    <hr>
+    <div>
+        <img src="~/css/Images/copyright-38672_1280.png" style="height: 12px; width: 12px; " /> <a> Mobizone private limited all right reserved</a>
+
+    </div>
     <style>
         .container-fluid {
             width: 100%;
@@ -287,8 +299,12 @@
             margin-left: 0px !important;
         }
     </style>
+</footer>
+                    </div>
+                </main>
+            </div>
+        </div>
 
-                    
 
 
 

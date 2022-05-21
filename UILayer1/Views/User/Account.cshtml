@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" style="margin-left:43%">Name : @user.FirstName</label>
-
+                   @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
                 </div>
                 @if (user.address == null)
                 {
@@ -55,14 +55,13 @@
                     </div>
                 }
             <div class="text-right mt-3">
+
+
+                <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>
+                <a type="button" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="account">Back</a>&nbsp;
+
+
            
-<<<<<<< HEAD
-               <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>
-                <a type="button" class="btn btn-primary" asp-action="Index">Back</a>&nbsp;
-=======
-         
-                <a type="button" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="Index">Back</a>&nbsp;
->>>>>>> 8d2fb2ede857391084e8b9c97fcd35aa677df6b1
             </div>
             </div>
 

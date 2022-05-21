@@ -1,28 +1,22 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using DocumentFormat.OpenXml.Bibliography;
 using DomainLayer;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
 using DTOLayer.Product;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using UILayer.Data.ApiServices;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace UILayer.Controllers
 {
@@ -369,6 +363,12 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        public IActionResult ManageAddress()
+        {
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
+            return View();
+        }
         public IActionResult Account()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -376,12 +376,29 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             return View();
         }
+        public IActionResult DeleteAddress(int id)
+        {
+            bool result = userApi.DeleteAddress(id);
+            if (result)
+            {
+                _notyf.Success("deleted");
+            }
+            else
+            {
+                _notyf.Error("Not deleted");
+
+            }
+            return RedirectToAction("");
+        }
+
         [HttpGet]
-        public IActionResult Address()
+        public IActionResult Address(int id)
         {
 
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return View(address);
         }
         [HttpPost]
         public IActionResult Address(Address addreses)
@@ -511,6 +528,11 @@ namespace UILayer.Controllers
 
              return Json();
          }*/
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> b4736d4cf4f1c9c7be78191e5e5bb3d1ed0d0ff0
 
     
 

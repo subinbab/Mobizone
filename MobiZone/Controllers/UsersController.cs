@@ -256,7 +256,8 @@ namespace ApiLayer.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
+       
+      [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserViewModel model)
         {
@@ -286,7 +287,30 @@ namespace ApiLayer.Controllers
             return Ok(_response);
         }
 
-        
+        #region delete method for address
+         /*[HttpDelete("{id}")]
+        public ResponseModel<Address> Delete(int id)
+        {
+            ResponseModel<Address> _response = new ResponseModel<Address>();
+            try
+            { 
+                List<Address> data = new List<Address>();
+                data = _addresData.Get().Result.ToList();
+                _addresData = data.Where(c => c.id.Equals(id)).FirstOrDefault();
+                _productOperations.DeleteProduct(_addresData);
+                string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                return _response;
+            }
+            catch (Exception ex)
+            {
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+        }*/
+        #endregion
 
         #region Update Method for Users
         [HttpPut]
