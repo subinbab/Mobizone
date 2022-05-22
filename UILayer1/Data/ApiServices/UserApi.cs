@@ -339,6 +339,27 @@ namespace UILayer.Data.ApiServices
                 return null;
             } 
         }
+        public bool PostMail(MailRequest mailRequest)
+        {
+            try
+            {
+                RequestHandler<MailRequest> requestHandler = new RequestHandler<MailRequest>(_configuration);
+                requestHandler.url = "api/mail/send";
+                if (requestHandler.Post(mailRequest).IsSuccess)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
     }
 }

@@ -1,25 +1,53 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<DomainLayer.CartDetails>
+
 @{
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
-    ViewData["Title"] = "Add to Cart";
+    ViewData["Title"] = "AddtoCart";
 }
-@*<div class=" text-center">
-    <div class="form-group">
-        <a asp-action="CartPage"><button class="btn btn-primary">Add to Cart</button></a>
-    </div>
-</div>*@
-<script>
-    $.ajax({
-        url: "/user/cartDetails",
-        method: "get",
-        dataType: "json",
-        success: function (data) {
-            console.log(data)
-        }
-        , error: function () {
-            console.log("error occured");
-        }
-    })
-</script>
+
+<h1>AddtoCart</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.productId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.productId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

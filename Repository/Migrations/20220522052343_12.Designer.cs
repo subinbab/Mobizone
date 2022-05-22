@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class ProductDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522052343_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,9 +165,6 @@ namespace Repository.Migrations
                     b.Property<int?>("Cartid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DbCartid")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ProductCartid")
                         .HasColumnType("int");
 
@@ -181,8 +180,6 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("Cartid");
-
-                    b.HasIndex("DbCartid");
 
                     b.HasIndex("ProductCartid");
 
@@ -232,21 +229,6 @@ namespace Repository.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DomainLayer.DbCart", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("sessionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("dbCart");
                 });
 
             modelBuilder.Entity("DomainLayer.Login", b =>
@@ -935,10 +917,6 @@ namespace Repository.Migrations
                         .WithMany("cartDetails")
                         .HasForeignKey("Cartid");
 
-                    b.HasOne("DomainLayer.DbCart", null)
-                        .WithMany("cartDetails")
-                        .HasForeignKey("DbCartid");
-
                     b.HasOne("DomainLayer.ProductCart", null)
                         .WithMany("cartDetails")
                         .HasForeignKey("ProductCartid");
@@ -1112,11 +1090,6 @@ namespace Repository.Migrations
                 });
 
             modelBuilder.Entity("DomainLayer.Cart", b =>
-                {
-                    b.Navigation("cartDetails");
-                });
-
-            modelBuilder.Entity("DomainLayer.DbCart", b =>
                 {
                     b.Navigation("cartDetails");
                 });

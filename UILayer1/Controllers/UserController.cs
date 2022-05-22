@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -180,6 +181,64 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword(ForgetPasswordViewModel data)
+        {
+            if (ModelState.IsValid)
+                       {
+                           ModelState.Clear();
+                           var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
+                           if (userDetails!=null)
+                            {
+                    var session = HttpContext.Session.Id;
+                    data.emailSent = true;
+                    MailRequest mailRequest = new MailRequest();
+                    mailRequest.Body = "<a href='http://localhost:58738/user/ResetPassword/"+data.email+"/"+ session + "'>Click Here</a>";
+                    mailRequest.Subject = "ResetPassword";
+                    mailRequest.ToEmail = userDetails.Email;
+                    var checkEmail = userApi.PostMail(mailRequest);
+                    return View();
+                          }
+
+
+                       }
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            return View();
+        }
+
+        [HttpGet("/user/ResetPassword/{email}/{sessionId}")]
+        public ActionResult ResetPassword(string email,string sessionId)
+        {
+            if(sessionId == HttpContext.Session.Id)
+            {
+                var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
+                ResetPassword reset = new ResetPassword();
+                reset.User = userDetails;
+                return View(reset);
+            }
+            else
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPassword resetPassword)
+        {
+            try
+            {
+                UserRegistration register = new UserRegistration();
+                register = userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
+                register.Password = resetPassword.newPassword;
+                var result = userApi.EditUser(register);
+                return View(resetPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
         public IActionResult Contact()
         {
 
@@ -287,87 +346,64 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        /* public IActionResult AddtoCart(int id)
+         public IActionResult AddtoCart(int id)
          {
+            List<CartDetails> cartList = new List<CartDetails>();
+            CartDetails cartDetails = new CartDetails();
+            cartDetails.productId = id;
+            
+                cartList.Add(cartDetails);
+                Cart cart = new Cart();
+                HttpContext.Session.SetString("testKey", "testValue");
+                cart.sessionId = HttpContext.Session.Id;
+                cart.cartDetails = cartList;
+                _carts.Add(cart);
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                }
 
-             // IEnumerable<ProductCart> cartListFromDb;
-             try
-             {
-                 string name = _distributedCache.GetStringAsync("cart").Result;
-                 if(JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                 {
-                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                 }
+            }
+            catch (Exception ex)
+            {
+            }
+            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                }
 
-             }
-             catch(Exception ex)
-             {
+            }
+            catch (Exception ex)
+            {
+            }
+            if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
+            {
+                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
+                data.cartDetails.Add(cartDetails);
+                var count = 0;
+                foreach(var item in _carts)
+                {
+                    if (item.sessionId.Equals(HttpContext.Session.Id))
+                    {
+                        _carts.Insert(count, data);
+                        count++;
+                    }
+                }
+            }
+            
+            var myCart = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
+            return View(myCart.cartDetails);
+            }
 
-<<<<<<< HEAD
-            cartList.Add(cartDetails);
-            Cart cart = new Cart();
-            HttpContext.Session.SetString("testKey", "testValue");
-            cart.sessionId = HttpContext.Session.Id;
-            cart.cartDetails = cartList;
-            _carts.Add(cart);
-             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-            return Redirect("/user/index");
-=======
-             }
+     
 
-             CartDetails cartDetails = new CartDetails();
-             cartDetails.productId = id;
-             List<CartDetails> cartList = new List<CartDetails>();
-
-             cartList.Add(cartDetails);
-             Cart cart = new Cart();
-
-
-             _carts.Add(cart);
-              _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-             HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
-
-             _carts = JsonConvert.DeserializeObject<List<Cart>>(HttpContext.Session.GetString("cart"));
-
-             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-
-
-
-             return View();
-
-
-
-
-
-             if (User.Identity.IsAuthenticated)
-             {
-                 var userData = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                 cart.usersId = userData.UserId;
-             }
->>>>>>> dc85de209a520e2f170e60e554f512882b7b55c9
-
-
-
-
-             cart.cartDetails = cartList;
-             HttpContext.Session.SetString("testKey","testValue");
-             cart.sessionId = HttpContext.Session.Id;
-            /* if (cartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-             {
-                 var existedCart = cartListFromDb.Where(c => c.sessionId.Equals(cart.sessionId)).FirstOrDefault();
-                 //cartDetails.productId = id;
-                 existedCart.cartDetails.Add(cartDetails);
-                 userApi.EditCart(existedCart);
-             }*/
-        /* else
-         {
-             //var result = userApi.Createcart(cart);
-         }*/
-        /* return Redirect("/user/index");
-
-
-     }
-*/
 
         public IActionResult CartPage()
         {
@@ -483,55 +519,7 @@ namespace UILayer.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult ForgetPassword(ForgetPasswordViewModel forgotPassword)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    ModelState.Clear();
-                    var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(forgotPassword.email)).FirstOrDefault();
-                    if (userDetails != null)
-                    {
-                        forgotPassword.emailSent = true;
-                        return Redirect("/user/ResetPassword?email=" + forgotPassword.email);
-                    }
-
-
-                }
-                return View(forgotPassword);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-        [HttpGet]
-        public ActionResult ResetPassword(string email)
-        {
-            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
-            ResetPassword reset = new ResetPassword();
-            reset.User = userDetails;
-            return View(reset);
-        }
-
-        [HttpPost]
-        public ActionResult ResetPassword(ResetPassword resetPassword)
-        {
-            try
-            {
-                UserRegistration register = new UserRegistration();
-                register = userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
-                register.Password = resetPassword.NewPassword;
-                var result = userApi.EditUser(register);
-                return View(resetPassword);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+      
     }
 }
         /* public IActionResult CartDetails()
