@@ -178,8 +178,10 @@ namespace UILayer.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
+            ForgetPasswordViewModel email = new ForgetPasswordViewModel();
+            email.emailSent = false;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return View(email);
         }
         [HttpPost]
         [AllowAnonymous]
@@ -187,7 +189,8 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
                        {
-                           ModelState.Clear();
+
+                ModelState.Clear();
                            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                            if (userDetails!=null)
                             {
@@ -198,13 +201,13 @@ namespace UILayer.Controllers
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
-                    return View();
+                    return View(data);
                           }
 
 
                        }
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return View(data);
         }
 
         [HttpGet("/user/ResetPassword/{email}/{sessionId}")]
@@ -495,6 +498,7 @@ namespace UILayer.Controllers
         [AllowAnonymous]
         public IActionResult ForgetPassword()
         {
+           
             return View();
         }
 
