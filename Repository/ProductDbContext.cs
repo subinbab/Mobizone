@@ -31,9 +31,8 @@ namespace Repository
         public DbSet<AdminContact> contact { get; set; }
         public DbSet<Roles> roles { get; set; }
         public DbSet<ProductSubPart> productSubPart { get; set; }
-        public DbSet<Cart> cart { get; set; }
-        public DbSet<ProductCart> productCart { get; set; }
         public DbSet<Address> address { get; set; }
+        public DbSet<DbCart> dbCart { get; set; }
        
     }
 

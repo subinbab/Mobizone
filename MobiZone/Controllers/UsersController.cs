@@ -89,7 +89,7 @@ namespace ApiLayer.Controllers
             _user.modifiedBy = users.FirstName + " " + users.LastName;
             _user.Password = _sec.Encrypt("admin", users.Password);
             _login.username = users.Email;
-            _login.password = users.Password;
+            _login.password = _sec.Encrypt("admin", users.Password);
             _login.createdOn = DateTime.Now;
             _login.createdBy = users.FirstName + " " + users.LastName;
             _login.modifiedOn = DateTime.Now;
@@ -314,12 +314,28 @@ namespace ApiLayer.Controllers
 
         #region Update Method for Users
         [HttpPut]
-        public IActionResult Put([FromBody] UserRegistration product)
+        public IActionResult Put([FromBody] UserRegistration user)
         {
+            
+            string myDateTime = DateTime.Now.ToString();
+            user.createdOn = DateTime.Now;
+            user.modifiedOn = DateTime.Now;
+            user.createdBy = user.FirstName + " " + user.LastName;
+            user.modifiedBy = user.FirstName + " " + user.LastName;
+            user.Password = _sec.Encrypt("admin", user.Password);
+            _login = _loginOperations.Get().Result.Where(c => c.username.Equals(user.Email)).FirstOrDefault();
+            _login.username = user.Email;
+            _login.password = user.Password;
+            _login.createdOn = DateTime.Now;
+            _login.createdBy = user.FirstName + " " + user.LastName;
+            _login.modifiedOn = DateTime.Now;
+            _login.modifiedBy = user.FirstName + " " + user.LastName;
+            _login.rolesId = 1;
             ResponseModel<string> _response = new ResponseModel<string>();
             try
             {
-                _userCreate.Edit(product);
+                _userCreate.Edit(user);
+                _loginOperations.Edit(_login);
                 string message = _userMessages.Updated + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _response.AddResponse(true, 0, _userMessages.Updated, message);
                 return new JsonResult(_response);
@@ -393,7 +409,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-        #region Update Method for Users
+        #region Update Method for CheckOut
         [HttpPut("CheckoutPut")]
         public IActionResult CheckoutPut([FromBody] Checkout checkout)
         {
@@ -418,7 +434,7 @@ namespace ApiLayer.Controllers
         #region Post Method for Cart
 
         [HttpPost("CreateCart")]
-        public IActionResult CreateCart([FromBody] ProductCart cart)
+        public IActionResult CreateCart([FromBody] DbCart cart)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
@@ -443,9 +459,9 @@ namespace ApiLayer.Controllers
 
         #region Get Method for cart
         [HttpGet("GetCart")]
-        public async Task<ResponseModel<IEnumerable<ProductCart>>> GetCart()
+        public async Task<ResponseModel<IEnumerable<DbCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<ProductCart>> _response = new ResponseModel<IEnumerable<ProductCart>>();
+            ResponseModel<IEnumerable<DbCart>> _response = new ResponseModel<IEnumerable<DbCart>>();
             try
             {
                 var result = await _cartOperations.Get();
@@ -481,7 +497,7 @@ namespace ApiLayer.Controllers
 
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
-        public IActionResult UpdateCart([FromBody] ProductCart cart)
+        public IActionResult UpdateCart([FromBody] DbCart cart)
         {
             ResponseModel<ProductCart> _response = new ResponseModel<ProductCart>();
             try

@@ -60,13 +60,22 @@ namespace UILayer1
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSession(options =>
-            options.IdleTimeout = TimeSpan.FromMinutes(15));
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.IsEssential = true;
+            }
+            );
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             services.AddDistributedSqlServerCache(options => {
                 options.ConnectionString = Configuration.GetConnectionString("online_db_2");
                 options.SchemaName = "dbo";
-                options.TableName = "SQLSessions";
+                options.TableName = "Sessions";
                 //options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(6);
+            });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
             });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

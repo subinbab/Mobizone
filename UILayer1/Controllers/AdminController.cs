@@ -29,6 +29,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using UILayer.Controllers;
 using BusinessObjectLayer.ProductOperations;
 using Repository;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace UIlayer.Controllers
 {
@@ -44,7 +46,9 @@ namespace UIlayer.Controllers
         UserApi _userApi;
         private readonly INotyfService _notyf;
         private readonly IMapper _mapper;
+        private readonly IDistributedCache _distributedCache;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        List<Cart> _carts;
         IEnumerable<UserRegistration> _userDataList;
         // for testing ////////////////////////////firebase//////////////////////////////////
         private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
@@ -52,7 +56,7 @@ namespace UIlayer.Controllers
         private static string AuthEmail = "subinbabusd720@gmail.com";
         private static string AuthPassword = "Subin@1999";
         //////////////////////////////////////////////////////
-        public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache)
         {
             _notyf = notyf;
             Configuration = configuration;
@@ -63,6 +67,8 @@ namespace UIlayer.Controllers
             _userApi = new UserApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
+            _distributedCache = distributedCache;
+            _carts = new List<Cart>();
         }
 
         public IActionResult Dashboard()
@@ -449,6 +455,28 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
+                        try
+                        {
+                            string name = _distributedCache.GetStringAsync("cart").Result;
+                            if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                            {
+                                _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                        var count = 0; 
+                        foreach(var cart in _carts)
+                        {
+                            if (cart.sessionId.Equals(check.sessionId))
+                            {
+                                var insertData = cart;
+                                _carts.Insert(count, insertData);
+                            }
+                            count++;
+                        }
                         UserApi userApi = new UserApi(Configuration);
                         _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();
@@ -522,6 +550,7 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
+        [HttpGet("/admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
             if(id == 0)
