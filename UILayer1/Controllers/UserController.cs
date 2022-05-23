@@ -387,11 +387,15 @@ namespace UILayer.Controllers
         [HttpGet("/user/addtocart/{id}")]
          public IActionResult AddtoCart(int id)
          {
-            
+            List<Cart> cartListSession = new List<Cart>();
             List<CartDetails> cartList = new List<CartDetails>();
             CartDetails cartDetails = new CartDetails();
             cartDetails.productId = id;
-            
+            cartDetails.quantity = 1;
+            var productData = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
+            cartDetails.price = 1 * productData.price;
+
+
                 cartList.Add(cartDetails);
                 Cart cart = new Cart();
             DbCart productCart = new DbCart();
@@ -399,21 +403,9 @@ namespace UILayer.Controllers
                 cart.sessionId = HttpContext.Session.Id;
             productCart.sessionId = HttpContext.Session.Id;
                 cart.cartDetails = cartList;
-            productCart.cartDetails = cartList;
-               
-            try
-            {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                {
-                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                }
-
-            }
-            catch (Exception ex)
-            {
-            }
-            _carts.Add(cart);
+            productCart.cartDetails = cartList;  
+            
+            
             if (User.Identity.IsAuthenticated)
             {
                 try
@@ -440,9 +432,59 @@ namespace UILayer.Controllers
             }
             else
             {
-                _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                try
+                {
+                    string name = _distributedCache.GetStringAsync("cart").Result;
+                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                }
+               catch(Exception ex)
+                {
+
+                }
+                /* bool check = false;
+                 try
+                 {
+                     try
+                     {
+
+                         string name = _distributedCache.GetStringAsync("cart").Result;
+                         _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                         if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                         {
+
+                             foreach (var data in _carts)
+                             {
+                                 foreach (var data1 in data.cartDetails)
+                                 {
+                                     if (data1.productId.Equals(id))
+                                     {
+                                         var quantity = data1.quantity;
+                                         data1.quantity = quantity + 1;
+                                         check = true;
+                                         cartList.Add(data1);
+                                     }
+
+                                 }
+                                 cartListSession.Add(data);
+                             }
+                             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(cartListSession));
+                         }
+                         else
+                         {
+                             _carts.Add(cart);
+                             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                         }
+
+                     }
+                     catch (Exception ex)
+                     {
+                     }
+                 }
+                 catch (Exception ex)
+                 {
+                 }*/
+
             }
-            
             try
             {
                 string name = _distributedCache.GetStringAsync("cart").Result;
@@ -476,7 +518,10 @@ namespace UILayer.Controllers
             }
 
      
-
+        public IActionResult AddtoCartPage()
+        {
+            return View();
+        }
 
         public IActionResult CartPage()
         {
@@ -520,7 +565,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(address);
         }
-        [HttpPost]
+        [HttpPost("/user/address")]
         public IActionResult Address(Address addreses)
         {
             List<Address> addresses = new List<Address>();
