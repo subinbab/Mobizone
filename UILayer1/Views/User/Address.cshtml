@@ -2,7 +2,7 @@
 
 @{
 
-    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
+    Layout = "~/Views/Simpleview/_UserLayout.cshtml";
    
 
     ViewData["Title"] = "Manage Profile";
@@ -28,18 +28,23 @@
 
                 </div>*@
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="address" class="control-label">Address</label>
-                        <input asp-for="address" class="form-control" />
-                        <span asp-validation-for="address" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="district" class="control-label">District</label>
-                        <input asp-for="district" class="form-control" />
-                        <span asp-validation-for="district" class="text-danger"></span>
-                    </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <label asp-for="name" class="control-label">Name</label>
+                    <input asp-for="name" class="form-control" />
+                    <span asp-validation-for="name" class="text-danger"></span>
                 </div>
+                <div class="col-md-6">
+                    <label asp-for="address" class="control-label">Address</label>
+                    <input asp-for="address" class="form-control" />
+                    <span asp-validation-for="address" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="district" class="control-label">District</label>
+                    <input asp-for="district" class="form-control" />
+                    <span asp-validation-for="district" class="text-danger"></span>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label asp-for="state" class="control-label">State</label>
