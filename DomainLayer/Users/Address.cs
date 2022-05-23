@@ -9,25 +9,25 @@ namespace DomainLayer.Users
     public class Address
     {
         public int id { get; set; }
-        [Required]
+         [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Name")]
         public string name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Address")]
         public string address { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "District")]
         public string district { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "State")]
         public string state { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Country")]
         public string country { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Pincode")]
         public string pincode { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Phone number")]
 
         public string phoneNumber { get; set; }

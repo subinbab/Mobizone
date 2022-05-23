@@ -133,31 +133,31 @@ element.style {
 
                                     <span asp-validation-for="price" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="padding-top: 2%">
                                     <div asp-for="quantity" class="control-label" style="text-align-last:justify"> Quantity</div>
                                     <input asp-for="quantity" placeholder="Quantity" class="form-control" />
 
                                     <span asp-validation-for="quantity" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="productType" class="control-label"> Product Type</label>
 
                                     <select class="form-control master js-select2" asp-for="productType" asp-items="new SelectList(ViewBag.ProductType) "></select>
                                     <span asp-validation-for="productType" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="productBrand" class="control-label"> Product Brand</label>
 
                                     <select asp-for="productBrand" class="form-control master js-select2" asp-items="new SelectList(ViewBag.BrandList)"></select>
                                     <span asp-validation-for="productBrand" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.processor" class="control-label">Processor</label>
 
                                     <select asp-for="specs.processor" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Processor)"></select>
                                     <span asp-validation-for="specs.processor" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.ram" class="control-label"> Ram</label>
 
                                     <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
@@ -196,7 +196,7 @@ element.style {
                                     }
                                     <span asp-validation-for="specs.ram" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.storage" class="control-label"> Storage</label>
 
                                     <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
@@ -235,25 +235,25 @@ element.style {
                                     }
                                     <span asp-validation-for="specs.storage" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.core" class="control-label"> Core</label>
 
                                     <select asp-for="specs.core" class="form-control master js-select2" asp-items="new SelectList(ViewBag.Core)"></select>
                                     <span asp-validation-for="specs.core" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
-                                    <label asp-for="specs.camFeatures" class="control-label">Sim Type</label>
+                                <div class="col-md-4"  style="padding-top: 2%">
+                                    <label asp-for="specs.camFeatures" class="control-label">Cam Features</label>
 
                                     <select asp-for="specs.camFeatures" class="form-control master js-select2" asp-items="new SelectList(ViewBag.camFeatures)"></select>
                                     <span asp-validation-for="specs.camFeatures" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.simType" class="control-label"> Sim Type</label>
 
                                     <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
                                     <span asp-validation-for="specs.simType" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12"  style="padding-top: 2%">
                                     <div asp-for="description" class="control-label" style="text-align-last:justify;  margin-top:30px"> Description</div>
                                     @*<textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
                                     <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250" />
