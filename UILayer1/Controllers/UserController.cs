@@ -356,6 +356,11 @@ namespace UILayer.Controllers
         [HttpGet]
         public IActionResult AddtoCart()
         {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AddtoCartResponse()
+        {
             List<CartDetails> cartList = new List<CartDetails>();
             try
             {
@@ -382,11 +387,17 @@ namespace UILayer.Controllers
                     }
                 }
             }
-            return View(cartList);
+            foreach(var data in cartList)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
+                data.product = product;
+            }
+            return new JsonResult(cartList);
         }
         [HttpGet("/user/addtocart/{id}")]
          public IActionResult AddtoCart(int id)
          {
+            bool check = false;
             List<Cart> cartListSession = new List<Cart>();
             List<CartDetails> cartList = new List<CartDetails>();
             CartDetails cartDetails = new CartDetails();
@@ -436,10 +447,53 @@ namespace UILayer.Controllers
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                    if(_carts != null || _carts.Count > 0)
+                    {
+                        if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
+                        {
+                            foreach (var data in _carts)
+                            {
+                                foreach (var data1 in data.cartDetails)
+                                {
+                                    if (data1.productId.Equals(id))
+                                    {
+                                        var quantity = data1.quantity;
+                                        data1.quantity = quantity + 1;
+                                        data1.price = data1.quantity * data1.price;
+                                        check = true;
+                                        /*cartList.Add(data1);*/
+                                    }
+                                    else
+                                    {
+                                        
+                                    }
+
+                                }
+                              /*  cartListSession.Add(data);*/
+                            }
+                            if (check == false)
+                            {
+                                _carts.Add(cart);
+                            }
+                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                        }
+                        else
+                        {
+                            _carts.Add(cart);
+                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                        }
+                    }
+                    else
+                    {
+                        _carts.Add(cart);
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                    }
+                    
                 }
                catch(Exception ex)
                 {
-
+                    _carts.Add(cart);
+                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                 }
                 /* bool check = false;
                  try
@@ -514,7 +568,7 @@ namespace UILayer.Controllers
             }
             
            
-            return View(cartDetailsList);
+            return View();
             }
 
      
