@@ -115,7 +115,7 @@ namespace Repository
             {
                  _context.SaveChanges();
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
 
             }

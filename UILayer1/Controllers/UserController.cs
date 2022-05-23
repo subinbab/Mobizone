@@ -349,31 +349,10 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-         public IActionResult AddtoCart(int id)
-         {
+        [HttpGet]
+        public IActionResult AddtoCart()
+        {
             List<CartDetails> cartList = new List<CartDetails>();
-            CartDetails cartDetails = new CartDetails();
-            cartDetails.productId = id;
-            
-                cartList.Add(cartDetails);
-                Cart cart = new Cart();
-                HttpContext.Session.SetString("testKey", "testValue");
-                cart.sessionId = HttpContext.Session.Id;
-                cart.cartDetails = cartList;
-                _carts.Add(cart);
-            try
-            {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                {
-                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                }
-
-            }
-            catch (Exception ex)
-            {
-            }
-            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
             try
             {
                 string name = _distributedCache.GetStringAsync("cart").Result;
@@ -388,21 +367,108 @@ namespace UILayer.Controllers
             }
             if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
             {
-                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
-                data.cartDetails.Add(cartDetails);
+                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+
                 var count = 0;
-                foreach(var item in _carts)
+                foreach (var item in data)
                 {
                     if (item.sessionId.Equals(HttpContext.Session.Id))
                     {
-                        _carts.Insert(count, data);
-                        count++;
+                        cartList.Add(item.cartDetails.FirstOrDefault());
+                    }
+                }
+            }
+            return View(cartList);
+        }
+        [HttpGet("/user/addtocart/{id}")]
+         public IActionResult AddtoCart(int id)
+         {
+            
+            List<CartDetails> cartList = new List<CartDetails>();
+            CartDetails cartDetails = new CartDetails();
+            cartDetails.productId = id;
+            
+                cartList.Add(cartDetails);
+                Cart cart = new Cart();
+            DbCart productCart = new DbCart();
+                HttpContext.Session.SetString("testKey", "testValue");
+                cart.sessionId = HttpContext.Session.Id;
+            productCart.sessionId = HttpContext.Session.Id;
+                cart.cartDetails = cartList;
+            productCart.cartDetails = cartList;
+               
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+            _carts.Add(cart);
+            if (User.Identity.IsAuthenticated)
+            {
+                try
+                {
+                    IEnumerable<DbCart> productCartListFromDb = userApi.GetCart().Result;
+                    if (productCartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+                    {
+                        var productCartBySessioId = productCartListFromDb.Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
+                        var cartDetailslList = productCartBySessioId.cartDetails;
+                        cartDetailslList.Add(cartDetails);
+                        productCartBySessioId.cartDetails = cartDetailslList;
+                        userApi.EditCart(productCartBySessioId);
+                    }
+                    else
+                    {
+                        userApi.Createcart(productCart);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    
+                }
+                
+            }
+            else
+            {
+                _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+            }
+            
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+            List<CartDetails> cartDetailsList = new List<CartDetails>();
+            if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
+            {
+                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+                
+                var count = 0;
+
+                foreach(var item in data)
+                {
+                    if (item.sessionId.Equals(HttpContext.Session.Id))
+                    {
+                        cartDetailsList.Add(item.cartDetails.FirstOrDefault());
                     }
                 }
             }
             
-            var myCart = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
-            return View(myCart.cartDetails);
+           
+            return View(cartDetailsList);
             }
 
      

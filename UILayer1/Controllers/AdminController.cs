@@ -550,6 +550,7 @@ namespace UIlayer.Controllers
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
+        [HttpGet("/admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
             if(id == 0)
