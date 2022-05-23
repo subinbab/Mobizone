@@ -516,7 +516,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(address);
         }
-        [HttpPost]
+        [HttpPost("/user/address")]
         public IActionResult Address(Address addreses)
         {
             List<Address> addresses = new List<Address>();

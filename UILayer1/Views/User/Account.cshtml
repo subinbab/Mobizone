@@ -32,7 +32,7 @@
                     <label class="form-label" style="margin-left:43%">Name : @user.FirstName</label>
                    @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
                 </div>
-                @if (user.address == null)
+                @if (user.address == null || user.address.Count==0)
                 {
                     <p>No Address available</p>
                 }
@@ -44,11 +44,11 @@
                           
 
                                 <div class="col">
-                           
+                         
                                     <p style="margin-left:41%"> Address : @user.address.FirstOrDefault().address</p>
-                                    <p style="margin-left:42%"> District : @user.address.FirstOrDefault().district</p>
+                                    <p style="margin-left:41%"> District : @user.address.FirstOrDefault().district</p>
                                     <p style="margin-left:41%">Pincode : @user.address.FirstOrDefault().pincode</p>
-                                    <p style="margin-left:43%">State : @user.address.FirstOrDefault().state</p>
+                                    <p style="margin-left:41%">State : @user.address.FirstOrDefault().state</p>
                                     <p style="margin-left:41%"> Country : @user.address.FirstOrDefault().country</p>
                                 </div>}
                         </div>
