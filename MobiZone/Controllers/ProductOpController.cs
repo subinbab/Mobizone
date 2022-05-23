@@ -291,8 +291,8 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
-        #region Sort Product By name 
-       /* [HttpGet("SortByBrand/{name}")]
+        #region Sort Product By brand 
+        [HttpGet]
         public ResponseModel<IEnumerable<ProductEntity>> SortByBrand(string name)
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
@@ -321,7 +321,7 @@ namespace ApiLayer.Controllers
                 return _response;
             }
 
-        }*/
+        }
         #endregion
         #region Delete Method for Product
         [HttpDelete("{id}")]
