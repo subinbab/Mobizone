@@ -21,46 +21,47 @@
     <div class="content " style="padding-bottom:10px">
         <div class="container-fluid">
             <main role="main" class="pb-3">
-                <div id="mypartialview"></div>
+                <div id="mypartialview"></div> 
 
-                @RenderBody()
-            <footer>
-                <div class="row justify-content-center"><img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-     class="float-left" />
-                    
-                    <ul class="list">
+                    @RenderBody()
+                    <footer>
+                        <div class="row justify-content-center">
+                            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                                 class="float-left" />
 
-                        </li>
-                        <li class="about">
-                            <a asp-controller="Admin" asp-action="Company" style="margin-right:-86px">Company</a>
-                        </li>
-                        <li class="about">
-                            <a asp-controller="Admin" asp-action="About" style="margin-right:-86px">About</a>
-                        </li>
+                            <ul class="list">
 
-                        <li class="about">
-                            <a asp-controller="Admin" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                        </li>
+                                </li>
+                                <li class="about">
+                                    <a asp-controller="Admin" asp-action="Company" style="margin-right:-86px">Company</a>
+                                </li>
+                                <li class="about">
+                                    <a asp-controller="Admin" asp-action="About" style="margin-right:-86px">About</a>
+                                </li>
 
-                        <li class="about">
+                                <li class="about">
+                                    <a asp-controller="Admin" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                                </li>
 
-                            <a asp-controller="Admin" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+                                <li class="about">
 
-
-                        </li>
-                    </ul>
-
-                </div>
+                                    <a asp-controller="Admin" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
+                                </li>
+                            </ul>
+
+                        </div>
 
 
-                <div style="font-size: 12px; padding-bottom:10px">
-                    <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
 
-                </div>
 
-            </footer>
+                        <div style="font-size: 12px; padding-bottom:10px">
+                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
+
+                        </div>
+
+                    </footer>
             </main>
         </div>
     </div>

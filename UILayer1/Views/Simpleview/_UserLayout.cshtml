@@ -28,28 +28,29 @@
 <body>
 
 
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%;     background-color: white;">
+    <nav class="navbar navbar-light " style="position: fixed; width: 100%;  background: linear-gradient( #ffd0d0 0%, #0099f3 100%);">
 
         <div class="container-fluid row">
-            <div class="col">
-                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" alt=" Mobizone" style="height:46px; width:58px;"
+            <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
+                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;"
                      class="float-left" />
-                <a class="" asp-action="Index" style="margin-left: 0px; font-size: 23px;
+
+                <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
                    -webkit-text-stroke: thin;
-                    color: brown;">
-                    MOBIZONE
-                </a>
+                    color: red;text-decoration:none;margin-top:10%;">MOBIZONE </a>
+
             </div>
             <div class="col">
-                <div class="row" style="align-items: baseline;">
+                <form class="row" style="align-items: baseline;" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
-                        <input type="search" id="form1" class="form-control" />
+                        <input type="search" id="form1" class="form-control" name="name" />
                     </div>
-                    <button type="button" class="btn  col-2 btn-indigo" style="width: 10px;">
+                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
                         <i class="fas fa-search " style="font-size: 17px;"></i>
                     </button>
-                </div>
+                </form>
             </div>
+
 
 
             <div class="col">
@@ -97,10 +98,10 @@
                 <div id="mypartialview"></div>
                 <div>
                     @RenderBody()
-                   
-    </div>
-    </main>
-    </div>
+
+                </div>
+            </main>
+        </div>
     </div>
 
 

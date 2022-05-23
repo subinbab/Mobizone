@@ -12,83 +12,80 @@
 
 </head>
 <body>
+    
+
+            @RenderBody()
+            <footer>
+                <div class="row justify-content-center">
+                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                         class="float-left" />
+
+                    <ul class="list">
+
+                        </li>
+                        <li class="about">
+                            <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                        </li>
+                        <li class="about">
+                            <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                        </li>
+
+                        <li class="about">
+                            <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                        </li>
+
+                        <li class="about">
+
+                            <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
-    @RenderBody()
-    <footer>
-        <div class="row justify-content-center">
-            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                 class="float-left" />
+                        </li>
+                    </ul>
 
-            <ul class="list">
-
-                </li>
-                <li class="about">
-                    <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                </li>
-                <li class="about">
-                    <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                </li>
-
-                <li class="about">
-                    <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                </li>
-
-                <li class="about">
-
-                    <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
-
-
-                </li>
-            </ul>
-
-        </div>
-
-
-
-
-        <div style="font-size: 12px; padding-bottom:10px">
-            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-        </div>
-
-    </footer>
-
-
-   
-
-    <style>
-        .container-fluid {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: 0px;
-        }
-
-        footer {
-            margin-top: 100px;
-        }
-
-        .dropdown {
-            display: none;
-            background-color: #275e4900;
-            padding-left: 8px;
-            text-align: center;
-            font-size: medium;
-        }
-
-        li {
-            display: inline;
-        }
-
-        a {
-            cursor: pointer;
-        }
-    </style>
+                </div>
 
 
 
+
+                <div style="font-size: 12px; padding-bottom:10px">
+                    <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
+
+                </div>
+
+            </footer>
+
+
+
+
+            <style>
+                .container-fluid {
+                    width: 100%;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                    margin-right: auto;
+                    margin-left: 0px;
+                }
+
+                footer {
+                    margin-top: 100px;
+                }
+
+                .dropdown {
+                    display: none;
+                    background-color: #275e4900;
+                    padding-left: 8px;
+                    text-align: center;
+                    font-size: medium;
+                }
+
+                li {
+                    display: inline;
+                }
+
+                a {
+                    cursor: pointer;
+                }
+            </style>
 
 
 
@@ -99,11 +96,14 @@
 
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
+
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+            @await Component.InvokeAsync("Notyf")
+            @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
