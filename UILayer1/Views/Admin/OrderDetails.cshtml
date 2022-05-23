@@ -5,7 +5,8 @@
 @using System;
 
 @{
-    var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
+   
+    var productDetails = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
 }<h3 style="text-align:center">Order Details Page</h3>
 <div class="container-fluid mt-3 align-middle">
@@ -20,14 +21,15 @@
                         {
                             <img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px;"/>
                                                      }
-                                                      <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
-                        
+                                                      
                         </div>
                         <div class="col row  " style="align-items: center;">
                             <div class="col  align-items-end">
+                                <div style="margin-left:5%">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+
                                 <div class="orderDetails col"> Address: @addressDetails.name</div>
-                                <div class="orderDetails col">@addressDetails.address,</div>
-                                <div class="orderDetails col">@addressDetails.district,@addressDetails.state</div>
+                                <div class="orderDetails col" style="margin-left:19%">@addressDetails.address,</div>
+                                <div class="orderDetails col" style="margin-left:19%">@addressDetails.district,@addressDetails.state</div>
                                 <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
                                 <div class="orderDetails col">Phone Number:@addressDetails.phoneNumber</div>
 
@@ -35,19 +37,19 @@
                             
                     </div>
                     <div class="col">
-                         <div style="margin-left:-20px">OrderId:   @Model.orderId</div>
-                              <div style="margin-left:-105px">Quantity:   @Model.quantity</div>
-                <div style="margin-left:-35px">Price:@Model.price/-</div>
+                         <div style="margin-left:-20px">Orderid   : @Model.orderId</div>
+                              <div style="margin-left:-105px">Quantity :  @Model.quantity</div>
+                <div style="margin-left:-35px">Price   : @Model.price/-</div>
 
                     </div>
                 </div>
                    
 
                     <div class="progress-track">
-                        <div class="col" style="margin-right:-50px">
+                        <div class="col" style="margin-left:-6%">
                             Progress Track:  @Model.status
 
-                            <ul id="progressbar">
+                            <ul id="progressbar" style="margin-left:15%">
                                 <li class="orderplaced  " id="step1">orderplaced</li>
                                 <li class="dispatched  text-center" id="step2">dispatched</li>
                                 <li class="delivered  text-right" id="step3">delivered</li>
