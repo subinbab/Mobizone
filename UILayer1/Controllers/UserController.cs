@@ -55,6 +55,7 @@ namespace UILayer.Controllers
 
 
         }
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
             ViewBag.Title = "Mobizone - Home";
@@ -189,11 +190,14 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
                        {
+                HttpContext.Session.SetString("key", "value");
+                
 
                 ModelState.Clear();
                            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                            if (userDetails!=null)
                             {
+
                     var session = HttpContext.Session.Id;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
