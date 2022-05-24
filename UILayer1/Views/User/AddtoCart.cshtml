@@ -13,19 +13,60 @@
 <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" defer></script>
 <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="~/js/Quantity.js"></script>
+@{
+    int? price = 0;
+    foreach(var data in Model)
+    {
+        price = price + data.price;
+    }
+}
 
-<table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
-    <thead>
-        <tr>
-            <th style="width:200px;">ProductId</th>
-            <th style="width:200px;">Price</th>
-            <th style="width:95px;">Quantity</th>
+<div class="row" style="height: 70vh;">
+    <div class="col-8"> 
+        @foreach(var data in Model)
+        {
+            <div class="row">
+                <div class="col-2">
+                    <img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 100%;height: 84%;">
+                </div>
+                <div class="col-10">
+                    <p class="textStyle" style="">@data.product.name</p>
+                    <p class="textStyle textColorGreen" >@data.price</p>
+                    <div><span onclick="minus(@data.quantity,@data.productId)" id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span><input id="quantity" style="width: 7%;" type="number" value="@data.quantity"/><span id ="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;" onclick="plus(@data.quantity,@data.productId)"></span></div>
+                </div>
+            </div>
+        }
+    </div>
+<div class="col-4 " >
+    <div class="row" style="width: 100%;height: 77%;">
+        <div class="col-12" style="border: groove;height: 14%;">
+            <p class="textStyle">Total</p>
+        </div>
+        <hr />
+        <div class="col-12" style="border: groove;height: 70%;">
+            <p><span>Price( @Model.Count() item) : </span><span>@price</span></p>
+        </div>
+        <hr />
+        <div class="col-12" style="border: groove;height: 17%;">
+            <p ><span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 26px;text-align: center;margin: 10px;font-weight: bold;">@price</span></p>
+        </div>
+        <div class="col-12" style="height: 49%;padding: 10px;">
+            <div style="height: 37%;background-color: cadetblue;color: white;text-align: center;padding: 15px;font-weight: bold;font-size: 19px;margin: 0px;"> Procees To Buy</div>
+        </div>
+    </div>
+</div>
+</div>
+<style>
+    .textStyle{
+        font-variant-caps: unicase;font-style: normal;font-weight: bold;font-size: 23px;
 
-        </tr>
-    </thead>
-</table>
+    }
+    .textColorGreen{
+        color: green;
+    }
+</style>
 
-<script>
+@*<script>
     $(document).ready(function () {
         $.ajax({
             url: '/user/AddtoCartResponse',
@@ -38,7 +79,7 @@
                     columns: [
                         {
                             'render': function (data, type, full, meta) {
-                                return '<p style="font-variant: all-petite-caps;font-size: 21px;">' + full.product.name + '</p><img style="width: 100px;height: 147px;" src="/Product/Images/' + full.product.images[0].imagePath + '"/><div class="quantity"><input type = "number" min = "1" max = "9" step = "1" value = "1"></div>'; } },
+                                return '<p style="font-variant: all-petite-caps;font-size: 21px;">' + full.product.name + '</p><img style="width: 100px;height: 147px;" src="/Product/Images/' + full.product.images[0].imagePath + '"/>'; } },
                         { 'data': 'price' },
                         { 'data': 'quantity' }]
                 })
@@ -46,4 +87,22 @@
         });
 
     })
+</script>*@
+
+<script>
+function plus(quantity,id) {
+    var qty =quantity
+    var id = id
+    $.post( "/user/quantity",{ quantity:qty+1 , id:id }, function( data ) {
+        location.reload();
+});
+}
+
+function minus(quantity,id) {
+    var qty =quantity
+    var id = id
+    $.post( "/user/quantity",{ quantity:qty-1 , id:id }, function( data ) {
+        location.reload();
+});
+}
 </script>

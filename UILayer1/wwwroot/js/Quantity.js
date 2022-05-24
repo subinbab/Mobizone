@@ -1,32 +1,33 @@
-﻿jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
-jQuery('.quantity').each(function () {
-    var spinner = jQuery(this),
-        input = spinner.find('input[type="number"]'),
-        btnUp = spinner.find('.quantity-up'),
-        btnDown = spinner.find('.quantity-down'),
-        min = input.attr('min'),
-        max = input.attr('max');
+﻿function incrementValue(e) {
+    e.preventDefault();
+    var fieldName = $(e.target).data('field');
+    var parent = $(e.target).closest('div');
+    var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
 
-    btnUp.click(function () {
-        var oldValue = parseFloat(input.val());
-        if (oldValue >= max) {
-            var newVal = oldValue;
-        } else {
-            var newVal = oldValue + 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-    });
+    if (!isNaN(currentVal)) {
+        parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+    } else {
+        parent.find('input[name=' + fieldName + ']').val(0);
+    }
+}
 
-    btnDown.click(function () {
-        var oldValue = parseFloat(input.val());
-        if (oldValue <= min) {
-            var newVal = oldValue;
-        } else {
-            var newVal = oldValue - 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-    });
+function decrementValue(e) {
+    e.preventDefault();
+    var fieldName = $(e.target).data('field');
+    var parent = $(e.target).closest('div');
+    var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
 
+    if (!isNaN(currentVal) && currentVal > 0) {
+        parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+    } else {
+        parent.find('input[name=' + fieldName + ']').val(0);
+    }
+}
+
+$('.input-group').on('click', '.button-plus', function (e) {
+    incrementValue(e);
+});
+
+$('.input-group').on('click', '.button-minus', function (e) {
+    decrementValue(e);
 });
