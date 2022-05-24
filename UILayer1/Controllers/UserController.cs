@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
 using DomainLayer;
+using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
 using DTOLayer.Product;
@@ -55,6 +56,7 @@ namespace UILayer.Controllers
 
 
         }
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
             ViewBag.Title = "Mobizone - Home";
@@ -189,11 +191,14 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
                        {
+                HttpContext.Session.SetString("key", "value");
+                
 
                 ModelState.Clear();
                            var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                            if (userDetails!=null)
                             {
+
                     var session = HttpContext.Session.Id;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
@@ -294,6 +299,22 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+        [Authorize(Roles = "User")]
+        [HttpGet]
+        public IActionResult CartOrder(List<ProductEntity> productList)
+        {
+            List<ProductEntity> productListForOrder = new List<ProductEntity>();
+            foreach(ProductEntity product in productList)
+            {
+                productListForOrder.Add(_opApi.GetProduct(product.id).Result);
+            }
+            var data = productListForOrder;
+            ViewData["ProductDetails"] = data;
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            return View();
+        }
         [HttpPost]
         public IActionResult order(Checkout checkout)
         {
@@ -349,6 +370,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
+       
         [HttpGet]
         public IActionResult AddtoCart()
         {
@@ -378,11 +400,17 @@ namespace UILayer.Controllers
                     }
                 }
             }
+            foreach(var data in cartList)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
+                data.product = product;
+            }
             return View(cartList);
         }
         [HttpGet("/user/addtocart/{id}")]
          public IActionResult AddtoCart(int id)
          {
+            bool check = false;
             List<Cart> cartListSession = new List<Cart>();
             List<CartDetails> cartList = new List<CartDetails>();
             CartDetails cartDetails = new CartDetails();
@@ -433,6 +461,7 @@ namespace UILayer.Controllers
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+<<<<<<< HEAD
                     var checkCart = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
                     if(checkCart != null)
                     {
@@ -448,16 +477,66 @@ namespace UILayer.Controllers
                             }
                         }
                         _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+=======
+                    if(_carts != null || _carts.Count > 0)
+                    {
+                        if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+                        {
+                            foreach (var data in _carts)
+                            {
+                                if (data.sessionId.Equals(HttpContext.Session.Id))
+                                {
+                                    foreach (var data1 in data.cartDetails)
+                                    {
+                                        if (data1.productId.Equals(id))
+                                        {
+                                            var quantity = data1.quantity;
+                                            data1.quantity = quantity + 1;
+                                            data1.price = data1.quantity * data1.product.price;
+                                            check = true;
+                                            /*cartList.Add(data1);*/
+                                        }
+                                        else
+                                        {
+
+                                        }
+
+                                    }
+                                }
+                                
+                              /*  cartListSession.Add(data);*/
+                            }
+                            if (check == false)
+                            {
+                                _carts.Add(cart);
+                            }
+                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                        }
+                        else
+                        {
+                            _carts.Add(cart);
+                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                        }
+>>>>>>> 98290b0079502fdcedf58081d5cc2e082412278b
                     }
                     else
                     {
                         _carts.Add(cart);
                         _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                     }
+<<<<<<< HEAD
                 }
                catch(Exception ex)
                 {
                    
+=======
+                    
+                }
+               catch(Exception ex)
+                {
+                    _carts.Add(cart);
+                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+>>>>>>> 98290b0079502fdcedf58081d5cc2e082412278b
                 }
                 
 
@@ -532,9 +611,9 @@ namespace UILayer.Controllers
                     }
                 }
             }
-            
-           
-            return View(cartDetailsList);
+
+
+            return Redirect("/user/Addtocart");
             }
 
      
@@ -656,18 +735,65 @@ namespace UILayer.Controllers
             var data = _opApi.Search(name).Result;
             return View("Index", data);
         }
+        [HttpPost]
+        public IActionResult quantity(int quantity , int id)
+        {
+            bool check = false;
+            string name = _distributedCache.GetStringAsync("cart").Result;
+            _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+            if (_carts != null || _carts.Count > 0)
+            {
+                if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+                {
+                    foreach (var data in _carts)
+                    {
+                        foreach (var caratDetailsData in data.cartDetails)
+                        {
+                            var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                            caratDetailsData.product = product;
+                        }
+                        if (data.sessionId.Equals(HttpContext.Session.Id))
+                        {
+                            foreach (var data1 in data.cartDetails)
+                            {
+                                if (data1.productId.Equals(id))
+                                {
+                                    data1.quantity = quantity;
+                                    data1.price = data1.quantity * data1.product.price;
+                                    /*cartList.Add(data1);*/
+                                }
+                                else
+                                {
+
+                                }
+
+                            }
+                        }
+
+                        /*  cartListSession.Add(data);*/
+                    }
+                   
+                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                }
+            }
+            return Redirect("/user/Addtocart");
+        }
 
 
-      
     }
+    public class quantityObj {
+        public int quantity { get; set; }
+    }
+
+
 }
-        /* public IActionResult CartDetails()
-         {
+/* public IActionResult CartDetails()
+ {
 
-             return Json();
-         }*/
+     return Json();
+ }*/
 
 
-    
+
 
 

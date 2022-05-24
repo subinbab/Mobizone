@@ -560,7 +560,7 @@ namespace UIlayer.Controllers
             var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
             var ProductDetails = _opApi.GetAll().Result.Where(c=> c.id.Equals(checkout.productId)).FirstOrDefault();
-            ViewData["ProuductDetails"] = ProductDetails;
+            ViewData["ProductDetails"] = ProductDetails;
             ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
             return View(checkout);
         }

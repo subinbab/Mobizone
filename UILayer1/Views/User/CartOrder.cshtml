@@ -6,7 +6,7 @@
 }
 @model DomainLayer.Checkout
 @{
-    var data = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
+    var data = ViewData["ProductDetails"] as List<DomainLayer.ProductModel.ProductEntity>;
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
@@ -20,12 +20,14 @@
 }
 else
 { }
+@foreach(var product in data)
+{
     <div class="container-fluid mt-3">
 
         <div class="row" style="margin-right: 6%;margin-left: 7%;">
             <form asp-action="order" method="post" class="col" id="my-form">
                 <input asp-for="id" value="0" type="hidden" />
-                <input asp-for="productId" type="hidden" value="@data.id" />
+                <input asp-for="productId" type="hidden" value="@product.id" />
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
                 <div>
                     
@@ -75,9 +77,9 @@ else
                                 <div class="form-check">
                                     <div class="">
                                         <div class="col-12">
-                                            <img class="img-fluid" src="~/Product/Images/@data.images.FirstOrDefault().imagePath" style="width: 10%;"/>
+                                            <img class="img-fluid" src="~/Product/Images/@product.images.FirstOrDefault().imagePath" style="width: 10%;"/>
                                             <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                                @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
+                                                @product.name (@product.specs.rams.FirstOrDefault().ram GB , @product.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @product.price
                                                 <div class=>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
                                             </label>
                                         </div>
@@ -158,6 +160,8 @@ else
             
         </div>
     </div>
+}
+
 
     <script>
         
