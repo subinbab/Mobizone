@@ -22,19 +22,28 @@
                @* <hr class="border-light m-0">*@
 
 
-            <div class="card-body">
+            <div class="card-body" style="margin-top: -24%; margin-left:10%">
                 <div class="form-group">
                     <label class="form-label" style="margin-left:40%">Username : @user.Email</label>
 
 
                 </div>
                 <div class="form-group">
+<<<<<<< HEAD
                     <label class="form-label" style="margin-left:40%">Name : @user.FirstName</label>
                    @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
                 </div>
                 @if (user.address == null || user.address.Count==0)
                 {
                     <p style="padding-left:43;">No Address available</p>
+=======
+                    <label class="form-label" style="margin-left:43%">Name : @user.FirstName</label>
+                 
+                </div>
+                @if (user.address == null || user.address.Count==0)
+                {
+                    <p style="padding-left: 41%;">No Address available</p>
+>>>>>>> c4011efdcef892c801d155b1948edd34dbadf82e
                 }
                 else
                 {
