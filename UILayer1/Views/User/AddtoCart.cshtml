@@ -29,10 +29,13 @@
                 <div class="col-2">
                     <img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 100%;height: 84%;">
                 </div>
-                <div class="col-10">
-                    <p class="textStyle" style="">@data.product.name</p>
-                    <p class="textStyle textColorGreen" >@data.price</p>
-                    <div><span onclick="minus(@data.quantity,@data.productId)" id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span><input id="quantity" style="width: 7%;" type="number" value="@data.quantity"/><span id ="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;" onclick="plus(@data.quantity,@data.productId)"></span></div>
+                <div class="col-7" >
+                    <p class="textStyle" style="margin: 4%;">@data.product.name</p>
+                    <p class="textStyle textColorGreen" style="margin: 5%;" >@data.price</p>
+                    <div style="margin: 3%;"><span onclick="minus(@data.quantity,@data.productId)" id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span><input id="quantity" style="width: 13%;margin: 6%;" type="number" value="@data.quantity"/><span id ="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;" onclick="plus(@data.quantity,@data.productId)"></span></div>
+                </div>
+                <div class="3" style="margin: 10%;">
+                    <span onclick="deleteItem(@data.productId)"  class="glyphicon glyphicon-trash" style="font-size: 27px;padding: 5%;"></span>
                 </div>
             </div>
         }
@@ -104,5 +107,12 @@ function minus(quantity,id) {
     $.post( "/user/quantity",{ quantity:qty-1 , id:id }, function( data ) {
         location.reload();
 });
-}
+    }
+    function deleteItem(data){
+        var id = data
+        console.log(id)
+        $.post("/user/removeCart", {id: id }, function (data) {
+            location.reload();
+        });
+    }
 </script>
