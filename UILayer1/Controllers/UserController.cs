@@ -461,23 +461,7 @@ namespace UILayer.Controllers
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-<<<<<<< HEAD
-                    var checkCart = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
-                    if(checkCart != null)
-                    {
-                        foreach(var data in _carts)
-                        {
-                            foreach(var data1 in data.cartDetails)
-                            {
-                                if (data1.productId.Equals(id))
-                                {
-                                    check = true;
-                                    data1.quantity += 1;
-                                }
-                            }
-                        }
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-=======
+
                     if(_carts != null || _carts.Count > 0)
                     {
                         if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
@@ -517,26 +501,21 @@ namespace UILayer.Controllers
                             _carts.Add(cart);
                             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                         }
->>>>>>> 98290b0079502fdcedf58081d5cc2e082412278b
+
                     }
                     else
                     {
                         _carts.Add(cart);
                         _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                     }
-<<<<<<< HEAD
-                }
-               catch(Exception ex)
-                {
-                   
-=======
+
                     
                 }
                catch(Exception ex)
                 {
                     _carts.Add(cart);
                     _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
->>>>>>> 98290b0079502fdcedf58081d5cc2e082412278b
+
                 }
                 
 
