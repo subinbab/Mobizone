@@ -427,9 +427,9 @@ namespace UILayer.Controllers
                 cart.sessionId = HttpContext.Session.Id;
             productCart.sessionId = HttpContext.Session.Id;
                 cart.cartDetails = cartList;
-            productCart.cartDetails = cartList;  
-            
-            
+            productCart.cartDetails = cartList;
+
+
             if (User.Identity.IsAuthenticated)
             {
                 try
@@ -448,15 +448,19 @@ namespace UILayer.Controllers
                         userApi.Createcart(productCart);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    
+
                 }
-                
+
             }
             else
             {
+<<<<<<< HEAD
                
+=======
+                /*bool check = false; */
+>>>>>>> b49b11953ecaa2ee369b57b575cc92547a4c934d
                 try
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
