@@ -456,15 +456,12 @@ namespace UILayer.Controllers
             }
             else
             {
-
-                /*bool check = false; */
-
                 try
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
 
-                    if(_carts != null || _carts.Count > 0)
+                    if (_carts != null || _carts.Count > 0)
                     {
                         if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
                         {
@@ -491,8 +488,8 @@ namespace UILayer.Controllers
 
                                     }
                                 }
-                                
-                              /*  cartListSession.Add(data);*/
+
+                                /*  cartListSession.Add(data);*/
                             }
                             if (check == false)
                             {
@@ -513,7 +510,6 @@ namespace UILayer.Controllers
                         _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                     }
 
-                    
                 }
                catch(Exception ex)
                 {
@@ -691,6 +687,11 @@ namespace UILayer.Controllers
             return View(details);
         }
 
+
+        public IActionResult OrderDetails()
+        {
+            return View();
+        }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgetPassword()

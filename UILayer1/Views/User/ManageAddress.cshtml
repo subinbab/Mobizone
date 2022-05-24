@@ -8,39 +8,38 @@
 }
 @model DomainLayer.Users.Address
 
-<div class="col-md-9" style="margin-right: -17%; padding-top: 10%; padding-bottom: -15%;  margin-top: -25%; text-align:center">
-    <div class="tab-content" >
+<div class="col-md-9">
+    <div class="tab-content" style="">
         <div class="tab-pane fade active show" id="account-general">
 
             <div class="card-body media align-items-center">
 
             </div>
 
-            <div class="card-body" style=" margin-top: -25%;">
+            <div class="card-body">
                 <div class="form-group">
-                    <a asp-action="address"><button class="btn btn-default" asp-controller="user"> + Add New Address</button></a>
+                   <a asp-action="address"><button class="btn btn-default" style=""  asp-controller="user" > + Add New Address</button></a>
                 </div>
                 @foreach (var data in user.address)
                 {
-                    <div class="form-group">
-                        <p style="margin-left:41%"> @data.name</p>
-                        <p style="margin-left:41%"> @data.address</p>
-                        <p style="margin-left:41%">@data.district, @data.pincode</p>
-                        <p style="margin-left:41%"> @data.state, @data.country </p>
-                        <p style="margin-left:41%">@data.phoneNumber</p>
+            <div class="form-group" style="">
+                <p style="margin-left:41%"> @data.name</p>
+                <p style="margin-left:41%"> @data.address</p>
+                <p style="margin-left:41%">@data.pincode,@data.district</p>
+                <p style="margin-left:41%"> @data.state,@data.country </p>
+                <p style="margin-left:41%">@data.phoneNumber</p>
 
-                        <div class="Edit" style="">
-
-                            <a asp-action="address" asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color:crimson;margin-top:-25%;">Edit</button></a>
-                            <a asp-action="account"> <button type="button" class="btn btn-orange" style="background-color: #29a174;margin-top: -25%; ">Delete</button></a>
-                        </div>
-                    </div>
-
+                <div class="Edit" style="">
+                    <a asp-action="address" asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color: ;">Edit</button></a>
+                    <a asp-action="account"> <button type="button" class="btn btn-indigo" style="background-color: #29a174;">Delete</button></a>
+                </div>
+            </div>
+                   
 
                 }
 
 
-
+          
             </div>
 
         </div>
@@ -48,15 +47,22 @@
 
 </div>
 <style>
-    .form-group{
-       
+    .form-group {
+        margin-top: 7%;
     }
     .Edit{
-        margin-left:72%;
+   margin-left:82%;
+   margin-top:-5%;
     }
     .btn-default {
-        background-color: #2980db;
-        margin-top: -5%;
+        background-color: #0099f3;
+        margin-top: -10%;
         margin-left: 40%;
+    }
+    .btn-orange {
+        background-color: #0099f3;
+    }
+    .btn-indigo {
+        background-color: #e52d2e;
     }
 </style>
