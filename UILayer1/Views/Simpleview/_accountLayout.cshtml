@@ -163,42 +163,44 @@
 </html>
 
 
-<footer class="border-top footer text-muted">
+    <footer>
+        <div class="row justify-content-center">
+            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                 class="float-left" />
 
-    <div class="row-bordered">
-        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-             class="float-left" />
-        <ul class="list">
+            <ul class="list">
 
+                </li>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                </li>
+                <li class="about">
+                    <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                </li>
 
-            <li class="about">
-                <a asp-controller="user" asp-action="Company" style="margin-right: -86px; color: navy">Company</a>
-            </li>
-            <li class="about">
-                <a asp-controller="user" asp-action="About" style="margin-right: -86px; color: navy">About</a>
-            </li>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                </li>
 
-            <li class="about">
-                <a asp-controller="user" asp-action="Privacy" style="margin-right: -86px; color: navy">Privacy & Policy</a>
-            </li>
+                <li class="about">
 
-            <li class="about">
-
-                <a asp-controller="user" asp-action="Contact" style="margin-right: -86px; color: navy">Contact Us</a>
-
-
-            </li>
-        </ul>
-
-    </div>
+                    <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
+                </li>
+            </ul>
 
-    <hr>
-    <div>
-        <img src="~/css/Images/copyright-38672_1280.png" style="height: 12px; width: 12px; " /> <a> Mobizone private limited all right reserved</a>
+        </div>
 
-    </div>
+
+
+
+        <div style="font-size: 12px; padding-bottom:10px">
+            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
+
+        </div>
+
+    </footer>
     <style>
         .container-fluid {
             width: 100%;

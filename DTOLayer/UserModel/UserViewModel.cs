@@ -11,11 +11,11 @@ namespace DTOLayer.UserModel
     {
         [Required (ErrorMessage = "This field is required")]
         [Display(Name = "First Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$",ErrorMessage = "Firstname must contain only letters")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$",ErrorMessage = "Firstletter must be capital")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Last Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "Lastname must contain only letters")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "Firstletter must be capital")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "This field is required")]
         [Display(Name = "Email")]

@@ -45,12 +45,12 @@
 
                                 <div class="col">
                          
-                                    <p style="margin-left:41%"> Address : @user.address.FirstOrDefault().address</p>
+                                    <p style="margin-left:40.5%"> Address : @user.address.FirstOrDefault().address</p>
                                     <p style="margin-left:41%"> District : @user.address.FirstOrDefault().district</p>
-                                    <p style="margin-left:41%">Pincode : @user.address.FirstOrDefault().pincode</p>
-                                    <p style="margin-left:41%">State : @user.address.FirstOrDefault().state</p>
-                                    <p style="margin-left:41%"> Country : @user.address.FirstOrDefault().country</p>
-                                </div>}
+                                    <p style="margin-left:40%">Pincode : @user.address.FirstOrDefault().pincode</p>
+                                    <p style="margin-left:42%">State : @user.address.FirstOrDefault().state</p>
+                                    <p style="margin-left:40%"> Country : @user.address.FirstOrDefault().country</p>
+                                </div>
                         </div>
                     </div>
                 }
@@ -58,10 +58,12 @@
 
 
                 <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>
-                <a type="button" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="account">Back</a>&nbsp;
+
+                <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" style="background-color: #2980db" />Back</button></a>
+                @* <a type="button" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="account">Back</a>&nbsp;*@
 
 
-           
+
             </div>
             </div>
 
