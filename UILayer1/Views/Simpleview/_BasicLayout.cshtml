@@ -128,9 +128,9 @@
                     <div id="mypartialview">
                         <div class="row no-gutters row-bordered row-border-light">
 
-                            <div class="col-md-2 pt-0">
+                           @* <div class="col-md-2 pt-0">
                                 <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
-                                   
+
                                     <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
                                 </div>
 
@@ -139,9 +139,24 @@
                                 </div>
 
                             </div>
-
+*@
                         </div>
 
+
+                    </div>
+
+
+
+
+                    <div class="col-md-2 pt-0">
+                        <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
+                            @* <h4 class="list-group-item">Account Settings</h4>*@
+                            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
+                        </div>
+
+                        <div>
+                            <a class="list-group-item list-group-item-action" asp-action="ManageAddress" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+                        </div>
 
                     </div>
                     <div>
