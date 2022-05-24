@@ -428,15 +428,39 @@ namespace UILayer.Controllers
             }
             else
             {
+                bool check = false;
                 try
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                    var checkCart = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+                    if(checkCart != null)
+                    {
+                        foreach(var data in _carts)
+                        {
+                            foreach(var data1 in data.cartDetails)
+                            {
+                                if (data1.productId.Equals(id))
+                                {
+                                    check = true;
+                                    data1.quantity += 1;
+                                }
+                            }
+                        }
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                    }
+                    else
+                    {
+                        _carts.Add(cart);
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                    }
                 }
                catch(Exception ex)
                 {
-
+                   
                 }
+                
+
                 /* bool check = false;
                  try
                  {

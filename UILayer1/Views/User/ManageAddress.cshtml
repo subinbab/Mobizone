@@ -23,14 +23,14 @@
                 @foreach (var data in user.address)
                 {
             <div class="form-group">
-
+                <p style="margin-left:41%"> @data.name</p>
                 <p style="margin-left:41%"> @data.address</p>
                 <p style="margin-left:41%">@data.pincode,@data.district</p>
                 <p style="margin-left:41%"> @data.state,@data.country </p>
                 <p style="margin-left:41%">@data.phoneNumber</p>
 
                 <div class="Edit" style="">
-                    <a asp-action="address"  asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color:crimson;margin-top:-25%;">Edit</button></a>
+                    <a asp-action="address" asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color:crimson;margin-top:-25%;">Edit</button></a>
                     <a asp-action="account"> <button type="button" class="btn btn-orange" style="background-color: #29a174;; margin-top: -25%; ">Delete</button></a>
                 </div>
             </div>
