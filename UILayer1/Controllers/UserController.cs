@@ -375,36 +375,78 @@ namespace UILayer.Controllers
         public IActionResult AddtoCart()
         {
             List<CartDetails> cartList = new List<CartDetails>();
-            try
+            if (User.Identity.IsAuthenticated)
             {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                try
                 {
-                    _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                }
-
-            }
-            catch (Exception ex)
-            {
-            }
-            if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
-            {
-                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
-
-                var count = 0;
-                foreach (var item in data)
-                {
-                    if (item.sessionId.Equals(HttpContext.Session.Id))
+                    string name = JsonConvert.SerializeObject(userApi.GetCart().Result);
+                    if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
                     {
-                        cartList.Add(item.cartDetails.FirstOrDefault());
+                        _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+                if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
+                {
+                    var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+
+                    var count = 0;
+                    foreach (var item in data)
+                    {
+                        if (item.sessionId.Equals(HttpContext.Session.Id))
+                        {
+                            foreach(var productcart in item.cartDetails)
+                            {
+                                cartList.Add(productcart);
+                            }
+                            
+                        }
                     }
                 }
+                foreach (var data in cartList)
+                {
+                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
+                    data.product = product;
+                }
             }
-            foreach(var data in cartList)
+            else
             {
-                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
-                data.product = product;
+                
+                try
+                {
+                    string name = _distributedCache.GetStringAsync("cart").Result;
+                    if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
+                    {
+                        _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+                if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
+                {
+                    var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+
+                    var count = 0;
+                    foreach (var item in data)
+                    {
+                        if (item.sessionId.Equals(HttpContext.Session.Id))
+                        {
+                            cartList.Add(item.cartDetails.FirstOrDefault());
+                        }
+                    }
+                }
+                foreach (var data in cartList)
+                {
+                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
+                    data.product = product;
+                }
             }
+            
             return View(cartList);
         }
         [HttpGet("/user/addtocart/{id}")]

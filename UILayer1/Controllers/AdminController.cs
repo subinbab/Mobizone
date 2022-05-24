@@ -455,7 +455,7 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
-                        try
+                     /*   try
                         {
                             string name = _distributedCache.GetStringAsync("cart").Result;
                             if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
@@ -476,7 +476,7 @@ namespace UIlayer.Controllers
                                 _carts.Insert(count, insertData);
                             }
                             count++;
-                        }
+                        }*/
                         UserApi userApi = new UserApi(Configuration);
                         _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();

@@ -292,7 +292,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
         #region Sort Product By brand 
-        [HttpGet]
+        [HttpGet("SortByBrand/{name}")]
         public ResponseModel<IEnumerable<ProductEntity>> SortByBrand(string name)
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
