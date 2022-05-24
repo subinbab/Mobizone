@@ -30,8 +30,15 @@ namespace BusinessObjectLayer
 
         public void delete(Address data)
         {
-            _repo.Delete(data);
-            _repo.Save();
+            try
+            {
+                _repo.Delete(data);
+                _repo.Save();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public async Task Edit(Address address)

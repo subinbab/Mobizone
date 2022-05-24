@@ -43,7 +43,7 @@ namespace Repository
             {
                 dbSet.Remove(entity);
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
 
             }
