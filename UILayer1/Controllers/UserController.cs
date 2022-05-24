@@ -619,6 +619,15 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             return View();
         }
+        [HttpGet("/user/AccountManage/{id}")]
+        public IActionResult AccountManage(int id)
+        {
+            var result = userApi.DeleteAddress(id);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
+            return View();
+        }
         public IActionResult DeleteAddress(int id)
         {
             bool result = userApi.DeleteAddress(id);
@@ -809,8 +818,7 @@ namespace UILayer.Controllers
             return Redirect("/user/Addtocart");
         }
         [HttpPost]
-        public IActionResult CartOrder(List<CartDetails> carts)
-        {
+        public IActionResult CartOrder(List<CartDetails> carts){
             return View();
         }
     }

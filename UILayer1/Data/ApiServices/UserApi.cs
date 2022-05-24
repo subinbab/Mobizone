@@ -263,7 +263,7 @@ namespace UILayer.Data.ApiServices
             RequestHandler<Address> requestHandler = new RequestHandler<Address>(_configuration);
             try
             {
-                requestHandler.url = "api/Users/";
+                requestHandler.url = "api/Users/AddressDelete/";
                 if (requestHandler.Delete(id).IsSuccess)
                 {
                     return true;
