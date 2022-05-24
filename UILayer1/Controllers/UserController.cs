@@ -456,11 +456,9 @@ namespace UILayer.Controllers
             }
             else
             {
-<<<<<<< HEAD
-               
-=======
+
                 /*bool check = false; */
->>>>>>> b49b11953ecaa2ee369b57b575cc92547a4c934d
+
                 try
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
