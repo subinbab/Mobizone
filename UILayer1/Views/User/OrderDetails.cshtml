@@ -10,195 +10,237 @@
     var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
 }<h3 style="text-align:center">Order Details Page</h3>
-<div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
 
-        <div class="card-title">
-            <div class="align-content-center">
+<div class="row">
+    <div class="col">
+        <div class=" text-md-center">
+            <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:162px;margin-right:90%; width:162px;" />
+        </div>
+        <div class="col">
+            <div class="text-center ">
 
-                <div class="row">
-                    <div class="col">
-                        @if (productDetails.images != null && productDetails.images.Count != 0)
-                        {
-                            <img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px;" />
-                        }
-                        <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+                <h5>Samsung Galaxy M12(Blue,6GBRAM ,128GB Storage)</h5>
 
-                    </div>
-                    <div class="col row  " style="align-items: center;">
-                        <div class="col  align-items-end">
-                            <div class="orderDetails col"> Address: @addressDetails.name</div>
-                            <div class="orderDetails col">@addressDetails.address,</div>
-                            <div class="orderDetails col">@addressDetails.district,@addressDetails.state</div>
-                            <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
-                            <div class="orderDetails col">Phone Number:@addressDetails.phoneNumber</div>
-
-                        </div>
-
-                    </div>
-                    <div class="col">
-                        <div style="margin-left:-20px">Orderid :  @Model.orderId</div>
-                        <div style="margin-left:-105px">Quantity : @Model.quantity</div>
-                        <div style="margin-left:-35px">Price   :  @Model.price/-</div>
-
-                    </div>
-                </div>
+                <h3>17,499/-</h3>
 
 
-                <div class="progress-track">
-                    <div class="col" style="margin-right:-50px">
-                        Progress Track:  @Model.status
 
-                        <ul id="progressbar">
-                            <li class="orderplaced  " id="step1">orderplaced</li>
-                            <li class="dispatched  text-center" id="step2">dispatched</li>
-                            <li class="delivered  text-right" id="step3">delivered</li>
-                        </ul>
-                    </div>
-                </div>
+                <div><a href="#" class="btn btn-primary" style="margin-left">Cancel Order</a></div>
+                <a type="button" class="btn  btn-orange" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="index">Back</a>&nbsp;
+               @* <div> <a href="url">Return to Store</a></div>*@
+            </div>
+        </div>
+        <div class="progress-track">
+            <div class="col" style="margin-right:-50px">
+                Progress Track:  .status
 
-
+                <ul id="progressbar">
+                    <li class="orderplaced  " id="step1">orderplaced</li>
+                    <li class="dispatched  text-center" id="step2">dispatched</li>
+                    <li class="delivered  text-right" id="step3">delivered</li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
-<script>
-        var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
-        console.log(sourcearray);
-        if(sourcearray.status == 1){
-            $(".orderplaced").addClass("active");
-        }
-        else if(sourcearray.status == 2){
-            $(".orderplaced").addClass("active");
-            $(".dispatched").addClass("active");
-        }
-        else if(sourcearray.status == 3){
-             $(".orderplaced").addClass("active");
-            $(".dispatched").addClass("active");
-            $(".delivered").addClass("active");
-        }
-        else{
-            $("#progressbar").css("color: rgb(255 33 33);")
-            $("#step2").css("display:none;");
-             $("#step3").css("display:none;");
-            $("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
-            $(".cancelled").addClass("active");
-
-
-        }
-</script>
-
 <style>
-    .orderDetails {
-        margin-left: 0px;
-        text-align-last: start;
+    .text-center {
+        padding-right: 40%;
+        margin-top: -13%;
     }
-
-    #progressbar {
-        margin-bottom: 3vh;
-        overflow: hidden;
-        color: rgb(252, 103, 49);
-        padding-left: 0px;
-        margin-top: 3vh
-    }
-
-        #progressbar li {
-            list-style-type: none;
-            font-size: x-small;
-            width: 25%;
-            float: left;
-            position: relative;
-            font-weight: 400;
-            color: rgb(160, 159, 159);
-        }
-
-        #progressbar #step1:before {
-            content: "";
-            color: rgb(252, 103, 49);
-            width: 5px;
-            height: 5px;
-            margin-left: 0px !important;
-            /* padding-left: 11px !important */
-        }
-
-        #progressbar #step2:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-left: 32%;
-        }
-
-        #progressbar #step3:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-right: 32%;
-            /* padding-right: 11px !important */
-        }
-
-        #progressbar #step4:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-right: 0px !important;
-            /* padding-right: 11px !important */
-        }
-
-        #progressbar li:before {
-            line-height: 29px;
-            display: block;
-            font-size: 12px;
-            background: #ddd;
-            border-radius: 50%;
-            margin: auto;
-            z-index: -1;
-            margin-bottom: 1vh;
-        }
-
-        #progressbar li:after {
-            content: '';
-            height: 2px;
-            background: #ddd;
-            position: absolute;
-            left: 0%;
-            right: 0%;
-            margin-bottom: 2vh;
-            top: 1px;
-            z-index: 1;
-        }
-
     .progress-track {
-        padding: 0 8%;
+        margin-left: 4%;
     }
-
-    #progressbar li:nth-child(2):after {
-        margin-right: auto;
-    }
-
-    #progressbar li:nth-child(1):after {
-        margin: auto;
-    }
-
-    #progressbar li:nth-child(3):after {
-        float: left;
-        width: 68%;
-    }
-
-    #progressbar li:nth-child(4):after {
-        margin-left: auto;
-        width: 132%;
-    }
-
-    #progressbar li.active {
-        color: black;
-    }
-
-        #progressbar li.active:before,
-        #progressbar li.active:after {
-            background: rgb(252, 103, 49);
-        }
 </style>
+
+
+
+@*<div class="container-fluid mt-3 align-middle">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+
+            <div class="card-title">
+
+
+
+                        <div class="col">
+                            <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:162px;margin-right:90%; width:162px;" />
+                            <div style="margin-left:145px">Product Details:Samsung (Blue,3 GB RAM,128GB Storage)</div>
+
+                        </div>
+                        <div class="col row  " style="align-items: center;">
+                            <div class="col  align-items-end">
+                                <div class="orderDetails col"> Address:Akza</div>
+                                <div class="orderDetails col">address,</div>
+                                <div class="orderDetails col">.state</div>
+                                <div class="orderDetails col">pincode</div>
+                                <div class="orderDetails col">Phone Number:.phoneNumber</div>
+
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div style="margin-left:-20px">Orderid :  35</div>
+                            <div style="margin-left:-105px">Quantity : 2y</div>
+                            <div style="margin-left:-35px">Price   : 24325345/-</div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="progress-track">
+                        <div class="col" style="margin-right:-50px">
+                            Progress Track:  .status
+
+                            <ul id="progressbar">
+                                <li class="orderplaced  " id="step1">orderplaced</li>
+                                <li class="dispatched  text-center" id="step2">dispatched</li>
+                                <li class="delivered  text-right" id="step3">delivered</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>*@
+
+
+    <script>
+            var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+            console.log(sourcearray);
+            if(sourcearray.status == 1){
+                $(".orderplaced").addClass("active");
+            }
+            else if(sourcearray.status == 2){
+                $(".orderplaced").addClass("active");
+                $(".dispatched").addClass("active");
+            }
+            else if(sourcearray.status == 3){
+                 $(".orderplaced").addClass("active");
+                $(".dispatched").addClass("active");
+                $(".delivered").addClass("active");
+            }
+            else{
+                $("#progressbar").css("color: rgb(255 33 33);")
+                $("#step2").css("display:none;");
+                 $("#step3").css("display:none;");
+                $("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
+                $(".cancelled").addClass("active");
+
+
+            }
+    </script>
+
+    <style>
+        .orderDetails {
+            margin-left: 0px;
+            text-align-last: start;
+        }
+
+        #progressbar {
+            margin-bottom: 3vh;
+            overflow: hidden;
+            color: rgb(252, 103, 49);
+            padding-left: 0px;
+            margin-top: 3vh
+        }
+
+            #progressbar li {
+                list-style-type: none;
+                font-size: x-small;
+                width: 25%;
+                float: left;
+                position: relative;
+                font-weight: 400;
+                color: rgb(160, 159, 159);
+            }
+
+            #progressbar #step1:before {
+                content: "";
+                color: rgb(252, 103, 49);
+                width: 5px;
+                height: 5px;
+                margin-left: 0px !important;
+                /* padding-left: 11px !important */
+            }
+
+            #progressbar #step2:before {
+                content: "";
+                color: #fff;
+                width: 5px;
+                height: 5px;
+                margin-left: 32%;
+            }
+
+            #progressbar #step3:before {
+                content: "";
+                color: #fff;
+                width: 5px;
+                height: 5px;
+                margin-right: 32%;
+                /* padding-right: 11px !important */
+            }
+
+            #progressbar #step4:before {
+                content: "";
+                color: #fff;
+                width: 5px;
+                height: 5px;
+                margin-right: 0px !important;
+                /* padding-right: 11px !important */
+            }
+
+            #progressbar li:before {
+                line-height: 29px;
+                display: block;
+                font-size: 12px;
+                background: #ddd;
+                border-radius: 50%;
+                margin: auto;
+                z-index: -1;
+                margin-bottom: 1vh;
+            }
+
+            #progressbar li:after {
+                content: '';
+                height: 2px;
+                background: #ddd;
+                position: absolute;
+                left: 0%;
+                right: 0%;
+                margin-bottom: 2vh;
+                top: 1px;
+                z-index: 1;
+            }
+
+        .progress-track {
+            padding: 0 8%;
+        }
+
+        #progressbar li:nth-child(2):after {
+            margin-right: auto;
+        }
+
+        #progressbar li:nth-child(1):after {
+            margin: auto;
+        }
+
+        #progressbar li:nth-child(3):after {
+            float: left;
+            width: 68%;
+        }
+
+        #progressbar li:nth-child(4):after {
+            margin-left: auto;
+            width: 132%;
+        }
+
+        #progressbar li.active {
+            color: black;
+        }
+
+            #progressbar li.active:before,
+            #progressbar li.active:after {
+                background: rgb(252, 103, 49);
+            }
+    </style>
 

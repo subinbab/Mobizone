@@ -19,28 +19,28 @@
                                     <div class="box"></div>
                                     <div class="icon"></div>
                                     <div class=" text">
-                                        <h3>Address</h3>
-                                        <p>@Model.shopName<br>@Model.district <br> @Model.state <br>Pin:@Model.pincode</p>
+                                        <h3 style="margin-left:-35%">Address</h3>
+                                        <p style="margin-top:-4%;">@Model.shopName<br>@Model.pincode,@Model.district              <br> @Model.state ,@Model.country<br></p>
                                     </div>
                                     <div class="box"></div>
                                     <div class="icon"></div>
                                     <div class=" text">
-                                        <h3>Email</h3>
-                                        <p> @Model.email</p>
+                                        <h3 style="margin-left:-32%">Email</h3>
+                                        <p style="margin-top:-2%"> @Model.email</p>
                                     </div>
                                 </div>
                                 <div class="box"></div>
                                 <div class="icon"></div>
                                 <div class=" text">
-                                    <h3>Phone</h3>
-                                    <p>@Model.phoneNumber</p>
+                                    <h3 style="margin-left:-35%">Phone</h3>
+                                    <p style="margin-top:-2%">@Model.phoneNumber</p>
                                 </div>
                            
 
                             <div class=" text-center">
                                 <div class="form-group">
                                     <a asp-action="ContactEdit"><button class="btn btn-orange">Edit</button></a>
-                                    <button class="btn btn-indigo"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b>Cancel</b></a></button>
+                                    <button class="btn btn-indigo"><a asp-controller="Admin" asp-action="Index" style="text-decoration:none;"><b style="color: white;">Cancel</b></a></button>
                                 </div>
                             </div>
 
@@ -64,7 +64,8 @@
                                 }
 
                                 .btn-orange {
-                                    background-color: #b5d9ff;
+                                    background-color: #3187e3;
+                                    color: white;
                                 }
                                 .container-fluid {
                                     width: 100%;
