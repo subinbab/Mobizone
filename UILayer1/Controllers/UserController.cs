@@ -807,6 +807,11 @@ namespace UILayer.Controllers
             }
             return Redirect("/user/Addtocart");
         }
+        [HttpPost]
+        public IActionResult CartOrder(List<CartDetails> carts)
+        {
+            return View();
+        }
     }
     public class quantityObj {
         public int quantity { get; set; }
