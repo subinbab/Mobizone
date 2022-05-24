@@ -14,32 +14,29 @@
     <div class="card shadow-lg p-3 mb-5 bg-white rounded">
 
         <div class="card-title">
-            <div class="align-content-center">
+           
 
                 <div class="row">
                     <div class="col">
-                        @if (productDetails.images != null && productDetails.images.Count != 0)
-                        {
-                            <img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px;" />
-                        }
-                        <div style="margin-left:145px">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+                        <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:162px;margin-right:90%; width:162px;" />
+                        <div style="margin-left:145px">Product Details:Samsung (Blue,3 GB RAM,128GB Storage)</div>
 
                     </div>
                     <div class="col row  " style="align-items: center;">
                         <div class="col  align-items-end">
-                            <div class="orderDetails col"> Address: @addressDetails.name</div>
-                            <div class="orderDetails col">@addressDetails.address,</div>
-                            <div class="orderDetails col">@addressDetails.district,@addressDetails.state</div>
-                            <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
-                            <div class="orderDetails col">Phone Number:@addressDetails.phoneNumber</div>
+                            <div class="orderDetails col"> Address:Akza</div>
+                            <div class="orderDetails col">address,</div>
+                            <div class="orderDetails col">.state</div>
+                            <div class="orderDetails col">pincode</div>
+                            <div class="orderDetails col">Phone Number:.phoneNumber</div>
 
                         </div>
 
                     </div>
                     <div class="col">
-                        <div style="margin-left:-20px">Orderid :  @Model.orderId</div>
-                        <div style="margin-left:-105px">Quantity : @Model.quantity</div>
-                        <div style="margin-left:-35px">Price   :  @Model.price/-</div>
+                        <div style="margin-left:-20px">Orderid :  35</div>
+                        <div style="margin-left:-105px">Quantity : 2y</div>
+                        <div style="margin-left:-35px">Price   : 24325345/-</div>
 
                     </div>
                 </div>
@@ -47,7 +44,7 @@
 
                 <div class="progress-track">
                     <div class="col" style="margin-right:-50px">
-                        Progress Track:  @Model.status
+                        Progress Track:  .status
 
                         <ul id="progressbar">
                             <li class="orderplaced  " id="step1">orderplaced</li>
@@ -61,7 +58,7 @@
             </div>
         </div>
     </div>
-</div>
+
 <script>
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
         console.log(sourcearray);

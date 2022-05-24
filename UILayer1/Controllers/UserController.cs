@@ -456,7 +456,6 @@ namespace UILayer.Controllers
             }
             else
             {
-                bool check = false;
                 try
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
@@ -687,6 +686,11 @@ namespace UILayer.Controllers
             return View(details);
         }
 
+
+        public IActionResult OrderDetails()
+        {
+            return View();
+        }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgetPassword()
