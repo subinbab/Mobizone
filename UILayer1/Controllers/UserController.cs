@@ -491,7 +491,6 @@ namespace UILayer.Controllers
                     else
                     {
                         productCart.usersId = user.UserId;
-                        productCart.users = user;
                         userApi.Createcart(productCart);
                     }
                 }
