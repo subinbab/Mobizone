@@ -122,7 +122,8 @@ namespace ApiLayer.Controllers
 
                 }
                 check.sessionId = data.sessionId;
-                 await _loginOperations.Edit(check);
+                check.password =_sec.Encrypt("admin", data.password);
+                await _loginOperations.Edit(check);
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {
