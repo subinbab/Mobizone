@@ -108,9 +108,9 @@ namespace ApiLayer.Controllers
             {
                 ResponseModel<Login> _response = new ResponseModel<Login>();
                 string message;
-                string password = _sec.Encrypt("admin", data.password);
+               // string password = _sec.Encrypt("admin", data.password);
                 var list = await _loginOperations.Get();
-                Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(password)).FirstOrDefault();
+                Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(data.password)).FirstOrDefault();
                 try
                 {
                     var cart = _cartOperations.Get().Result.Where(c => c.sessionId.Equals(check.sessionId)).FirstOrDefault();
