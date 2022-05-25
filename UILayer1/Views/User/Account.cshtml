@@ -19,6 +19,47 @@
 
                         <div class="card-body media align-items-center">
 
+<<<<<<< HEAD
+=======
+                <div class="card-body media align-items-center">
+
+                </div>
+
+               @* <hr class="border-light m-0">*@
+
+
+            <div class="card-body" style="margin-top: -24%; margin-left:10%">
+                <div class="form-group">
+                    <label class="form-label" style="margin-left:40%">Username : @user.Email</label>
+
+
+                </div>
+                <div class="form-group">
+
+                    <label class="form-label" style="margin-left:43%">Name : @user.FirstName</label>
+                   @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
+                </div>
+                
+                @if (user.address == null || user.address.Count==0)
+                {
+                    <p style="padding-left: 41%;">No Address available</p>
+
+                }
+                else
+                {
+                    <div class="form-group">
+
+                        <div class="row">
+                          
+
+                                <div class="col">
+                         
+                                    <p style="margin-left:40%"> Address : @user.address.FirstOrDefault().address</p>
+                                    <p style="margin-left:48%">@user.address.FirstOrDefault().pincode,@user.address.FirstOrDefault().district</p>
+                                    <p style="margin-left:48%"> @user.address.FirstOrDefault().state,@user.address.FirstOrDefault().country</p>
+                                    @*<p style="margin-left:49%">  </p>*@
+                                </div>
+>>>>>>> 3550e094214bbb52e20b40dad16fdff0276961d6
                         </div>
 
                         @* <hr class="border-light m-0">*@
@@ -71,7 +112,17 @@
 
                     </div>
 
+<<<<<<< HEAD
                 </div>
+=======
+
+               @* <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>*@
+                <a type="button" class="btn  btn-orange" style="background-color: #0099f3; padding-left: 1%; padding-right: 1%; color: white; " asp-action="index">Back</a>&nbsp;
+
+
+           
+            </div>
+>>>>>>> 3550e094214bbb52e20b40dad16fdff0276961d6
             </div>
 
 
