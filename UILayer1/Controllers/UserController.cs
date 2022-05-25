@@ -860,7 +860,10 @@ namespace UILayer.Controllers
             return Redirect("/user/Addtocart");
         }
         [HttpPost]
-        public IActionResult CartOrder(List<CartDetails> carts){
+        public IActionResult CartOrder()
+        {
+            var cartDataList = userApi.GetCart().Result;
+            var vartData = cartDataList.Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
             return View();
         }
     }
