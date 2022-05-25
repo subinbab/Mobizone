@@ -3,6 +3,7 @@
 *@
 @{
     ViewData["Title"] = "Buy Now";
+    var carts = ViewData["cartDetails"] as List<DomainLayer.CartDetails>;
 }
 @model DomainLayer.Checkout
 @{
@@ -19,15 +20,13 @@
     <a asp-action="login"><button class="btn btn-primary">Click To Login</button></a>
 }
 else
-{ }
-@foreach(var product in data)
-{
-    <div class="container-fluid mt-3">
+{ 
+  <div class="container-fluid mt-3">
 
         <div class="row" style="margin-right: 6%;margin-left: 7%;">
             <form asp-action="order" method="post" class="col" id="my-form">
                 <input asp-for="id" value="0" type="hidden" />
-                <input asp-for="productId" type="hidden" value="@product.id" />
+                @*<input asp-for="productId" type="hidden" value="@product.id" />*@
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
                 <div>
                     
@@ -72,26 +71,29 @@ else
                         <div class="">
                             
                             <h5 class="card-title address">Order Summary</h5>
-                            
-                            <div class="orderDetails">
-                                <div class="form-check">
-                                    <div class="">
-                                        <div class="col-12">
-                                            <img class="img-fluid" src="~/Product/Images/@product.images.FirstOrDefault().imagePath" style="width: 10%;"/>
-                                            <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                                @product.name (@product.specs.rams.FirstOrDefault().ram GB , @product.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @product.price
-                                                <div class=>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
-                                            </label>
-                                        </div>
-                                        
-                                     </div>
+                            @foreach(var cart in carts)
+                {
+                        <div class="orderDetails">
+                            <div class="form-check">
+                                <div class="">
+                                    <div class="col-12">
+                                        <img class="img-fluid" src="~/Product/Images/@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;" />
+                                        <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                            @cart.product.name (@cart.product.specs.rams.FirstOrDefault().ram GB , @cart.product.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @cart.product.price
+                                            <div class=>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" /></div>
+                                        </label>
+                                    </div>
+
+                                </div>
 
 
-                                   
-                                
 
-                                 </div>
+
+
                             </div>
+                        </div>
+                }
+                            
                             
 
 

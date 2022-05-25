@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
@@ -862,8 +863,21 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult CartOrder()
         {
+            UserRegistration user; 
             var cartDataList = userApi.GetCart().Result;
             var vartData = cartDataList.Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
+            ProductEntity product;
+            List<CartDetails> carts = new List<CartDetails>();
+            foreach(var cartDetails in vartData.cartDetails)
+            {
+                product = _opApi.GetAll().Result.Where(c => c.id.Equals(cartDetails.productId)).FirstOrDefault();
+                cartDetails.product = product;
+                carts.Add(cartDetails);
+            }
+            ViewData["cartDetails"] = carts;
+            user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = user;
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
     }
