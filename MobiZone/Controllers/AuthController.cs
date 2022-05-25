@@ -44,6 +44,7 @@ namespace ApiLayer.Controllers
         IWebHostEnvironment _webHostEnvironment;
         Security _sec;
         ILoginOperations _loginOperations;
+        ICartOperations _cartOperations;
         ITokenManager _tokenManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -51,8 +52,9 @@ namespace ApiLayer.Controllers
         JwtSecurityToken token;
         public AuthController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations, UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, ITokenManager tokenManager)
+            IConfiguration configuration, ITokenManager tokenManager, ICartOperations cartOperations)
         {
+            _cartOperations = cartOperations;
             _webHostEnvironment = web;
             _userContext = userContext;
             _userCreate = userCreate;
@@ -109,8 +111,18 @@ namespace ApiLayer.Controllers
                 string password = _sec.Encrypt("admin", data.password);
                 var list = await _loginOperations.Get();
                 Login check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(password)).FirstOrDefault();
+                try
+                {
+                    var cart = _cartOperations.Get().Result.Where(c => c.sessionId.Equals(check.sessionId)).FirstOrDefault();
+                    cart.sessionId = data.sessionId;
+                    _cartOperations.Edit(cart);
+                }
+                catch(Exception ex)
+                {
+
+                }
                 check.sessionId = data.sessionId;
-                await _loginOperations.Edit(check);
+                 await _loginOperations.Edit(check);
                 /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
                 if (check != null)
                 {

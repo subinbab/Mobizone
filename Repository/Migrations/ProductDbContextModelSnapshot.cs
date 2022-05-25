@@ -133,12 +133,35 @@ namespace Repository.Migrations
                     b.ToTable("AdminContact");
                 });
 
+            modelBuilder.Entity("DomainLayer.Cart", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("sessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("usersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("usersId");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("DomainLayer.CartDetails", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int?>("Cartid")
+                        .HasColumnType("int");
 
                     b.Property<int?>("DbCartId")
                         .HasColumnType("int");
@@ -154,7 +177,11 @@ namespace Repository.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("Cartid");
+
                     b.HasIndex("DbCartId");
+
+                    b.HasIndex("productId");
 
                     b.ToTable("CartDetails");
                 });
@@ -172,6 +199,9 @@ namespace Repository.Migrations
                     b.Property<int?>("cancelRequested")
                         .HasColumnType("int");
 
+                    b.Property<int?>("cartid")
+                        .HasColumnType("int");
+
                     b.Property<int>("orderId")
                         .HasColumnType("int");
 
@@ -181,7 +211,7 @@ namespace Repository.Migrations
                     b.Property<int>("price")
                         .HasColumnType("int");
 
-                    b.Property<int>("productId")
+                    b.Property<int?>("productId")
                         .HasColumnType("int");
 
                     b.Property<int>("quantity")
@@ -196,6 +226,8 @@ namespace Repository.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("addressId");
+
+                    b.HasIndex("cartid");
 
                     b.HasIndex("productId");
 
@@ -873,11 +905,32 @@ namespace Repository.Migrations
                     b.Navigation("product");
                 });
 
+            modelBuilder.Entity("DomainLayer.Cart", b =>
+                {
+                    b.HasOne("DomainLayer.Users.UserRegistration", "users")
+                        .WithMany()
+                        .HasForeignKey("usersId");
+
+                    b.Navigation("users");
+                });
+
             modelBuilder.Entity("DomainLayer.CartDetails", b =>
                 {
+                    b.HasOne("DomainLayer.Cart", null)
+                        .WithMany("cartDetails")
+                        .HasForeignKey("Cartid");
+
                     b.HasOne("DomainLayer.DbCart", null)
                         .WithMany("cartDetails")
                         .HasForeignKey("DbCartId");
+
+                    b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("DomainLayer.Checkout", b =>
@@ -888,11 +941,13 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DomainLayer.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("cartid");
+
                     b.HasOne("DomainLayer.ProductModel.ProductEntity", "product")
                         .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("productId");
 
                     b.HasOne("DomainLayer.Users.UserRegistration", "user")
                         .WithMany()
@@ -901,6 +956,8 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("address");
+
+                    b.Navigation("cart");
 
                     b.Navigation("product");
 
@@ -1045,6 +1102,11 @@ namespace Repository.Migrations
             modelBuilder.Entity("BusinessObjectLayer.ProductOperations.ProductSubPart", b =>
                 {
                     b.Navigation("images");
+                });
+
+            modelBuilder.Entity("DomainLayer.Cart", b =>
+                {
+                    b.Navigation("cartDetails");
                 });
 
             modelBuilder.Entity("DomainLayer.DbCart", b =>

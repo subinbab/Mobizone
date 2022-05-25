@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "AddtoCart";
-    ViewData["carts"] = Model.ToList();
+    var cartList  = Model.ToList();
 }
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 
@@ -55,11 +55,15 @@
                 <div class="col-12" style="border: groove;height: 17%;">
                     <p><span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 26px;text-align: center;margin: 10px;font-weight: bold;">@price</span></p>
                 </div>
-                <form action="/user/CartOrder" method="post">
-                    <input type="hidden" value="@Model" name="carts"/>
+                <form action="/user/CartOrder" method="post" style="height: 144%;width: 100%;">
+                @foreach(var cartData in Model)
+                {
+                    <input type="hidden" value="@cartData" name="carts[]"/>
+                }
+                
 
-                    <div class="col-12" style="height: 49%;padding: 10px;">
-                        <div style="height: 37%;background-color: cadetblue;color: white;text-align: center;padding: 15px;font-weight: bold;font-size: 19px;margin: 0px;"> <input type="submit" value="Procees To Buy" /></div>
+                    <div class="col-12" style="height: 53%;padding: 0px;">
+                        <input style="height: 22%;background-color: cadetblue;color: white;text-align: center;padding: 5%;font-weight: bold;font-size: 19px;margin: 0px;padding-left: 27%;padding-right: 27%;"  type="submit" value="Procees To Buy" />
                     </div>
                 </form>
             </div>
