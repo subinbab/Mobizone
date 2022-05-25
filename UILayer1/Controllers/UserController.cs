@@ -242,7 +242,7 @@ namespace UILayer.Controllers
                 register = userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
                 register.Password = resetPassword.newPassword;
                 var result = userApi.EditUser(register);
-                return View(resetPassword);
+                return Redirect("/Login");
             }
             catch (Exception ex)
             {

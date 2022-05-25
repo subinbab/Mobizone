@@ -5,77 +5,82 @@
     Layout = "~/Views/Simpleview/_accountLayout.cshtml";
     ViewData["Title"] = "My Account";
 
-    }
-    @{
-        var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
-    }
+}
+@{
+    var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+}
 
+<div class="container-fluid mt-3 align-middle">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <div class="col-md-9">
+                <div class="tab-content" style="margin-right:10%;padding-top:10%;padding-bottom:-15%">
+                    <div class="tab-pane fade active show" id="account-general">
 
-    <div class="col-md-9">
-        <div class="tab-content" style="margin-right:10%;padding-top:10%;padding-bottom:-15%">
-            <div class="tab-pane fade active show" id="account-general">
+                        <div class="card-body media align-items-center">
 
-                <div class="card-body media align-items-center">
-
-                </div>
-
-               @* <hr class="border-light m-0">*@
-
-
-            <div class="card-body" style="margin-top: -24%; margin-left:10%">
-                <div class="form-group">
-                    <label class="form-label" style="margin-left:40%">Username : @user.Email</label>
-
-
-                </div>
-                <div class="form-group">
-
-                    <label class="form-label" style="margin-left:40%">Name : @user.FirstName</label>
-                   @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
-                </div>
-                
-                @if (user.address == null || user.address.Count==0)
-                {
-                    <p style="padding-left: 41%;">No Address available</p>
-
-                }
-                else
-                {
-                    <div class="form-group">
-
-                        <div class="row">
-                          
-
-                                <div class="col">
-                         
-                                    <p style="margin-left:41%"> Address : @user.address.FirstOrDefault().address</p>
-                                    <p style="margin-left:41%">@user.address.FirstOrDefault().pincode,@user.address.FirstOrDefault().district</p>
-                                    <p style="margin-left:41%"> @user.address.FirstOrDefault().state,@user.address.FirstOrDefault().country</p>
-                                    <p style="margin-left:41%">  </p>
-                                </div>
                         </div>
+
+                        @* <hr class="border-light m-0">*@
+
+
+                        <div class="card-body" style="margin-top: -24%; margin-left:10%">
+                            <div class="form-group">
+                                <label class="form-label" style="margin-left:40%">Username : @user.Email</label>
+
+
+                            </div>
+                            <div class="form-group">
+
+                                <label class="form-label" style="margin-left:40%">Name : @user.FirstName</label>
+                                @* <a asp-action=""> <button type="button"  class="btn btn-orange" />Edit</button></a>*@
+                            </div>
+
+                            @if (user.address == null || user.address.Count == 0)
+                            {
+                                <p style="padding-left: 41%;">No Address available</p>
+
+                            }
+                            else
+                            {
+                                <div class="form-group">
+
+                                    <div class="row">
+
+
+                                        <div class="col">
+
+                                            <p style="margin-left:41%"> Address : @user.address.FirstOrDefault().address</p>
+                                            <p style="margin-left:41%">@user.address.FirstOrDefault().pincode,@user.address.FirstOrDefault().district</p>
+                                            <p style="margin-left:41%"> @user.address.FirstOrDefault().state,@user.address.FirstOrDefault().country</p>
+                                            <p style="margin-left:41%">  </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="text-right mt-3">
+
+
+                                @* <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>*@
+                                <a type="button" class="btn  btn-orange" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="index">Back</a>&nbsp;
+
+
+
+                            </div>
+                        </div>
+
                     </div>
-                }
-            <div class="text-right mt-3">
 
-
-               @* <a asp-action="address"> <button type="button" value="Save" class="btn btn-orange" />Edit</button></a>*@
-                <a type="button" class="btn  btn-orange" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="index">Back</a>&nbsp;
-
-
-           
-            </div>
+                </div>
             </div>
 
-            </div>
+
+
 
         </div>
+
     </div>
-
-
-
-
-
+</div>
 
 
 

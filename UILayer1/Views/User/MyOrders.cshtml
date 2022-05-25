@@ -7,9 +7,7 @@
 
 }
 <h3 style="text-align:center">My Orders</h3>
-<div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
+
             <div class="">
                 <table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
                    
@@ -21,7 +19,7 @@
                     @foreach (var data in Model)
                     {
                         <div class=" text-md-center" style=" margin-top: 3%;">
-                            <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Samsung" style="height:70px;margin-right:90%; width:70px;" /></a>
+                            <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Images" style="height:70px;margin-right:90%; width:29px;" /></a>
                         </div>
 
 
@@ -43,9 +41,7 @@
                     }
                 </table>
             </div>
-        </div>
-    </div>
-</div>
+       
 <style>
     .product {
         margin-left: 8%;
