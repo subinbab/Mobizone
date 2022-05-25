@@ -52,7 +52,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <a asp-controller="User" asp-action="account">Hello @User.Identity.Name </a>
+                    <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {

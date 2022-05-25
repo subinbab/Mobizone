@@ -18,7 +18,7 @@
 
             <div class="card-body">
                 <div class="form-group">
-                   <a asp-action="address"><button class="btn btn-default" style=""  asp-controller="user" > + Add New Address</button></a>
+                   <a asp-action="address"><button class="btn btn-default" asp-controller="user" > + Add New Address</button></a>
                 </div>
                 @foreach (var data in user.address)
                 {
@@ -31,7 +31,7 @@
 
                 <div class="Edit" style="">
                     <a asp-action="address" asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color: ;">Edit</button></a>
-                    <a href="/user/AccountManage/@data.id"> <button type="button" class="btn btn-indigo" style="background-color: #29a174;">Delete</button></a>
+                    <a href="/user/DeleteAddress/@data.id"> <button type="button" class="btn btn-indigo" style="background-color: #29a174;">Delete</button></a>
                 </div>
             </div>
                    
@@ -56,7 +56,7 @@
     }
     .btn-default {
         background-color: #0099f3;
-        margin-top: -10%;
+        margin-top: -20%;
         margin-left: 40%;
     }
     .btn-orange {

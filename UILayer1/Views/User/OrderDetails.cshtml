@@ -5,6 +5,7 @@
     @model DomainLayer.Checkout;
     @using System;
     ViewData["Title"] = "Order Details";
+    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
 }
 @{
     var productDetails = ViewData["ProuductDetails"] as DomainLayer.ProductModel.ProductEntity;
@@ -14,23 +15,25 @@
 <div class="row">
     <div class="col">
         <div class=" text-md-center">
-            <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:162px;margin-right:90%; width:162px;" />
+            <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:132px;margin-right:90%; width:132px;" />
         </div>
-        <div class="col">
-            <div class="text-center ">
+        
+            <div class="text-center " >
 
-                <h5>Samsung Galaxy M12(Blue,6GBRAM ,128GB Storage)</h5>
+                <h5 style= "">Samsung Galaxy M12(Blue,6GBRAM ,128GB Storage)</h5>
 
-                <h3>17,499/-</h3>
+                <h3 style="">17,499/-</h3>
+            </div>
 
-
-
-                <div><a href="#" class="btn btn-primary" style="margin-left">Cancel Order</a></div>
-                <a type="button" class="btn  btn-orange" style="background-color: #5be5b2; padding-left: 1%; padding-right: 1%; color: black; " asp-action="index">Back</a>&nbsp;
+                <div>
+                    <div><a href="#" class="btn btn-primary" style="">Cancel Order</a></div>
+                </div>
+              
+                <a type="button" class="btn  btn-orange" style="background-color: #5be5b2;  color: black;  }; " asp-action="MyOrders">Back</a>&nbsp;
                @* <div> <a href="url">Return to Store</a></div>*@
             </div>
         </div>
-        <div class="progress-track">
+        <div class="progress-track" style=" ">
             <div class="col" style="margin-right:-50px">
                 Progress Track:  .status
 
@@ -41,8 +44,7 @@
                 </ul>
             </div>
         </div>
-    </div>
-</div>
+  
 <style>
     .text-center {
         padding-right: 40%;

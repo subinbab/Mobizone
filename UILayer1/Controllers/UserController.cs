@@ -619,28 +619,22 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             return View();
         }
-        [HttpGet("/user/AccountManage/{id}")]
-        public IActionResult AccountManage(int id)
+        [HttpGet("/user/DeleteAddress/{id}")]
+      /*  public IActionResult AccountManage(int id)
         {
             var result = userApi.DeleteAddress(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
-        }
+        }*/
         public IActionResult DeleteAddress(int id)
         {
-            bool result = userApi.DeleteAddress(id);
-            if (result)
-            {
-                _notyf.Success("deleted");
-            }
-            else
-            {
-                _notyf.Error("Not deleted");
-
-            }
-            return RedirectToAction("");
+            var result = userApi.DeleteAddress(id);
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            ViewData["userData"] = _user;
+            return View();
         }
 
         [HttpGet]
@@ -695,12 +689,16 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
-
+        public IActionResult MyOrders()
+        {
+            return View();
+        }
 
         public IActionResult OrderDetails()
         {
             return View();
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgetPassword()
