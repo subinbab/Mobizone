@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DomainLayer;
 using DomainLayer.ProductModel;
@@ -733,13 +734,31 @@ namespace UILayer.Controllers
             return View(details);
         }
         public IActionResult MyOrders()
-        {
-            return View();
-        }
+         {
+            var user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var userOrders = userApi.GetCheckOut().Result.Where(c=> c.userId.Equals(user.UserId));
+            foreach (var checkOutData in userOrders)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(checkOutData.productId)).FirstOrDefault();
+                checkOutData.product = product;
 
-        public IActionResult OrderDetails()
+            }
+            return View(userOrders);
+        }
+        [HttpGet]
+        public IActionResult OrderDetails(int id )
         {
-            return View();
+            if (id == 0)
+            {
+                return View("Index");
+            }
+            var checkoutList = userApi.GetCheckOut().Result;
+            var checkout = checkoutList.Where(c => c.id.Equals(id)).FirstOrDefault();
+            var ProductDetails = _opApi.GetAll().Result.Where(c => c.id.Equals(checkout.productId)).FirstOrDefault();
+            ViewBag.Product = ProductDetails;
+            ViewData["Address"] = userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
+            
+            return View(checkout);
         }
 
         [HttpGet]
