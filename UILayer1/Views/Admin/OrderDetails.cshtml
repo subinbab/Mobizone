@@ -25,7 +25,7 @@
                         </div>
                         <div class="col row  " style="align-items: center;">
                             <div class="col  align-items-end">
-                                <div style="margin-left:5%">Product Details:@productDetails.name (Blue, @productDetails.specs.ram GB RAM,@productDetails.specs.storage GB Storage)</div>
+                                <div style="margin-left:5%">Product Details:@productDetails.name ( Storage @productDetails.specs.storages.FirstOrDefault().storage) Ram(@productDetails.specs.rams.FirstOrDefault().ram)</div>
 
                                 <div class="orderDetails col"> Address: @addressDetails.name</div>
                                 <div class="orderDetails col" style="margin-left:19%">@addressDetails.address,</div>

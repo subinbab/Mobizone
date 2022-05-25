@@ -78,7 +78,7 @@
                                     {
                                         <a asp-controller="User" asp-action="account">My Account </a>
                                         <hr />
-                                        <a href="/user/OrderList">My Orders</a>
+                                        <a  asp-controller="User" asp-action="MyOrders">My Orders</a>
                                         <hr />
                                         <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
                                         <hr />
@@ -126,11 +126,11 @@
 
         <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
            
-            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred; margin-bottom: 8px;  margin-top: -29%;  width: 11%; padding-left: 1%; ">Profile Information</a>
+            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred; margin-bottom: 8px;  margin-top: -30%;  width: 11%; padding-left: 1%; ">Profile Information</a>
         </div>
 
         <div>
-            <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: indianred; margin-bottom: 8px; margin-top: -25%; width: 11%; padding-left: 1%; ">Manage Address</a>
+            <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: indianred; margin-bottom: 8px; margin-top: -26%; width: 11%; padding-left: 1%; ">Manage Address</a>
         </div>
 
       
