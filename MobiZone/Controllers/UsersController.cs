@@ -50,13 +50,14 @@ namespace ApiLayer.Controllers
         Address _addresData;
         ICartOperations _cartOperations;
         IForgotPassword _forgotPassword;
+        ICartDetailsOperation _cartDetailsOperation;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,IForgotPassword forgotPassword,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations)
+            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations, ICartDetailsOperation cartDetailsOperation)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -78,6 +79,7 @@ namespace ApiLayer.Controllers
             _checkOutOperation = checkOutOperation;
             _productOperations = productOperations;
             _cartOperations = cartOperations;
+            _cartDetailsOperation = cartDetailsOperation;
         }
         [HttpPost("UserCreate")]
         public async Task<ResponseModel<UserViewModel>> post([FromBody] UserViewModel users)
@@ -566,6 +568,27 @@ namespace ApiLayer.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+        [HttpDelete("DeleteCartDetails/{id}")]
+        public IActionResult DeleteCartDetails(int id)
+        {
+            try
+            {
+                /*  _addressList = _addressOperations.Get().Result;*/
+                var data = _cartDetailsOperation.Get().Result;
+                _cartDetailsOperation.Delete(data.Where(c => c.id.Equals(id)).FirstOrDefault());
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<string> _response = new ResponseModel<string>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return BadRequest();
+            }
         }
 
 

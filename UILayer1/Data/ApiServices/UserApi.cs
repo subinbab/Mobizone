@@ -361,5 +361,25 @@ namespace UILayer.Data.ApiServices
             }
         }
 
+        #region delete method for cartDetails
+        public bool DeleteCartDetails(int id)
+        {
+            RequestHandler<CartDetails> requestHandler = new RequestHandler<CartDetails>(_configuration);
+            try
+            {
+                requestHandler.url = "api/Users/DeleteCartDetails/";
+                if (requestHandler.Delete(id).IsSuccess)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }

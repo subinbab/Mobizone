@@ -34,6 +34,7 @@ namespace Repository
         public DbSet<Address> address { get; set; }
         public DbSet<DbCart> dbCart { get; set; }
         public DbSet<MyCart> myCart { get; set; }
+        public DbSet<CartDetails> cartDetails { get; set; }
 
 
     }
