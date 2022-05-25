@@ -10,12 +10,12 @@ namespace BusinessObjectLayer
     public class CartOperations : ICartOperations
     {
         ProductDbContext _context;
-        IRepositoryOperations<DbCart> _repo;
-        public CartOperations(IRepositoryOperations<DbCart> repo)
+        IRepositoryOperations<MyCart> _repo;
+        public CartOperations(IRepositoryOperations<MyCart> repo)
         {
             _repo = repo;
         }
-        public async Task Add(DbCart entity)
+        public async Task Add(MyCart entity)
         {
             try
             {
@@ -28,24 +28,24 @@ namespace BusinessObjectLayer
             }
         }
 
-        public async Task Delete(DbCart entity)
+        public async Task Delete(MyCart entity)
         {
             _repo.Delete(entity);
             _repo.Save();
         }
 
-        public async Task Edit(DbCart entity)
+        public async Task Edit(MyCart entity)
         {
             _repo.Update(entity);
             _repo.Save();
         }
 
-        public Task<DbCart> GetById(int id)
+        public Task<MyCart> GetById(int id)
         {
             return _repo.GetById(id);
         }
 
-        public async Task<IEnumerable<DbCart>> Get()
+        public async Task<IEnumerable<MyCart>> Get()
         {
             return await  _repo.Get(n1=>n1.cartDetails);
         }

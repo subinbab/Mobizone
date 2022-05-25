@@ -228,9 +228,9 @@ namespace UILayer.Data.ApiServices
         }
 
         #region Create an cart
-        public bool Createcart(DbCart cart)
+        public bool Createcart(MyCart cart)
         {
-            RequestHandler<DbCart> requestHandler = new RequestHandler<DbCart>(_configuration);
+            RequestHandler<MyCart> requestHandler = new RequestHandler<MyCart>(_configuration);
             try
             {
                 requestHandler.url = "api/Users/CreateCart";
@@ -278,9 +278,9 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
 
-        public bool EditCart(DbCart cart)
+        public bool EditCart(MyCart cart)
         {
-            RequestHandler<DbCart> _requestHandler = new RequestHandler<DbCart>(_configuration);
+            RequestHandler<MyCart> _requestHandler = new RequestHandler<MyCart>(_configuration);
             try
             {
                 _requestHandler.url = "api/users/UpdateCart";
@@ -307,9 +307,9 @@ namespace UILayer.Data.ApiServices
             }
 
         }
-        public async Task<IEnumerable<DbCart>> GetCart()
+        public async Task<IEnumerable<MyCart>> GetCart()
         {
-            RequestHandler<IEnumerable<DbCart>> _requestHandler = new RequestHandler<IEnumerable<DbCart>>(_configuration);
+            RequestHandler<IEnumerable<MyCart>> _requestHandler = new RequestHandler<IEnumerable<MyCart>>(_configuration);
             try
             {
                 _requestHandler.url = "api/users/GetCart";

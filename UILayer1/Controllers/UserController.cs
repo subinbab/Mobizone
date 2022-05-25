@@ -465,7 +465,7 @@ namespace UILayer.Controllers
 
                 cartList.Add(cartDetails);
                 Cart cart = new Cart();
-            DbCart productCart = new DbCart();
+            MyCart productCart = new MyCart();
                 HttpContext.Session.SetString("testKey", "testValue");
                 cart.sessionId = HttpContext.Session.Id;
             productCart.sessionId = HttpContext.Session.Id;
@@ -477,8 +477,9 @@ namespace UILayer.Controllers
             {
                 try
                 {
-                    IEnumerable<DbCart> productCartListFromDb = userApi.GetCart().Result;
-                    if (productCartListFromDb.Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+                    UserRegistration user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                    IEnumerable<MyCart> productCartListFromDb = userApi.GetCart().Result;
+                    if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
                     {
                         var productCartBySessioId = productCartListFromDb.Where(c => c.sessionId.Equals(HttpContext.Session.Id)).FirstOrDefault();
                         var cartDetailslList = productCartBySessioId.cartDetails;
@@ -488,6 +489,8 @@ namespace UILayer.Controllers
                     }
                     else
                     {
+                        productCart.usersId = user.UserId;
+                        productCart.users = user;
                         userApi.Createcart(productCart);
                     }
                 }

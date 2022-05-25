@@ -437,7 +437,7 @@ namespace ApiLayer.Controllers
         #region Post Method for Cart
 
         [HttpPost("CreateCart")]
-        public IActionResult CreateCart([FromBody] DbCart cart)
+        public IActionResult CreateCart([FromBody] MyCart cart)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
@@ -462,9 +462,9 @@ namespace ApiLayer.Controllers
 
         #region Get Method for cart
         [HttpGet("GetCart")]
-        public async Task<ResponseModel<IEnumerable<DbCart>>> GetCart()
+        public async Task<ResponseModel<IEnumerable<MyCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<DbCart>> _response = new ResponseModel<IEnumerable<DbCart>>();
+            ResponseModel<IEnumerable<MyCart>> _response = new ResponseModel<IEnumerable<MyCart>>();
             try
             {
                 var result = await _cartOperations.Get();
@@ -500,7 +500,7 @@ namespace ApiLayer.Controllers
 
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
-        public IActionResult UpdateCart([FromBody] DbCart cart)
+        public IActionResult UpdateCart([FromBody] MyCart cart)
         {
             ResponseModel<ProductCart> _response = new ResponseModel<ProductCart>();
             try
