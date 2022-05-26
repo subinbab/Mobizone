@@ -36,7 +36,7 @@ namespace ApiLayer.DI
             services.AddScoped(typeof(ICartOperations), typeof(CartOperations));
 
             services.AddScoped(typeof(IForgotPassword), typeof(ForgotPassword));
-
+            services.AddScoped(typeof(ICartDetailsOperation), typeof(CartDetailsOperation));
 
 
         }

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
 {
-    public class CartOperations : ICartOperations
+    public class CartDetailsOperation : ICartDetailsOperation
     {
         ProductDbContext _context;
-        IRepositoryOperations<MyCart> _repo;
-        public CartOperations(IRepositoryOperations<MyCart> repo)
+        IRepositoryOperations<CartDetails> _repo;
+        public CartDetailsOperation(IRepositoryOperations<CartDetails> repo)
         {
             _repo = repo;
         }
-        public async Task Add(MyCart entity)
+        public async Task Add(CartDetails entity)
         {
             try
             {
@@ -28,26 +28,26 @@ namespace BusinessObjectLayer
             }
         }
 
-        public async Task Delete(MyCart entity)
+        public async Task Delete(CartDetails entity)
         {
             _repo.Delete(entity);
             _repo.Save();
         }
 
-        public async Task Edit(MyCart entity)
+        public async Task Edit(CartDetails entity)
         {
             _repo.Update(entity);
             _repo.Save();
         }
 
-        public Task<MyCart> GetById(int id)
+        public Task<CartDetails> GetById(int id)
         {
             return _repo.GetById(id);
         }
 
-        public async Task<IEnumerable<MyCart>> Get()
+        public async Task<IEnumerable<CartDetails>> Get()
         {
-            return await  _repo.Get(n1=>n1.cartDetails,n2=> n2.cartDetails);
+            return await _repo.Get();
         }
     }
 }
