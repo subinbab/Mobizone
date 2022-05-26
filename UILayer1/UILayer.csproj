@@ -42,10 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Product\Images\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\js\ckeditor\adapters\jquery.js" />
     <None Include="wwwroot\js\ckeditor\build-config.js" />
     <None Include="wwwroot\js\ckeditor\CHANGES.md" />
@@ -155,6 +151,10 @@
     <Content Update="Views\Admin\Index.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Product\" />
   </ItemGroup>
 <Target Name="BeforeBuild">
     <!-- Remove obj folder -->
