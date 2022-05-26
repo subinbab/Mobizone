@@ -90,11 +90,11 @@ namespace ApiLayer.Controllers
             _user.modifiedOn = DateTime.Now;
             _user.createdBy = users.FirstName + " " + users.LastName;
             _user.modifiedBy = users.FirstName + " " + users.LastName;
-            //_user.Password = _sec.Encrypt("admin", users.Password);
-            _user.Password = users.Password;
+            _user.Password = _sec.Encrypt("admin", users.Password);
+            //_user.Password = users.Password;
             _login.username = users.Email;
-            //_login.password = _sec.Encrypt("admin", users.Password);
-            _login.password = users.Password;
+            _login.password = _sec.Encrypt("admin", users.Password);
+            //_login.password = users.Password;
             _login.createdOn = DateTime.Now;
             _login.createdBy = users.FirstName + " " + users.LastName;
             _login.modifiedOn = DateTime.Now;

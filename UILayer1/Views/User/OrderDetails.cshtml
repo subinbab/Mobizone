@@ -4,7 +4,7 @@
 @using System;
 @model DomainLayer.Checkout;
 @{
-    ViewData["Title"] = "Order Details";
+    ViewData["Title"] = "Mobizone- Order Details";
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
     var productDetails = ViewBag.Product as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
@@ -55,6 +55,7 @@
                     </ul>
                 </div>
             </div>
+    
             <div style=" margin-left: 60%;">
                 <div><a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a></div>
             </div>
