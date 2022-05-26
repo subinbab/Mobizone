@@ -130,21 +130,8 @@
            
             </div>
             <div id="dropdown1" class="dropdown">
-               @* <form asp-action="sort" method="post">
-                    <select name="select price" >
-                        <option disabled selected> Select price</option>
-                        <option>Low to High</option>
-                        <Option>High to Low </Option>
-                    </select> 
-                    <input class=" @(Context.Request.Path == "/User/sort" ? "active " : "") " type="submit" value="sort" style="color:white; background-color: #e52d2e"
-                    </input>
-                </form>*@
-                  
-                    <a asp-action="sort" method="post"><button style="width: 101px; font-size: 14px">Low to High</button></a>
-                    <a asp-action="sortby" method="post"><button style="width: 101px; font-size: 14px">High to Low</button></a>
-
-
-
+                   <a asp-action="sort" method="post"><button style="width: 100%; font-size: 14px"> Price(Low to High)</button></a>
+                   <a asp-action="sortby" method="post"><button style="width: 100%; font-size: 14px">Price(High to Low)</button></a>
 
             </div>
         </div>
