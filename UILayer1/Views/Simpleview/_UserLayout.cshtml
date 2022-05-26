@@ -45,7 +45,7 @@
                     <div class="form-outline col-10 mt-2">
                         <input type="search" id="form1" class="form-control" name="name" />
                     </div>
-                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
+                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px; background-color: #dd0000;">
                         <i class="fas fa-search " style="font-size: 17px;"></i>
                     </button>
                 </form>
@@ -60,7 +60,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
 
-                            <a asp-controller="User" asp-action="account">@User.Identity.Name </a>
+                            <a asp-controller="User" asp-action="account"style="color:black;text-decoration:none;">@User.Identity.Name </a>
                             <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
 
 

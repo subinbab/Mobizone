@@ -46,7 +46,7 @@
                     <div class="form-outline col-10 mt-2">
                         <input type="search" id="form1" class="form-control" name="name" />
                     </div>
-                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
+                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px; background-color: #dd0000;">
                         <i class="fas fa-search " style="font-size: 17px;"></i>
                     </button>
                 </form>
@@ -57,7 +57,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="account">Hello @User.Identity.Name </a>
+                        <a asp-controller="User" asp-action="account"style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
@@ -126,11 +126,11 @@
 
         <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
            
-            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred; margin-bottom: 8px;  margin-top: -30%;  width: 11%; padding-left: 1%; ">Profile Information</a>
+            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -30%; width: 11%; padding-left: 1%; ">Profile Information</a>
         </div>
 
         <div>
-            <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: indianred; margin-bottom: 8px; margin-top: -26%; width: 11%; padding-left: 1%; ">Manage Address</a>
+            <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -26%; width: 11%; padding-left: 1%; ">Manage Address</a>
         </div>
 
       

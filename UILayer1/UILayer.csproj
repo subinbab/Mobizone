@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Content Include="Controllers\navigation-bar.css" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +40,6 @@
     <ProjectReference Include="..\BusinessObjectLayer\BusinessObjectLayer.csproj" />
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
     <ProjectReference Include="..\DTOLayer\DTOLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\Product\Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -155,6 +152,10 @@
     <Content Update="Views\Admin\Index.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Product\" />
   </ItemGroup>
 <Target Name="BeforeBuild">
     <!-- Remove obj folder -->

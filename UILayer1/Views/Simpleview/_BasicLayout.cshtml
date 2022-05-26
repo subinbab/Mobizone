@@ -47,7 +47,7 @@
                     <div class="form-outline col-10 mt-2">
                         <input type="search" id="form1" class="form-control" name="name" />
                     </div>
-                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
+                    <button type="submit" class="btn  col-2 btn-indigo"  style="width: 10px; background-color: #dd0000">
                         <i class="fas fa-search " style="font-size: 17px;"></i>
                     </button>
                 </form>
@@ -58,7 +58,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="account">Hello @User.Identity.Name </a>
+                        <a asp-controller="User" asp-action="account"style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
@@ -151,11 +151,11 @@
                     <div class="col-md-2 pt-0">
                         <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
                             @* <h4 class="list-group-item">Account Settings</h4>*@
-                            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
+                            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #dd0000; margin-bottom: 7px;">Profile Information</a>
                         </div>
 
                         <div>
-                            <a class="list-group-item list-group-item-action" asp-action="ManageAddress" style="background-color: indianred ;padding-top:10px;color:white">Manage Address</a>
+                            <a class="list-group-item list-group-item-action" asp-action="ManageAddress" style="background-color: #dd0000; padding-top: 10px; color: white">Manage Address</a>
                         </div>
 
                     </div>
