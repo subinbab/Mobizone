@@ -790,41 +790,61 @@ namespace UILayer.Controllers
         public IActionResult quantity(int quantity , int id)
         {
             bool check = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+
+                MyCart myCart = new MyCart();
+                myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+
+                foreach (var mycartData in myCart.cartDetails)
+                {
+                    if (mycartData.productId.Equals(id))
+                    {
+                        mycartData.quantity = quantity;
+                        mycartData.price = quantity * mycartData.product.price;
+                    }
+                }
+                userApi.EditCart(myCart);
+            }
+            else
+            {
             string name = _distributedCache.GetStringAsync("cart").Result;
             _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-            if (_carts != null || _carts.Count > 0)
-            {
-                if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+                if (_carts != null || _carts.Count > 0)
                 {
-                    foreach (var data in _carts)
+                    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
                     {
-                        foreach (var caratDetailsData in data.cartDetails)
+                        foreach (var data in _carts)
                         {
-                            var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                            caratDetailsData.product = product;
-                        }
-                        if (data.sessionId.Equals(HttpContext.Session.Id))
-                        {
-                            foreach (var data1 in data.cartDetails)
+                            foreach (var caratDetailsData in data.cartDetails)
                             {
-                                if (data1.productId.Equals(id))
-                                {
-                                    data1.quantity = quantity;
-                                    data1.price = data1.quantity * data1.product.price;
-                                    /*cartList.Add(data1);*/
-                                }
-                                else
-                                {
-
-                                }
-
+                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                                caratDetailsData.product = product;
                             }
+                            if (data.sessionId.Equals(HttpContext.Session.Id))
+                            {
+                                foreach (var data1 in data.cartDetails)
+                                {
+                                    if (data1.productId.Equals(id))
+                                    {
+                                        data1.quantity = quantity;
+                                        data1.price = data1.quantity * data1.product.price;
+                                        /*cartList.Add(data1);*/
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+                            }
+
+                            /*  cartListSession.Add(data);*/
                         }
 
-                        /*  cartListSession.Add(data);*/
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                     }
-                   
-                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                 }
             }
             return Redirect("/user/Addtocart");

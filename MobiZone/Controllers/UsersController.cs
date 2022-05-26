@@ -570,24 +570,25 @@ namespace ApiLayer.Controllers
             return BadRequest();
         }
         [HttpDelete("DeleteCartDetails/{id}")]
-        public IActionResult DeleteCartDetails(int id)
+        public ResponseModel<MyCart> DeleteCartDetails(int id)
         {
             try
             {
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
                 /*  _addressList = _addressOperations.Get().Result;*/
                 var data = _cartDetailsOperation.Get().Result;
                 _cartDetailsOperation.Delete(data.Where(c => c.id.Equals(id)).FirstOrDefault());
-
-                return Ok();
+                _response.AddResponse(true, 0, null, "deleted");
+                return _response;
 
             }
             catch (Exception ex)
             {
-                ResponseModel<string> _response = new ResponseModel<string>();
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
                 string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
-                _response.AddResponse(false, 0, _userMessages.ExceptionError, message);
+                _response.AddResponse(false, 0,null, message);
                 _log.Error("log4net : error in the post controller", ex);
-                return BadRequest();
+                return _response;
             }
         }
 

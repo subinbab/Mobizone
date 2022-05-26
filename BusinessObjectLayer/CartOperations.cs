@@ -47,7 +47,7 @@ namespace BusinessObjectLayer
 
         public async Task<IEnumerable<MyCart>> Get()
         {
-            return await  _repo.Get(n1=>n1.cartDetails);
+            return await  _repo.Get(n1=>n1.cartDetails,n2=> n2.cartDetails);
         }
     }
 }
