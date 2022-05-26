@@ -50,13 +50,14 @@ namespace ApiLayer.Controllers
         Address _addresData;
         ICartOperations _cartOperations;
         IForgotPassword _forgotPassword;
+        ICartDetailsOperation _cartDetailsOperation;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         public UsersController(ProductDbContext userContext, IUserCreate userCreate, IMapper mapper, IWebHostEnvironment web, ILoginOperations loginOperations,IAddressOperations addressOperations,IForgotPassword forgotPassword,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations)
+            IConfiguration configuration, ICheckOutOperation checkOutOperation, IProductOperations productOperations, ICartOperations cartOperations, ICartDetailsOperation cartDetailsOperation)
         {
             _webHostEnvironment = web;
             _userContext = userContext;
@@ -78,6 +79,7 @@ namespace ApiLayer.Controllers
             _checkOutOperation = checkOutOperation;
             _productOperations = productOperations;
             _cartOperations = cartOperations;
+            _cartDetailsOperation = cartDetailsOperation;
         }
         [HttpPost("UserCreate")]
         public async Task<ResponseModel<UserViewModel>> post([FromBody] UserViewModel users)
@@ -437,7 +439,7 @@ namespace ApiLayer.Controllers
         #region Post Method for Cart
 
         [HttpPost("CreateCart")]
-        public IActionResult CreateCart([FromBody] DbCart cart)
+        public IActionResult CreateCart([FromBody] MyCart cart)
         {
             ResponseModel<string> _response = new ResponseModel<string>();
             try
@@ -462,9 +464,9 @@ namespace ApiLayer.Controllers
 
         #region Get Method for cart
         [HttpGet("GetCart")]
-        public async Task<ResponseModel<IEnumerable<DbCart>>> GetCart()
+        public async Task<ResponseModel<IEnumerable<MyCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<DbCart>> _response = new ResponseModel<IEnumerable<DbCart>>();
+            ResponseModel<IEnumerable<MyCart>> _response = new ResponseModel<IEnumerable<MyCart>>();
             try
             {
                 var result = await _cartOperations.Get();
@@ -500,7 +502,7 @@ namespace ApiLayer.Controllers
 
         #region Update Method for Cart
         [HttpPut("UpdateCart")]
-        public IActionResult UpdateCart([FromBody] DbCart cart)
+        public IActionResult UpdateCart([FromBody] MyCart cart)
         {
             ResponseModel<ProductCart> _response = new ResponseModel<ProductCart>();
             try
@@ -566,6 +568,28 @@ namespace ApiLayer.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+        [HttpDelete("DeleteCartDetails/{id}")]
+        public ResponseModel<MyCart> DeleteCartDetails(int id)
+        {
+            try
+            {
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
+                /*  _addressList = _addressOperations.Get().Result;*/
+                var data = _cartDetailsOperation.Get().Result;
+                _cartDetailsOperation.Delete(data.Where(c => c.id.Equals(id)).FirstOrDefault());
+                _response.AddResponse(true, 0, null, "deleted");
+                return _response;
+
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0,null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
         }
 
 
