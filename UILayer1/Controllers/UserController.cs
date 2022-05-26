@@ -63,7 +63,7 @@ namespace UILayer.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
-            ViewBag.Title = "Mobizone - Home";
+            ViewBag.Title = "Mobizone-Home";
             try
             {
                 if (count == null)
