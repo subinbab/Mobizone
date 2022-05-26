@@ -8,67 +8,58 @@
 }
 <h3 style="text-align:center">My Orders</h3>
 
-            <div class="">
-                <table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
-                   
-
-                            <div class="product">Product</div>
-                            <div class="price">Price</div>
-                            <div class="status">Status</div>
-
-                    @foreach (var data in Model)
-                    {
-                        <div class=" text-md-center" style=" margin-top: 3%;">
-                            <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Images" style="height:70px;margin-right:90%; width:29px;" /></a>
-                        </div>
+<div class="">
+    <table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
 
 
+        <div class="product">Product</div>
+        <div class="price">Price</div>
+        <div class="status">Status</div>
 
-                        <h5 style=" font-size: 120%; margin-top: -5%; margin-left: 9%; } ">@data.product.name @data.product.model (@data.product.specs.rams.FirstOrDefault().ram)</h5>
-                        <div style=" margin-left: 9%;">
-                            <h5>Quantity : @data.quantity</h5>
-
-                        </div>
-
-
-                        <div>
-                            <h3 style=" margin-left: 48%; font-size: 120%; margin-top: -2%;">  &#8377 @data.price</h3>
-                        </div>
-
-                        <div style="margin-left: 85%; margin-top: -2%;">
-                            <h5> @data.status</h5>
-                        </div>
-                    }
-                </table>
+        @foreach (var data in Model)
+        {
+            <div class=" text-md-center" style=" margin-top: 3%;">
+                <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Images" style="height:70px;margin-right:90%; width:29px;" /></a>
             </div>
-       
+
+
+
+            <h5 style=" font-size: 120%; margin-top: -5%; margin-left: 9%; } ">@data.product.name @data.product.model (@data.product.specs.rams.FirstOrDefault().ram)</h5>
+            <div style=" margin-left: 9%;">
+                <h5>Quantity : @data.quantity</h5>
+
+            </div>
+
+
+            <div>
+                <h3 style=" margin-left: 48%; font-size: 120%; margin-top: -2%;">  &#8377 @data.price</h3>
+            </div>
+
+            <div style="margin-left: 85%; margin-top: -2%;">
+                <h5> @data.status</h5>
+            </div>
+        }
+    </table>
+</div>
+
+<a type="button" class="btn  btn-orange" style="background-color: #078ceb; padding-left: 1%; padding-right: 1%; color: white; margin-left: 81%; margin-top: 13%; " asp-action="index">Back</a>&nbsp;
+
+
 <style>
     .product {
         margin-left: 8%;
-        font-size:150%;
+        font-size: 150%;
     }
+
     .price {
         margin-top: -2%;
         margin-left: 48%;
         font-size: 150%;
     }
+
     .status {
         margin-left: 85%;
         margin-top: -2%;
         font-size: 150%;
     }
-    
 </style>
-
-
-
-
-
-
-<<<<<<< HEAD
-<a type="button" class="btn  btn-orange" style="background-color: #078ceb; padding-left: 1%; padding-right: 1%; color: white; margin-left: 81%; margin-top: 13%; " asp-action="index">Back</a>&nbsp;
-=======
-<a type="button" class="btn  btn-orange" style="background-color: #e52d2e;color:white; padding-left: 1%; padding-right: 1%; color: black; margin-left: 81%; margin-top: 13%; " asp-action="index">Back</a>&nbsp;
->>>>>>> f66ae2886fce5893a374a6a45888a57b9b0fedaf
-@* <div> <a href="url">Return to Store</a></div>*@
-
