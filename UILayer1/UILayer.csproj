@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Content Include="Controllers\navigation-bar.css" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
