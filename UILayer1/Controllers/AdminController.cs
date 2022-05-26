@@ -168,7 +168,7 @@ namespace UIlayer.Controllers
                         {
                             _notyf.Success("Prduct added");
                             var data = _opApi.GetAll().Result.Where(c => c.model.Equals(product.model)).FirstOrDefault();
-                            return RedirectToAction("ProductsSubPart", new { id = data.specsId, productId = data.id });
+                            return RedirectToAction("Index");
                         }
                         else
                         {
@@ -186,7 +186,7 @@ namespace UIlayer.Controllers
                     {
                         _notyf.Success("Product Updated");
                         var data = _opApi.GetAll().Result.Where(c => c.model.Equals(product.model)).FirstOrDefault();
-                        return RedirectToAction("ProductsSubPart", new { id = data.specsId, productId = data.id });
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -638,7 +638,7 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
+        [HttpGet("ProductDetails/DeleteImage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);

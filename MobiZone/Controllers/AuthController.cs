@@ -125,8 +125,8 @@ namespace ApiLayer.Controllers
                 try
                 {
                     var cart = _cartOperations.Get().Result.Where(c => c.sessionId.Equals(check.sessionId)).FirstOrDefault();
-                    cart.sessionId = data.sessionId;
-                    _cartOperations.Edit(cart);
+                    //cart.sessionId = data.sessionId;
+                    //_cartOperations.Edit(cart);
                 }
                 catch(Exception ex)
                 {

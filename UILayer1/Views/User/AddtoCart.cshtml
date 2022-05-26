@@ -16,54 +16,71 @@
 <script src="~/js/Quantity.js"></script>
 @{
     int? price = 0;
-    foreach (var data in Model)
+    if (Model != null)
     {
-        price = price + data.price;
+        foreach (var data in Model)
+        {
+            price = price + data.price;
+        }
     }
+
 }
 
-    <div class="row" style="height: 70vh;">
+    <div class="row" >
         <div class="col-8">
-            @foreach (var data in Model)
+            @if (Model != null)
             {
-      
-                <div class="row">
-                    <div class="col-2">
+                @foreach (var data in Model)
+                {
+
+                    <div class="row">
+                        <div class="col-2">
+                            @if(data.product.images == null || data.product.images.Count() == 0)
+                    {
+                        <p>no image</p>
+                    }
+                    else
+                    {
                         <img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 100%;height: 84%;">
+                    }      
+                        </div>
+                        <div class="col-7">
+                            <p class="textStyle" style="margin: 4%;">@data.product.name</p>
+                            <p class="textStyle textColorGreen" style="margin: 5%;">@data.price</p>
+                            <div style="margin: 3%;"><a asp-action="minus" asp-route-id="@data.productId"><span  id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span></a><input id="quantity" style="width: 13%;margin: 6%;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><span id="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;"></span></a></div>
+                        </div>
+                        <div class="3" style="margin: 10%;">
+                            <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="glyphicon glyphicon-trash" style="font-size: 27px;padding: 5%;"></span></a>
+                        </div>
                     </div>
-                    <div class="col-7">
-                        <p class="textStyle" style="margin: 4%;">@data.product.name</p>
-                        <p class="textStyle textColorGreen" style="margin: 5%;">@data.price</p>
-                        <div style="margin: 3%;"><span onclick="minus(@data.quantity,@data.productId)" id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span><input id="quantity" style="width: 13%;margin: 6%;" type="number" value="@data.quantity" /><span id="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;" onclick="plus(@data.quantity,@data.productId)"></span></div>
-                    </div>
-                    <div class="3" style="margin: 10%;">
-                        <span onclick="deleteItem(@data.productId)" class="glyphicon glyphicon-trash" style="font-size: 27px;padding: 5%;"></span>
-                    </div>
-                </div>
+                }
             }
+
         </div>
         <div class="col-4 ">
-            <div class="row" style="width: 100%;height: 77%;">
+            <div class="row" style="width: 32vh;height: 53vh;">
                 <div class="col-12" style="border: groove;height: 14%;">
                     <p class="textStyle">Total</p>
                 </div>
                 <hr />
                 <div class="col-12" style="border: groove;height: 70%;">
-                    <p><span>Price( @Model.Count() item) : </span><span>@price</span></p>
+                    @if(Model != null)
+                    {
+                        <p><span>Price( @Model.Count() item) : </span><span>@price</span></p>
+                    }
+                    <p><span>Price( 0 item) : </span><span>0</span></p>
+
                 </div>
                 <hr />
                 <div class="col-12" style="border: groove;height: 17%;">
-                    <p><span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 26px;text-align: center;margin: 10px;font-weight: bold;">@price</span></p>
+                    <p><span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 26px;text-align: center;margin: 10px;font-weight: bold;">@if (Model != null) { @price } 0</span></p>
                 </div>
                 <form action="/user/CartOrder" method="post" style="height: 144%;width: 100%;">
-                @foreach(var cartData in Model)
-                {
-                    <input type="hidden" value="@cartData" name="carts[]"/>
-                }
-                
-
                     <div class="col-12" style="height: 53%;padding: 0px;">
-                        <input style="height: 22%; background-color: #307cbd; color: white; text-align: center; padding: 5%; font-weight: bold; font-size: 19px; margin: 0px; padding-left: 27%; padding-right: 27%;"  type="submit" value="Proceed To Buy" />
+                        <input  type="submit" value="Proceed To Buy" style="
+    width: 100%;
+    height: 18%;
+"/>
                     </div>
                 </form>
             </div>
