@@ -15,6 +15,6 @@ namespace BusinessObjectLayer.ProductOperations
         Task<IEnumerable<ProductEntity>> Search(string name);
         Task<IEnumerable<ProductEntity>> SortByPriceAscending();
         Task<IEnumerable<ProductEntity>> SortByPriceDescending();
-        Task<IEnumerable<ProductEntity>> SortByBrand(string name);
+        Task<IEnumerable<ProductEntity>> FilterByBrand(string name);
     }
 }
