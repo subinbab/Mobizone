@@ -13,9 +13,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{59926585-9357-4240-B6A0-4120168CCD8E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C488AF9B-D523-4478-850D-E881255BDA11}"
-	ProjectSection(SolutionItems) = preProject
-		UILayer1\wwwroot\favicon.ico = UILayer1\wwwroot\favicon.ico
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObjectLayer", "BusinessObjectLayer\BusinessObjectLayer.csproj", "{054A6841-A5C6-4871-9056-7B84B7DE4D55}"
 EndProject

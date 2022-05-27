@@ -150,7 +150,7 @@
                         columns: [
                             { 'render': function () { ++c;return c; } },
                             {'render':function (data, type, full, meta) {return '<a href="/admin/orderDetails/'+full.orderId+'">'+full.orderId+'</a>'; }},
-                            { 'render': function(data, type, full, meta){return Roles[full.cancelRequested-1] } },
+                            { 'render': function (data, type, full, meta) { if (full.cancelRequested == null) { return ''; } else { return Roles[full.cancelRequested - 1] } } },
                             { "render": function (data, type, full, meta) { dataStatus = full.status;
                     console.log(obj);
                     console.log(dataList[dataStatus])

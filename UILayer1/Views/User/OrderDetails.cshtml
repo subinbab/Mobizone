@@ -4,7 +4,7 @@
 @using System;
 @model DomainLayer.Checkout;
 @{
-    ViewData["Title"] = "Order Details";
+    ViewData["Title"] = "Mobizone- Order Details";
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
     var productDetails = ViewBag.Product as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
@@ -55,8 +55,9 @@
                     </ul>
                 </div>
             </div>
-            <div>
-                <div><a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="">Cancel Order</a></div>
+    
+            <div style=" margin-left: 60%;">
+                <div><a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a></div>
             </div>
             <div class="back">
                 <a type="button" class="btn  btn-orange" style="background-color: #3187e3; color: white; margin-top: -1%;" asp-action="MyOrders">Back</a>&nbsp;
@@ -95,7 +96,7 @@
         margin-left: 75%;
     }   
     .btn-orange {
-        margin-left: 66%;
+        margin-left: 40%;
         background-color: #e52d2e;
     }
 </style>

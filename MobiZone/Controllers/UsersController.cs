@@ -90,11 +90,13 @@ namespace ApiLayer.Controllers
             _user.modifiedOn = DateTime.Now;
             _user.createdBy = users.FirstName + " " + users.LastName;
             _user.modifiedBy = users.FirstName + " " + users.LastName;
-            //_user.Password = _sec.Encrypt("admin", users.Password);
-            _user.Password = users.Password;
+            _user.Password = _sec.Encrypt("admin", users.Password);
+
+            //_user.Password = users.Password;
             _login.username = users.Email;
-            //_login.password = _sec.Encrypt("admin", users.Password);
-            _login.password = users.Password;
+            _login.password = _sec.Encrypt("admin", users.Password);
+            //_login.password = users.Password;
+
             _login.createdOn = DateTime.Now;
             _login.createdBy = users.FirstName + " " + users.LastName;
             _login.modifiedOn = DateTime.Now;
@@ -592,7 +594,28 @@ namespace ApiLayer.Controllers
             }
         }
 
+        [HttpDelete("DeleteCart/{id}")]
+        public ResponseModel<MyCart> DeleteCart(int id)
+        {
+            try
+            {
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
+                /*  _addressList = _addressOperations.Get().Result;*/
+                var data = _cartOperations.Get().Result;
+                _cartOperations.Delete(data.Where(c => c.id.Equals(id)).FirstOrDefault());
+                _response.AddResponse(true, 0, null, "deleted");
+                return _response;
 
+            }
+            catch (Exception ex)
+            {
+                ResponseModel<MyCart> _response = new ResponseModel<MyCart>();
+                string message = _userMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK) + ex.Message;
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+        }
     }
 
 
