@@ -593,49 +593,6 @@ namespace UILayer.Controllers
                 }
 
 
-                /* bool check = false;
-                 try
-                 {
-                     try
-                     {
-
-                         string name = _distributedCache.GetStringAsync("cart").Result;
-                         _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                         if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                         {
-
-                             foreach (var data in _carts)
-                             {
-                                 foreach (var data1 in data.cartDetails)
-                                 {
-                                     if (data1.productId.Equals(id))
-                                     {
-                                         var quantity = data1.quantity;
-                                         data1.quantity = quantity + 1;
-                                         check = true;
-                                         cartList.Add(data1);
-                                     }
-
-                                 }
-                                 cartListSession.Add(data);
-                             }
-                             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(cartListSession));
-                         }
-                         else
-                         {
-                             _carts.Add(cart);
-                             _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                         }
-
-                     }
-                     catch (Exception ex)
-                     {
-                     }
-                 }
-                 catch (Exception ex)
-                 {
-                 }*/
-
             }
             try
             {
@@ -694,21 +651,13 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpGet("/user/DeleteAddress/{id}")]
-        /*  public IActionResult AccountManage(int id)
-          {
-              var result = userApi.DeleteAddress(id);
-              ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-              _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-              ViewData["userData"] = _user;
-              return View();
-          }*/
         public IActionResult DeleteAddress(int id)
         {
             var result = userApi.DeleteAddress(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
-            return View();
+            return Redirect("Account");
         }
 
         [HttpGet]
