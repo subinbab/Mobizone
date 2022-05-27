@@ -4,10 +4,10 @@
 
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
 }
-@{ 
+@{
     ViewData["Title"] = "Mobizone- Add New Address";
 }
-  
+
 
 
 <div class="row align-item-center">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="phoneNumber" class="control-label" style="padding-top: 10%">Phone Number</label>
-                        <input asp-for="phoneNumber" class="form-control"type="number" />
+                        <input asp-for="phoneNumber" class="form-control" type="number" />
                         <span asp-validation-for="phoneNumber" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
@@ -92,18 +92,20 @@
 
         </div>
     </div>
+
 </div>
-<style>
-    .card-body {
-        margin-left: 40%;
+
+    <style>
+        .card-body {
+            margin-left: 40%;
+        }
+
+        .text-center {
+            margin-left: 73%;
+        }
+    </style>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
-
-    .text-center {
-        margin-left: 73%;
-    }
-</style>
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

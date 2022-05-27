@@ -657,7 +657,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
-            return Redirect("Account");
+            return RedirectToAction("Account");
         }
 
         [HttpGet]

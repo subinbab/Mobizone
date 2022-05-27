@@ -30,18 +30,20 @@
 
         <div class="container-fluid row">
             <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
-                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;"
+                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height: 30px; width: 40px; margin-left: 2%; margin-top: -9%;"
                      class="float-left" />
-
-                <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
+                <div class="mobizone" style="margin-top: -8%; margin-left: 12%; ">
+                    <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
                    -webkit-text-stroke: thin;
                     color: red;text-decoration:none;margin-top:10%;">MOBIZONE </a>
+                </div>
+               
 
             </div>
             <div class="col">
                 <form class="row" style="align-items: baseline;" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
-                        <input type="search" id="form1" class="form-control" name="name"/>
+                        <input type="search" id="form1" class="form-control" name="name" required/>
                      </div>
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
                  <i class="fas fa-search " style="font-size: 17px;"></i>
@@ -99,8 +101,8 @@
 
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                      <a asp-action="addtocart">  <i class="fa-solid fa-cart-shopping"></i>
-                        <a class="mr-3">Cart</a></a> 
+                       <i class="fa-solid fa-cart-shopping"></i>
+                        <a asp-action="addtocart"class="mr-3">Cart</a> 
                     </div>
                 </div>
                 
