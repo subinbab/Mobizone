@@ -61,12 +61,12 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="account"style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
+                        <a asp-controller="User" asp-action="account"style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                            <a asp-action="registration">Register</a>
+                            <a asp-action="registration" style="color:white;">Register</a>
                         </div>
                     }
 
@@ -74,7 +74,7 @@
 
 
                         <div class="dropdown">
-                            <a class="dropbtn">Account</a>
+                            <a class="dropbtn" style="color:white;">Account</a>
                             <div class="dropdown-content">
 
                                 <div class="row" style=" justify-content: center; display: flex; ">
@@ -107,7 +107,7 @@
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        <a  asp-action="addtocart" class="mr-3">Cart</a>
+                        <a  asp-action="addtocart" class="mr-3" style="color:white;">Cart</a>
                     </div>
                 </div>
 
