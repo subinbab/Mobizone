@@ -82,10 +82,10 @@
                               <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e">Login</button>
                                 </div>
                                 <div>
-                                    <a asp-controller="user" asp-action="ForgotPassword" style="color:black;"> Forgot Password ?</a>
+                                    <a asp-controller="user" asp-action="ForgotPassword" style="color:white;"> Forgot Password ?</a>
                                 </div>
                                     <div>
-                                        <a asp-controller="user" asp-action="registration"style="color:black;">If not a user,Register here</a>
+                                        <a asp-controller="user" asp-action="registration"style="color:white;">If not a user,Register here</a>
                                     </div>
                                     @if (!string.IsNullOrEmpty(error))
                                     {
@@ -136,7 +136,8 @@
         display: inline-block;
     }
     .bg-white {
-        background-color:#b5d9ff !important;
+        background: linear-gradient(to bottom,#0f9cef,white, #666363 )
+        !important;
     }
     .alert-danger {
         color: #040404;

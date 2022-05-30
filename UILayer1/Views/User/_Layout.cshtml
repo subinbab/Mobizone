@@ -26,7 +26,7 @@
 <body>
 
 
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background-color: #b5d9ff ">
+    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black,#0099f3, red ); ">
 
         <div class="container-fluid row">
             <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
@@ -56,12 +56,12 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
+                    <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
-                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                                <a asp-action="registration">Register</a>
+                        <div class="col" style="align-items: center; justify-content: center; display: flex; ">
+                                <a asp-action="registration"style="color: white;" >Register</a>
                             </div>
                     }
 
@@ -69,7 +69,7 @@
 
 
                             <div class="dropdown">
-  <a class="dropbtn">Account</a>
+  <a class="dropbtn"style="color: white;">Account</a>
   <div class="dropdown-content">
    
       <div class="row" style=" justify-content: center; display: flex; ">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                        <i class="fa-solid fa-cart-shopping"></i>
-                        <a asp-action="addtocart"class="mr-3">Cart</a> 
+                        <a asp-action="addtocart"class="mr-3"style="color: white;">Cart</a> 
                     </div>
                 </div>
                 
@@ -113,7 +113,7 @@
     </nav>
 
 
-    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #b5d9ff ">
+    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; ">
 
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
@@ -147,7 +147,7 @@
 
     <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
 
-    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
+    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #dddddd; ">
 
         <div class="container-fluid" >
             <main role="main" class="pb-3">

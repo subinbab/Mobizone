@@ -16,8 +16,8 @@
         <div class="col-md-12 mb-4">
             <div class="card-body">
                 <div class=" text-center"
-                     <h1>vEdit Contact Us</h1>
-                <form asp-action="ContactEdit" method="post">
+                     <h2>Edit Contact Us</h2>
+                   <form asp-action="ContactEdit" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <input asp-for="id" value="@Model.id" type="hidden" />
@@ -67,8 +67,8 @@
 
                         <br />
                         <div class="row">
-                            <div class="col-md-6">
-                                <label asp-for="email" class="control-label">Email</label>
+                            <div class="col-md-6" >
+                                <label asp-for="email" class="control-label"style="margin-right:87%;">Email</label>
                                 <input asp-for="email" class="form-control" />
 
 
@@ -76,7 +76,7 @@
 
 
                             <div class="col-md-6">
-                                <label asp-for="phoneNumber" class="control-label">PhoneNumber</label>
+                                <label asp-for="phoneNumber" class="control-label"style="margin-right:69%;">Phone number</label>
                                 <input asp-for="phoneNumber" class="form-control" type="number" />
                                 <span asp-validation-for="phoneNumber" class="text-danger"></span>
                             </div>
@@ -94,14 +94,16 @@
                             </div>
                         </div>
                     </div>
-                      </form>
-                <div class="text-center">
-                    <div class="form-group">
-                        <button class="btn btn-indigo" ><a asp-controller="Admin" asp-action="Contact" style="text-decoration: none; "><b style="color: white;">Cancel</b></a></button>
-                    </div>
 
-                </div>
-                
+                    </form>
+
+                    <div class="text-center">
+                        <div class="form-group">
+                            <button class="btn btn-indigo"><a asp-controller="Admin" asp-action="Contact" style="text-decoration: none; "><b style="color: white;">Cancel</b></a></button>
+                        </div>
+
+                    </div>
+                 </div>
             </div>
         </div>
     </div>
