@@ -293,7 +293,7 @@ namespace ApiLayer.Controllers
         #endregion
         #region Filter Product By brand 
         [HttpGet("FilterByBrand/{name}")]
-        public ResponseModel<IEnumerable<ProductEntity>> SortByBrand(string name)
+        public ResponseModel<IEnumerable<ProductEntity>> FilterByBrand(string name)
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
             try

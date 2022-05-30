@@ -41,12 +41,12 @@
             <div class="col">
                 <form class="row" style="align-items: baseline;" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
-                        <input type="search" id="form1" class="form-control" name="name"/>
-                     </div>
+                        <input type="search" id="form1" class="form-control" name="name" />
+                    </div>
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
-                 <i class="fas fa-search " style="font-size: 17px;"></i>
-                </button>
-               </form>
+                        <i class="fas fa-search " style="font-size: 17px;"></i>
+                    </button>
+                </form>
             </div>
 
 
@@ -54,57 +54,59 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
+                        <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                                <a asp-action="registration">Register</a>
-                            </div>
+                            <a asp-action="registration">Register</a>
+                        </div>
                     }
 
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
 
-                            <div class="dropdown">
-  <a class="dropbtn">Account</a>
-  <div class="dropdown-content">
-   
-      <div class="row" style=" justify-content: center; display: flex; ">
-          @if (User.Identity.IsAuthenticated)
-          {
-              <a asp-controller="User" asp-action="account">My Account </a>
-              <hr />
-              <a asp-controller="User" asp-action="MyOrders">My Orders</a>
-              <hr />
-              <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-              <hr />
+                        <div class="dropdown">
+                            <a class="dropbtn">Account</a>
+                            <div class="dropdown-content">
+
+                                <div class="row" style=" justify-content: center; display: flex; ">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a asp-controller="User" asp-action="account">My Account </a>
+                                        <hr />
+                                        <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                        <hr />
+                                        <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+                                        <hr />
 
 
 
-          }
-          else
-          {
-              <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                  <a asp-action="registration">Register</a>
-              </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                                            <a asp-action="registration">Register</a>
+                                        </div>
 
-              <a  href="login">Login</a>
-          }
-      </div>
-  </div>
-</div>
+                                        <a href="login">Login</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
 
 
 
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                      <a asp-action="addtocart">  <i class="fa-solid fa-cart-shopping"></i>
-                        <a class="mr-3">Cart</a></a> 
+                        <a asp-action="addtocart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <a class="mr-3">Cart</a>
+                        </a>
                     </div>
                 </div>
-                
-                
+
+
             </div>
 
         </div>
@@ -116,9 +118,9 @@
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
-        <div id="dropdown1" class="dropdown" >
+        <div id="dropdown1" class="dropdown">
             <form asp-action="filter" method="post">
-                <select  name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
+                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
                     <option disabled selected> Select Brand </option>
                 </select>
 
@@ -129,123 +131,157 @@
 
         <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
             <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
-           
-            </div>
-            <div id="dropdown1" class="dropdown">
-                   <a asp-action="sort" method="post"><button style="width: 100%; font-size: 14px"> Price(Low to High)</button></a>
-                   <a asp-action="sortby" method="post"><button style="width: 100%; font-size: 14px">Price(High to Low)</button></a>
 
-            </div>
+        </div>
+        <div id="dropdown1" class="dropdown">
+            <a asp-action="sort" method="post"><button style="width: 100%; font-size: 14px"> Price(Low to High)</button></a>
+            <a asp-action="sortby" method="post"><button style="width: 100%; font-size: 14px">Price(High to Low)</button></a>
+
         </div>
     </div>
+    </div>
 
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
 
+            @for (int i = 0; i <= count; i++)
+            {
+                <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
+
+                pagination = pagination + 1;
+            }
+
+        </ul>
+    </nav>
 
 
 
     <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
 
-    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
+        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
 
-        <div class="container-fluid" >
-            <main role="main" class="pb-3">
-                <div id="mypartialview"></div>
-                <div>
-                    @RenderBody()
-                  
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    <div id="mypartialview"></div>
+                    <div>
 
-                    <footer>
-                        <div class="row justify-content-center">
-                            <a asp-action="index">
-                                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                                     class="float-left" />
-                            </a>
-
-                            <ul class="list">
-
-                                </li>
-                                <li class="about">
-                                    <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                                </li>
-                                <li class="about">
-                                    <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                                </li>
-
-                                <li class="about">
-                                    <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                                </li>
-
-                                <li class="about">
-
-                                    <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+                        @RenderBody()
 
 
-                                </li>
-                            </ul>
+                        <footer>
+                            <div class="row justify-content-center">
+                                <a asp-action="index">
+                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                                         class="float-left" />
+                                </a>
 
-                        </div>
+                                <ul class="list">
 
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                                    </li>
 
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                                    </li>
 
+                                    <li class="about">
 
-                        <div style="font-size: 12px; padding-bottom:10px">
-                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-                        </div>
-
-                    </footer>
-                    <style>
-                        .container-fluid {
-                            width: 100%;
-                            padding-right: 15px;
-                            padding-left: 15px;
-                            margin-right: auto;
-                            margin-left: 0px;
-                        }
-
-                        footer {
-                            margin-top: 100px;
-                        }
-
-                        .dropdown {
-                            display: none;
-                            background-color: #275e4900;
-                            padding-left: 8px;
-                            text-align: center;
-                            font-size: medium;
-                        }
-
-                        li {
-                            display: inline;
-                        }
-
-                        a {
-                            cursor: pointer;
-                        }
+                                        <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
-                        .dropbtn {
-                            color: black;
-                            padding: 16px;
-                            font-size: 16px;
-                            border: none;
-                        }
+                                    </li>
+                                </ul>
 
-                        .dropdown {
-                            position: relative;
-                            display: inline-block;
-                        }
+                            </div>
 
 
-                        .dropdown-content {
-                            display: none;
-                            position: absolute;
-                            background-color: white;
-                            min-width: 160px;
-                            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                            z-index: 1;
-                        }
 
+
+                            <div style="font-size: 12px; padding-bottom:10px">
+                                <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
+
+                            </div>
+
+                        </footer>
+                        <style>
+                            .container-fluid {
+                                width: 100%;
+                                padding-right: 15px;
+                                padding-left: 15px;
+                                margin-right: auto;
+                                margin-left: 0px;
+                            }
+
+                            footer {
+                                margin-top: 100px;
+                            }
+
+                            .dropdown {
+                                display: none;
+                                background-color: #275e4900;
+                                padding-left: 8px;
+                                text-align: center;
+                                font-size: medium;
+                            }
+
+                            li {
+                                display: inline;
+                            }
+
+                            a {
+                                cursor: pointer;
+                            }
+
+
+                            .dropbtn {
+                                color: black;
+                                padding: 16px;
+                                font-size: 16px;
+                                border: none;
+                            }
+
+                            .dropdown {
+                                position: relative;
+                                display: inline-block;
+                            }
+
+
+                            .dropdown-content {
+                                display: none;
+                                position: absolute;
+                                background-color: white;
+                                min-width: 160px;
+                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                z-index: 1;
+                            }
+
+
+                                .dropdown-content a {
+                                    color: black;
+                                    padding: 12px 26px;
+                                    text-decoration: none;
+                                    display: block;
+                                }
+
+
+
+
+                                    .dropdown-content a:hover {
+                                        background-color: #ddd;
+                                    }
+
+                            .dropdown:hover .dropdown-content {
+                                display: block;
+                            }
+
+
+                            .dropdown:hover .dropbtn {
+                            }
 
                             .dropdown-content a {
                                 color: black;
@@ -254,73 +290,51 @@
                                 display: block;
                             }
 
-
-
-
                                 .dropdown-content a:hover {
                                     background-color: #ddd;
                                 }
 
-                        .dropdown:hover .dropdown-content {
-                            display: block;
-                        }
-
-
-                        .dropdown:hover .dropbtn {
-                        }
-
-                        .dropdown-content a {
-                            color: black;
-                            padding: 12px 26px;
-                            text-decoration: none;
-                            display: block;
-                        }
-
-                            .dropdown-content a:hover {
-                                background-color: #ddd;
+                            .dropdown:hover .dropdown-content {
+                                display: block;
                             }
 
-                        .dropdown:hover .dropdown-content {
-                            display: block;
-                        }
-
-                        .dropdown:hover .dropbtn {
-                        }
+                            .dropdown:hover .dropbtn {
+                            }
 
 
 
 
-                        .row {
-                            margin-left: 0px !important;
-                        }
-                    </style>
-                   @* </footer>*@
-                </div>
-            </main>
+                            .row {
+                                margin-left: 0px !important;
+                            }
+                        </style>
+                        @* </footer>*@
+                    </div>
+                </main>
+            </div>
         </div>
-    </div>
 
 
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#filter").click(function () {
-                $("#dropdown1").toggle();
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#filter").click(function () {
+                    $("#dropdown1").toggle();
+                });
+
             });
 
-        });
-
-        $(document).ready(function () {
-            $("#sort").click(function () {
-                $("#dropdown2").toggle();
+            $(document).ready(function () {
+                $("#sort").click(function () {
+                    $("#dropdown2").toggle();
+                });
             });
-        });
-    </script>
+        </script>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
