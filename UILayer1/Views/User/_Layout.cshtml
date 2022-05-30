@@ -1,5 +1,7 @@
 ﻿
 @{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
     if(ViewBag.BrandList == null)
     {
         ViewBag.BrandList = "";
@@ -35,7 +37,7 @@
                 <div class="mobizone" style="margin-top: -8%; margin-left: 12%; ">
                     <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
                    -webkit-text-stroke: thin;
-                    color: red;text-decoration:none;margin-top:10%;">MOBIZONE </a>
+                    color: white;text-decoration:none;margin-top:10%;">MOBIZONE </a>
                 </div>
                
 
@@ -43,13 +45,8 @@
             <div class="col">
                 <form class="row" style="align-items: baseline;" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
-<<<<<<< HEAD
-                        <input type="search" id="form1" class="form-control" name="name" />
-                    </div>
-=======
                         <input type="search" id="form1" class="form-control" name="name" required/>
                      </div>
->>>>>>> 1018b362353baae78e87b34329894b5814f460f0
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
                         <i class="fas fa-search " style="font-size: 17px;"></i>
                     </button>
@@ -61,15 +58,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-<<<<<<< HEAD
-                        <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
-                    }
-                    else
-                    {
-                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                            <a asp-action="registration">Register</a>
-                        </div>
-=======
+
                     <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
@@ -77,43 +66,27 @@
                         <div class="col" style="align-items: center; justify-content: center; display: flex; ">
                                 <a asp-action="registration"style="color: white;" >Register</a>
                             </div>
->>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
                     }
 
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
 
-<<<<<<< HEAD
-                        <div class="dropdown">
-                            <a class="dropbtn">Account</a>
-                            <div class="dropdown-content">
 
-                                <div class="row" style=" justify-content: center; display: flex; ">
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <a asp-controller="User" asp-action="account">My Account </a>
-                                        <hr />
-                                        <a asp-controller="User" asp-action="MyOrders">My Orders</a>
-                                        <hr />
-                                        <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-                                        <hr />
-=======
                             <div class="dropdown">
-  <a class="dropbtn"style="color: white;">Account</a>
-  <div class="dropdown-content">
+                              <a class="dropbtn"style="color: white;">Account</a>
+                              <div class="dropdown-content">
    
-      <div class="row" style=" justify-content: center; display: flex; ">
-          @if (User.Identity.IsAuthenticated)
-          {
-              <a asp-controller="User" asp-action="account">My Account </a>
-              <hr />
-              <a asp-controller="User" asp-action="MyOrders">My Orders</a>
-              <hr />
-              <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-              <hr />
->>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
+                                  <div class="row" style=" justify-content: center; display: flex; ">
+                                      @if (User.Identity.IsAuthenticated)
+                                      {
+                                          <a asp-controller="User" asp-action="account">My Account </a>
+                                          <hr />
+                                          <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                          <hr />
+                                          <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+                                          <hr />
 
-
+                                           
 
                                     }
                                     else
@@ -122,37 +95,18 @@
                                             <a asp-action="registration">Register</a>
                                         </div>
 
-<<<<<<< HEAD
-                                        <a href="login">Login</a>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-=======
-              <a asp-controller="admin" asp-action="login"  >Login</a>
+     <a asp-controller="admin" asp-action="login"  >Login</a>
           }
       </div>
   </div>
 </div>
->>>>>>> 1018b362353baae78e87b34329894b5814f460f0
 
 
 
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
-<<<<<<< HEAD
-                        <a asp-action="addtocart">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <a class="mr-3">Cart</a>
-                        </a>
-=======
-                       <i class="fa-solid fa-cart-shopping"></i>
-<<<<<<< HEAD
-                        <a asp-action="addtocart"class="mr-3">Cart</a> 
->>>>>>> 1018b362353baae78e87b34329894b5814f460f0
-=======
-                        <a asp-action="addtocart"class="mr-3"style="color: white;">Cart</a> 
->>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <a asp-action="addtocart" class="mr-3" style="color: white;text-decoration:none;">Cart</a>
                     </div>
                 </div>
 
@@ -163,7 +117,7 @@
     </nav>
 
 
-    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; ">
+    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
 
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
@@ -174,8 +128,8 @@
                     <option disabled selected> Select Brand </option>
                 </select>
 
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e"
-                </input>
+              <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter"                 style="color:white; background-color: #e52d2e">
+               </input>
             </form>
         </div>
 
@@ -189,7 +143,7 @@
 
         </div>
     </div>
-    </div>
+   
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
@@ -206,13 +160,10 @@
 
 
 
-    <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
+    <div class="content " style=" padding: 143px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
 
-<<<<<<< HEAD
-        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
-=======
-    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #dddddd; ">
->>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
+
+        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #f5f2f2; ">
 
             <div class="container-fluid">
                 <main role="main" class="pb-3">
@@ -390,5 +341,6 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         @await Component.InvokeAsync("Notyf")
         @await RenderSectionAsync("Scripts", required: false)
+    </div>
 </body>
 </html>
