@@ -1,5 +1,7 @@
 ﻿
 @{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
     if(ViewBag.BrandList == null)
     {
         ViewBag.BrandList = "";
@@ -26,7 +28,11 @@
 <body>
 
 
+<<<<<<< HEAD
     <nav class="navbar navbar-light " style="position: fixed; width: 100%; background-color: #b5d9ff ">
+=======
+    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black, red ); ">
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
 
         <div class="container-fluid row">
             <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
@@ -35,13 +41,23 @@
 
                 <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
                    -webkit-text-stroke: thin;
+<<<<<<< HEAD
                     color: red;text-decoration:none;margin-top:10%;">MOBIZONE </a>
+=======
+                    color: white;text-decoration:none;margin-top:10%;">MOBIZONE </a>
+                </div>
+               
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
 
             </div>
             <div class="col">
                 <form class="row" style="align-items: baseline;" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
+<<<<<<< HEAD
                         <input type="search" id="form1" class="form-control" name="name"/>
+=======
+                        <input type="search" id="form1" class="form-control" name="name" required/>
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
                      </div>
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
                  <i class="fas fa-search " style="font-size: 17px;"></i>
@@ -54,18 +70,29 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
+<<<<<<< HEAD
                     <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
                                 <a asp-action="registration">Register</a>
+=======
+
+                    <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
+                    }
+                    else
+                    {
+                        <div class="col" style="align-items: center; justify-content: center; display: flex; ">
+                                <a asp-action="registration"style="color: white;" >Register</a>
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
                             </div>
                     }
 
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
 
+<<<<<<< HEAD
                             <div class="dropdown">
   <a class="dropbtn">Account</a>
   <div class="dropdown-content">
@@ -80,7 +107,24 @@
               <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
               <hr />
 
+=======
 
+                            <div class="dropdown">
+                              <a class="dropbtn"style="color: white;">Account</a>
+                              <div class="dropdown-content">
+   
+                                  <div class="row" style=" justify-content: center; display: flex; ">
+                                      @if (User.Identity.IsAuthenticated)
+                                      {
+                                          <a asp-controller="User" asp-action="account">My Account </a>
+                                          <hr />
+                                          <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                          <hr />
+                                          <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+                                          <hr />
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
+
+                                           
 
           }
           else
@@ -89,7 +133,11 @@
                   <a asp-action="registration">Register</a>
               </div>
 
+<<<<<<< HEAD
               <a  href="login">Login</a>
+=======
+     <a asp-controller="admin" asp-action="login"  >Login</a>
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
           }
       </div>
   </div>
@@ -99,8 +147,13 @@
 
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
+<<<<<<< HEAD
                       <a asp-action="addtocart">  <i class="fa-solid fa-cart-shopping"></i>
                         <a class="mr-3">Cart</a></a> 
+=======
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <a asp-action="addtocart" class="mr-3" style="color: white;text-decoration:none;">Cart</a>
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
                     </div>
                 </div>
                 
@@ -111,7 +164,11 @@
     </nav>
 
 
+<<<<<<< HEAD
     <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #b5d9ff ">
+=======
+    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
+>>>>>>> a9f32e8e61c70ae0dfa30f0387d95d6fad7af23f
 
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
@@ -122,8 +179,8 @@
                     <option disabled selected> Select Brand </option>
                 </select>
 
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e"
-                </input>
+              <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter"                 style="color:white; background-color: #e52d2e">
+               </input>
             </form>
         </div>
 
@@ -143,9 +200,12 @@
 
 
 
-    <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
 
-    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
+    <div class="content " style=" padding: 143px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
+
+
+        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #f5f2f2; ">
+
 
         <div class="container-fluid" >
             <main role="main" class="pb-3">
@@ -313,15 +373,10 @@
 
         });
 
-        $(document).ready(function () {
-            $("#sort").click(function () {
-                $("#dropdown2").toggle();
-            });
-        });
-    </script>
+~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
