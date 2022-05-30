@@ -26,7 +26,7 @@
 <body>
 
 
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background-color: #b5d9ff ">
+    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black,#0099f3, red ); ">
 
         <div class="container-fluid row">
             <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
@@ -61,6 +61,7 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
+<<<<<<< HEAD
                         <a asp-controller="User" asp-action="account" style="color:black;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
@@ -68,11 +69,21 @@
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
                             <a asp-action="registration">Register</a>
                         </div>
+=======
+                    <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
+                    }
+                    else
+                    {
+                        <div class="col" style="align-items: center; justify-content: center; display: flex; ">
+                                <a asp-action="registration"style="color: white;" >Register</a>
+                            </div>
+>>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
                     }
 
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
 
+<<<<<<< HEAD
                         <div class="dropdown">
                             <a class="dropbtn">Account</a>
                             <div class="dropdown-content">
@@ -86,6 +97,21 @@
                                         <hr />
                                         <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
                                         <hr />
+=======
+                            <div class="dropdown">
+  <a class="dropbtn"style="color: white;">Account</a>
+  <div class="dropdown-content">
+   
+      <div class="row" style=" justify-content: center; display: flex; ">
+          @if (User.Identity.IsAuthenticated)
+          {
+              <a asp-controller="User" asp-action="account">My Account </a>
+              <hr />
+              <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+              <hr />
+              <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
+              <hr />
+>>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
 
 
 
@@ -121,8 +147,12 @@
                         </a>
 =======
                        <i class="fa-solid fa-cart-shopping"></i>
+<<<<<<< HEAD
                         <a asp-action="addtocart"class="mr-3">Cart</a> 
 >>>>>>> 1018b362353baae78e87b34329894b5814f460f0
+=======
+                        <a asp-action="addtocart"class="mr-3"style="color: white;">Cart</a> 
+>>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
                     </div>
                 </div>
 
@@ -133,7 +163,7 @@
     </nav>
 
 
-    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #b5d9ff ">
+    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; ">
 
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
@@ -178,7 +208,11 @@
 
     <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
 
+<<<<<<< HEAD
         <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
+=======
+    <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #dddddd; ">
+>>>>>>> 99ad7f277ce76c273da9bbe3d8e7d79fc4a63eeb
 
             <div class="container-fluid">
                 <main role="main" class="pb-3">
