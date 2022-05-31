@@ -742,7 +742,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
-        public IActionResult MyOrders()
+        public IActionResult MyOrders() 
         {
             var user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var userOrders = userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
