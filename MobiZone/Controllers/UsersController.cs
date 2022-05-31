@@ -468,10 +468,11 @@ namespace ApiLayer.Controllers
         [HttpGet("GetCart")]
         public async Task<ResponseModel<IEnumerable<MyCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<MyCart>> _response = null;
+            IEnumerable<MyCart> result = null;
+            ResponseModel<IEnumerable<MyCart>> _response = new ResponseModel<IEnumerable<MyCart>>();
             try
             {
-                var result = await _cartOperations.Get();
+                 result = await _cartOperations.Get();
                 if (result == null)
                 {
                     string message = " " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);

@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,7 +48,16 @@ namespace BusinessObjectLayer
 
         public async Task<IEnumerable<MyCart>> Get()
         {
-            return await  _repo.Get(n1=>n1.cartDetails,n2=> n2.cartDetails);
+            Task<IQueryable<MyCart>> result = null;
+            try
+            {
+                result =  _repo.Get(n1 => n1.cartDetails, n2 => n2.cartDetails);
+            }
+            catch(Exception ex)
+            {
+                result = null;
+            }
+            return await result;
         }
     }
 }
