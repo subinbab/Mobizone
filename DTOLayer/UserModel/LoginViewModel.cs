@@ -7,12 +7,12 @@ namespace DomainLayer.Users
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name ="Username")]
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "This field should not contain any numbers or special characters")]
         public string username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [DataType(DataType.Password)]
         [Display(Name ="Password")]
         public string password { get; set; }
