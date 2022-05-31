@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Simpleview/_UserLogin.cshtml";
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = " Mobizone - Login";
 }
 
 @{
@@ -8,16 +8,16 @@
     var error = TempData["error"] as string;
 }
 @model DomainLayer.Users.LoginViewModel
-@{       if (User.Identity.IsAuthenticated)
-            {
-    <script type="text/javascript">
-        function noBack() { window.history.forward() }
-        noBack();
-        window.onload = noBack;
-        window.onpageshow = function (evt) { if (evt.persisted) noBack() }
-        window.onunload = function () { void (0) }
-    </script>
-            }
+@{ if (User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            function noBack() { window.history.forward() }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) { if (evt.persisted) noBack() }
+            window.onunload = function () { void (0) }
+        </script>
+    }
 }
 
 
@@ -28,21 +28,21 @@
 <script>eval(mod_pagespeed_fUKQzxht9j);</script>
 <script>eval(mod_pagespeed_lpntivnFUb);</script>
 <head>
-    <script type="text/javascript">
-        function validate() {
-            username = document.getElementById("username").value;
-            password = document.getElementById("password").value;
-            if (username == null || username == "") {
-                alert("Please enter a username");
-                return false;
+    @*  <script type="text/javascript">
+            function validate() {
+                username = document.getElementById("username").value;
+                password = document.getElementById("password").value;
+                if (username == null || username == "") {
+                    alert("Please enter a username");
+                    return false;
+                }
+                if (password == null || password == "") {
+                    alert("Please enter a password");
+                    return false;
+                }
+                return true;
             }
-            if (password == null || password == "") {
-                alert("Please enter a password");
-                return false;
-            }
-            return true;
-        }
-    </script>
+        </script>*@
 </head>
 
 <div class="row">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-12  ">
                             <div class="d-flex" style="text-align: center;">
-                               <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:62px; width:65px;margin-left:100px ; " />
+                                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:62px; width:65px;margin-left:100px ; " />
                                 <div class="w-100">
 
                                     <h3 class="mb-4" style="margin-top:65px; margin-left:-170px">Login</h3>
@@ -69,6 +69,7 @@
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
                                     <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Email id " required>
+
                                 </div>
                                 <div class="form-group mb-3">
                                     <label asp-for="password" class="control-label">Password</label>
@@ -79,20 +80,20 @@
 
 
 
-                              <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e">Login</button>
+                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e">Login</button>
                                 </div>
                                 <div>
                                     <a asp-controller="user" asp-action="ForgotPassword" style="color:white;"> Forgot Password ?</a>
                                 </div>
-                                    <div>
-                                        <a asp-controller="user" asp-action="registration"style="color:white;">If not a user,Register here</a>
+                                <div>
+                                    <a asp-controller="user" asp-action="registration" style="color:white;">If not a user,Register here</a>
+                                </div>
+                                @if (!string.IsNullOrEmpty(error))
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @error
                                     </div>
-                                    @if (!string.IsNullOrEmpty(error))
-                                    {
-                                        <div class="alert alert-danger" role="alert">
-                                            @error
-                                        </div>
-                                    }
+                                }
 
                             </form>
 
@@ -101,7 +102,7 @@
                     </div>
                 </div>
             </div>
-          
+
         </div>
     </section>
 
@@ -123,22 +124,26 @@
         background-color: white;
         margin-left: 30px;
         margin-top: 50px;
-        display:none;
+        display: none;
     }
+
     .button {
         background-color: indianred;
     }
+
     section {
         margin-left: 0px;
         margin-top: 0px;
     }
+
     .form-control {
         display: inline-block;
     }
+
     .bg-white {
-        background: linear-gradient(to bottom,#fff1f1 40%, #222121 )
-        !important;
+        background: linear-gradient(to bottom,#fff1f1 40%, #222121 ) !important;
     }
+
     .alert-danger {
         color: #040404;
         background-color: #f1f1f1;
@@ -150,23 +155,6 @@
 
 </div>
 
-
-@*<script>
-   
-    var field = document.querySelector('[name="Email"]');
-    field.addEventListener('keypress', function (event) {
-        var key = event.keyCode;
-        if (key === 32) {
-            event.preventDefault();
-        }
-    });
-    var field = document.querySelector('[name="Password"]');
-    field.addEventListener('keypress', function (event) {
-        var key = event.keyCode;
-        if (key === 32) {
-            event.preventDefault();
-        }
-    });
-    
-    
-</script>*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
