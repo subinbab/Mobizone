@@ -309,11 +309,26 @@ namespace UILayer.Data.ApiServices
         }
         public async Task<IEnumerable<MyCart>> GetCart()
         {
+            IEnumerable<MyCart> result = null;
             RequestHandler<IEnumerable<MyCart>> _requestHandler = new RequestHandler<IEnumerable<MyCart>>(_configuration);
             try
             {
                 _requestHandler.url = "api/users/GetCart";
-                var result = _requestHandler.Get().result;
+                try
+                {
+                    if (_requestHandler.Get().result == null || _requestHandler.Get() == null)
+                    {
+                        
+                    }
+                    else
+                    {
+                        result = _requestHandler.Get().result;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
                 if(result == null)
                 {
                     result = null;

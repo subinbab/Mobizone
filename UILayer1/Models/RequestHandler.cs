@@ -41,6 +41,10 @@ namespace UILayer.Models
                     {
                         System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
                         _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                        if(_responseModel == null)
+                        {
+                            return null;
+                        }
                     }
                     return _responseModel;
                 }
