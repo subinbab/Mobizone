@@ -27,7 +27,7 @@ namespace UILayer.Models
         #region get generic method
         public ResponseModel<T> Get()
         {
-            ResponseModel<T> _responseModel = new ResponseModel<T>();
+            ResponseModel<T> _responseModel = null;
             _responseModel = null;
             try
             {
@@ -41,6 +41,10 @@ namespace UILayer.Models
                     {
                         System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
                         _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                        if(_responseModel == null)
+                        {
+                            return null;
+                        }
                     }
                     return _responseModel;
                 }

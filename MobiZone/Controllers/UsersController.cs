@@ -468,7 +468,7 @@ namespace ApiLayer.Controllers
         [HttpGet("GetCart")]
         public async Task<ResponseModel<IEnumerable<MyCart>>> GetCart()
         {
-            ResponseModel<IEnumerable<MyCart>> _response = new ResponseModel<IEnumerable<MyCart>>();
+            ResponseModel<IEnumerable<MyCart>> _response = null;
             try
             {
                 var result = await _cartOperations.Get();
