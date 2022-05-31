@@ -27,7 +27,7 @@ namespace UILayer.Models
         #region get generic method
         public ResponseModel<T> Get()
         {
-            ResponseModel<T> _responseModel = null;
+            ResponseModel<T> _responseModel = new ResponseModel<T>();
             _responseModel = null;
             try
             {

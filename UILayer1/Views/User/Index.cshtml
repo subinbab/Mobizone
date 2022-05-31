@@ -66,13 +66,16 @@ else
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
-
-        @for (int i = 0; i <= count; i++)
+        @if (Model != null)
         {
-            <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
+            @for (int i = 0; i <= count; i++)
+            {
+                <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
 
-            pagination = pagination + 1;
+                pagination = pagination + 1;
+            }
         }
+
 
     </ul>
 </nav>
