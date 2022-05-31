@@ -26,6 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+
 </head>
 <body>
 
@@ -50,7 +51,7 @@
                     <div class="form-outline col-10 mt-2">
 
 
-                        <input type="search" id="form1" class="form-control" name="name" required/>
+                        <input autocomplete="on" type="search" id="tags" class="form-control" name="name" required/>
 
                      </div>
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
@@ -167,13 +168,13 @@
         <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #f5f2f2; ">
 
 
-        <div class="container-fluid" >
-            <main role="main" class="pb-3">
-                <div id="mypartialview"></div>
-                <div>
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    <div id="mypartialview"></div>
+                    <div>
 
-                    @RenderBody()
-                  
+                        @RenderBody()
+
 
 
 
@@ -187,7 +188,7 @@
 
                                 <ul class="list">
 
-                                    
+
                                     <li class="about">
                                         <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
                                     </li>
@@ -213,11 +214,12 @@
 
                             </div>
 
-                         </footer>
+                        </footer>
                         <style>
-                            #ui-id-1{
-                                z-index:1000;
+                            #ui-id-1 {
+                                z-index: 1000;
                             }
+
                             .container-fluid {
                                 width: 100%;
                                 padding-right: 15px;
@@ -328,7 +330,7 @@
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script>
-            var nameList= [];
+            var nameList = [];
             $(document).ready(function () {
                 $("#filter").click(function () {
                     $("#dropdown1").toggle();
@@ -356,18 +358,19 @@
             });
 
 
-           
+
         </script>
-                <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-                <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                @await Component.InvokeAsync("Notyf")
-                @await RenderSectionAsync("Scripts", required: false)
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
 
 
-     
 
-</script>
+
+        </script>
         @await Component.InvokeAsync("Notyf")
         @await RenderSectionAsync("Scripts", required: false)
     </div>
