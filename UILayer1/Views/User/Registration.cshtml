@@ -17,68 +17,70 @@
 
 
     </div>
+    <div class="Absolute-Center">
+        <div class="card bg-glass " style="background: linear-gradient(to bottom,#fff1f1 40%, #222121 ); ">
 
-    <div class="card bg-glass " style="background: linear-gradient(to bottom,#fff1f1 40%, #222121 ); " >
+            <div class="card-body px-4 py-5 px-md-5">
 
-        <div class="card-body px-4 py-5 px-md-5">
-       
-            <form asp-action="Registration" method="post">
-                
-                <div class="d-flex" style="text-align: center;">
-                <div class="w-100">
-                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone"  style="height:62px; width:65px; margin-top:10px" />
-                    <h3 class="mb-4">Sign Up</h3>
-                </div>
+                <form asp-action="Registration" method="post">
 
-        </div>
-        <!-- 2 column grid layout with text inputs for the first and last names -->
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                    <label asp-for="FirstName" class="control-label"></label>
-                    <input asp-for="FirstName" class="form-control" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
+                    <div class="d-flex" style="text-align: center;">
+                        <div class="w-100">
+                            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:62px; width:65px; margin-top:10px" />
+                            <h3 class="mb-4">Sign Up</h3>
+                        </div>
+
+                    </div>
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label asp-for="FirstName" class="control-label"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="form-outline">
+                                <label asp-for="LastName" class="control-label"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit" value="Sign Up" class="form-control button rounded submit px-3" style="background-color: #c72b2b ; color:white" />
+                    </div>
+                    <div>
+                        <a asp-controller="admin" asp-action="login" style="color:white">Already have an account? Click here to Login</a>
+                    </div>
+
+
+                </form>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="form-outline">
-                    <label asp-for="LastName" class="control-label"></label>
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-            </div>
         </div>
 
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-            <label asp-for="Email" class="control-label"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-            <label asp-for="Password" class="control-label"></label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="form-outline mb-4">
-            <label asp-for="ConfirmPassword" class="control-label"></label>
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-
-            <input type="submit" value="Sign Up" class="form-control button rounded submit px-3" style="background-color: #c72b2b ; color:white" />
-        </div>
-        <div>
-            <a asp-controller="admin" asp-action="login" style="color:white">Already have an account? Click here to Login</a>
-        </div>
-
-
-        </form>
-    </div>
     </div>
 </div>
 </div>
@@ -87,7 +89,19 @@
      
     </div>
 
-
+<style>
+    .Absolute-Center {
+        width: 35%;
+        height: 95%;
+        overflow: auto;
+        margin: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+</style>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
