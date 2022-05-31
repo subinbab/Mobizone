@@ -34,7 +34,7 @@ else
                         <h4 class="card-title" style=" text-align: center;">@item.name</h4>
                         @if (item.images == null || item.images.Count == 0)
                         {
-                            <div class="col-3" align="center"><img src="~/css/Images/noimage.jpg"  style="align-items:center;  height: 100%; width: 700%;"></div>
+                            <div class="col-3" align="center"><a asp-action="ProductDetails" asp-route-id="@item.id"><img src="~/css/Images/noimage.jpg" style="align-items:center;  height: 100%; width: 700%;"></a></div>
                         }
                         else
                         {

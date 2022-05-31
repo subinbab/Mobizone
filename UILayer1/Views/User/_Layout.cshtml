@@ -103,7 +103,7 @@
                   <a asp-action="registration">Register</a>
               </div>
 
-     <a asp-controller="admin" asp-action="login"  >Login</a>
+     <a href="../login"  >Login</a>
 
           }
       </div>
@@ -339,7 +339,7 @@
                     $("#dropdown2").toggle();
                 });
                 $.ajax({
-                    url: 'http://localhost:22888/api/productop/GetAll',
+                    url: 'https://mobizoneapi.azurewebsites.net/api/productop/GetAll',
                     dataType: 'Json',
                     success: function (data) {
                         console.log(data.result)

@@ -77,7 +77,7 @@ else
                                         <div class="col-12">
                                             @if (data.images == null || data.images.Count == 0)
                                             {
-                                                <div class="col-3" align="center"><img src="~/css/Images/noimage.jpg" style="width: 10%;"></div>
+                                                <div class="col-3" align="center"><a asp-action="ProductDetails" asp-route-id="@data.id"><img src="~/css/Images/noimage.jpg" style="width: 10%;"></a></div>
                                             }
                                             else
                                             {
