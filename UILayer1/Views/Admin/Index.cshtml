@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "ProductList";
+    Layout = "~/Views/Admin/_Layout.cshtml";
 }
 @{
     var values = Enum.GetValues(typeof(DomainLayer.OrderStatus));
@@ -19,13 +20,9 @@
 
 
 
-<script type="text/javascript">
-    function preventBack() { window.history.forward(); }
-    setTimeout("preventBack()", 0);
-    window.onunload = function () { null };
-</script>
 
-<h2 style="text-align:center" style="text-align:center">Product Listing </h2 >
+
+<h2 style="text-align:center" >Product Listing </h2 >
 
 
 
@@ -99,6 +96,15 @@
     }
     .modal-footer {
     padding: 30px !important}
+    .navbar-brand {
+        display: inline-block;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
 </style>
 
 

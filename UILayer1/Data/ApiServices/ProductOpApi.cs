@@ -86,7 +86,7 @@ namespace UILayer.Data.ApiServices
             try
             {
                 RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
-                _requestHandler.url = "api/productop/SortByBrand/" + name;
+                _requestHandler.url = "api/productop/FilterByBrand/" + name;
                 var result = _requestHandler.Get();
                 if(result != null)
                 {

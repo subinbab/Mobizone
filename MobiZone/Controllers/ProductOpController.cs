@@ -291,14 +291,14 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
-        #region Sort Product By brand 
-        [HttpGet("SortByBrand/{name}")]
-        public ResponseModel<IEnumerable<ProductEntity>> SortByBrand(string name)
+        #region Filter Product By brand 
+        [HttpGet("FilterByBrand/{name}")]
+        public ResponseModel<IEnumerable<ProductEntity>> FilterByBrand(string name)
         {
             ResponseModel<IEnumerable<ProductEntity>> _response = new ResponseModel<IEnumerable<ProductEntity>>();
             try
             {
-                _productDataList = _productOperations.SortByBrand(name).Result;
+                _productDataList = _productOperations.FilterByBrand(name).Result;
                 if (_productData == null)
                 {
                     string message = _productMessages.Null + " , " + new HttpResponseMessage(System.Net.HttpStatusCode.NoContent);

@@ -81,7 +81,7 @@ namespace UIlayer.Controllers
             {
 
             }
-            return View("Home");
+            return View("Index");
         }
         #region Index page
         [Authorize(Roles="Admin")]
@@ -96,7 +96,7 @@ namespace UIlayer.Controllers
             {
 
             }
-            return View();
+            return View("Home");
         }
         #endregion
 

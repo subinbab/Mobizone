@@ -2,77 +2,92 @@
 
 @{
     ViewData["Title"] = "MasterList";
+    Layout = "~/Views/Admin/_Layout.cshtml";
 }
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<div class="row container-fluid pr-6">
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+*@<div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <div class="">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <div class="">
 
-<table  id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
-    <thead>
-        <tr>
-            
-            <th>
-                @ViewBag.MasterTitle
-            </th>
-            
-            
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            
-            <td>
-                <div class="col">
-                    @Html.DisplayFor(modelItem => item.masterData)
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" onclick="masterEdit(@item.id)"></span>
+                    <table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    @ViewBag.MasterTitle
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <div class="col">
+                                            @Html.DisplayFor(modelItem => item.masterData)
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true" onclick="masterEdit(@item.id)"></span>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            </td>
-            
-            
-        </tr>
-}
-    </tbody>
-</table>
-</div></div></div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>
     <a asp-action="MasterData">Back </a>
 </p>
 
 <div id="partialModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Please Confirm Your Action</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                </div>
-                
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please Confirm Your Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+            </div>
+
         </div>
     </div>
+</div>
 <style>
-    span{
-        margin-left:100px;
-
+    span {
+        margin-left: 100px;
     }
+
     .glyphicon {
         font-size: x-large;
         color: black;
     }
+    .navbar-brand {
+        display: inline-block;
+        padding-top: 0.3125rem;
+        padding-bottom: 0.3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
 </style>
 <script>
-        function masterEdit(data) {
-    var id = data;
-    $(document).ready(function (e) {
-        $.ajax({
+    function masterEdit(data) {
+        var id = data;
+        $(document).ready(function (e) {
+            $.ajax({
                 url: 'admin/EditMaster/' + id,
                 type: 'get',
                 success: function (response) {
@@ -80,13 +95,13 @@
                     $("#partialModal").modal('show');
                 },
                 failure: function (response) {
-                        alert("fail");
-                    },
-                    error: function (response) {
-                        console.log(response);
-                    }
+                    alert("fail");
+                },
+                error: function (response) {
+                    console.log(response);
+                }
             })
-        
-    });
-}
-    </script>
+
+        });
+    }
+</script>
