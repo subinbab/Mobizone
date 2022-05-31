@@ -683,7 +683,9 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
-            IEnumerable <ProductEntity> result = null;
+
+            ViewBag.Title = " Mobizone - Filter ";
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable)); 
             if(filteredData != null)
@@ -714,6 +716,7 @@ namespace UILayer.Controllers
 
         public IActionResult Sort(string price)
         {
+            ViewBag.Title = " Mobizone - Price(Low to High)";
             ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort(price).Result;
@@ -722,6 +725,7 @@ namespace UILayer.Controllers
 
         public IActionResult Sortby(string price)
         {
+            ViewBag.Title = "Mobizone - Price(High to Low )";
             ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sortby(price).Result;
