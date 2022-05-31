@@ -683,25 +683,30 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
+            IEnumerable <ProductEntity> result = null;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable)); ;
-            if (brandName != null)
+            IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable)); 
+            if(filteredData != null)
             {
-                filteredData = _opApi.Filter(brandName).Result;
-            }
-            int count = 0;
-            var productCount = filteredData.Count();
-            int cout = 0;
-            for (int i = 0; i <= 0; i++)
-            {
-                if (productCount > 10)
+                if (brandName != null)
                 {
-                    cout += 1;
+                    filteredData = _opApi.Filter(brandName).Result;
                 }
-                productCount = productCount - 10;
+                int count = 0;
+                var productCount = filteredData.Count();
+                int cout = 0;
+                for (int i = 0; i <= 0; i++)
+                {
+                    if (productCount > 10)
+                    {
+                        cout += 1;
+                    }
+                    productCount = productCount - 10;
+                }
+                 result = filteredData.Skip((int)count * 10).Take(10);
+                ViewBag.count = cout;
             }
-            var result = filteredData.Skip((int)count * 10).Take(10);
-            ViewBag.count = cout;
+            
 
             return View("Index", result);
         }
