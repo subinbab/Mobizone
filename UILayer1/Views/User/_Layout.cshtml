@@ -24,6 +24,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
 
@@ -44,9 +46,13 @@
             <div class="col">
                 <form class="row" style="align-items: baseline;color:white" asp-action="Search">
                     <div class="form-outline col-10 mt-2">
+<<<<<<< HEAD
+                        <input type="search" id="tags" class="form-control" name="name"/>
+=======
 
                         <input type="search" id="form1" class="form-control" name="name" required/>
 
+>>>>>>> ddf2096720e374644524cfa11e7b374b9bea1820
                      </div>
                     <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
                  <i class="fas fa-search " style="font-size: 17px;"></i>
@@ -157,6 +163,15 @@
 
 
 
+<<<<<<< HEAD
+        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
+
+            <div class="container-fluid">
+                <main role="main" class="pb-3">
+                    <div id="mypartialview"></div>
+                    <div>
+                        @RenderBody()
+=======
     <div class="content " style=" padding: 143px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
 
 
@@ -195,74 +210,126 @@
                                 <li class="about">
 
                                     <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+>>>>>>> ddf2096720e374644524cfa11e7b374b9bea1820
 
 
-                                </li>
-                            </ul>
+                        <footer>
+                            <div class="row justify-content-center">
+                                <a asp-action="index">
+                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                                         class="float-left" />
+                                </a>
 
-                        </div>
+                                <ul class="list">
 
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                                    </li>
 
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                                    </li>
 
+                                    <li class="about">
 
-                        <div style="font-size: 12px; padding-bottom:10px">
-                            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-                        </div>
-
-                    </footer>
-                    <style>
-                        .container-fluid {
-                            width: 100%;
-                            padding-right: 15px;
-                            padding-left: 15px;
-                            margin-right: auto;
-                            margin-left: 0px;
-                        }
-
-                        footer {
-                            margin-top: 100px;
-                        }
-
-                        .dropdown {
-                            display: none;
-                            background-color: #275e4900;
-                            padding-left: 8px;
-                            text-align: center;
-                            font-size: medium;
-                        }
-
-                        li {
-                            display: inline;
-                        }
-
-                        a {
-                            cursor: pointer;
-                        }
+                                        <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
-                        .dropbtn {
-                            color: black;
-                            padding: 16px;
-                            font-size: 16px;
-                            border: none;
-                        }
+                                    </li>
+                                </ul>
 
-                        .dropdown {
-                            position: relative;
-                            display: inline-block;
-                        }
+                            </div>
 
 
-                        .dropdown-content {
-                            display: none;
-                            position: absolute;
-                            background-color: white;
-                            min-width: 160px;
-                            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                            z-index: 1;
-                        }
 
+
+                            <div style="font-size: 12px; padding-bottom:10px">
+                                <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
+
+                            </div>
+
+                        </footer>
+                        <style>
+                            #ui-id-1{
+                                z-index:1000;
+                            }
+                            .container-fluid {
+                                width: 100%;
+                                padding-right: 15px;
+                                padding-left: 15px;
+                                margin-right: auto;
+                                margin-left: 0px;
+                            }
+
+                            footer {
+                                margin-top: 100px;
+                            }
+
+                            .dropdown {
+                                display: none;
+                                background-color: #275e4900;
+                                padding-left: 8px;
+                                text-align: center;
+                                font-size: medium;
+                            }
+
+                            li {
+                                display: inline;
+                            }
+
+                            a {
+                                cursor: pointer;
+                            }
+
+
+                            .dropbtn {
+                                color: black;
+                                padding: 16px;
+                                font-size: 16px;
+                                border: none;
+                            }
+
+                            .dropdown {
+                                position: relative;
+                                display: inline-block;
+                            }
+
+
+                            .dropdown-content {
+                                display: none;
+                                position: absolute;
+                                background-color: white;
+                                min-width: 160px;
+                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                z-index: 1;
+                            }
+
+
+                                .dropdown-content a {
+                                    color: black;
+                                    padding: 12px 26px;
+                                    text-decoration: none;
+                                    display: block;
+                                }
+
+
+
+
+                                    .dropdown-content a:hover {
+                                        background-color: #ddd;
+                                    }
+
+                            .dropdown:hover .dropdown-content {
+                                display: block;
+                            }
+
+
+                            .dropdown:hover .dropbtn {
+                            }
 
                             .dropdown-content a {
                                 color: black;
@@ -271,62 +338,71 @@
                                 display: block;
                             }
 
-
-
-
                                 .dropdown-content a:hover {
                                     background-color: #ddd;
                                 }
 
-                        .dropdown:hover .dropdown-content {
-                            display: block;
-                        }
-
-
-                        .dropdown:hover .dropbtn {
-                        }
-
-                        .dropdown-content a {
-                            color: black;
-                            padding: 12px 26px;
-                            text-decoration: none;
-                            display: block;
-                        }
-
-                            .dropdown-content a:hover {
-                                background-color: #ddd;
+                            .dropdown:hover .dropdown-content {
+                                display: block;
                             }
 
-                        .dropdown:hover .dropdown-content {
-                            display: block;
-                        }
-
-                        .dropdown:hover .dropbtn {
-                        }
+                            .dropdown:hover .dropbtn {
+                            }
 
 
 
 
-                        .row {
-                            margin-left: 0px !important;
-                        }
-                    </style>
-                   @* </footer>*@
-                </div>
-            </main>
+                            .row {
+                                margin-left: 0px !important;
+                            }
+                        </style>
+                        @* </footer>*@
+                    </div>
+                </main>
+            </div>
         </div>
-    </div>
 
 
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#filter").click(function () {
-                $("#dropdown1").toggle();
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script>
+            var nameList= [];
+            $(document).ready(function () {
+                $("#filter").click(function () {
+                    $("#dropdown1").toggle();
+                });
+                $("#sort").click(function () {
+                    $("#dropdown2").toggle();
+                });
+                $.ajax({
+                    url: 'http://localhost:22888/api/productop/GetAll',
+                    dataType: 'Json',
+                    success: function (data) {
+                        console.log(data.result)
+                        var resultData = data.result;
+                        resultData.forEach(function (items, index) {
+                            console.log(items.name)
+                            nameList.push(items.name);
+                            console.log(nameList)
+                            $("#tags").autocomplete({
+                                source: nameList
+                            });
+                        });
+                    }
+                })
+
             });
 
+<<<<<<< HEAD
+           
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
+=======
         });
 
 ~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -334,5 +410,6 @@
         @await RenderSectionAsync("Scripts", required: false)
     </div>
 
+>>>>>>> ddf2096720e374644524cfa11e7b374b9bea1820
 </body>
 </html>
