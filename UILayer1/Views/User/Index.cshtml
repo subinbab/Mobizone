@@ -27,7 +27,7 @@ else
     <div class="row" style="justify-content: center;">
         @foreach (var item in Model)
         {
-            <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-3"style="height: 22rem;">
+            <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-3">
                 <div class="card-body">
 
                     <div class="col-12">
@@ -40,7 +40,7 @@ else
                         {
                             @foreach (var data in item.images)
                             {
-                                <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" width="149" height="301" style="align-items: center; height: 59%; width: 47%;"></div></a>
+                                <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" width="149" height="301" style="align-items: center;"></div></a>
                                 break;
                             }
                         }
