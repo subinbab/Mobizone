@@ -206,7 +206,7 @@ namespace UILayer.Controllers
                     var session = HttpContext.Session.Id;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-                    mailRequest.Body = "<a href='http://localhost:58738/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+                    mailRequest.Body = "<a href=' https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
