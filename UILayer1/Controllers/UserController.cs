@@ -734,10 +734,27 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
-            ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var filteredData = _opApi.Filter(brandName).Result;
-            return View("Index", filteredData);
+            IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable)); ;
+            if (brandName != null)
+            {
+                filteredData = _opApi.Filter(brandName).Result;
+            }
+            int count = 0;
+            var productCount = filteredData.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 10)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 10;
+            }
+            var result = filteredData.Skip((int)count * 10).Take(10);
+            ViewBag.count = cout;
+
+            return View("Index", result);
         }
 
 
@@ -1166,6 +1183,19 @@ namespace UILayer.Controllers
                 }
             }
             return Redirect("/user/Addtocart");
+             int pagination(int count)
+            {
+                int cout = 0;
+                for (int i = 0; i <= 0; i++)
+                {
+                    if (count > 10)
+                    {
+                        cout += 1;
+                    }
+                    count = count - 10;
+                }
+                return cout;
+            }
         }
         public class quantityObj
         {

@@ -126,7 +126,7 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
-        #region GetList Method for Products
+        #region GetAll Method for Products
         [HttpGet("GetAll")]
         public async  Task<ResponseModel<IEnumerable<ProductEntity>>> GetAll()
         {

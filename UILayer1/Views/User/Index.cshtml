@@ -1,6 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 @{
     int count = (int)ViewBag.count;
     int pagination = 1;
@@ -8,11 +12,11 @@
 @if (User.Identity.IsAuthenticated!)
 {
 
-   @* <script type="text/javascript">
-        function preventBack() { window.history.forward(); }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
-    </script>*@
+    @* <script type="text/javascript">
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+        </script>*@
 }
 @model IEnumerable<DomainLayer.ProductModel.ProductEntity>
 @if (Model == null || Model.Count().Equals(0))
@@ -66,16 +70,15 @@ else
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
-
-        @for (int i = 0; i <= count; i++)
+        @if (Model != null)
         {
-            <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
+            @for (int i = 0; i <= count; i++)
+            {
+                <li class="page-item"><a class="page-link" href="/user/index/@i">@pagination</a></li>
 
-            pagination = pagination + 1;
+                pagination = pagination + 1;
+            }
         }
-
-
-
     </ul>
 </nav>
 <style>
@@ -91,3 +94,8 @@ else
         background: #0099f3;
     }
 </style>
+<script>
+    $(document).ready(function () {
+
+    })
+</script>
