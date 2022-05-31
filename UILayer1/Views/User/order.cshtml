@@ -75,7 +75,19 @@ else
                                 <div class="form-check">
                                     <div class="">
                                         <div class="col-12">
-                                            <img class="img-fluid" src="~/Product/Images/@data.images.FirstOrDefault().imagePath" style="width: 10%;"/>
+                                            @if (data.images == null || data.images.Count == 0)
+                                            {
+                                                <div class="col-3" align="center"><img src="~/css/Images/noimage.jpg" style="width: 10%;"></div>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var item in data.images)
+                                                {
+                                                    <a asp-action="ProductDetails" asp-route-id="@data.id"><div class="col-12" align="center"><img src="~/Product/Images/@item.imagePath" sstyle="width: 10%;"></div></a>
+                                                    break;
+                                                }
+                                            }
+                                            
                                             <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
                                                 @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
                                                 <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
