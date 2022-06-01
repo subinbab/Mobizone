@@ -206,7 +206,7 @@ namespace UILayer.Controllers
                     var session = HttpContext.Session.Id;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-                    mailRequest.Body = "<a href='https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<a href=' https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
@@ -705,12 +705,12 @@ namespace UILayer.Controllers
                     }
                     productCount = productCount - 10;
                 }
-                 result = filteredData.Skip((int)count * 10).Take(10);
+                 var result = filteredData.Skip((int)count * 10).Take(10);
                 ViewBag.count = cout;
             }
             
 
-            return View("Index", result);
+            return View("Index",result);
         }
 
 
