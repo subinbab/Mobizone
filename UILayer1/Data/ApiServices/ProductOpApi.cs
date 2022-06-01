@@ -396,7 +396,7 @@ namespace UILayer.Data.ApiServices
 
         }
         #endregion
-       
+        #region method for sort Ascending
         public async  Task<IEnumerable<ProductEntity>> Sort(string price)
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
@@ -411,7 +411,8 @@ namespace UILayer.Data.ApiServices
             }
 
         }
-     
+        #endregion
+        #region method for descending Sort
         public async  Task<IEnumerable<ProductEntity>> Sortby ( string price)
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler =  new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
@@ -426,6 +427,7 @@ namespace UILayer.Data.ApiServices
             }
 
         }
+        #endregion
     }
 }
 

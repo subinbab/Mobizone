@@ -9,9 +9,17 @@
 @{
     var data = ViewData["ProductDetails"] as List<DomainLayer.ProductModel.ProductEntity>;
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
+    var cartData = ViewData["cart"] as DomainLayer.MyCart;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
-
+    int? price = 0;
+    if (cartData != null)
+    {
+        foreach (var cartDetailsData in cartData.cartDetails)
+        {
+            price = price + cartDetailsData.price;
+        }
+    }
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 @if (user == null)
@@ -149,13 +157,13 @@ else
                            
                         </div>
                         <div>
-                            <p class="card-text" id="priceField">Price </p>
+                            <p class="card-text" id="priceField">Price @price</p>
                             <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
                             <div id="price"></div>
                         </div>
                         
                         <div class="">
-                            <p class="card-text" id="totalPrice">Total Payable</p>
+                            <p class="card-text" id="totalPrice">Total Payable @price</p>
                             <div id="price"></div>
                         </div>
 

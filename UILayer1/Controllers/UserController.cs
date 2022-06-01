@@ -206,9 +206,7 @@ namespace UILayer.Controllers
                     var session = HttpContext.Session.Id;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-
-                    mailRequest.Body = "<a href=' https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
-
+            mailRequest.Body = "<a href=' https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
@@ -685,34 +683,35 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult filter(string brandName)
         {
-
-            int count = 0;
             int cout = 0;
+            int count = 0;
             ViewBag.Title = " Mobizone - Filter ";
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable)); 
-            if(filteredData != null)
+            IEnumerable<ProductEntity> filteredData = filteredData = _opApi.Filter(brandName).Result;
+            if (brandName != null)
             {
-                if (brandName != null)
+                if (filteredData != null)
                 {
-                    filteredData = _opApi.Filter(brandName).Result;
-                }
- 
-                var productCount = filteredData.Count();
-               
-                for (int i = 0; i <= 0; i++)
-                {
-                    if (productCount > 10)
+                    
+                    var productCount = filteredData.Count();
+                   
+                    for (int i = 0; i <= 0; i++)
                     {
-                        cout += 1;
+                        if (productCount > 10)
+                        {
+                            cout += 1;
+                        }
+                        productCount = productCount - 10;
                     }
-                    productCount = productCount - 10;
+                     filteredData = filteredData.Skip((int)count * 10).Take(10);
+                    
                 }
-            }
-            var result = filteredData.Skip((int)count * 10).Take(10);
-            ViewBag.count = cout;
                 ViewBag.count = cout;
-                return View("Index", result);
+                return View("Index", filteredData);
+            }
+            ViewBag.count = cout;
+            return View("Index");
             
         }
 
@@ -966,7 +965,7 @@ namespace UILayer.Controllers
                 carts.Add(cartDetails);
             }
             ViewData["cartDetails"] = carts;
-            
+            ViewData["cart"] = vartData;
             ViewData["userData"] = user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
