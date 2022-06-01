@@ -54,16 +54,12 @@ else
                             }
 
 
-                            <div class="row">
-
-                                
-                                
+                            <div class="row"> 
                                 <div class="col"><a asp-action="address" class="btn btn-orange" style=" color: white">Add New Address</a></div>
                                                    <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1 " onclick="orderDetails()"  >continue</a></div>
+                                <a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1 " onclick="orderDetails()">continue</a></div>
 
                             </div>
-
                         </div>
                     </div>
                     <div class="card order mt-3" style="display:none">
@@ -83,14 +79,14 @@ else
                                             {
                                                 @foreach (var item in data.images)
                                                 {
-                                                    <a asp-action="ProductDetails" asp-route-id="@data.id"><div class="col-12" align="center"><img src="~/Product/Images/@item.imagePath" sstyle="width: 10%;"></div></a>
+                                                    <a asp-action="ProductDetails" asp-route-id="@data.id"><div class="col-12" align="center"><img src="~/Product/Images/@item.imagePath" style="width: 10%;"></div></a>
                                                     break;
                                                 }
                                             }
                                             
                                             <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
                                                 @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
-                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="pricetag" /></div>
+                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="quantitytag" /></div>
                                             </label>
                                         </div>
                                         
@@ -131,7 +127,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  onchange="displaySubmit()" style="display:none"/></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  onchange="displaySubmit()" style="display:none;"/></div>
                             </div>
 
 
@@ -235,7 +231,7 @@ else
 
         function price() {
 
-                var data = document.getElementById("pricetag").value
+            var data = document.getElementById("quantitytag").value
                 document.getElementById("priceField").innerHTML(data);
 
             }
