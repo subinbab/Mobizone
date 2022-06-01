@@ -707,10 +707,11 @@ namespace UILayer.Controllers
                 }
                  var result = filteredData.Skip((int)count * 10).Take(10);
                 ViewBag.count = cout;
+                return View("Index", result);
             }
-            
 
-            return View("Index",result);
+            return View("Index");
+            
         }
 
 
