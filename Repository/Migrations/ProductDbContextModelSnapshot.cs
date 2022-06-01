@@ -163,7 +163,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("productId");
 
-                    b.ToTable("CartDetails");
+                    b.ToTable("cartDetails");
                 });
 
             modelBuilder.Entity("DomainLayer.Checkout", b =>
