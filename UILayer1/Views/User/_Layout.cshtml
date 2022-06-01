@@ -115,7 +115,7 @@
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        <i asp-action="addtocart" class="fa-solid fa-cart-shopping"></i>
                         <a asp-action="addtocart" class="mr-3" style="color: white;text-decoration:none;">Cart</a>
 
                     </div>
@@ -142,20 +142,20 @@
                 </select>
 
               <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter"                 style="color:white; background-color: #e52d2e">
-               </input>
+               
             </form>
         </div>
 
         <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
             <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
            
-            </div>
+        </div>
             <div id="dropdown1" class="dropdown">
                    <a asp-action="sort" method="post"><button style="width: 100%; font-size: 14px"> Price(Low to High)</button></a>
                    <a asp-action="sortby" method="post"><button style="width: 100%; font-size: 14px">Price(High to Low)</button></a>
 
             </div>
-        </div>
+        
     </div>
 
 
