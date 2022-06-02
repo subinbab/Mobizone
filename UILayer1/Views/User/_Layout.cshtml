@@ -151,8 +151,8 @@
            
         </div>
             <div id="dropdown1" class="dropdown">
-                   <a asp-action="sort" method="post"><button style="width: 100%; font-size: 14px"> Price(Low to High)</button></a>
-                   <a asp-action="sortby" method="post"><button style="width: 100%; font-size: 14px">Price(High to Low)</button></a>
+                   <a asp-action="sort" method="post" style="width: 100%; font-size: 14px" > Price(Low to High)</a>
+                   <a asp-action="sortby" method="post" style="width: 100%; font-size: 14px">Price(High to Low)</a>
 
             </div>
         
@@ -329,41 +329,11 @@
 
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script>
-            var nameList = [];
-            $(document).ready(function () {
-                $("#filter").click(function () {
-                    $("#dropdown1").toggle();
-                });
-                $("#sort").click(function () {
-                    $("#dropdown2").toggle();
-                });
-                $.ajax({
-                    url: 'https://mobizoneapi.azurewebsites.net/api/productop/GetAll',
-                    dataType: 'Json',
-                    success: function (data) {
-                        console.log(data.result)
-                        var resultData = data.result;
-                        resultData.forEach(function (items, index) {
-                            console.log(items.name)
-                            nameList.push(items.name);
-                            console.log(nameList)
-                            $("#tags").autocomplete({
-                                source: nameList
-                            });
-                        });
-                    }
-                })
-
-            });
-
-
-
-        </script>
+        <script src="~/js/searchBar.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-   
+
         @await Component.InvokeAsync("Notyf")
         @await RenderSectionAsync("Scripts", required: false)
 

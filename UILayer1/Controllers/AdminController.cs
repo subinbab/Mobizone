@@ -247,10 +247,10 @@ namespace UIlayer.Controllers
 
             return PartialView("Delete", data);
         }
-        [HttpPost("Delete")]
-        public IActionResult DeleteProduct(int id)
+        [HttpPost("admin/Delete")]
+        public IActionResult DeleteProduct(ProductEntity data)
         {
-            bool result = _opApi.DeleteProduct(id);
+            bool result = _opApi.DeleteProduct(data.id);
             if (result)
             {
                 _notyf.Success("deleted");

@@ -688,9 +688,10 @@ namespace UILayer.Controllers
             ViewBag.Title = " Mobizone - Filter ";
 
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            IEnumerable<ProductEntity> filteredData = filteredData = _opApi.Filter(brandName).Result;
+            IEnumerable<ProductEntity>  filteredData = _opApi.GetAll().Result;
             if (brandName != null)
             {
+                filteredData = _opApi.Filter(brandName).Result;
                 if (filteredData != null)
                 {
                     

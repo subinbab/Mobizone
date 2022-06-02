@@ -129,7 +129,7 @@
                     <div id="mypartialview">
                         <div class="row no-gutters row-bordered row-border-light">
 
-                           @* <div class="col-md-2 pt-0">
+                            @* <div class="col-md-2 pt-0">
                                 <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
 
                                     <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: indianred ;margin-bottom:7px;">Profile Information</a>
@@ -140,7 +140,7 @@
                                 </div>
 
                             </div>
-*@
+                            *@
                         </div>
 
 
@@ -166,31 +166,32 @@
                             <div class="row justify-content-center">
                                 <a asp-action="index">
                                     <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                                         class="float-left" /></a>
+                                         class="float-left" />
+                                </a>
 
-                                    <ul class="list">
+                                <ul class="list">
 
-                                        </li>
-                                        <li class="about">
-                                            <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                                        </li>
-                                        <li class="about">
-                                            <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                                        </li>
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                                    </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                                    </li>
 
-                                        <li class="about">
-                                            <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                                        </li>
+                                    <li class="about">
+                                        <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                                    </li>
 
-                                        <li class="about">
+                                    <li class="about">
 
-                                            <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+                                        <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
 
 
-                                        </li>
-                                    </ul>
+                                    </li>
+                                </ul>
 
-</div>
+                            </div>
 
 
 
@@ -311,21 +312,21 @@
 
 
 
-
+        <script src="~/js/searchBar.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script>
-        $(document).ready(function () {
-            $("#filter").click(function () {
-                $("#dropdown1").toggle();
+            $(document).ready(function () {
+                $("#filter").click(function () {
+                    $("#dropdown1").toggle();
+                });
+
             });
 
-        });
-
-        $(document).ready(function () {
-            $("#sort").click(function () {
-                $("#dropdown2").toggle();
+            $(document).ready(function () {
+                $("#sort").click(function () {
+                    $("#dropdown2").toggle();
+                });
             });
-        });
         </script>
 
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
