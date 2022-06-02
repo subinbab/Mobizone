@@ -18,9 +18,21 @@
 
         @foreach (var data in Model)
         {
-            <div class=" text-md-center" style=" margin-top: 3%;">
-                <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Images" style="height:70px;margin-right:90%; width:29px;" /></a>
-            </div>
+<div class=" text-md-center" style=" margin-top: 3%;">
+    @if (data.product.images == null || data.product.images.Count == 0)
+    {
+        <div class="col-3" align="center"><a asp-action="OrderDetails" asp-route-id="@data.id"><img src="~/css/Images/noimage.jpg" style="align-items:center;  height: 100%; width: 100%;"></a></div>
+    }
+    else
+    {
+        @foreach (var Imagedata in data.product.images)
+        {
+<a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/Product/Images/@data.product.images.FirstOrDefault().imagePath" alt=" Images" style="height:70px;margin-right:90%; width:29px;" /></a>
+            break;
+        }
+    }
+    
+</div>
 
 
 

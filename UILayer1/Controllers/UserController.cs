@@ -711,7 +711,7 @@ namespace UILayer.Controllers
                 return View("Index", filteredData);
             }
             ViewBag.count = cout;
-            return View("Index");
+            return View("Index", filteredData);
             
         }
 
