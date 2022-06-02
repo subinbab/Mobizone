@@ -260,7 +260,7 @@ namespace UIlayer.Controllers
                 _notyf.Error("Not deleted");
 
             }
-            return RedirectToAction("");
+            return RedirectToAction("Index");
         }
         public ActionResult prductmodel()
         {
