@@ -26,28 +26,28 @@
                         </div>
                         <div class="col row  " style="align-items: center;">
                             <div class="col  align-items-end">
-                                <div style="margin-left:5%">Product Details:@productDetails.name ( Storage @productDetails.specs.storages.FirstOrDefault().storage) Ram(@productDetails.specs.rams.FirstOrDefault().ram)</div>
+                                <div style="margin-left:-30%">Product Details : @productDetails.name ( Storage @productDetails.specs.storages.FirstOrDefault().storage) Ram(@productDetails.specs.rams.FirstOrDefault().ram)</div>
 
-                                <div class="orderDetails col"> Address: @addressDetails.name</div>
-                                <div class="orderDetails col" style="margin-left:19%">@addressDetails.address,</div>
-                                <div class="orderDetails col" style="margin-left:19%">@addressDetails.district,@addressDetails.state</div>
-                                <div class="orderDetails col">Pincode:@addressDetails.pincode</div>
-                                <div class="orderDetails col">Phone Number:@addressDetails.phoneNumber</div>
+                                <div class="orderDetails col"style="margin-left:-11%"> Address : @addressDetails.name</div>
+                                <div class="orderDetails col" style="margin-left:9%">@addressDetails.address,</div>
+                                <div class="orderDetails col" style="margin-left:10%">@addressDetails.district,@addressDetails.state</div>
+                                <div class="orderDetails col"style="margin-left:-9%">Pincode:@addressDetails.pincode</div>
+                                <div class="orderDetails col"style="margin-left:-24%">Phone Number:@addressDetails.phoneNumber</div>
 
                             </div>
                             
                     </div>
                     <div class="col">
-                         <div style="margin-left:-20px">Orderid   : @Model.orderId</div>
-                              <div style="margin-left:-105px">Quantity :  @Model.quantity</div>
-                <div style="margin-left:-35px">Price   : @Model.price/-</div>
+                         <div style="margin-left:-1%">Orderid   : @Model.orderId</div>
+                              <div style="margin-left: -25%">Quantity :  @Model.quantity</div>
+                <div style="margin-left: -5%">Price   : @Model.price/-</div>
 
                     </div>
                 </div>
                    
 
                     <div class="progress-track">
-                        <div class="col" style="margin-left:-6%">
+                        <div class="col" style="margin-left:-13%">
                             Progress Track:  @Model.status
 
                             <ul id="progressbar" style="margin-left:15%">
