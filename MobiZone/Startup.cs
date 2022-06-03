@@ -54,7 +54,7 @@ namespace MobiZone
         )
     .AddEntityFrameworkStores<ProductDbContext>();
             services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+            services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("online_db_2")));
             /*services.AddScoped(typeof(IRepositoryOperations<>), typeof(RepositoryOperations<>));*/
             services.AddScoped(typeof(IProductCatalog), typeof(ProductCatalog));
             services.AddScoped(typeof(IUserCreate), typeof(UserCreate));
