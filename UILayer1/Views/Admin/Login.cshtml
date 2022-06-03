@@ -27,23 +27,23 @@
 <script>eval(mod_pagespeed_YYCwSj$83H);</script>
 <script>eval(mod_pagespeed_fUKQzxht9j);</script>
 <script>eval(mod_pagespeed_lpntivnFUb);</script>
-<head>
-      <script type="text/javascript">
-            function validate() {
-                username = document.getElementById("username").value;
-                password = document.getElementById("password").value;
-                if (username == null || username == "") {
-                    alert("Please enter a username");
-                    return false;
+@*<head>
+          <script type="text/javascript">
+                function validate() {
+                    username = document.getElementById("username").value;
+                    password = document.getElementById("password").value;
+                    if (username == null || username == "") {
+                        alert("Please enter a username");
+                        return false;
+                    }
+                    if (password == null || password == "") {
+                        alert("Please enter a password");
+                        return false;
+                    }
+                    return true;
                 }
-                if (password == null || password == "") {
-                    alert("Please enter a password");
-                    return false;
-                }
-                return true;
-            }
-        </script>
-</head>
+            </script>
+    </head>*@
 
 <div class="row">
 
@@ -58,9 +58,11 @@
                         </div>
                         <div class="col-12  ">
                             <div class="d-flex" style="text-align: center;">
-                                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:62px; width:65px;margin-left:100px ; " />
-                                <div class="w-100">
+                                <a asp-action="index">
+                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:62px; width:65px;margin-left:100px ; " />
 
+                                </a>
+                                <div class="w-100">
                                     <h3 class="mb-4" style="margin-top:65px; margin-left:-170px">Login</h3>
                                 </div>
 
@@ -69,6 +71,7 @@
                                 <div class="form-group mb-3 ">
                                     <label asp-for="username" class="control-label">Email</label>
                                     <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Email id " required>
+                                    <span asp-validation-for="username" class="text-danger"></span>
 
                                 </div>
                                 <div class="form-group mb-3">
@@ -141,7 +144,7 @@
     }
 
     .bg-white {
-        background: linear-gradient(to bottom,#fff1f1 40%, #222121 ) !important;
+        background: linear-gradient(to bottom,#fff1f1 40%,#605757 ) !important;
     }
 
     .alert-danger {
@@ -155,3 +158,6 @@
 
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
