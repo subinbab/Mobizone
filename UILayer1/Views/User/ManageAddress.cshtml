@@ -18,7 +18,7 @@
 
             <div class="card-body">
                 <div class="form-group"    style=" margin-bottom: -20%;">
-                   <a asp-action="address"><button class="btn btn-default" asp-controller="user" > + Add New Address</button></a>
+                   <a asp-action="address" class="btn btn-default" asp-controller="user" > + Add New Address</a>
                 </div>
                 @foreach (var data in user.address)
                 {
@@ -30,8 +30,8 @@
                 <p style="margin-left:41%">@data.phoneNumber</p>
 
                 <div class="Edit" style="">
-                    <a asp-action="address" asp-route-id="@data.id"> <button type="button" class="btn btn-orange" style="background-color: #e52d2e;">Edit</button></a>
-                    <a href="/user/DeleteAddress/@data.id"> <button type="button" class="btn btn-indigo" style="background-color: #0099f3 ">Delete</button></a>
+                    <a asp-action="address" asp-route-id="@data.id" type="button" class="btn btn-orange" style="background-color: #e52d2e;">Edit</a>
+                    <a href="/user/DeleteAddress/@data.id"  type="button" class="btn btn-indigo" style="background-color: #0099f3 ">Delete</a>
                 </div>
             </div>
                    

@@ -38,7 +38,7 @@
                 <div class="mobizone" style="margin-top: -8%; margin-left: 12%;">
                     <a class="" asp-action="Index" style="margin-left: 0px; font-size: 95%; -webkit-text-stroke: thin; color: white; text-decoration: none; margin-top: 10%;">MOBIZONE </a>
                 </div>
-              
+
 
             </div>
             <div class="col">
@@ -57,12 +57,12 @@
                 <div class="row">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="User" asp-action="account"style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
+                        <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
                     }
                     else
                     {
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                            <a asp-action="registration"style="color:white;">Register</a>
+                            <a asp-action="registration" style="color:white;">Register</a>
                         </div>
                     }
 
@@ -78,7 +78,7 @@
                                     {
                                         <a asp-controller="User" asp-action="account">My Account </a>
                                         <hr />
-                                        <a  asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                        <a asp-controller="User" asp-action="MyOrders">My Orders</a>
                                         <hr />
                                         <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
                                         <hr />
@@ -103,7 +103,7 @@
                     </div>
                     <div class="col" style="align-items: center;justify-content: center;display: flex;">
                         <i asp-action="addtocart" class="fa-solid fa-cart-shopping"></i>
-                        <a   asp-action="addtocart"class="mr-3" style="color:white;">Cart</a>
+                        <a asp-action="addtocart" class="mr-3" style="color:white;">Cart</a>
                     </div>
                 </div>
 
@@ -114,51 +114,52 @@
     </nav>
 
 
-        <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
-           
-            <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -30%; width: 11%; padding-left: 1%; ">Profile Information</a>
-        </div>
+    <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
 
-        <div>
-            <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -26%; width: 11%; padding-left: 1%; ">Manage Address</a>
-        </div>
+        <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -30%; width: 11%; padding-left: 1%; ">Profile Information</a>
+    </div>
 
-      
+    <div>
+        <a class="list-group-item list-group-item-action active" asp-action="ManageAddress" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -26%; width: 11%; padding-left: 1%; ">Manage Address</a>
+    </div>
 
 
-        @RenderBody();
-       
+
+
+    @RenderBody();
+
 
 
     <footer style="margin-top: 240px">
         <div class="row justify-content-center">
             <a asp-action="index">
                 <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                     class="float-left" /></a>
+                     class="float-left" />
+            </a>
 
-                <ul class="list">
-
-                    </li>
-                    <li class="about">
-                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                    </li>
-                    <li class="about">
-                        <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                    </li>
-
-                    <li class="about">
-                        <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                    </li>
-
-                    <li class="about">
-
-                        <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+            <ul class="list">
 
 
-                    </li>
-                </ul>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
+                </li>
+                <li class="about">
+                    <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
+                </li>
 
-</div>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
+                </li>
+
+                <li class="about">
+
+                    <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
+
+
+                </li>
+            </ul>
+
+        </div>
 
 
 
@@ -269,12 +270,9 @@
             margin-left: 0px !important;
         }
     </style>
-</footer>
-                    </div>
-                </main>
-            </div>
-        </div>
-    </body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/searchBar.js"></script>
+</body>
 </html>
 
 
