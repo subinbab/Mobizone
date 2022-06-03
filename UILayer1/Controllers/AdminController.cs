@@ -427,7 +427,7 @@ namespace UIlayer.Controllers
         }
         [AllowAnonymous]
         [HttpPost("/Login")]
-        public async Task<IActionResult> Validate(string userName, string password, string ReturnUrl)
+        public async Task<IActionResult> Validate(string userName, string password/*, string ReturnUrl*/)
         {
             try
             {
@@ -455,28 +455,7 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
-                     /*   try
-                        {
-                            string name = _distributedCache.GetStringAsync("cart").Result;
-                            if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
-                            {
-                                _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
-                            }
-
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                        var count = 0; 
-                        foreach(var cart in _carts)
-                        {
-                            if (cart.sessionId.Equals(check.sessionId))
-                            {
-                                var insertData = cart;
-                                _carts.Insert(count, insertData);
-                            }
-                            count++;
-                        }*/
+                     
                         UserApi userApi = new UserApi(Configuration);
                         _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();

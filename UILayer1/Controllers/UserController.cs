@@ -678,7 +678,7 @@ namespace UILayer.Controllers
             _user.address = addresses;
             bool result = userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return RedirectToAction("Index");
+            return RedirectToAction("Account");
         }
         [HttpPost]
         public IActionResult filter(string brandName)

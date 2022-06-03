@@ -23,12 +23,15 @@
                             <br />
                             <div>
                                 <input type="submit" value="Save" class="btn btn-orange" />
-
-                                <button class="btn btn-indigo">
-                              <a><b style="color: white;">Cancel</b></a></button>
                             </div>
 
                         </form>
+                        <div class="text-center">
+                            <div class="form-group">
+                                <a class="btn btn-indigo" asp-controller="Admin" asp-action="About" style="text-decoration: none; "><b style="color: white;">Cancel</b></a>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,14 +40,15 @@
 </div>
 <style>
     .btn-indigo {
-
         background: #e52d2e;
-        color:white;
-
+        color: white;
+        margin-top: -5%;
+        margin-left: 33%;
     }
 
     .btn-orange {
         background: #3187e3;
         color: white;
+        margin-left: 20%;
     }
 </style>
