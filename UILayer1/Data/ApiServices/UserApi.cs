@@ -137,7 +137,7 @@ namespace UILayer.Data.ApiServices
         #endregion
 
 
-        #region Creare an order
+        #region Create an order
         public bool CreateCheckOut(Checkout checkout)
         {
             RequestHandler<Checkout> requestHandler = new RequestHandler<Checkout>(_configuration);

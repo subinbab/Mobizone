@@ -25,9 +25,16 @@ namespace BusinessObjectLayer.User
 
         public async Task<UserRegistration> Authenticate(string username, string password)
         {
-            UserRegistration registration = new UserRegistration();
-            var list= await _userRepo.Get();
-            var user = list.Where(c => c.Email.Equals(username) && c.Password.Equals(password)).FirstOrDefault();
+            UserRegistration user = null;
+            try
+            {
+                var list = await _userRepo.Get();
+                 user = list.Where(c => c.Email.Equals(username) && c.Password.Equals(password)).FirstOrDefault();
+            }
+            catch(Exception ex)
+            {
+
+            }
             
             return user;
         }

@@ -40,6 +40,7 @@ namespace ApiLayer.Controllers
             _masterMessages = new MasterMessages(_webHostEnvironment);
             _productOperations = productOperations;
         }
+        #region Create method for products
         [HttpPost]
         public IActionResult Post([FromBody] MasterTable masterData)
         {
@@ -61,6 +62,7 @@ namespace ApiLayer.Controllers
             }
 
         }
+        #endregion
         #region Get Method for Products
         [HttpGet]
         public IActionResult Get()

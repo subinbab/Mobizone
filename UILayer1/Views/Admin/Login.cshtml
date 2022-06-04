@@ -22,11 +22,11 @@
 
 
 
-<script src="./Login 04_files/jquery.min.js.download"></script>
-<script src="./Login 04_files/popper.js+bootstrap.min.js+main.js.pagespeed.jc.JD3obyg0WD.js.download"></script>
-<script>eval(mod_pagespeed_YYCwSj$83H);</script>
-<script>eval(mod_pagespeed_fUKQzxht9j);</script>
-<script>eval(mod_pagespeed_lpntivnFUb);</script>
+@*<script src="./Login 04_files/jquery.min.js.download"></script>
+    <script src="./Login 04_files/popper.js+bootstrap.min.js+main.js.pagespeed.jc.JD3obyg0WD.js.download"></script>
+    <script>eval(mod_pagespeed_YYCwSj$83H);</script>
+    <script>eval(mod_pagespeed_fUKQzxht9j);</script>
+    <script>eval(mod_pagespeed_lpntivnFUb);</script>*@
 @*<head>
           <script type="text/javascript">
                 function validate() {
@@ -45,17 +45,15 @@
             </script>
     </head>*@
 
-<div class="row">
+<div class="row ">
 
     <section class="ftco-section col-12" style="margin-top: 145px;">
 
         <div class="row justify-content-center ">
             <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="margin:auto;position:fixed;">
                 <div class="col-12">
-                    <div class="row ">
-                        <div class="img col" style="background-image:url(images/xbg-1.jpg.pagespeed.ic.3OAd9jZTMD.webp)">
-                            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview.png" width="250px" />
-                        </div>
+                    <div class="row">
+
                         <div class="col-12  ">
                             <div class="d-flex" style="text-align: center;">
                                 <a asp-action="index">
@@ -68,37 +66,41 @@
 
                             </div>
                             <form action="/Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
-                                <div class="form-group mb-3 ">
-                                    <label asp-for="username" class="control-label">Email</label>
-                                    <input name="userName" input asp-for="username" type="text" class="form-control" placeholder="Email id " required>
-                                    <span asp-validation-for="username" class="text-danger"></span>
-
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label asp-for="password" class="control-label">Password</label>
-                                    <input name="Password" input asp-for="password" class="form-control" placeholder=" Password" required>
-
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="username" class="control-label"></label>
+                                    <input asp-for="username" class="form-control" />
+                                    <div>
+                                        <span style="width:50px;" asp-validation-for="username" class="text-danger"></span>
+                                    </div>
+                                    
                                 </div>
                                 <div class="form-group">
-
-
-
-                                    <button type="submit" onclick="return validate()" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e">Login</button>
-                                </div>
-                                <div>
-                                    <a asp-controller="user" asp-action="ForgotPassword" style="color:white;"> Forgot Password ?</a>
-                                </div>
-                                <div>
-                                    <a asp-controller="user" asp-action="registration" style="color:white;">If not a user,Register here</a>
-                                </div>
-                                @if (!string.IsNullOrEmpty(error))
-                                {
-                                    <div class="alert alert-danger" role="alert">
-                                        @error
+                                    <label asp-for="password" class="control-label"></label>
+                                    <input asp-for="password" class="form-control" />
+                                    <div>
+                                        <span style="width:50px;" asp-validation-for="password" class="text-danger"></span>
                                     </div>
-                                }
-
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="form-control button rounded submit px-3" style="color: white; background-color: #e52d2e" value="Login" />
+                                </div>
                             </form>
+                            <div>
+                                <a asp-controller="user" asp-action="ForgotPassword" style="color:white;"> Forgot Password ?</a>
+                            </div>
+                            <div>
+                                <a asp-controller="user" asp-action="registration" style="color:white;">If not a user,Register here</a>
+                            </div>
+                            @if (!string.IsNullOrEmpty(error))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @error
+                                </div>
+                            }
+
+
 
                         </div>
 
