@@ -102,7 +102,7 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet("ProductDetails/{id}")]
+        [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
             ProductEntity details = null;
@@ -173,7 +173,7 @@ namespace UIlayer.Controllers
                         else
                         {
                             _notyf.Error("Not Added");
-                            return RedirectToAction("");
+                            return RedirectToAction("Create");
                         }
                         
                     }
@@ -191,7 +191,7 @@ namespace UIlayer.Controllers
                     else
                     {
                         _notyf.Error("Not Updated");
-                        return RedirectToAction("");
+                        return RedirectToAction("Create");
                     }
                     
                 }
@@ -617,7 +617,7 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("ProductDetails/DeleteImage/{id}")]
+        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);
@@ -653,7 +653,7 @@ namespace UIlayer.Controllers
             products.quantity = product.quantity + Convert.ToInt32(newQuantity);
             var productEntity = (ProductViewModel)_mapper.Map<ProductViewModel>(products);
             bool result = _opApi.EditProduct(productEntity);
-            return RedirectToAction("Index");
+            return RedirectToAction("ProductDetails", new { id = product.id });
         }
         [RequestFormLimits(MultipartBodyLengthLimit = 104857600)]
         [HttpGet("denied")]
@@ -670,7 +670,7 @@ namespace UIlayer.Controllers
             data.status = 1;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
-            return RedirectToAction("Index");
+            return RedirectToAction("Dashboard");
         }
         [HttpGet("/admin/Enable/{id}")]
         public async Task<IActionResult> Enable(int id)
@@ -680,7 +680,7 @@ namespace UIlayer.Controllers
             data.status = 0;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
-            return RedirectToAction("Index");
+            return RedirectToAction("Dashboard");
         }
         [HttpGet]
         public IActionResult EditMaster(int id)
