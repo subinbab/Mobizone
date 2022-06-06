@@ -66,12 +66,12 @@ namespace UILayer1
             }
             );
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            services.AddDistributedSqlServerCache(options => {
+            /*services.AddDistributedSqlServerCache(options => {
                 options.ConnectionString = Configuration.GetConnectionString("online_db_2");
                 options.SchemaName = "dbo";
                 options.TableName = "Sessions";
                 //options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(6);
-            });
+            });*/
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -86,9 +86,10 @@ namespace UILayer1
             }
             else
             {
+                app.UseStatusCodePagesWithRedirects("/Home/Error");
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+               // app.UseHsts();
             }
             /*app.UseHttpsRedirection();*/
             app.UseStaticFiles();
@@ -96,13 +97,24 @@ namespace UILayer1
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+           
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    context.Request.Path = "/Home/Error";
+                    await next();
+     
+                }
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=user}/{action=Index}/{count?}");
             });
+            
         }
     }
 }

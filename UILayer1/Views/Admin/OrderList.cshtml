@@ -118,21 +118,67 @@
         const dataList = [];
         const Roles = [];
         const statusList = [1, 2, 3, 4];
+        
+        function getStatus(callback) {
+            $.ajax({
+                url: 'OrderStatus',
+                type: 'get',
+                datatype: 'json',
+                success: function (data) {
+                    status = data;
+                    console.log(status);
+                    callback();
+                    obj = JSON.parse(status);
+                    for (name in obj) {
+                        dataList.push(name)
+
+                    }
+
+                }
+            })
+            
+        }
+
+            
+        function getList() {
+            
+        }
+    getStatus(function () {
         $.ajax({
-            url: 'OrderStatus',
+            url: 'https://mobizoneapi.azurewebsites.net/api/users/CheckOutData',
+            //url: 'http://subin4127-001-site1.etempurl.com/api/users/CheckOutData',
             type: 'get',
             datatype: 'json',
             success: function (data) {
-                status = data;
-                console.log(status);
-                obj = JSON.parse(status);
-                for (name in obj) {
-                    dataList.push(name)
-                }
-                console.log(dataList)
+                var c = 0;
+                console.log(data);
+                $('#datatable').dataTable({
+                    data: data.result,
+                    columns: [
+                        { 'render': function () { ++c; return c; } },
+                        { 'render': function (data, type, full, meta) { return '<a href="/admin/orderDetails/' + full.orderId + '">' + full.orderId + '</a>'; } },
+                        { 'render': function (data, type, full, meta) { if (full.cancelRequested == null) { return ''; } else { return Roles[full.cancelRequested - 1] } } },
+                        {
+                            "render": function (data, type, full, meta) {
+                                dataStatus = full.status;
+                                var sliceData = dataList.slice(dataStatus)
+                                var sliceStatus = statusList.slice(dataStatus)
+
+                                var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="' + full.orderId + '"/><select id="enumDropdown" name="status"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
+                                var endData = '</select><input style="padding: 2px;margin-left: 23px;font-variant: all-small-caps;" type="submit" value="update" class="btn btn-orange"/></form>'
+                                sliceData.forEach(function (element) {
+                                    var option = '<option value="' + element + '">' + element + '</option>';
+                                    formData = formData + option;
+                                });
+                                formData = formData + endData;
+                                return formData;
+                            }
+                        }]
+                })
+                var $select = $('#enumDropdown');
             }
         })
-
+    })
         $.ajax({
             url: 'RoleTYpe',
             type: 'get',
@@ -148,65 +194,10 @@
         })
 
 
-
-        $.ajax({
-            url: 'https://mobizoneapi.azurewebsites.net/api/CheckOutData',
-          @*  url: 'https://localhost:44317/api/CheckOutData',*@
-            type: 'get',
-            datatype: 'json',
-            success: function (data) {
-                var c = 0;
-                console.log(data);
-                console.log(status);
-                $('#datatable').dataTable({
-                    data: data.result,
-                    columns: [
-                        { 'render': function () { ++c; return c; } },
-                        { 'render': function (data, type, full, meta) { return '<a href="/admin/orderDetails/' + full.orderId + '">' + full.orderId + '</a>'; } },
-                        { 'render': function (data, type, full, meta) { if (full.cancelRequested == null) { return ''; } else { return Roles[full.cancelRequested - 1] } } },
-                        {
-                            "render": function (data, type, full, meta) {
-                                dataStatus = full.status;
-                                console.log(obj);
-                                console.log(dataList[dataStatus])
-                                console.log(dataStatus)
-                                for (name in obj) {
-                                    console.log(name);
-                                }
-                                var sliceData = dataList.slice(dataStatus)
-                                var sliceStatus = statusList.slice(dataStatus)
-                                console.log(sliceData)
-                                console.log(sliceStatus)
-
-                                var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="' + full.orderId + '"/><select id="enumDropdown" name="status"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
-                                var endData = '</select><input style="padding: 2px;margin-left: 23px;font-variant: all-small-caps;" type="submit" value="update" class="btn btn-orange"/></form>'
-                                sliceData.forEach(function (element) {
-                                    console.log("-----------")
-                                    console.log(element)
-                                    var option = '<option value="' + element + '">' + element + '</option>';
-                                    formData = formData + option;
-                                });
-                                formData = formData + endData;
-                                return formData;
-                            }
-                        }]
-                })
-                var $select = $('#enumDropdown');
-
-
-                function callbackTester(callback) {
-                    callback(arguments[1]);
-                }
-
-
-
-
-
-
-
-
-            }
-        })
+        
+            
+     
+        
 
     })
 

@@ -10,6 +10,7 @@ using DomainLayer.Users;
 using DTOLayer.Product;
 using DTOLayer.UserModel;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using UILayer.Data.ApiServices;
 
@@ -63,6 +65,7 @@ namespace UILayer.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
+           
             ViewBag.Title = "Mobizone-Home";
             try
             {
@@ -168,6 +171,16 @@ namespace UILayer.Controllers
                 if (result)
                 {
                     _notyf.Success("Successfully Registered new user");
+                    var userDataList = userApi.GetUserData();
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().FirstName + " " + userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().LastName));
+                    claims.Add(new Claim("email", user.Email));
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().FirstName + " " + userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().LastName));
+                    claims.Add(new Claim("password", user.Password));
+                    claims.Add(new Claim(ClaimTypes.Role, "User"));
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    await HttpContext.SignInAsync(claimsPrincipal);
                 }
                 else
                 {
@@ -187,6 +200,7 @@ namespace UILayer.Controllers
             ForgetPasswordViewModel email = new ForgetPasswordViewModel();
             email.emailSent = false;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.check = false;
             return View(email);
         }
         [HttpPost]
@@ -195,24 +209,28 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("key", "value");
-
+                HttpContext.Session.SetString("Email", "hello");
+                var session = HttpContext.Session.Id;
 
                 ModelState.Clear();
                 var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {
-
-                    var session = HttpContext.Session.Id;
+                    
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<a href=' https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<a href='https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
+                    ViewBag.check = false;
                     return View(data);
                 }
-
+                else
+                {
+                    ViewBag.check = true;
+                }
+               
 
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
