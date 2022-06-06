@@ -65,6 +65,7 @@ namespace UILayer.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
+           
             ViewBag.Title = "Mobizone-Home";
             try
             {
@@ -199,6 +200,7 @@ namespace UILayer.Controllers
             ForgetPasswordViewModel email = new ForgetPasswordViewModel();
             email.emailSent = false;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.check = false;
             return View(email);
         }
         [HttpPost]
@@ -207,24 +209,28 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("key", "value");
-
+                HttpContext.Session.SetString("Email", "hello");
+                var session = HttpContext.Session.Id;
 
                 ModelState.Clear();
                 var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {
-
-                    var session = HttpContext.Session.Id;
+                    
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<a href='http://localhost:44317/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<a href='http://akzacv-001-site1.itempurl.com/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
+                    ViewBag.check = false;
                     return View(data);
                 }
-
+                else
+                {
+                    ViewBag.check = true;
+                }
+               
 
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
