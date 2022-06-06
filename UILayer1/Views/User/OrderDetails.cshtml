@@ -1,70 +1,70 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@using System;
 @model DomainLayer.Checkout;
+@using System;
+
 @{
-    ViewData["Title"] = "Mobizone- Order Details";
+    ViewData["Title"] = "Mobizone(Admin) Order Details";
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
-    var productDetails = ViewBag.Product as DomainLayer.ProductModel.ProductEntity;
+    var productDetails = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
-}
+}<h3 style="text-align:center"></h3>
+ <div>
+     <div class="container-fluid" style="border: solid 1px #d7d7d7;padding: 26px; margin:5px;">
+         <div class="row">
+             <div class="col-12" style="font-weight: bold;">Delivery Address</div>
+             <div class="col-12">@addressDetails.name</div>
+             <div class="col-12">@addressDetails.address</div>
+             <div class="col-12">District - @addressDetails.district , PinCode : @addressDetails.pincode , @addressDetails.state</div>
+             <div class="col-12">Phone Number - @addressDetails.phoneNumber</div>
+         </div>
+     </div>
+     <div class="container-fluid" style="border: solid 1px #d7d7d7; padding: 26px; margin: 5px;">
+         <div class="row">
+             <div class="col-2">
+                 @if (productDetails.images != null && productDetails.images.Count != 0)
+                 {
+                     <a asp-action="ProductDetails" asp-route-id="@productDetails.id"><img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px;" /></a>
+                 }
+                 else
+                 {
+                     <a asp-action="ProductDetails" asp-route-id="@productDetails.id"><img src="/css/Images/noimage.jpg" style="width: 100px;" /></a>
+                 }
+             </div>
+             <div class="col-3">
+                 <div class="col-12" style="font-weight: bold;">@productDetails.name</div>
+                 <div class="col-12">@productDetails.model</div>
+                 <div class="col-12" style="font-weight: bold;color: green;">@productDetails.price</div>
 
-<h3 style="text-align:center">Order Details Page</h3>
+             </div>
+             <div class="col-5">
+                 <div class="progress-track">
+                     <div class="col" style="margin-left:-13%">
+                         Progress Track:  @Model.status
 
-<div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-           
-                    @if (productDetails.images != null && productDetails.images.Count != 0)
-                    {
-                        <img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px; margin-left: 18%;" />
-                    }
+                         <ul id="progressbar" style="margin-left:15%">
+                             <li class="orderplaced  " id="step1">orderplaced</li>
+                             <li class="dispatched  text-center" id="step2">dispatched</li>
+                             <li class="delivered  text-right" id="step3">delivered</li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+             @if (Model.status != DomainLayer.OrderStatus.cancelled)
+             {
+                 <div class="col-2">
+                     <div style=" margin-left: 60%;">
+                         <a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a>
+                     </div>
+                 </div>
+             }
 
-                </div>
+         </div>
+     </div>
+ </div>
 
-                <div class="text-center " style="margin-top: -10%; margin-right: -27%;">
-
-                    <div>
-                        @productDetails.name ( Storage @productDetails.specs.storages.FirstOrDefault().storage) Ram(@productDetails.specs.rams.FirstOrDefault().ram)
-                    </div>
-
-                    <div> Price : @Model.price/- </div>
-                </div>
-                <div style="margin-left: 42%; ">
-                    <div>Quantity :  @Model.quantity</div>
-                </div>
-                <div class="address" style=" margin-left: 29%; margin-top: 0%; ">
-                    <div class="orderDetails col" style="margin-left:17%"> Address :   @addressDetails.name</div>
-                    <div class="orderDetails col" style="margin-left:24%">@addressDetails.address</div>
-                    <div class="orderDetails col" style="margin-left:24%">@addressDetails.district,@addressDetails.state</div>
-                    <div class="orderDetails col" style="margin-left:17%">Pincode : @addressDetails.pincode</div>
-                    <div class="orderDetails col" style="margin-left:12%">Phone Number : @addressDetails.phoneNumber</div>
-
-                </div>
-                <div class="progress-track" style=" ">
-                    <div class="col" style="margin-right: -50px; padding-left: 27%;">
-                        Progress Track :  @Model.status
-                    </div>
-
-                    <ul id="progressbar" style="margin-left: 12%; font-weight: 515;  ">
-                        <li class="orderplaced  " id="step1">orderplaced</li>
-                        <li class="dispatched  " id="step2">dispatched</li>
-                        <li class="delivered  " id="step3">delivered</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style=" margin-left: 60%;">
-                <div><a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a></div>
-            </div>
-            <div class="back">
-                <a type="button" class="btn  btn-orange" style="background-color: #3187e3; color: white; margin-top: -1%;" asp-action="MyOrders">Back</a>&nbsp;
-            </div>
-
-
-        </div>
-
+ <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
         console.log(sourcearray);
@@ -82,225 +82,15 @@
         }
         else{
             $("#progressbar").css("color: rgb(255 33 33);")
-            $("#step2").css("display:none;");
-             $("#step3").css("display:none;");
-            $("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
+            
+            document.getElementById('progressbar').innerHTML = '<li class="orderplaced  " id="step1">orderplaced</li><li class="dispatched  text-center" id = "step2" > dispatched</li ><li class="cancelled  text-right" id="step3">cancelled</li>';
+            //$("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
             $(".cancelled").addClass("active");
-
-
-        }
-</script>
-
-<style>
-    .text-center {
-        padding-right: 40%;
-        margin-top: -13%;
-    }
-
-    .progress-track {
-        margin-left: 12%;
-        margin-top: 2%;
-        color: black
-    }
-
-    #progressbar {
-        margin-bottom: 3vh;
-        overflow: hidden;
-        color: rgb(252, 103, 49);
-        padding-left: 0px;
-        margin-top: 3vh
-    }
-        #progressbar li {
-            list-style-type: none;
-            font-size: x-small;
-            width: 25%;
-            float: left;
-            position: relative;
-            font-weight: 400;
-            color: rgb(160, 159, 159);
-        }
-
-        #progressbar #step1:before {
-            content: "";
-            color: rgb(252, 103, 49);
-            width: 5px;
-            height: 5px;
-            margin-left: 0px !important;
-            /* padding-left: 11px !important */
-        }
-
-        #progressbar #step2:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-left: 32%;
-        }
-
-        #progressbar #step3:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-right: 32%;
-            /* padding-right: 11px !important */
-        }
-
-        #progressbar #step4:before {
-            content: "";
-            color: #fff;
-            width: 5px;
-            height: 5px;
-            margin-right: 0px !important;
-            /* padding-right: 11px !important */
-        }
-
-        #progressbar li:before {
-            line-height: 29px;
-            display: block;
-            font-size: 12px;
-            background: #ddd;
-            border-radius: 50%;
-            margin: auto;
-            z-index: -1;
-            margin-bottom: 1vh;
-        }
-
-        #progressbar li:after {
-            content: '';
-            height: 2px;
-            background: #ddd;
-            position: absolute;
-            left: 0%;
-            right: 0%;
-            margin-bottom: 2vh;
-            top: 1px;
-            z-index: 1;
-        }
-    .address {
-        margin-top: 4%;
-        margin-left: 6%;
-    }
-
-    .text-center {
-        margin-top: -19%;
-        margin-left: 8%;
-    }
-
-    .back {
-        margin-top: -2%;
-        margin-left: 75%;
-    }
-
-    .btn-orange {
-        margin-left: 40%;
-        background-color: #e52d2e;
-    }
-</style>
-
-
-
-
-@*<div class="container-fluid mt-3 align-middle">
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-
-        <div class="card-title">
-
-
-
-                    <div class="col">
-                        <img src="~/css/Images/samsung image.jpg" alt=" Samsung" style="height:162px;margin-right:90%; width:162px;" />
-                        <div style="margin-left:145px">Product Details:Samsung (Blue,3 GB RAM,128GB Storage)</div>
-
-                    </div>
-                    <div class="col row  " style="align-items: center;">
-                        <div class="col  align-items-end">
-                            <div class="orderDetails col"> Address:Akza</div>
-                            <div class="orderDetails col">address,</div>
-                            <div class="orderDetails col">.state</div>
-                            <div class="orderDetails col">pincode</div>
-                            <div class="orderDetails col">Phone Number:.phoneNumber</div>
-
-                        </div>
-
-                    </div>
-                    <div class="col">
-                        <div style="margin-left:-20px">Orderid :  35</div>
-                        <div style="margin-left:-105px">Quantity : 2y</div>
-                        <div style="margin-left:-35px">Price   : 24325345/-</div>
-
-                    </div>
-                </div>
-
-
-                <div class="progress-track">
-                    <div class="col" style="margin-right:-50px">
-                        Progress Track:  .status
-
-                        <ul id="progressbar">
-                            <li class="orderplaced  " id="step1">orderplaced</li>
-                            <li class="dispatched  text-center" id="step2">dispatched</li>
-                            <li class="delivered  text-right" id="step3">delivered</li>
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>*@
-
-
-<script>
-     var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
-        console.log(sourcearray);
-        if(sourcearray.status == 1){
-            $(".orderplaced").addClass("active");
-        }
-        else if(sourcearray.status == 2){
             $(".orderplaced").addClass("active");
             $(".dispatched").addClass("active");
-        }
-        else if(sourcearray.status == 3){
-             $(".orderplaced").addClass("active");
-            $(".dispatched").addClass("active");
-            $(".delivered").addClass("active");
-        }
-        else{
-            $("#progressbar").css("color: rgb(255 33 33);")
-            $("#step2").css("display:none;");
-             $("#step3").css("display:none;");
-            $("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
-            $(".cancelled").addClass("active");
 
 
         }
-
-
-
-
-         @*   var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
-            console.log(sourcearray);
-            if(sourcearray.status == 1){
-                $(".orderplaced").addClass("active");
-            }
-            else if(sourcearray.status == 2){
-                $(".orderplaced").addClass("active");
-                $(".dispatched").addClass("active");
-            }
-            else if(sourcearray.status == 3){
-                 $(".orderplaced").addClass("active");
-                $(".dispatched").addClass("active");
-                $(".delivered").addClass("active");
-            }
-            else{
-                $("#progressbar").css("color: rgb(255 33 33);")
-                $("#step2").css("display:none;");
-                 $("#step3").css("display:none;");
-                $("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
-                $(".cancelled").addClass("active");
-
-
-            }*@
 </script>
 
 <style>
@@ -416,4 +206,22 @@
             background: rgb(252, 103, 49);
         }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

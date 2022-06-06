@@ -43,7 +43,7 @@ else
                                 @foreach (var address in @user.address)
                                 {
                                     <div class="form-check ">
-                                        <input class="form-check-input" name="addressId" type="checkbox" value="@address.id" id="flexCheckDefault" onchange="showbutton1()" />
+                                        <input  class="form-check-input addressInput" name="addressId" type="checkbox" value="@address.id" id="flexCheckDefault" onchange="showbutton1()" />
                                         <label class="form-check-label" for="flexCheckDefault">
                                             @address.name <br> @address.address<br> @address.district
                                         </label>
@@ -55,7 +55,7 @@ else
 
 
                             <div class="row"> 
-                                <div class="col"><a asp-action="address" class="btn btn-orange" style=" color: white">Add New Address</a></div>
+                                <div class="col"><a id="addNewAddress" asp-action="address" class="btn btn-orange" style=" color: white">Add New Address</a></div>
                                                    <div class="col col d-flex justify-content-end " id="addressContinue ">
                                 <a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1 " onclick="orderDetails()">continue</a></div>
 
@@ -69,8 +69,8 @@ else
                             
                             <div class="orderDetails">
                                 <div class="form-check">
-                                    <div class="">
-                                        <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 row">
                                             @if (data.images == null || data.images.Count == 0)
                                             {
                                                 <div class="col-3" align="center"><a asp-action="ProductDetails" asp-route-id="@data.id"><img src="~/css/Images/noimage.jpg" style="width: 10%;"></a></div>
@@ -79,15 +79,18 @@ else
                                             {
                                                 @foreach (var item in data.images)
                                                 {
-                                                    <a asp-action="ProductDetails" asp-route-id="@data.id"><div class="col-12" align="center"><img src="~/Product/Images/@item.imagePath" style="width: 10%;"></div></a>
-                                                    break;
-                                                }
+                                        
+                                            <a asp-action="ProductDetails" asp-route-id="@data.id" class="col-3"><img src="~/Product/Images/@item.imagePath" style="width: 100%;"></a>
+                                            break;
                                             }
-                                            
+                                            }
+
+                                        <div class="col-9">
                                             <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
                                                 @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
                                                 <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="quantitytag" /></div>
                                             </label>
+                                        </div>
                                         </div>
                                         
                                      </div>
@@ -103,8 +106,10 @@ else
 
 
                             <div class="row">
-                               
-                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
+                                <div class="col">
+                                    <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="orderDetailsCancel()">cancel</a>
+                                </div>
+                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" id="paymentContinue"style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
                             </div>
 
                         </div>
@@ -125,7 +130,7 @@ else
                             }
                             <p class="card-text"></p>
                             <div class="row">
-                                <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
+                                <div class="col"><a href="#" onclick="paymentCancel()" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
                                 <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  onchange="displaySubmit()" style="display:none;"/></div>
                             </div>
@@ -182,17 +187,16 @@ else
         })
         
         $("input[name = 'quantity']").change(function () {
-            var data = document.getElementById("pricetag").value
-
-
-
-
+            var data = document.getElementById("quantitytag").value
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
 
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
 
-            if(data>0){
-                $(".toggle-button2").show();
+            if (data <= 0) {
+                $('#paymentContinue').hide();
+            }
+            else {
+                $('#paymentContinue').show();
             }
         });
         
@@ -205,13 +209,30 @@ else
             $(".toggle-button2").hide();
         }
         function orderDetails() {
+            $('#addNewAddress').hide();
+            $('.addressInput').hide();
             $(".order").show();
-            $(".addressDetails").hide();
+           // $(".addressDetails").hide();
             $(".toggle-button1").hide();
             //$(document).ready(function () {
            // document.getElementById("addressContinue").innerHtml = '';
            //document.getElementById("addressContinue").innerHtml = '<button onclick='"'address()'"'>Change</button>';
             //});
+        }
+        function orderDetailsCancel() {
+            $('#addNewAddress').show();
+            $('.addressInput').show();
+            $(".order").show();
+            // $(".addressDetails").hide();
+            $(".toggle-button1").show();
+            $(".order").hide();
+        }
+        function paymentCancel() {
+            $(".payment").hide();
+            $(".cancel2").show();
+            $(".orderDetails").show();
+            $(".toggle-button1").show();
+            $(".toggle-button2").show();
         }
         $("input[name = 'addressId']").change(function () {
             $(".toggle-button1").toggle();
@@ -241,6 +262,7 @@ else
 
     </script>
     <style>
+
         .submit{
             display:none;
         }

@@ -26,95 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
 </head>
 <body>
+    <partial name="_NavbarLayout" />
 
-
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black, red );">
-
-        <div class="container-fluid row">
-            <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
-                <div style="margin-top: -8%;">
-                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;"
-                         class="float-left" />
-                </div>
-                <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
-                   -webkit-text-stroke: thin;color:white;text-decoration:none;">MOBIZONE</a>
-
-            </div>
-            <div class="col">
-                <form class="row" style="align-items: baseline;" asp-action="Search">
-                    <div class="form-outline col-10 mt-2">
-                        <input type="search" id="form1" class="form-control" name="name" />
-                    </div>
-                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px; background-color: #dd0000;">
-                        <i class="fas fa-search " style="font-size: 17px;"></i>
-                    </button>
-                </form>
-            </div>
-
-
-            <div class="col">
-                <div class="row">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a asp-controller="User" asp-action="account" style=" color:white;text-decoration:none;">Hello @User.Identity.Name </a>
-                    }
-                    else
-                    {
-                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                            <a asp-action="registration" style="color:white;">Register</a>
-                        </div>
-                    }
-
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-
-
-                        <div class="dropdown">
-                            <a class="dropbtn" style="color:white;">Account</a>
-                            <div class="dropdown-content">
-
-                                <div class="row" style=" justify-content: center; display: flex; ">
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <a asp-controller="User" asp-action="account">My Account </a>
-                                        <hr />
-                                        <a asp-controller="User" asp-action="MyOrders">My Orders</a>
-                                        <hr />
-                                        <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-                                        <hr />
-
-
-
-                                    }
-                                    else
-                                    {
-                                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                                            <a asp-action="registration">Register</a>
-                                        </div>
-
-                                        <a href="https://mobizone.azurewebsites.net/login">Login</a>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                        <a asp-action ="addtocart" class="fa-solid fa-cart-shopping"></a>
-                    </div>
-                    <div>
-                        <a asp-action="addtocart" class="mr-3" style="color: white; text-decoration: none; margin-left: -130%">Cart</a>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-       
-    </nav>
-
+    
 
 
 
