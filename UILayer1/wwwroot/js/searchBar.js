@@ -8,7 +8,7 @@
                     $("#dropdown2").toggle();
                 });
                 $.ajax({
-                    url: 'http://subin4127-001-site1.etempurl.com/api/productop/GetAll',
+                    url: 'https://mobizoneapi.azurewebsites.net/api/productop/GetAll',
                     dataType: 'Json',
                     success: function (data) {
                         console.log(data.result)

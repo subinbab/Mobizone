@@ -219,7 +219,7 @@ namespace UILayer.Controllers
                     
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<a href='http://akzacv-001-site1.itempurl.com/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<a href='https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
