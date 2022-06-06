@@ -157,7 +157,7 @@ namespace UILayer.Data.ApiServices
                     }
                     data.images = images;
                 }
-                
+                data.name = product.name;
                 data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
                 data.status = product.status;
