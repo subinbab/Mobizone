@@ -65,6 +65,7 @@ namespace UILayer.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index(int? count)
         {
+           
             ViewBag.Title = "Mobizone-Home";
             try
             {
@@ -82,7 +83,7 @@ namespace UILayer.Controllers
                     {
                         cout += 1;
                     }
-                    productCount = productCount - 10;
+                    productCount = productCount - 12;
                 }
                 var result = data.Skip((int)count * 10).Take(10);
                 ViewBag.count = cout;
@@ -199,6 +200,7 @@ namespace UILayer.Controllers
             ForgetPasswordViewModel email = new ForgetPasswordViewModel();
             email.emailSent = false;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.check = false;
             return View(email);
         }
         [HttpPost]
@@ -207,24 +209,28 @@ namespace UILayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("key", "value");
-
+                HttpContext.Session.SetString("Email", "hello");
+                var session = HttpContext.Session.Id;
 
                 ModelState.Clear();
                 var userDetails = userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {
-
-                    var session = HttpContext.Session.Id;
+                    
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<a href='http://localhost:44317/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<a href='https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);
+                    ViewBag.check = false;
                     return View(data);
                 }
-
+                else
+                {
+                    ViewBag.check = true;
+                }
+               
 
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -715,7 +721,7 @@ namespace UILayer.Controllers
                         {
                             cout += 1;
                         }
-                        productCount = productCount - 10;
+                        productCount = productCount - 12;
                     }
                      filteredData = filteredData.Skip((int)count * 10).Take(10);
                     
@@ -775,7 +781,7 @@ namespace UILayer.Controllers
             var checkoutList = userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.id.Equals(id)).FirstOrDefault();
             var ProductDetails = _opApi.GetAll().Result.Where(c => c.id.Equals(checkout.productId)).FirstOrDefault();
-            ViewBag.Product = ProductDetails;
+            ViewData["ProductDetails"] = ProductDetails;
             ViewData["Address"] = userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
 
             return View(checkout);

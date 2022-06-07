@@ -18,15 +18,18 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+    <link rel="stylesheet" href="~/css/SideBar.css" />
     <link rel="stylesheet" href="~/css/navigation-bar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
+
 
 
     <nav class="navbar navbar-light " style="position: fixed; width: 100%;  background: linear-gradient(to right,black, red ); ">
@@ -116,6 +119,7 @@
     </nav>
 
 
+
     <div class="list-group list-group-flush account-settings-links" style="padding-top:35%">
 
         <a class="list-group-item list-group-item-action active" asp-action="account" style="background-color: #dd0000; margin-bottom: 8px; margin-top: -30%; width: 11%; padding-left: 1%; ">Profile Information</a>
@@ -172,106 +176,7 @@
         </div>
 
     </footer>
-    <style>
-        .container-fluid {
-            width: 100%;
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: 0px;
-        }
 
-        footer {
-            margin-top: 100px;
-        }
-
-        .dropdown {
-            display: none;
-            background-color: #275e4900;
-            padding-left: 8px;
-            text-align: center;
-            font-size: medium;
-        }
-
-        li {
-            display: inline;
-        }
-
-        a {
-            cursor: pointer;
-        }
-
-
-        .dropbtn {
-            color: black;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-
-            .dropdown-content a {
-                color: black;
-                padding: 12px 26px;
-                text-decoration: none;
-                display: block;
-            }
-
-
-
-
-                .dropdown-content a:hover {
-                    background-color: #ddd;
-                }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-
-        .dropdown:hover .dropbtn {
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 26px;
-            text-decoration: none;
-            display: block;
-        }
-
-            .dropdown-content a:hover {
-                background-color: #ddd;
-            }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-        }
-
-
-
-
-        .row {
-            margin-left: 0px !important;
-        }
-    </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/searchBar.js"></script>
 </body>

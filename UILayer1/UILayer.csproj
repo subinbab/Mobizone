@@ -160,6 +160,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Product\Images\" />
+    <Folder Include="wwwroot\Product\Images\" />
+    <Folder Include="wwwroot\Product\Images\" />
   </ItemGroup>
 <Target Name="BeforeBuild">
     <!-- Remove obj folder -->

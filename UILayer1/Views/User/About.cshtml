@@ -7,23 +7,26 @@
 }
 @model DomainLayer.About
 <section class=" flex-fill">
-    <div class=" text-center">
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 19%; margin-right: 25%;">
+        <div class="card-body">
+            <div class=" text-center">
 
-        <h2>About</h2>
-        <br />
-        <br />
-        <p>@Model.content</p>
+                <h2>About</h2>
+                <br />
+                <br />
+                <p>@Model.content</p>
+            </div>
+        </div>
     </div>
 
- 
 
 
-    <style>
-        .About {
-            margin-left: 300px;
-          
-        }
-    </style>
+
+        <style>
+            .About {
+                margin-left: 300px;
+            }
+        </style>
 
 </section>
 

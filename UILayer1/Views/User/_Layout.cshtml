@@ -31,6 +31,7 @@
 <body>
 
 
+
     <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black, red ); ">
 
 
@@ -137,33 +138,36 @@
 
 
 
+
     <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
 
 
         <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
             <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
         </div>
-        <div id="dropdown1" class="dropdown" >
+        <div id="dropdown1" class="dropdown">
             <form asp-action="filter" method="post">
-                <select  name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
+                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
                     <option disabled selected> Select Brand </option>
                 </select>
 
-              <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter"                 style="color:white; background-color: #e52d2e">
-               
+                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e">
+
             </form>
         </div>
 
         <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
             <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
-           
+
         </div>
             <div id="dropdown1" class="dropdown">
                    <a asp-action="sort"  style="width: 100%; font-size: 130%" > Price(Low to High)</a>
                    <a asp-action="sortby"  style="width: 100%; font-size: 130%">Price(High to Low)</a>
 
-            </div>
-        
+
+        </div>
+       
+
     </div>
 
 
@@ -223,110 +227,7 @@
                             </div>
 
                         </footer>
-                        <style>
-                            #ui-id-1 {
-                                z-index: 1000;
-                            }
-
-                            .container-fluid {
-                                width: 100%;
-                                padding-right: 15px;
-                                padding-left: 15px;
-                                margin-right: auto;
-                                margin-left: 0px;
-                            }
-
-                            footer {
-                                margin-top: 100px;
-                            }
-
-                            .dropdown {
-                                display: none;
-                                background-color: #275e4900;
-                                padding-left: 8px;
-                                text-align: center;
-                                font-size: medium;
-                            }
-
-                            li {
-                                display: inline;
-                            }
-
-                            a {
-                                cursor: pointer;
-                            }
-
-
-                            .dropbtn {
-                                color: black;
-                                padding: 16px;
-                                font-size: 16px;
-                                border: none;
-                            }
-
-                            .dropdown {
-                                position: relative;
-                                display: inline-block;
-                            }
-
-
-                            .dropdown-content {
-                                display: none;
-                                position: absolute;
-                                background-color: white;
-                                min-width: 160px;
-                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                z-index: 1;
-                            }
-
-
-                                .dropdown-content a {
-                                    color: black;
-                                    padding: 12px 26px;
-                                    text-decoration: none;
-                                    display: block;
-                                }
-
-
-
-
-                                    .dropdown-content a:hover {
-                                        background-color: #ddd;
-                                    }
-
-                            .dropdown:hover .dropdown-content {
-                                display: block;
-                            }
-
-
-                            .dropdown:hover .dropbtn {
-                            }
-
-                            .dropdown-content a {
-                                color: black;
-                                padding: 12px 26px;
-                                text-decoration: none;
-                                display: block;
-                            }
-
-                                .dropdown-content a:hover {
-                                    background-color: #ddd;
-                                }
-
-                            .dropdown:hover .dropdown-content {
-                                display: block;
-                            }
-
-                            .dropdown:hover .dropbtn {
-                            }
-
-
-
-
-                            .row {
-                                margin-left: 0px !important;
-                            }
-                        </style>
+                        
                         @* </footer>*@
                     </div>
                 </main>
