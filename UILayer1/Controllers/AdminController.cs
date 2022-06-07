@@ -665,9 +665,9 @@ namespace UIlayer.Controllers
         [HttpGet("admin/disable/{id}")]
         public async  Task<IActionResult> Disable(int id)
         {
-            var datas = await _opApi.GetProduct();
+            var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
-            data.status = 1;
+            data.status = ProductStatus.disable;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
             return RedirectToAction("Dashboard");
@@ -675,7 +675,7 @@ namespace UIlayer.Controllers
         [HttpGet("/admin/Enable/{id}")]
         public async Task<IActionResult> Enable(int id)
         {
-            var datas = await _opApi.GetProduct();
+            var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
             data.status = 0;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
