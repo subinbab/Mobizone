@@ -40,9 +40,9 @@
 
                 <div style="margin-top: -8%;">
                     <a asp-action="index">
-                        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;"
+                        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;cursor:pointer;"
                              class="float-left" />
-                        </a>
+                    </a>
                 </div>
                 <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
                    -webkit-text-stroke: thin;color:white;text-decoration:none;">MOBIZONE</a>
@@ -122,7 +122,7 @@
                     </div>
                     <div>
 
-                        <a asp-action="addtocart" class="mr-3" style="color: white; text-decoration: none; margin-left: -210%; ">Cart</a>
+                        <a asp-action="addtocart" class="mr-3" style="color: white; text-decoration: none; margin-left: -170%; cursor:pointer; ">Cart</a>
                     </div>
 
                 </div>
@@ -188,7 +188,7 @@
                         <footer>
                             <div class="row justify-content-center">
                                 <a asp-action="index">
-                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height: 60px; width: 60px; cursor: pointer;"
                                          class="float-left" />
                                 </a>
 
@@ -359,258 +359,3 @@
 
 
 
-<!--@{
-   
-    if(ViewBag.BrandList == null)
-    {
-        ViewBag.BrandList = "";
-    }
-}
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link runat="server" rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
-    <link runat="server" rel="icon" href="~/favicon.ico" type="image/ico" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/SideBar.css" />
-    <link rel="stylesheet" href="~/css/navigation-bar.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/footer.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-
-</head>
-<body>
-
-
-
-    <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black, red ); ">
-
-
-        <div class="container-fluid row">
-            <div class="col-3" style="padding-top: 2%; margin-left: -3%;">
-
-                <div style="margin-top: -8%;" >
-                    <a asp-action="index">
-                        <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:30px; width:40px;"
-                             class="float-left" />
-                    </a>
-
-                </div>
-                    <a class="" asp-action="Index" style="margin-left: 0px; font-size:95%;
-                   -webkit-text-stroke: thin;color:white;text-decoration:none;">MOBIZONE</a>
-
-
-            </div>
-            <div class="col">
-                <form class="row" style="align-items: baseline;color:white" asp-action="Search">
-                    <div class="form-outline col-10 mt-2">
-
-
-                        <input autocomplete="on" type="search" id="tags" class="form-control" name="name" required/>
-
-                     </div>
-                    <button type="submit" class="btn  col-2 btn-indigo" style="width: 10px;">
-                 <i class="fas fa-search " style="font-size: 17px;"></i>
-                </button>
-               </form>
-            </div>
-
-
-            <div class="col">
-                <div class="row">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-
-
-                    <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
-                    }
-                    else
-                    {
-                        <div class="col" style="align-items: center; justify-content: center; display: flex; ">
-                                <a asp-action="registration"style="color: white;" >Register</a>
-
-                            </div>
-                    }
-
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-
-
-                            <div class="dropdown">
-                              <a class="dropbtn"style="color: white;">Account</a>
-                              <div class="dropdown-content">
-
-                                  <div class="row" style=" justify-content: center; display: flex; ">
-                                      @if (User.Identity.IsAuthenticated)
-                                      {
-                                          <a asp-controller="User" asp-action="account">My Account </a>
-                                          <hr />
-                                          <a asp-controller="User" asp-action="MyOrders">My Orders</a>
-                                          <hr />
-                                          <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
-                                          <hr />
-
-
-
-          }
-          else
-          {
-              <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                  <a asp-action="registration">Register</a>
-              </div>
-
-     <a href="../login">Login</a>
-
-          }
-      </div>
-  </div>
-</div>
-
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-
-                            <a asp-action="addtocart" class="fa-solid fa-cart-shopping"></a>
-
-                        </div>
-                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                            <a asp-action="addtocart" style="color: white; text-decoration: none; margin-right: 180%">Cart</a>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-    </nav>
-
-
-
-
-    <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
-
-
-        <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
-            <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
-        </div>
-        <div id="dropdown1" class="dropdown">
-            <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
-                    <option disabled selected> Select Brand </option>
-                </select>
-
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e">
-
-            </form>
-        </div>
-
-        <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
-            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
-
-        </div>
-            <div id="dropdown1" class="dropdown">
-                   <a asp-action="sort"  style="width: 100%; font-size: 130%" > Price(Low to High)</a>
-                   <a asp-action="sortby"  style="width: 100%; font-size: 130%">Price(High to Low)</a>
-
-
-        </div>
-
-
-    </div>
-
-
-
-
-
-    <div class="content " style=" padding: 143px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
-
-
-        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #f5f2f2; ">
-
-
-            <div class="container-fluid">
-                <main role="main" class="pb-3">
-                    <div id="mypartialview"></div>
-                    <div>
-
-                        @RenderBody()
-
-
-
-
-
-                        <footer>
-                            <div class="row justify-content-center">
-                                <a asp-action="index">
-                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                                         class="float-left" />
-                                </a>
-
-                                <ul class="list">
-
-
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px">Company</a>
-                                    </li>
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="About" style="margin-right:-86px">About</a>
-                                    </li>
-
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="Privacy" style="margin-right:-86px">Privacy & Policy</a>
-                                    </li>
-
-                                    <li class="about">
-
-                                        <a asp-controller="User" asp-action="Contact" style="margin-right:-86px">Contact Us</a>
-
-
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div style="font-size: 12px; padding-bottom:10px">
-                                <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-                            </div>
-
-                        </footer>-->
-@* </footer>*@
-<!--</div>
-                </main>
-            </div>
-        </div>
-
-
-
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/js/searchBar.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
-
-
-
-
-        </script>
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
-    </div>
-
-</body>
-</html>-->

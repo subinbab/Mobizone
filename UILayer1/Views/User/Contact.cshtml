@@ -12,75 +12,54 @@
 
 
 @model DomainLayer.AdminContact
-<section class=" flex-fill" style="margin-left: 0px;">
-    <div class=" text-center">
 
-        @* <h1>Contact Us</h1>
-        <br />
-        <br />
-        <div class="text-center">
-            <div class=" " container>
-                <div class=" contact us"></div>
-                <div class="box"></div>
-                <div class="icon"></div>
-                <div class=" text">
-                    <h3 class=" " style="margin-top:-2%;margin-left:-30%">Address</h3>
-                    <p class=" " style="margin-top:-3%;">@Model.shopName<br>@Model.address, @Model.district <br>@Model.pincode,  @Model.state <br>@Model.country  </p>
-                </div>
-                <div class="box"></div>
-                <div class="icon"></div>
-                <div class=" text">
-                    <h3 class="" style="margin-left:-32%">Email</h3>
-                    <p class=" " style="margin-top:-2%"> @Model.email</p>
-                </div>
-            </div>
-            <div class="box"></div>
-            <div class="icon"></div>
-            <div class=" text">
-                <h3 class="" style="margin-left: -32%; margin-top: 2%;">Phone</h3>
-                <p class="" style="margin-top:-2%">@Model.phoneNumber</p>
-            </div>
-        </div>
-        *@ <div class="container-fluid mt-3 align-middle">
+
+
+
+<div class="container-fluid mt-3 align-middle">
     <div class="card shadow-lg p-3 mb-5 bg-white rounded" style="margin-left: 19%; margin-right: 25%;">
         <div class="card-body">
             <section class=" flex-fill" style="margin-left: 0px;">
                 <div class=" text-center">
-                    <h1>Contact Us</h1>
-                    <div class=" contact us" style="margin-left: 26%;">
+
+                    <h2>Contact Us</h2>
+                    <div class=" contact us" style="margin-left: 33%;">
                         <div class="text-center">
-                            <div class=" " container style="margin-left: 20%; padding-top: 3%; }">
+                            <div class=" " container>
                                 <div class="row mt-3">
-                                    <div class="col-8" style="font-weight: 640;">
+                                    <div class="col-8">
                                         <div class="row">
-                                            <p class="card-text col-3 row "><b>Address</b></p>
-                                            <p class="col-6 row">@Model.shopName</p>
+                                            <p class="card-text col-3 row " style="color:darkblue">Address</p>
+                                            <p class="col-6 row"><b>@Model.shopName</b></p>
                                         </div>
                                         <div class="row">
                                             <p class="card-text col-3 row "></p>
-                                            <p class="col-6 row">@Model.pincode,@Model.district</p>
+                                            <p class="col-6 row"><b>@Model.pincode,@Model.district</b></p>
                                         </div>
                                         <div class="row">
                                             <p class="card-text col-3 row "></p>
-                                            <p class="col-6 row">@Model.state ,@Model.country</p>
+                                            <p class="col-6 row"><b>@Model.state ,@Model.country</b></p>
                                         </div>
 
                                         <div class="row">
-                                            <p class="card-text col-3 row "><b>Email</b></p>
-                                            <p class="col-6 row"> @Model.email</p>
+                                            <p class="card-text col-3 row "style="color:darkblue">Email</p>
+                                            <p class="col-6 row"><b>@Model.email</b></p>
                                         </div>
                                         <div class="row">
-                                            <p class="card-text col-3 row "><b>Phone</b></p>
-                                            <p class="col-6 row">@Model.phoneNumber</p>
+                                            <p class="card-text col-3 row "style="color:darkblue">Phone</p>
+                                            <p class="col-6 row"><b>@Model.phoneNumber</b></p>
                                         </div>
 
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
+
                 </div>
-
-
             </section>
+        </div>
+    </div>
+
+</div>

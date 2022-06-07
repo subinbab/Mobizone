@@ -1,5 +1,4 @@
-﻿
-    @model DomainLayer.Checkout;
+﻿@* @model DomainLayer.Checkout;
     @using System;
 
     @{
@@ -196,6 +195,223 @@
                 background: rgb(252, 103, 49);
             }
     </style>
+
+
+
+
+
+*@
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model DomainLayer.Checkout;
+@using System;
+
+@{
+    ViewData["Title"] = "Mobizone(Admin) Order Details";
+    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    var productDetails = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
+    var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
+}<h3 style="text-align:center"></h3>
+<div>
+    <div class="container-fluid" style="border: solid 1px #d7d7d7;padding: 26px; margin:5px;">
+        <div class="row">
+            <div class="col-12" style="font-weight: bold;">Delivery Address</div>
+            <div class="col-12">@addressDetails.name</div>
+            <div class="col-12">@addressDetails.address</div>
+            <div class="col-12">@addressDetails.district, @addressDetails.state </div>
+            <div style=" margin-left: 14px;">PinCode : @addressDetails.pincode </div>
+            <div class="col-12">Phone Number : @addressDetails.phoneNumber</div>
+        </div>
+    </div>
+    <div class="container-fluid" style="border: solid 1px #d7d7d7; padding: 26px; margin: 5px;">
+        <div class="row">
+            <div class="col-2">
+                @if (productDetails.images != null && productDetails.images.Count != 0)
+                {
+                    <a asp-action="ProductDetails" asp-route-id="@productDetails.id"><img src="/Product/Images/@productDetails.images.FirstOrDefault().imagePath" style="width: 100px;" /></a>
+                }
+                else
+                {
+                    <a asp-action="ProductDetails" asp-route-id="@productDetails.id"><img src="/css/Images/noimage.jpg" style="width: 100px;" /></a>
+                }
+            </div>
+            <div class="col-3">
+                <div class="col-12" style="font-weight: bold;">Name : @productDetails.name</div>
+                <div class="col-12">Brand : @productDetails.model</div>
+                <div class="col-12" style="font-weight: bold;color: green;">Price : @productDetails.price</div>
+
+            </div>
+            <div class="col-5">
+                <div class="progress-track">
+                    <div class="col" style="margin-left:-13%">
+                        Progress Track:  @Model.status
+
+                        <ul id="progressbar" style="margin-left:15%">
+                            <li class="orderplaced  " id="step1">orderplaced</li>
+                            <li class="dispatched  text-center" id="step2">dispatched</li>
+                            <li class="delivered  text-right" id="step3">delivered</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @if (Model.status != DomainLayer.OrderStatus.cancelled)
+            {
+                <div class="col-2">
+                    <div style=" margin-left: 60%;">
+                        <a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+        var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+        console.log(sourcearray);
+        if(sourcearray.status == 1){
+            $(".orderplaced").addClass("active");
+        }
+        else if(sourcearray.status == 2){
+            $(".orderplaced").addClass("active");
+            $(".dispatched").addClass("active");
+        }
+        else if(sourcearray.status == 3){
+             $(".orderplaced").addClass("active");
+            $(".dispatched").addClass("active");
+            $(".delivered").addClass("active");
+        }
+        else{
+            $("#progressbar").css("color: rgb(255 33 33);")
+
+            document.getElementById('progressbar').innerHTML = '<li class="orderplaced  " id="step1">orderplaced</li><li class="dispatched  text-center" id = "step2" > dispatched</li ><li class="cancelled  text-right" id="step3">cancelled</li>';
+            //$("#progressbar").append('<li class="cancelled  text-right">cancelled</li>');
+            $(".cancelled").addClass("active");
+            $(".orderplaced").addClass("active");
+            $(".dispatched").addClass("active");
+
+
+        }
+</script>
+
+<style>
+    .orderDetails {
+        margin-left: 0px;
+        text-align-last: start;
+    }
+
+    #progressbar {
+        margin-bottom: 3vh;
+        overflow: hidden;
+        color: rgb(252, 103, 49);
+        padding-left: 0px;
+        margin-top: 3vh
+    }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: x-small;
+            width: 25%;
+            float: left;
+            position: relative;
+            font-weight: 400;
+            color: rgb(160, 159, 159);
+        }
+
+        #progressbar #step1:before {
+            content: "";
+            color: rgb(252, 103, 49);
+            width: 5px;
+            height: 5px;
+            margin-left: 0px !important;
+            /* padding-left: 11px !important */
+        }
+
+        #progressbar #step2:before {
+            content: "";
+            color: #fff;
+            width: 5px;
+            height: 5px;
+            margin-left: 32%;
+        }
+
+        #progressbar #step3:before {
+            content: "";
+            color: #fff;
+            width: 5px;
+            height: 5px;
+            margin-right: 32%;
+            /* padding-right: 11px !important */
+        }
+
+        #progressbar #step4:before {
+            content: "";
+            color: #fff;
+            width: 5px;
+            height: 5px;
+            margin-right: 0px !important;
+            /* padding-right: 11px !important */
+        }
+
+        #progressbar li:before {
+            line-height: 29px;
+            display: block;
+            font-size: 12px;
+            background: #ddd;
+            border-radius: 50%;
+            margin: auto;
+            z-index: -1;
+            margin-bottom: 1vh;
+        }
+
+        #progressbar li:after {
+            content: '';
+            height: 2px;
+            background: #ddd;
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            margin-bottom: 2vh;
+            top: 1px;
+            z-index: 1;
+        }
+
+    .progress-track {
+        padding: 0 8%;
+    }
+
+    #progressbar li:nth-child(2):after {
+        margin-right: auto;
+    }
+
+    #progressbar li:nth-child(1):after {
+        margin: auto;
+    }
+
+    #progressbar li:nth-child(3):after {
+        float: left;
+        width: 68%;
+    }
+
+    #progressbar li:nth-child(4):after {
+        margin-left: auto;
+        width: 132%;
+    }
+
+    #progressbar li.active {
+        color: black;
+    }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: rgb(252, 103, 49);
+        }
+</style>
 
 
 
