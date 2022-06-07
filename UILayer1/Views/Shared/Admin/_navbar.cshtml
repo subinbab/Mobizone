@@ -3,11 +3,14 @@
     <nav class="navbar  navbar-fixed-top" style="background: linear-gradient(to right,black, red ); ">
 
         <div class="navbar-brand ">
-            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height: 42px;
-                 width: 36px; margin-left: -26%; "
-                 class="float-left" />
-                
-                 
+            <a asp-action="Index">
+                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height: 30px;
+                 width: 30px; margin-left: -8%; "
+                     class="float-left" />
+            </a>
+            <a class="" asp-action="Index" style="margin-left: 0px; font-size:90%;
+                   -webkit-text-stroke: thin;color:white;text-decoration:none;">MOBIZONE</a>
+
         </div>
         @if (User.Identity.IsAuthenticated)
                         {

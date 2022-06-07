@@ -397,7 +397,7 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region method for sort Ascending
-        public async  Task<IEnumerable<ProductEntity>> Sort(string price)
+        public async  Task<IEnumerable<ProductEntity>> Sort()
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
@@ -413,7 +413,7 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region method for descending Sort
-        public async  Task<IEnumerable<ProductEntity>> Sortby ( string price)
+        public async  Task<IEnumerable<ProductEntity>> Sortby ( )
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler =  new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
