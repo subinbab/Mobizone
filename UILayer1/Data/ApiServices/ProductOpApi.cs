@@ -166,9 +166,7 @@ namespace UILayer.Data.ApiServices
                 List<Ram> rams = new List<Ram>();
                 foreach (var ramData in data.specs.rams)
                 {
-                    Ram ram = new Ram();
-                   /* ram.ram = ramData.ram;*/
-                    rams.Add(ramData);
+                    DeleteRam(ramData.id);
                 }
                 if (product.specs != null)
                 {
@@ -186,11 +184,9 @@ namespace UILayer.Data.ApiServices
                 List<Storage> storages = new List<Storage>();
                 foreach (var storage1 in data.specs.storages)
                 {
-                    Storage storage = new Storage();
-                    /*storage.storage = storage1.storage;*/
-                    storages.Add(storage1);
+                    DeleteStorage(storage1.id);
                 }
-                if(product.specs != null)
+                if (product.specs != null)
                 {
                     if (product.specs.storage != null)
                     {
@@ -426,6 +422,47 @@ namespace UILayer.Data.ApiServices
                 return null;
             }
 
+        }
+        #endregion
+
+        #region delete method
+        public bool DeleteRam(int id)
+        {
+            RequestHandler<ProductEntity> requestHandler = new RequestHandler<ProductEntity>(_configuration);
+            try
+            {
+                requestHandler.url = "api/productop/DeleteRam/";
+                if (requestHandler.Delete(id).IsSuccess)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return false;
+            }
+        }
+        #endregion
+        #region delete method
+        public bool DeleteStorage(int id)
+        {
+            RequestHandler<ProductEntity> requestHandler = new RequestHandler<ProductEntity>(_configuration);
+            try
+            {
+                requestHandler.url = "api/productop/DeleteStorage/";
+                if (requestHandler.Delete(id).IsSuccess)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return false;
+            }
         }
         #endregion
     }

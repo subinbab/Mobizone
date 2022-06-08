@@ -1,8 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Spreadsheet;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
@@ -20,7 +17,6 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -219,7 +215,7 @@ namespace UILayer.Controllers
                     
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<a href='https://mobizone.azurewebsites.net/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a>";
+            mailRequest.Body = "<div><a href='http://akzacv-001-site1.itempurl.com/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = userApi.PostMail(mailRequest);

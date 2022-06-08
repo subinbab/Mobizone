@@ -500,7 +500,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-        #region Get Method for Master data
+        #region Get Method for Rams
         [HttpGet("GetRams")]
         public ResponseModel<IEnumerable<Ram>> GetRams()
         {
@@ -535,7 +535,7 @@ namespace ApiLayer.Controllers
         }
         #endregion
 
-        #region Get Method for Master data
+        #region Get Method for Storages
         [HttpGet("GetStorages")]
         public ResponseModel<IEnumerable<Storage>> GetStorages()
         {
@@ -569,5 +569,50 @@ namespace ApiLayer.Controllers
 
         }
         #endregion
+        #region Delete Method for Product
+        [HttpDelete("DeleteRam/{id}")]
+        public ResponseModel<ProductEntity> DeleteRam(int id)
+        {
+            ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
+            try
+            {
+                var RamData = _ramOperations.Get().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
+                _ramOperations.DeleteProduct(RamData);
+                string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                return _response;
+            }
+            catch (Exception ex)
+            {
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+        }
+        #endregion
+        #region Delete Method for Product
+        [HttpDelete("DeleteStorage/{id}")]
+        public ResponseModel<ProductEntity> DeleteStorage(int id)
+        {
+            ResponseModel<ProductEntity> _response = new ResponseModel<ProductEntity>();
+            try
+            {
+                var StorageData = _storageOperations.Get().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
+                _storageOperations.DeleteProduct(StorageData);
+                string message = _productMessages.Deleted + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(true, 0, null, message);
+                return _response;
+            }
+            catch (Exception ex)
+            {
+                string message = _productMessages.ExceptionError + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                _response.AddResponse(false, 0, null, message);
+                _log.Error("log4net : error in the post controller", ex);
+                return _response;
+            }
+        }
+        #endregion
+
     }
 }

@@ -90,7 +90,8 @@ namespace UIlayer.Controllers
             ViewBag.Title = "Admin - Product List";
             try
             {
-
+                ViewBag.UsersCount = _userApi.GetUserData().Count();
+                ViewBag.ProductCount = _opApi.GetAll().Result.Count();
             }
            catch(Exception ex)
             {
@@ -186,7 +187,7 @@ namespace UIlayer.Controllers
                     {
                         _notyf.Success("Product Updated");
                         var data = _opApi.GetAll().Result.Where(c => c.model.Equals(product.model)).FirstOrDefault();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("ProductDetails", new { id = product.id });
                     }
                     else
                     {
@@ -208,6 +209,16 @@ namespace UIlayer.Controllers
         {
             var product = await _opApi.GetProduct(id);
             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
+            data.specs.ram = new List<string>();
+            foreach(var rams in product.specs.rams)
+            {
+                data.specs.ram.Add(rams.ram);
+            }
+            data.specs.storage = new List<string>();
+            foreach (var storages in product.specs.storages)
+            {
+                data.specs.storage.Add(storages.storage);
+            }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
             ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
             ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
@@ -226,7 +237,7 @@ namespace UIlayer.Controllers
             {
                 bool result = pr.EditProduct(product);
             }
-            return RedirectToAction("");
+            return RedirectToAction("ProductDetails");
         }
         
         [HttpGet("Delete/{id}")]
@@ -665,9 +676,9 @@ namespace UIlayer.Controllers
         [HttpGet("admin/disable/{id}")]
         public async  Task<IActionResult> Disable(int id)
         {
-            var datas = await _opApi.GetProduct();
+            var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
-            data.status = 1;
+            data.status = ProductStatus.disable;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
             return RedirectToAction("Dashboard");
@@ -675,7 +686,7 @@ namespace UIlayer.Controllers
         [HttpGet("/admin/Enable/{id}")]
         public async Task<IActionResult> Enable(int id)
         {
-            var datas = await _opApi.GetProduct();
+            var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
             data.status = 0;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
@@ -748,6 +759,12 @@ namespace UIlayer.Controllers
         public IActionResult RoleType()
         {
             return new JsonResult(EnumConvertion.EnumToString<RoleTypes>());
+        }
+        [HttpGet("RemoveRam/{id}")]
+        public IActionResult RemoveRam(int id)
+        {
+            var data = _opApi.GetRams().Where(c => c.id.Equals(id)).FirstOrDefault();
+            return View();
         }
     }
 }
