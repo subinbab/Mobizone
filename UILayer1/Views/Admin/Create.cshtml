@@ -161,7 +161,7 @@ element.style {
                                     <label asp-for="specs.ram" class="control-label"> Ram</label>
 
                                     <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
-                                    @{
+                                   @* @{
                                         try
                                         {
                                             if (Model == null)
@@ -183,7 +183,7 @@ element.style {
                                                     {
                                                         foreach (var item in Model.specs.rams)
                                                         {
-                                                            <option value="@item.ram">@item.ram <span onclick="DeleteMaster(@item.id)">&times;</span></option>
+                                                            @item.ram <span onclick="DeleteMaster(@item.id)"><a href="/RemoveRam/@item.id">&times;</a></span>
                                                         }
                                                     }
                                                 }
@@ -193,14 +193,14 @@ element.style {
                                         {
 
                                         }
-                                    }
+                                    }*@
                                     <span asp-validation-for="specs.ram" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4"  style="padding-top: 2%">
                                     <label asp-for="specs.storage" class="control-label"> Storage</label>
 
                                     <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
-                                    @{
+                                    @*@{
                                         try
                                         {
                                             if (Model == null)
@@ -232,7 +232,7 @@ element.style {
                                         {
 
                                         }
-                                    }
+                                    }*@
                                     <span asp-validation-for="specs.storage" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4"  style="padding-top: 2%">
@@ -335,7 +335,9 @@ element.style {
         CKEDITOR.replace("Description");
     });
    
-
+    function DeleteMaster(data) {
+        alert(data)
+    }
     
 
 
