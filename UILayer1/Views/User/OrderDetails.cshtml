@@ -16,8 +16,9 @@
              <div class="col-12" style="font-weight: bold;">Delivery Address</div>
              <div class="col-12">@addressDetails.name</div>
              <div class="col-12">@addressDetails.address</div>
-             <div class="col-12">District - @addressDetails.district , PinCode : @addressDetails.pincode , @addressDetails.state</div>
-             <div class="col-12">Phone Number - @addressDetails.phoneNumber</div>
+             <div class="col-12">District : @addressDetails.district , @addressDetails.state</div>
+            <div style=" margin-left: 14px;">PinCode : @addressDetails.pincode </div>
+             <div class="col-12">Phone Number : @addressDetails.phoneNumber</div>
          </div>
      </div>
      <div class="container-fluid" style="border: solid 1px #d7d7d7; padding: 26px; margin: 5px;">
@@ -33,9 +34,9 @@
                  }
              </div>
              <div class="col-3">
-                 <div class="col-12" style="font-weight: bold;">@productDetails.name</div>
-                 <div class="col-12">@productDetails.model</div>
-                 <div class="col-12" style="font-weight: bold;color: green;">@productDetails.price</div>
+                 <div class="col-12" style="font-weight: bold;">Name : @productDetails.name</div>
+                 <div class="col-12">Brand : @productDetails.model</div>
+                 <div class="col-12" style="font-weight: bold;color: green;">Price : @productDetails.price</div>
 
              </div>
              <div class="col-5">

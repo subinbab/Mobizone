@@ -731,21 +731,21 @@ namespace UILayer.Controllers
         }
 
 
-        public IActionResult Sort(string price)
+        public IActionResult Sort()
         {
             ViewBag.Title = " Mobizone - Price(Low to High)";
             ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sort(price).Result.Where(c => c.status.Equals(ProductStatus.enable));
+            var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("Index", SortedData);
         }
 
-        public IActionResult Sortby(string price)
+        public IActionResult Sortby()
         {
             ViewBag.Title = "Mobizone - Price(High to Low )";
             ViewBag.count = 0;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sortby(price).Result.Where(c => c.status.Equals(ProductStatus.enable));
+            var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("Index", SortedData);
         }
         [HttpGet]
