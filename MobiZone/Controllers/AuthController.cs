@@ -116,7 +116,7 @@ namespace ApiLayer.Controllers
                 
                 if (check != null)
                 {
-                    try
+                    /*try
                     {
                         var cart = _cartOperations.Get().Result.Where(c => c.sessionId.Equals(check.sessionId)).FirstOrDefault();
                         //cart.sessionId = data.sessionId;
@@ -125,12 +125,12 @@ namespace ApiLayer.Controllers
                     catch (Exception ex)
                     {
 
-                    }
-                    check.sessionId = data.sessionId;
-                    check.password = _sec.Encrypt("admin", data.password);
+                    }*/
+                    /*check.sessionId = data.sessionId;
+                    check.password = _sec.Encrypt("admin", data.password);*/
                     //await _loginOperations.Edit(check);
                     /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
-                    message = _userMessages.Added + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);
                     return _response;
                 }
@@ -146,7 +146,7 @@ namespace ApiLayer.Controllers
             }
 
         }
-        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        /*private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -252,6 +252,6 @@ namespace ApiLayer.Controllers
             SignOut();
 
             return NoContent();
-        }
+        }*/
     }
 }

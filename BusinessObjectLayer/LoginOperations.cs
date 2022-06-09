@@ -13,7 +13,6 @@ namespace BusinessObjectLayer
 
         public LoginOperations(IRepositoryOperations<Login> repo)
         {
-
             _repo = repo;
         }
         public async Task Add(Login entity)
