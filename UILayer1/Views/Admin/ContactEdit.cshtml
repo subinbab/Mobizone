@@ -27,7 +27,7 @@
                              <div class="form-group row mb-4">
                                  <div class="col-md-12">
                                      <label asp-for="shopName" class="edit" style="margin-left:-84%;">Shop Name</label>
-                                     <input asp-for="shopName" placeholder="Shop Name" class="form-control" />
+                                     <input asp-for="shopName" placeholder="Shop Name" class="form-control" type="text"  />
                                      <span asp-validation-for="shopName" class="text-danger"></span>
                                  </div>
 
@@ -36,14 +36,14 @@
                              <div class="row">
                                  <div class="col-md-12">
                                      <label asp-for="address" class="edit" style="margin-left:-88%">Address</label>
-                                     <input asp-for="address" placeholder="Address" class="form-control" />
+                                     <input asp-for="address" placeholder="Address" class="form-control"  type="text"  />
                                      <span asp-validation-for="address" class="text-danger"></span>
                                  </div>
                              </div>
                              <br />
                              <div class="row">
                                  <div class="col-md-6">
-                                     <input asp-for="district" placeholder="District" class="form-control" />
+                                     <input asp-for="district" placeholder="District" class="form-control" type="text" />
                                      <span asp-validation-for="district" class="text-danger"></span>
                                  </div>
                                  <div class="col-md-6">
@@ -54,11 +54,11 @@
                              <br />
                              <div class="row">
                                  <div class="col-md-6">
-                                     <input asp-for="state" placeholder="State" class="form-control" />
+                                     <input asp-for="state" placeholder="State" class="form-control"  type="text"  />
                                      <span asp-validation-for="state" class="text-danger"></span>
                                  </div>
                                  <div class="col-md-6">
-                                     <input asp-for="country" placeholder="Country"class="form-control" />
+                                     <input asp-for="country" placeholder="Country"class="form-control"  type="text"  />
                                      <span asp-validation-for="country" class="text-danger"></span>
 
                                  </div>
@@ -69,7 +69,7 @@
                              <div class="row">
                                  <div class="col-md-6">
                                      <label asp-for="email" class="control-label" style="margin-right:87%;">Email</label>
-                                     <input asp-for="email" class="form-control" />
+                                     <input asp-for="email" class="form-control"  type="text"  />
 
 
                                  </div>
@@ -77,7 +77,7 @@
 
                                  <div class="col-md-6">
                                      <label asp-for="phoneNumber" class="edit" style="margin-left:-58%;">Phone number</label>
-                                     <input asp-for="phoneNumber" class="form-control" type="number" />
+                                     <input asp-for="phoneNumber" class="form-control" type="tel" />
                                      <span asp-validation-for="phoneNumber" class="text-danger"></span>
                                  </div>
 
@@ -122,6 +122,15 @@
     }
     .control-label{
         margin-right:88%;
+    }
+    input[type="text"] {
+        text-align: left;
+    }
+    input[type="tel"] {
+        text-align: left;
+    }
+    input[type="number"] {
+        text-align: left;
     }
 </style>
 @*<div>
