@@ -9,8 +9,9 @@
     var data = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
-    Layout = "~/Views/User/_Layout.cshtml";
-
+    Layout = "~/Views/Simpleview/_UserLayout.cshtml";
+    var ReturnUrl = ViewBag.ReturnUrl as string;
+    int count = 0;
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 @if (user == null)
@@ -23,7 +24,7 @@ else
     <div class="container-fluid mt-3">
 
         <div class="row" style="margin-right: 6%;margin-left: 7%;">
-            <form asp-action="order" method="post" class="col" id="my-form">
+            <form action="/user/order" method="post" class="col" id="my-form">
                 <input asp-for="id" value="0" type="hidden" />
                 <input asp-for="productId" type="hidden" value="@data.id" />
                 <input asp-for="userId" type="hidden" value="@user.UserId" />
@@ -39,25 +40,36 @@ else
                             }
                             else
                             {
-                                <div class="addressDetails">
+                                <div class="addressDetails"  id="realDiv">
                                 @foreach (var address in @user.address)
                                 {
                                     <div class="form-check ">
-                                        <input  class="form-check-input addressInput" name="addressId" type="checkbox" value="@address.id" id="flexCheckDefault" onchange="showbutton1()" />
-                                        <label class="form-check-label" for="flexCheckDefault">
+                                        @*<input multiple class="form-check-input  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox"  id="flexCheckDefault" onchange="showbutton1()" />*@
+                                        @Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })
+                                        <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
+                                        <input asp-for="addressList[count].address" value="@address.address" type="hidden" />
+                                        <input asp-for="addressList[count].country" value="@address.country" type="hidden" />
+                                        <input asp-for="addressList[count].district" value="@address.district" type="hidden" />
+                                        <input asp-for="addressList[count].name" value="@address.name" type="hidden" />
+                                        <input asp-for="addressList[count].phoneNumber" value="@address.phoneNumber" type="hidden" />
+                                        <input asp-for="addressList[count].pincode" value="@address.pincode" type="hidden" />
+                                        <input asp-for="addressList[count].additionalInfo" value="@address.additionalInfo" type="hidden" />
+                                        <input asp-for="addressList[count].state" value="@address.state" type="hidden" />
+                                        <label class="form-check-label @address.id" for="flexCheckDefault" id="@address.id">
                                             @address.name <br> @address.address<br> @address.district
                                         </label>
                                     </div>
                                     <hr />
+                                    count++;
                                 }
                                 </div>
                             }
-
+                            <div id="selectedAddress"></div>
 
                             <div class="row"> 
-                                <div class="col"><a id="addNewAddress" asp-action="address" class="btn btn-orange" style=" color: white">Add New Address</a></div>
+                                <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
                                                    <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1 " onclick="orderDetails()">continue</a></div>
+                                <a style=" background-color: #e52d2e;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a></div>
 
                             </div>
                         </div>
@@ -87,8 +99,17 @@ else
 
                                         <div class="col-9">
                                             <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                                @data.name (@data.specs.rams.FirstOrDefault().ram GB , @data.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @data.price
-                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="quantitytag" /></div>
+                                                @if (data.specs.rams != null && data.specs.rams.Count() > 0)
+                                                {@data.name;
+                                            }
+                                                (@if (data.specs.rams != null && data.specs.rams.Count() > 0)
+                                                {
+                                                    @data.specs.rams.FirstOrDefault().ram;
+                                                } GB, @if (data.specs.storages != null && data.specs.storages.Count() > 0)
+                                                {
+                                                    @data.specs.storages.FirstOrDefault().storage}
+                                                GB)<br>&#8377 @data.price;
+                                            <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="1" id="quantitytag" /></div>
                                             </label>
                                         </div>
                                         </div>
@@ -173,7 +194,8 @@ else
     </div>
 
     <script>
-        
+        var addressDiv = '<div class="addressDetails"id="realDiv">';
+        var previousDiv 
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(data))');
         function changePrice(data) {
             alert(sourcearray.price)
@@ -182,10 +204,12 @@ else
             document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
         }
         $(document).ready(function () {
+           
+            previousDiv = $("#realDiv")[0].innerHTML
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6"> Price <p class="col-6">  ₹' + sourcearray.price + ' </p>';
             document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6" style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price + ' </p>';
         })
-        
+
         $("input[name = 'quantity']").change(function () {
             var data = document.getElementById("quantitytag").value
             document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
@@ -199,7 +223,7 @@ else
                 $('#paymentContinue').show();
             }
         });
-        
+
         console.log(sourcearray)
         function paymentDetails() {
             $(".payment").show();
@@ -209,10 +233,14 @@ else
             $(".toggle-button2").hide();
         }
         function orderDetails() {
+            document.getElementById("selectedAddress").innerHTML = addressDiv
+            console.log(address)
+            var value = $("#flexCheckDefault").val()
+            console.log(value)
             $('#addNewAddress').hide();
             $('.addressInput').hide();
             $(".order").show();
-           // $(".addressDetails").hide();
+           $("#realDiv").hide();
             $(".toggle-button1").hide();
             //$(document).ready(function () {
            // document.getElementById("addressContinue").innerHtml = '';
@@ -226,6 +254,10 @@ else
             // $(".addressDetails").hide();
             $(".toggle-button1").show();
             $(".order").hide();
+            console.log("_______")
+            console.log(previousDiv)
+            document.getElementById("selectedAddress").innerHTML = previousDiv;
+            apply()
         }
         function paymentCancel() {
             $(".payment").hide();
@@ -240,7 +272,7 @@ else
         $("input[name = 'paymentModeId']").change(function () {
             $(".submit").toggle();
         })
-       
+
         function address(){
             $(".order").hide();
             $(".addressDetails").show();
@@ -259,7 +291,105 @@ else
         function displaySubmit() {
             $(".submit").toggle();
         }
+@*$(document).ready(function(){
+    $('input:checkbox').click(function() {
+    if($('.check').is(':checked')){
+    alert('not checked')
+    }
+    else{
+    alert('checked')
+    }
 
+    });
+});*@
+        @*$(document).ready(function () {
+
+            var $submit = $("#submit_prog").hide(),
+                $cbs = $('input[name="address.IsChecked"]').click(function () {
+                    $submit.toggle($cbs.is(":checked"));
+                });
+
+        });*@
+        function apply() {
+            debugger
+            $(".check").on('click', function () {
+                debugger
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                    alert("checked")
+                    console.log("enter")
+
+                    var group = "input:checkbox[class='" + $box.attr("class") + "']";
+                    $(group).prop("checked", false);
+                    $box.prop("checked", true);
+                    addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
+                    console.log($box)
+                    console.log($(group).length)
+                    @*var divList = $(group)
+                    divList.forEach(function (items, index) {
+                        if (items.id === $box[0].id) {
+                            console.log("equals")
+                        }
+                    }) *@
+                    //console.log($("#" + $box[0].id)[0].innerHTML)
+                    for (let step = 0; step <= $(group).length; step++) {
+                        console.log($(group)[step].id)
+                        console.log($box[0].id)
+                        if ($(group)[step].id == $box[0].id) {
+                            console.log("equals")
+
+                            console.log($("#" + $box[0].id))
+                        }
+                        console.log("''''")
+                    }
+                } else {
+                    alert("not checked")
+                    $box.prop("checked", false);
+                    console.log($box)
+                }
+            });
+        }
+        $(document).ready(function () {
+            $(".check").on('click', function () {
+                debugger
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                    alert("checked")
+                    console.log("enter")
+                   
+                    var group = "input:checkbox[class='" + $box.attr("class") + "']";
+                    $(group).prop("checked", false);
+                    $box.prop("checked", true);
+                    addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
+                    console.log($box)
+                    console.log($(group).length)
+                    @*var divList = $(group)
+                    divList.forEach(function (items, index) {
+                        if (items.id === $box[0].id) {
+                            console.log("equals")
+                        }
+                    })*@
+                    //console.log($("#" + $box[0].id)[0].innerHTML)
+                    for (let step = 0; step <= $(group).length; step++) {
+                        console.log($(group)[step].id)
+                        console.log($box[0].id)
+                        if ($(group)[step].id == $box[0].id) {
+                            console.log("equals")
+
+                            console.log($("#" + $box[0].id))
+                        }
+                        console.log("''''")
+                    }
+                } else {
+                    alert("not checked")
+                    $box.prop("checked", false);
+                    console.log($box)
+                }
+            });
+        })
+        
+  
+        
     </script>
     <style>
 

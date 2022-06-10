@@ -58,6 +58,40 @@ namespace UILayer.Models
 
         }
         #endregion
+        #region get generic method
+        public ResponseModel<T> Get(string encodedCode)
+        {
+            ResponseModel<T> _responseModel = new ResponseModel<T>();
+            _responseModel = null;
+            try
+            {
+                using (HttpClient httpclient = new HttpClient())
+                {
+                    string url = _configuration.GetSection("Development")["BaseApi"].ToString() + _url;
+                    Uri uri = new Uri(url);
+                    httpclient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Authorization", encodedCode);
+                    System.Threading.Tasks.Task<HttpResponseMessage> result = httpclient.GetAsync(uri);
+                    if (result.Result.IsSuccessStatusCode)
+                    {
+                        System.Threading.Tasks.Task<string> response = result.Result.Content.ReadAsStringAsync();
+                        _responseModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseModel<T>>(response.Result);
+                        if (_responseModel == null)
+                        {
+                            return null;
+                        }
+                    }
+                    return _responseModel;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                return default(ResponseModel<T>);
+
+            }
+
+        }
+        #endregion
 
         #region Edit Generic method
         public ResponseModel<T> Edit(T entity)

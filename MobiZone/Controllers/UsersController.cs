@@ -10,6 +10,7 @@ using DomainLayer.Users;
 using DTOLayer.UserModel;
 using Firebase.Auth;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+//using System.Web.Http;
 
 namespace ApiLayer.Controllers
 {
@@ -125,6 +127,7 @@ namespace ApiLayer.Controllers
 
 
         #region Get Method for users
+        //[Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpGet("userdata")]
         public IActionResult userdata()
         {

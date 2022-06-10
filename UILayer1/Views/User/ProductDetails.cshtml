@@ -56,7 +56,8 @@
     </div>
     <div class="col-8" style="position: relative;margin-left: 518px;">
         <div class="col-7 pb-3">
-            <h2 class="card-title " style="font-size: 21px;">@Model.name ( Storage @Model.specs.storages.FirstOrDefault().storage) Ram(@Model.specs.rams.FirstOrDefault().ram)</h2>
+            <h2 class="card-title " style="font-size: 21px;">Model.name (@if(Model.specs.storages != null && Model.specs.storages.Count()>0){@Model.specs.storages.FirstOrDefault().storage}) Ram(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
+            {@Model.specs.rams.FirstOrDefault().ram})</h2>
             <h3 class="card-subtitle" style="padding-left: 14px;font-weight: 600;"> &#8377 @Model.price </h3>
             <h4>Model:@Model.model</h4>
       

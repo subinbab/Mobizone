@@ -31,5 +31,7 @@ namespace DomainLayer
         public Address address { get; set; }
         public OrderStatus status { get; set; }
         public RoleTypes? cancelRequested { get; set; }
+        [NotMapped]
+        public List<Address> addressList { get; set; }
     }
 }

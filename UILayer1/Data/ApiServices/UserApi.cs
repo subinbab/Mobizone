@@ -60,6 +60,22 @@ namespace UILayer.Data.ApiServices
             }
             
         }
+        public IEnumerable<UserRegistration> GetUserData(string username , string password)
+        {
+            var enocodedcode = Base64Encode(username+":"+password);
+            ///var encodedPassword = Base64Encode(password);
+            RequestHandler<IEnumerable<UserRegistration>> _requestHandler = new RequestHandler<IEnumerable<UserRegistration>>(_configuration);
+            try
+            {
+                _requestHandler.url = "api/users/userdata";
+                return _requestHandler.Get(enocodedcode).result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
 
 
         //Authenticate
@@ -416,5 +432,15 @@ namespace UILayer.Data.ApiServices
             }
         }
         #endregion
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace ApiLayer.Models
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        ILoginOperations _loginOperations;
         private readonly IUserCreate _userService;
         IEnumerable<UserRegistration> _userList;
         Security _security;
@@ -31,15 +32,17 @@ namespace ApiLayer.Models
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            IUserCreate userService)
+            IUserCreate userService, ILoginOperations loginOperations)
             : base(options, logger, encoder, clock)
         {
             _userService = userService;
             _security = new Security();
-        }
+       _loginOperations = loginOperations;
+    }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            Login userData = null;
             // skip authentication if endpoint has [AllowAnonymous] attribute
             var endpoint = Context.GetEndpoint();
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
@@ -57,23 +60,23 @@ namespace ApiLayer.Models
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                var decryptPass = _security.Decrypt("subin", password);
+                var decryptPass = _security.Encrypt("admin", password);
                 _userList = _userService.Get().Result;
                 /*user = _userList.Where(c=> c.Email.Equals(username)&& c.Password.Equals(decryptPass)).FirstOrDefault();*/
 
-                user =  _userService.Authenticate(username, password).Result;
+                userData = _loginOperations.Get().Result.Where(c=> c.username.Equals(username) && c.password.Equals(decryptPass)).FirstOrDefault();
             }
-            catch
+            catch(Exception ex)
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            if (user == null)
+            if (userData == null)
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, user.Email),
-                new Claim(ClaimTypes.Name,user.FirstName +" "+ user.LastName ),
+                new Claim(ClaimTypes.NameIdentifier, userData.username),
+                new Claim(ClaimTypes.Name,userData.username),
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

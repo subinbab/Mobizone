@@ -438,7 +438,7 @@ namespace UIlayer.Controllers
         }
         [AllowAnonymous]
         [HttpPost("/Login")]
-        public async Task<IActionResult> Validate(string userName, string password/*, string ReturnUrl*/)
+        public async Task<IActionResult> Validate(string userName, string password, string ReturnUrl)
         {
             try
             {
@@ -478,7 +478,7 @@ namespace UIlayer.Controllers
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                         await HttpContext.SignInAsync(claimsPrincipal);
-                        return Redirect("/user");
+                        return Redirect(ReturnUrl);
 
 
                     }

@@ -6,6 +6,7 @@
 }
 @{
     ViewData["Title"] = "Mobizone- Add New Address";
+    var returnUrl = ViewBag.ReturnUrl as string;
 }
 
 
@@ -13,7 +14,7 @@
 <div class="row align-item-center">
     <div class="col-md-8 mb-4">
         <div class="card-body">
-            <form asp-action="Address" method="post">
+            <form action="/user/Address?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 

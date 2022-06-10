@@ -307,12 +307,15 @@ namespace UILayer.Controllers
             return View("Orderplaced");
         }
         [Authorize(Roles = "User")]
-        [HttpGet]
+        [HttpGet("/user/order/{id}")]
         public IActionResult order(int id)
         {
+            ViewBag.ReturnUrl = "/user/order/" + id;
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
-            _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
+            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
+            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
@@ -333,8 +336,8 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        [HttpPost]
-        public IActionResult order(Checkout checkout)
+        [HttpPost("/user/order")]
+        public IActionResult order(Checkout checkout,int addressId)
         {
             if (checkout == null)
             {
@@ -349,6 +352,13 @@ namespace UILayer.Controllers
                 if (data.quantity == 0)
                 {
                     data.status = ProductStatus.disable;
+                }
+                foreach(var address in checkout.addressList)
+                {
+                    if (address.IsChecked)
+                    {
+                        checkout.address = address;
+                    }
                 }
                 var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
                 _opApi.EditProduct(mappedData);
@@ -675,16 +685,16 @@ namespace UILayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Address(int id)
+        public IActionResult Address(int id , string ReturnUrl)
         {
-
+            ViewBag.ReturnUrl = ReturnUrl;
             _user = userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(address);
         }
         [HttpPost("/user/address")]
-        public IActionResult Address(Address addreses)
+        public IActionResult Address(Address addreses,string ReturnUrl)
         {
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
@@ -692,7 +702,7 @@ namespace UILayer.Controllers
             _user.address = addresses;
             bool result = userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return RedirectToAction("Account");
+            return Redirect(ReturnUrl);
         }
         [HttpPost]
         public IActionResult filter(string brandName)
