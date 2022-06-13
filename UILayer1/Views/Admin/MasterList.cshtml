@@ -92,9 +92,15 @@
     }
 </style>
 <script>
+    $(document).ready(function (e) {
+        $('#datatable').dataTable({
+        })
+    })
+    
     function masterEdit(data) {
         var id = data;
         $(document).ready(function (e) {
+            
             $.ajax({
                 url: 'admin/EditMaster/' + id,
                 type: 'get',
@@ -113,61 +119,7 @@
         });
     }
 
-    var getProductLink;
-    var header;
-    //configLink(GetProductData);
-    configLink(header);
-    //header(GetProductData);
-    //GetProductData();
-    function configLink(callback) {
-        $.ajax({
-            url: '/config/getapi',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data)
-                getProductLink = data + 'api/master';
-                header();
-                callback(getUserData);
-            }
-        })
-    }
-    function header(callback) {
-        $.ajax({
-            url: '/config/GetHeader',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data)
-                header = data;
-                callback();
-
-            }
-        })
-    }
-    function getUserData() {
-        debugger
-        $.ajax({
-            url: getProductLink,
-            type: 'get',
-            datatype: 'json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Basic " + header);
-            },
-            success: function (data) {
-                console.log(data.result);
-                $('#datatable').dataTable({
-                    data: data.result,
-                    columns: [
-                        {
-                            'render': function (data, type, full, meta) {
-                                return full.firstName + " " + full.lastName
-                            }
-                        },
-                        { 'data': 'createdOn' }
-                    ]
-                })
-            }
-        })
-    }
+    
+                
+            
 </script>

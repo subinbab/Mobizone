@@ -54,7 +54,7 @@ namespace UILayer.Controllers
             _distributedCache = distributedCache;
             _carts = new List<Cart>();
             // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
-
+            ViewBag.WebLink = _configuration.GetSection("Development:WebLink").Value;
 
 
         }
@@ -179,10 +179,10 @@ namespace UILayer.Controllers
                 var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {
-                    
+                    var webLink = _configuration.GetSection("Development:WebLink").Value;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<div><a href='http://akzacv-001-site1.itempurl.com/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div>";
+            mailRequest.Body = "<div><a href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = _userApi.PostMail(mailRequest);
