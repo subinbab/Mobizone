@@ -87,10 +87,12 @@ namespace UIlayer.Controllers
         [Authorize(Roles="Admin")]
         public async Task<ActionResult> Index(int? i)
         {
+            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
+            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.Title = "Admin - Product List";
             try
             {
-                ViewBag.UsersCount = _userApi.GetUserData().Count();
+                ViewBag.UsersCount = _userApi.GetUserData(username,password).Count();
                 ViewBag.ProductCount = _opApi.GetAll().Result.Count();
             }
            catch(Exception ex)
@@ -417,8 +419,10 @@ namespace UIlayer.Controllers
         [Authorize]
         public IActionResult Userdata()
         {
+            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
+            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserApi userApi = new UserApi(Configuration);
-            _userDataList = userApi.GetUserData();
+            _userDataList = userApi.GetUserData(username, password);
             return View(_userDataList);
         }
         
@@ -468,7 +472,7 @@ namespace UIlayer.Controllers
                     {
                      
                         UserApi userApi = new UserApi(Configuration);
-                        _userDataList = userApi.GetUserData();
+                        _userDataList = userApi.GetUserData(userName, password);
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("email", user.username));
@@ -478,9 +482,14 @@ namespace UIlayer.Controllers
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                         await HttpContext.SignInAsync(claimsPrincipal);
-                        return Redirect(ReturnUrl);
-
-
+                        if(ReturnUrl == null)
+                        {
+                            return Redirect("/");
+                        }
+                        else
+                        {
+                            return Redirect(ReturnUrl);
+                        }
                     }
                 }
                 else

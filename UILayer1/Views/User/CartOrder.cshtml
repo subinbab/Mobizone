@@ -12,7 +12,9 @@
     var cartData = ViewData["cart"] as DomainLayer.MyCart;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    var ReturnUrl = ViewBag.ReturnUrl as string;
     int? price = 0;
+    int count = 0;
     if (cartData != null)
     {
         foreach (var cartDetailsData in cartData.cartDetails)
@@ -40,39 +42,49 @@ else
                     
                     <div class="card ">
                         <div class="">
-                            <div class="address" ><p class="card-title">Delivery Address</p></div>
-                            
+                            <div class="address"><p class="card-title">Delivery Address</p></div>
+
                             @if (user.address == null)
                             {
                                 <p>No address available please create one </p>
                             }
                             else
                             {
-                                <div class="addressDetails">
-                                @foreach (var address in @user.address)
-                                {
-                                    <div class="form-check ">
-                                        <input class="form-check-input" name="addressId" type="checkbox" value="@address.id" id="flexCheckDefault" onchange="showbutton1()" />
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            @address.name <br> @address.address<br> @address.district
-                                        </label>
-                                    </div>
-                                    <hr />
-                                }
+                                <div class="addressDetails" id="realDiv">
+                                    @foreach (var address in @user.address)
+                                    {
+                                        <div class="form-check ">
+                                            <label asp-for="@Model.addressList[count].IsChecked">
+                                                <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" />
+                                            </label>
+                                            @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
+                                            <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
+                                            <input asp-for="addressList[count].address" value="@address.address" type="hidden" />
+                                            <input asp-for="addressList[count].country" value="@address.country" type="hidden" />
+                                            <input asp-for="addressList[count].district" value="@address.district" type="hidden" />
+                                            <input asp-for="addressList[count].name" value="@address.name" type="hidden" />
+                                            <input asp-for="addressList[count].phoneNumber" value="@address.phoneNumber" type="hidden" />
+                                            <input asp-for="addressList[count].pincode" value="@address.pincode" type="hidden" />
+                                            <input asp-for="addressList[count].additionalInfo" value="@address.additionalInfo" type="hidden" />
+                                            <input asp-for="addressList[count].state" value="@address.state" type="hidden" />
+                                            <label class="form-check-label @address.id" for="flexCheckDefault" id="@address.id">
+                                                @address.name <br> @address.address<br> @address.district
+                                            </label>
+                                        </div>
+                                        <hr />
+                                        count++;
+                                    }
                                 </div>
                             }
-
+                            <div id="selectedAddress" style="margin:7%;"></div>
 
                             <div class="row">
-
-                                
-                                
-                                <div class="col"><a asp-action="address" class="btn btn-orange" style=" color: white">Add New Address</a></div>
-                                                   <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style="display: none; background-color: #e52d2e;" href="#" class="btn btn-orange toggle-button1 " onclick="orderDetails()"  >continue</a></div>
+                                <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
+                                <div class="col col d-flex justify-content-end " id="addressContinue ">
+                                    <a style=" background-color: #e52d2e;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
+                                </div>
 
                             </div>
-
                         </div>
                     </div>
                     <div class="card order mt-3" style="display:none">
@@ -93,8 +105,16 @@ else
                                         {
                                             <img src="~/Product/Images/@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
                                         }
-                                        <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                            @cart.product.name (@cart.product.specs.rams.FirstOrDefault().ram GB , @cart.product.specs.storages.FirstOrDefault().storage GB)<br>&#8377 @cart.product.price
+                                    <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                        @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                        {@cart.product.name;
+                                    }
+                                        (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                        {
+                                            @cart.product.specs.rams.FirstOrDefault().ram;
+                                        } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
+                                        {
+                                            @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
                                             Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
                                         </label>
                                     </div>
@@ -114,7 +134,9 @@ else
 
 
                             <div class="row">
-                               
+                                <div class="col">
+                                    <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="orderDetailsCancel()">cancel</a>
+                                </div>
                                 <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
                             </div>
 
@@ -138,7 +160,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: ##b5d9ff;"  onchange="displaySubmit()" style="display:none"/></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #b5d9ff; display: none"  onchange="displaySubmit()" /></div>
                             </div>
 
 
@@ -180,79 +202,7 @@ else
 }
 
 
-    <script>
-        
-        var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(data))');
-        function changePrice(data) {
-            alert(sourcearray.price)
-            var qty = $("input[name='quantity']").val()
-            console.log(qty);
-            document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
-        }
-        $(document).ready(function () {
-            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6"> Price <p class="col-6">  ₹' + sourcearray.price + ' </p>';
-            document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6" style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price + ' </p>';
-        })
-        
-        $("input[name = 'quantity']").change(function () {
-            var data = document.getElementById("pricetag").value
 
-
-
-
-            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
-
-            document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6"style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
-
-            if(data>0){
-                $(".toggle-button2").show();
-            }
-        });
-        
-        console.log(sourcearray)
-        function paymentDetails() {
-            $(".payment").show();
-            $(".cancel2").hide();
-            $(".orderDetails").hide();
-            $(".toggle-button1").hide();
-            $(".toggle-button2").hide();
-        }
-        function orderDetails() {
-            $(".order").show();
-            $(".addressDetails").hide();
-            $(".toggle-button1").hide();
-            //$(document).ready(function () {
-           // document.getElementById("addressContinue").innerHtml = '';
-           //document.getElementById("addressContinue").innerHtml = '<button onclick='"'address()'"'>Change</button>';
-            //});
-        }
-        $("input[name = 'addressId']").change(function () {
-            $(".toggle-button1").toggle();
-        })
-        $("input[name = 'paymentModeId']").change(function () {
-            $(".submit").toggle();
-        })
-       
-        function address(){
-            $(".order").hide();
-            $(".addressDetails").show();
-        }
-
-        $('#my-form').on('change keyup paste', ':input', function (e) {
-            // The form has been changed. Your code here.
-        });
-
-        function price() {
-
-                var data = document.getElementById("pricetag").value
-                document.getElementById("priceField").innerHTML(data);
-
-            }
-        function displaySubmit() {
-            $(".submit").toggle();
-        }
-
-    </script>
     <style>
         .submit{
             display:none;
@@ -306,6 +256,177 @@ else
         }
         
     </style>
+    <script>
 
+    var addressDiv = '<div class="addressDetails" id="realDiv">';
+        var previousDiv
+        var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(data))');
+        function changePrice(data) {
+            alert(sourcearray.price)
+            var qty = $("input[name='quantity']").val()
+        console.log(qty);
+        document.getElementById("priceField").innerHTML = '<p>' + sourcearray.price * qty + '</p>';
+        }
+        $(document).ready(function () {
+
+            previousDiv = $("#realDiv")[0].innerHTML
+            document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6"> Price <p class="col-6">  ₹' + sourcearray.price + ' </p>';
+            document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6" style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price + ' </p>';
+        })
+
+                $("input[name = 'quantity']").change(function () {
+            var data = document.getElementById("quantitytag").value
+                document.getElementById("priceField").innerHTML = '<div class="row"><p class="col-6">Price <p class="col-6">  ₹' + sourcearray.price * data + '</p>';
+
+                    document.getElementById("totalPrice").innerHTML = '<div class="row"><p class="col-6" style="font-weight: bold;"> Amount Payable</p><p class="col-6" style="font-weight: bold;">  ₹' + sourcearray.price * data + '</p>';
+
+                        if (data <= 0) {
+                            $('#paymentContinue').hide();
+            }
+                        else {
+                            $('#paymentContinue').show();
+            }
+        });
+
+                        console.log(sourcearray)
+                        function paymentDetails() {
+                            $(".payment").show();
+                        $(".cancel2").hide();
+                        $(".orderDetails").hide();
+                        $(".toggle-button1").hide();
+                        $(".toggle-button2").hide();
+        }
+                        function orderDetails() {
+                            document.getElementById("selectedAddress").innerHTML = addressDiv
+            console.log(address)
+                        var value = $("#flexCheckDefault").val()
+                        console.log(value)
+                        $('#addNewAddress').hide();
+                        $('.addressInput').hide();
+                        $(".order").show();
+                        $("#realDiv").hide();
+                        $(".toggle-button1").hide();
+                        apply()
+
+                        }
+                        function orderDetailsCancel() {
+
+                            $('#addNewAddress').show();
+                        $('.addressInput').show();
+                        $(".order").show();
+                        $("#realDiv").show();
+                        // $(".addressDetails").hide();
+                        $(".toggle-button1").show();
+                        $(".order").hide();
+                        console.log("_______")
+                        console.log(previousDiv)
+                        document.getElementById("selectedAddress").innerHTML = "";
+                        apply()
+        }
+                        function paymentCancel() {
+                            $(".payment").hide();
+                        $(".cancel2").show();
+                        $(".orderDetails").show();
+                        $(".toggle-button1").show();
+                        $(".toggle-button2").show();
+        }
+                        $("input[name = 'addressId']").change(function () {
+                            $(".toggle-button1").toggle();
+        })
+                        $("input[name = 'paymentModeId']").change(function () {
+                            $(".submit").toggle();
+        })
+
+                        function address(){
+                            $(".order").hide();
+                        $(".addressDetails").show();
+        }
+
+                        $('#my-form').on('change keyup paste', ':input', function (e) {
+                            // The form has been changed. Your code here.
+                        });
+
+                        function price() {
+
+            var data = document.getElementById("quantitytag").value
+                        document.getElementById("priceField").innerHTML(data);
+
+            }
+                        function displaySubmit() {
+                            $(".submit").toggle();
+        }
+
+                        function apply() {
+            debugger
+                        $(".check").on('click', function () {
+                debugger
+                        var $box = $(this);
+                        if ($box.is(":checked")) {
+                            //alert("checked")
+                            console.log("enter")
+
+                    var group = "input:checkbox[class='" + $box.attr("class") + "']";
+                        $(group).prop("checked", false);
+                        $box.prop("checked", true);
+                        addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
+                    console.log($box)
+                    console.log($(group).length)
+
+                    //console.log($("#" + $box[0].id)[0].innerHTML)
+                    for (let step = 0; step <= $(group).length; step++) {
+                        console.log($(group)[step].id)
+                        console.log($box[0].id)
+                    if ($(group)[step].id == $box[0].id) {
+                        console.log("equals")
+
+                            console.log($("#" + $box[0].id))
+                        }
+                    console.log("''''")
+                    }
+                } else {
+                        alert("not checked")
+                    $box.prop("checked", false);
+                    console.log($box)
+                }
+            });
+        }
+                    $(document).ready(function () {
+                        $(".check").on('click', function () {
+                            debugger
+                            var $box = $(this);
+                            if ($box.is(":checked")) {
+                                //alert("checked")
+                                console.log("enter")
+
+                                var group = "input:checkbox[class='" + $box.attr("class") + "']";
+                                $(group).prop("checked", false);
+                                $box.prop("checked", true);
+                                addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
+                                console.log($box)
+                                console.log($(group).length)
+
+                    //console.log($("#" + $box[0].id)[0].innerHTML)
+                    for (let step = 0; step <= $(group).length; step++) {
+                                    console.log($(group)[step].id)
+                                    console.log($box[0].id)
+                                    if ($(group)[step].id == $box[0].id) {
+                                        console.log("equals")
+
+                                        console.log($("#" + $box[0].id))
+                                    }
+                                    console.log("''''")
+                                }
+                            } else {
+                                alert("not checked")
+                                $box.prop("checked", false);
+                                console.log($box)
+                            }
+                        });
+        })
+
+
+
+
+    </script>
 
 

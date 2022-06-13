@@ -46,7 +46,7 @@ namespace UILayer.Data.ApiServices
             }
         }
         //getuser data
-        public IEnumerable<UserRegistration> GetUserData()
+        /*public IEnumerable<UserRegistration> GetUserData()
         {
             RequestHandler<IEnumerable<UserRegistration>> _requestHandler = new RequestHandler<IEnumerable<UserRegistration>>(_configuration);
             try
@@ -59,7 +59,7 @@ namespace UILayer.Data.ApiServices
                 return null;
             }
             
-        }
+        }*/
         public IEnumerable<UserRegistration> GetUserData(string username , string password)
         {
             var enocodedcode = Base64Encode(username+":"+password);
