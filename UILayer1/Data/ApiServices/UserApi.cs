@@ -15,7 +15,7 @@ using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
 {
-    public class UserApi
+    public class UserApi : IUserApi
     {
         private IConfiguration _configuration { get; }
         private readonly ILog _log;
@@ -46,7 +46,7 @@ namespace UILayer.Data.ApiServices
             }
         }
         //getuser data
-        /*public IEnumerable<UserRegistration> GetUserData()
+        public IEnumerable<UserRegistration> GetUserData()
         {
             RequestHandler<IEnumerable<UserRegistration>> _requestHandler = new RequestHandler<IEnumerable<UserRegistration>>(_configuration);
             try
@@ -54,28 +54,13 @@ namespace UILayer.Data.ApiServices
                 _requestHandler.url = "api/users/userdata";
                 return _requestHandler.Get().result;
             }
-            catch(Exception ex)
-            {
-                return null;
-            }
-            
-        }*/
-        public IEnumerable<UserRegistration> GetUserData(string username , string password)
-        {
-            var enocodedcode = Base64Encode(username+":"+password);
-            ///var encodedPassword = Base64Encode(password);
-            RequestHandler<IEnumerable<UserRegistration>> _requestHandler = new RequestHandler<IEnumerable<UserRegistration>>(_configuration);
-            try
-            {
-                _requestHandler.url = "api/users/userdata";
-                return _requestHandler.Get(enocodedcode).result;
-            }
             catch (Exception ex)
             {
                 return null;
             }
 
         }
+
 
 
         //Authenticate
@@ -117,7 +102,7 @@ namespace UILayer.Data.ApiServices
             {
                 return false;
             }
-        
+
         }
 
         #region Edit user method
@@ -144,7 +129,7 @@ namespace UILayer.Data.ApiServices
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -192,21 +177,21 @@ namespace UILayer.Data.ApiServices
                 _requestHandler.url = "api/users/CheckOutData";
                 return _requestHandler.Get().result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
 
         }
-        
+
         public bool EditCheckout(Checkout checkout)
         {
             RequestHandler<Checkout> _requestHandler = new RequestHandler<Checkout>(_configuration);
             try
             {
                 _requestHandler.url = "api/users/CheckoutPut";
-                var result =  _requestHandler.Edit(checkout);
-                if(result != null)
+                var result = _requestHandler.Edit(checkout);
+                if (result != null)
                 {
                     if (result.IsSuccess)
                     {
@@ -287,7 +272,7 @@ namespace UILayer.Data.ApiServices
                 return false;
             }
             catch (Exception ex)
-{
+            {
                 _log.Error(ex.Message);
                 return false;
             }
@@ -334,7 +319,7 @@ namespace UILayer.Data.ApiServices
                 {
                     if (_requestHandler.Get().result == null || _requestHandler.Get() == null)
                     {
-                        
+
                     }
                     else
                     {
@@ -345,7 +330,7 @@ namespace UILayer.Data.ApiServices
                 {
 
                 }
-                if(result == null)
+                if (result == null)
                 {
                     result = null;
                 }
@@ -368,7 +353,7 @@ namespace UILayer.Data.ApiServices
             catch
             {
                 return null;
-            } 
+            }
         }
         public bool PostMail(MailRequest mailRequest)
         {
@@ -432,15 +417,6 @@ namespace UILayer.Data.ApiServices
             }
         }
         #endregion
-        public static string Base64Encode(string plainText)
-        {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-            return System.Convert.ToBase64String(plainTextBytes);
-        }
-        public static string Base64Decode(string base64EncodedData)
-        {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-        }
+
     }
 }

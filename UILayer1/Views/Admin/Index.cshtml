@@ -49,16 +49,50 @@
 <script>
    
     
-    $(document).ready(function(){
-       
-        
-    
-            
+    $(document).ready(function () {
+        debugger
+        var getProductLink;
+        var header;
+        //configLink(GetProductData);
+        configLink(header);
+        //header(GetProductData);
+        //GetProductData();
+        function configLink(callback) {
             $.ajax({
-                url:'https://mobizoneapi.azurewebsites.net/api/productop/getlist',
-                type:'get',
-                datatype:'json',
-                success:function(data){
+                url: '/config/getapi',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    getProductLink = data + 'api/productop/getlist';
+                    header();
+                    callback(GetProductData);
+                }
+            })
+        }
+        function header(callback) {
+            $.ajax({
+                url: '/config/GetHeader',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    header = data;
+                    callback();
+                
+                }
+            })
+        }
+        function GetProductData() {
+            debugger
+            $.ajax({
+                url: getProductLink,
+                type: 'get',
+                datatype: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + header);
+                },
+                success: function (data) {
                     console.log(data);
                     $('[tool-tip-toggle="tooltip- demo"]').tooltip({
 
@@ -66,31 +100,32 @@
 
                     });
                     $('#datatable').dataTable({
-                        data:data.result,
-                        columns:[
-                            {'data':'productBrand'},
-                            {'data':'model'},
-                            {'data':'quantity'},
-                            {'data':'price'},
-                            {  
-                                "render": function (data, type, full, meta)
-                                {
-                                    if (full.status == 0)
-                                    {
+                        data: data.result,
+                        columns: [
+                            { 'data': 'productBrand' },
+                            { 'data': 'model' },
+                            { 'data': 'quantity' },
+                            { 'data': 'price' },
+                            {
+                                "render": function (data, type, full, meta) {
+                                    if (full.status == 0) {
                                         return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit"<a href=""  data-toggle="tooltip" title="Edit"aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash"  data-toggle="tooltip" title="Delete"aria-hidden="true"></span></a></div><div><a href="/admin/disable/' + full.id + '"><span class="glyphicon glyphicon-remove-sign" data-toggle="tooltip"  title="Disable" style="color:red"></span></a></div><div class="col"><a href ="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-eye-open" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
                                     }
-                                    else
-                                    {
+                                    else {
                                         return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="glyphicon glyphicon-edit"  data-toggle="tooltip" title="Edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="glyphicon glyphicon-trash" data-toggle="tooltip"  title="Delete"  aria-hidden="true"></span></a></div><div><a href="/admin/enable/' + full.id + '"><span class="glyphicon glyphicon-ok-sign"  data-toggle="tooltip" title="Enable"style="color:green"></span></a></div>  <div class="col"><a href ="/admin/ProductDetails/' + full.id + '"><span class="glyphicon glyphicon-eye-open" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
                                     }
                                 }
-                }
-                 
-                                       ]
+                            }
+
+                        ]
                     })
                 }
             })
+        }
+
         })
+        
+            
 
         
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using UILayer.Data.ApiServices;
 
 namespace UILayer1
 {
@@ -77,6 +77,8 @@ namespace UILayer1
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
             });
+            services.AddSingleton(typeof(IUserApi), typeof(UserApi));
+            services.AddSingleton(typeof(IProductOpApi), typeof(ProductOpApi));
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

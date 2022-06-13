@@ -118,7 +118,35 @@
         const dataList = [];
         const Roles = [];
         const statusList = [1, 2, 3, 4];
-        
+        var getLink;
+        var header;
+        configLink(header);
+        function configLink(callback) {
+            $.ajax({
+                url: '/config/getapi',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    getLink = data + 'api/users/CheckOutData';
+                    header();
+                    callback(getStatus);
+                }
+            })
+        }
+        function header(callback) {
+            $.ajax({
+                url: '/config/GetHeader',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    header = data;
+                    callback(getOrderList);
+
+                }
+            })
+        }
         function getStatus(callback) {
             $.ajax({
                 url: 'OrderStatus',
@@ -140,13 +168,12 @@
         }
 
             
-        function getList() {
-            
-        }
-    getStatus(function () {
+
+function getOrderList() {
         $.ajax({
-            url: 'https://mobizoneapi.azurewebsites.net/api/users/CheckOutData',
+            //url: 'https://mobizoneapi.azurewebsites.net/api/users/CheckOutData',
             //url: 'http://subin4127-001-site1.etempurl.com/api/users/CheckOutData',
+            url: getLink,
             type: 'get',
             datatype: 'json',
             success: function (data) {
@@ -164,8 +191,8 @@
                                 var sliceData = dataList.slice(dataStatus)
                                 var sliceStatus = statusList.slice(dataStatus)
 
-                                var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="' + full.orderId + '"/><select id="enumDropdown" name="status"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
-                                var endData = '</select><input style="padding: 2px;margin-left: 23px;font-variant: all-small-caps;" type="submit" value="update" class="btn btn-orange"/></form>'
+                                var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="' + full.orderId + '"/><select id="enumDropdown" name="status" style="width: 39%;"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
+                                var endData = '</select><input style="padding: 6px;margin-left: 23px;font-variant: all-small-caps;" type="submit" value="update" class="btn btn-orange"/></form>'
                                 sliceData.forEach(function (element) {
                                     var option = '<option value="' + element + '">' + element + '</option>';
                                     formData = formData + option;
@@ -178,7 +205,7 @@
                 var $select = $('#enumDropdown');
             }
         })
-    })
+    }
         $.ajax({
             url: 'RoleTYpe',
             type: 'get',

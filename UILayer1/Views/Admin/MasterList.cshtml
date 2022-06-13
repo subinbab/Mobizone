@@ -4,8 +4,15 @@
     ViewData["Title"] = "Mobizone(Admin) MasterList";
     Layout = "~/Views/Admin/_Layout.cshtml";
 }
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-*@<div class="row container-fluid pr-6">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js" defer></script>
+<div class="row container-fluid pr-6">
     <div class="container-fluid mt-3 align-middle">
         <div class="card shadow-lg p-3 mb-5 bg-white rounded">
             <div class="card-body">
@@ -30,7 +37,7 @@
                                     <td>
                                         <div class="col">
                                             @Html.DisplayFor(modelItem => item.masterData)
-                                            <span class="glyphicon glyphicon-edit"  onclick="masterEdit(@item.id)">Edit</span>
+                                            <span class="glyphicon glyphicon-edit" onclick="masterEdit(@item.id)"></span>
                                         </div>
                                     </td>
 
@@ -53,7 +60,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Please Confirm Your Action</h5>
+                <h5 class="modal-title">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -73,6 +80,7 @@
         font-size: x-large;
         color: black;
     }
+
     .navbar-brand {
         display: inline-block;
         padding-top: 0.3125rem;
@@ -103,5 +111,63 @@
             })
 
         });
+    }
+
+    var getProductLink;
+    var header;
+    //configLink(GetProductData);
+    configLink(header);
+    //header(GetProductData);
+    //GetProductData();
+    function configLink(callback) {
+        $.ajax({
+            url: '/config/getapi',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                getProductLink = data + 'api/master';
+                header();
+                callback(getUserData);
+            }
+        })
+    }
+    function header(callback) {
+        $.ajax({
+            url: '/config/GetHeader',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                header = data;
+                callback();
+
+            }
+        })
+    }
+    function getUserData() {
+        debugger
+        $.ajax({
+            url: getProductLink,
+            type: 'get',
+            datatype: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + header);
+            },
+            success: function (data) {
+                console.log(data.result);
+                $('#datatable').dataTable({
+                    data: data.result,
+                    columns: [
+                        {
+                            'render': function (data, type, full, meta) {
+                                return full.firstName + " " + full.lastName
+                            }
+                        },
+                        { 'data': 'createdOn' }
+                    ]
+                })
+            }
+        })
     }
 </script>

@@ -19,13 +19,13 @@ using UILayer.Models;
 
 namespace UILayer.Data.ApiServices
 {
-    public class ProductOpApi
+    public class ProductOpApi : IProductOpApi
     {
         private readonly ILog _log;
         private IConfiguration _configuration { get; }
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductOpApi(IConfiguration configuration , IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public ProductOpApi(IConfiguration configuration, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _configuration = configuration;
             _log = LogManager.GetLogger(typeof(ProductOpApi));
@@ -41,7 +41,7 @@ namespace UILayer.Data.ApiServices
                 RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
                 _requestHandler.url = "api/productop/GetAll";
                 var result = _requestHandler.Get();
-                if(result != null)
+                if (result != null)
                 {
                     return result.result;
                 }
@@ -55,7 +55,7 @@ namespace UILayer.Data.ApiServices
                 _log.Error(ex.Message);
                 return null;
             }
-             
+
         }
         #endregion
 
@@ -70,12 +70,12 @@ namespace UILayer.Data.ApiServices
                 _requestHandler.url = "api/productop/GetList";
                 return _requestHandler.Get().result;
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                return  null;
+                return null;
             }
-            
+
         }
         #endregion
 
@@ -88,7 +88,7 @@ namespace UILayer.Data.ApiServices
                 RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
                 _requestHandler.url = "api/productop/FilterByBrand/" + name;
                 var result = _requestHandler.Get();
-                if(result != null)
+                if (result != null)
                 {
                     return result.result;
                 }
@@ -97,7 +97,7 @@ namespace UILayer.Data.ApiServices
                     return null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 return null;
@@ -116,7 +116,7 @@ namespace UILayer.Data.ApiServices
                 return _requestHandler.Get().result;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 return null;
@@ -180,7 +180,7 @@ namespace UILayer.Data.ApiServices
                         }
                     }
                 }
-                
+
                 List<Storage> storages = new List<Storage>();
                 foreach (var storage1 in data.specs.storages)
                 {
@@ -198,11 +198,11 @@ namespace UILayer.Data.ApiServices
                         }
                     }
                 }
-                
+
                 data.specs.storages = storages;
                 data.specs.rams = rams;
-                
-                
+
+
                 /*var mapperData = (ProductEntity)_mapper.Map<ProductEntity>(data);
                 mapperData.images = images;*/
                 RequestHandler<ProductEntity> _requestHandler = new RequestHandler<ProductEntity>(_configuration);
@@ -224,12 +224,12 @@ namespace UILayer.Data.ApiServices
                     return false;
                 }
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 return false;
             }
-            
+
         }
         #endregion
 
@@ -259,41 +259,55 @@ namespace UILayer.Data.ApiServices
                 ProductEntity products = new ProductEntity();
                 products = (ProductEntity)_mapper.Map<ProductEntity>(data);
                 products.status = ProductStatus.enable;
-                Images image;
-                List<Images> images = new List<Images>();
-                if (product.imageFile != null)
-                {
-                    foreach (IFormFile files in data.imageFile)
-                    {
+                //Images image;
+                //List<Images> images = new List<Images>();
+                //if (product.imageFile != null)
+                //{
+                //    foreach (IFormFile files in data.imageFile)
+                //    {
 
-                        image = new Images();
-                        image.imagePath = files.FileName;
-                        images.Add(image);
-                    }
-                }
+                //        image = new Images();
+                //        image.imagePath = files.FileName;
+                //        images.Add(image);
+                //    }
+                //}
 
-                products.images = images;
+               /* products.images = images;*/
 
 
 
                 string uniqueFileName = null;
-                if (data.imageFile != null && data.imageFile.Count > 0)
+                if (product.imageFile != null)
                 {
-                    foreach (IFormFile files in data.imageFile)
+                    Images image;
+                    List<Images> images = new List<Images>();
+                    //images = data.images.ToList();
+                    if (product.imageFile != null)
                     {
-                        string folder = "Product/Images";
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                        string folderPath = Path.Combine(uniqueFileName, serverFolder);
-                        files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                        foreach (IFormFile files in product.imageFile)
+                        {
+                            string folder = "Product/Images";
+                            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                            string folderPath = Path.Combine(serverFolder, uniqueFileName);
+                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                            image = new Images();
+                            image.imagePath = uniqueFileName;
+                            images.Add(image);
+                        }
                     }
+                    else
+                    {
+                        images = null;
+                    }
+                    products.images = images;
                 }
                 RequestHandler<ProductEntity> requestHandler = new RequestHandler<ProductEntity>(_configuration);
                 requestHandler.url = "api/productop/CreateProduct";
-                var result = requestHandler.Post(products); 
+                var result = requestHandler.Post(products);
                 if (result != null)
                 {
-                    if(result.IsSuccess)
+                    if (result.IsSuccess)
                         return true;
                     return false;
                 }
@@ -302,7 +316,7 @@ namespace UILayer.Data.ApiServices
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 return false;
@@ -323,7 +337,7 @@ namespace UILayer.Data.ApiServices
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 return false;
@@ -393,7 +407,7 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region method for sort Ascending
-        public async  Task<IEnumerable<ProductEntity>> Sort()
+        public async Task<IEnumerable<ProductEntity>> Sort()
         {
             RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
@@ -409,9 +423,9 @@ namespace UILayer.Data.ApiServices
         }
         #endregion
         #region method for descending Sort
-        public async  Task<IEnumerable<ProductEntity>> Sortby ( )
+        public async Task<IEnumerable<ProductEntity>> Sortby()
         {
-            RequestHandler<IEnumerable<ProductEntity>> _requestHandler =  new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
+            RequestHandler<IEnumerable<ProductEntity>> _requestHandler = new RequestHandler<IEnumerable<ProductEntity>>(_configuration);
             try
             {
                 _requestHandler.url = "api/productop/SortByPriceDescending ";

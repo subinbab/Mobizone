@@ -28,24 +28,24 @@ namespace UILayer.Controllers
     public class UserController : Controller
     {
         IConfiguration _configuration;
-        UserApi userApi;
         ProductOpApi _opApi;
         private readonly INotyfService _notyf;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
         List<Cart> _carts;
+        IUserApi _userApi; 
         UserRegistration _user { get; set; }
         private readonly IDistributedCache _distributedCache;
 
 
         INotyfService _notyfService;
 
-        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache)
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache, IUserApi userApi)
 
         {
             _configuration = configuration;
-            userApi = new UserApi(_configuration);
+            _userApi = userApi;
             _opApi = new ProductOpApi(_configuration, mapper, webHostEnvironment);
 
             _masterApi = new MasterApi(_configuration);
@@ -121,7 +121,7 @@ namespace UILayer.Controllers
             UserApi userApi = new UserApi(_configuration);
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            var userList = userApi.GetUserData(username,password);
+            var userList = userApi.GetUserData();
             if (userList.Any(c => c.Email.Equals(user.Email)))
             {
                 _notyf.Error("User Already Registered");
@@ -132,7 +132,7 @@ namespace UILayer.Controllers
                 if (result)
                 {
                     _notyf.Success("Successfully Registered new user");
-                    var userDataList = userApi.GetUserData(username,password);
+                    var userDataList = userApi.GetUserData();
                     var claims = new List<Claim>();
                     claims.Add(new Claim(ClaimTypes.Name, userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().FirstName + " " + userDataList.Where(c => c.Email.Equals(user.Email)).FirstOrDefault().LastName));
                     claims.Add(new Claim("email", user.Email));
@@ -176,7 +176,7 @@ namespace UILayer.Controllers
                 var session = HttpContext.Session.Id;
 
                 ModelState.Clear();
-                var userDetails = userApi.GetUserData(username,password).Where(check => check.Email.Equals(data.email)).FirstOrDefault();
+                var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {
                     
@@ -185,7 +185,7 @@ namespace UILayer.Controllers
             mailRequest.Body = "<div><a href='http://akzacv-001-site1.itempurl.com/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
-                    var checkEmail = userApi.PostMail(mailRequest);
+                    var checkEmail = _userApi.PostMail(mailRequest);
                     ViewBag.check = false;
                     return View(data);
                 }
@@ -207,7 +207,7 @@ namespace UILayer.Controllers
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             if (sessionId == HttpContext.Session.Id)
             {
-                var userDetails = userApi.GetUserData(username, password).Where(check => check.Email.Equals(email)).FirstOrDefault();
+                var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
                 ResetPassword reset = new ResetPassword();
                 reset.User = userDetails;
                 return View(reset);
@@ -226,9 +226,9 @@ namespace UILayer.Controllers
             try
             {
                 UserRegistration register = new UserRegistration();
-                register = userApi.GetUserData(username, password).Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
+                register = _userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
                 register.Password = resetPassword.newPassword;
-                var result = userApi.EditUser(register);
+                var result = _userApi.EditUser(register);
                 return Redirect("/Login");
             }
             catch (Exception ex)
@@ -286,7 +286,7 @@ namespace UILayer.Controllers
             ViewData["ProductDetails"] = data;
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
@@ -305,7 +305,7 @@ namespace UILayer.Controllers
             }
             var data = productListForOrder;
             ViewData["ProductDetails"] = data;
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
@@ -341,7 +341,7 @@ namespace UILayer.Controllers
                 checkout.orderId = rnd.Next();
                 checkout.status = OrderStatus.orderplaced;
                 checkout.price = checkout.quantity * data.price;
-                bool result = userApi.CreateCheckOut(checkout);
+                bool result = _userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
                 _notyf.Success("succesfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -385,10 +385,10 @@ namespace UILayer.Controllers
                 
                 if (User.Identity.IsAuthenticated)
                 {
-                    var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                    var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
                     try
                     {
-                        string name = JsonConvert.SerializeObject(userApi.GetCart().Result);
+                        string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
                         if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
                         {
                             _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
@@ -487,8 +487,8 @@ namespace UILayer.Controllers
                 int cartDetailsCheck = 0;
                 try
                 {
-                    UserRegistration user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                    IEnumerable<MyCart> productCartListFromDb = userApi.GetCart().Result;
+                    UserRegistration user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                    IEnumerable<MyCart> productCartListFromDb = _userApi.GetCart().Result;
                     if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
                     {
                         var productCartBySessioId = productCartListFromDb.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
@@ -517,12 +517,12 @@ namespace UILayer.Controllers
                         }
 
                         productCartBySessioId.cartDetails = cartDetailslList;
-                        userApi.EditCart(productCartBySessioId);
+                        _userApi.EditCart(productCartBySessioId);
                     }
                     else
                     {
                         productCart.usersId = user.UserId;
-                        userApi.Createcart(productCart);
+                        _userApi.Createcart(productCart);
                     }
                 }
                 catch (Exception ex)
@@ -644,7 +644,7 @@ namespace UILayer.Controllers
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
         }
@@ -653,7 +653,7 @@ namespace UILayer.Controllers
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
         }
@@ -662,9 +662,9 @@ namespace UILayer.Controllers
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            var result = userApi.DeleteAddress(id);
+            var result = _userApi.DeleteAddress(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return RedirectToAction("Account");
         }
@@ -675,7 +675,7 @@ namespace UILayer.Controllers
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.ReturnUrl = ReturnUrl;
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(address);
@@ -687,9 +687,9 @@ namespace UILayer.Controllers
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
-            _user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             _user.address = addresses;
-            bool result = userApi.EditUser(_user);
+            bool result = _userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return Redirect(ReturnUrl);
         }
@@ -758,8 +758,8 @@ namespace UILayer.Controllers
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-            var userOrders = userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
+            var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
             foreach (var checkOutData in userOrders)
             {
                 var product = _opApi.GetAll().Result.Where(c => c.id.Equals(checkOutData.productId)).FirstOrDefault();
@@ -775,11 +775,11 @@ namespace UILayer.Controllers
             {
                 return View("Index");
             }
-            var checkoutList = userApi.GetCheckOut().Result;
+            var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.id.Equals(id)).FirstOrDefault();
             var ProductDetails = _opApi.GetAll().Result.Where(c => c.id.Equals(checkout.productId)).FirstOrDefault();
             ViewData["ProductDetails"] = ProductDetails;
-            ViewData["Address"] = userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
+            ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
 
             return View(checkout);
         }
@@ -819,10 +819,10 @@ namespace UILayer.Controllers
             bool check = false;
             if (User.Identity.IsAuthenticated)
             {
-                var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
 
                 MyCart myCart = new MyCart();
-                myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
 
                 foreach (var mycartData in myCart.cartDetails)
                 {
@@ -832,7 +832,7 @@ namespace UILayer.Controllers
                         mycartData.price = quantity * mycartData.product.price;
                     }
                 }
-                userApi.EditCart(myCart);
+                _userApi.EditCart(myCart);
             }
             else
             {
@@ -885,10 +885,10 @@ namespace UILayer.Controllers
             bool check = false;
             if (User.Identity.IsAuthenticated)
             {
-                var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
                 try
                 {
-                    string name = JsonConvert.SerializeObject(userApi.GetCart().Result);
+                    string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
                     if (JsonConvert.DeserializeObject<List<Cart>>(name) != null)
                     {
                         _carts = JsonConvert.DeserializeObject<List<Cart>>(name);
@@ -912,15 +912,15 @@ namespace UILayer.Controllers
 
                     }
                     MyCart myCart = new MyCart();
-                    myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                    myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
                     foreach (var mycartData in myCart.cartDetails)
                     {
                         if (mycartData.productId.Equals(id))
                         {
-                            userApi.DeleteCartDetails(mycartData.id);
+                            _userApi.DeleteCartDetails(mycartData.id);
                         }
                     }
-                    userApi.EditCart(myCart);
+                    _userApi.EditCart(myCart);
                 }
             }
             else
@@ -975,8 +975,8 @@ namespace UILayer.Controllers
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
-            user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-            var cartDataList = userApi.GetCart().Result;
+            user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            var cartDataList = _userApi.GetCart().Result;
             var vartData = cartDataList.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
             ProductEntity product;
             List<CartDetails> carts = new List<CartDetails>();
@@ -997,9 +997,9 @@ namespace UILayer.Controllers
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
-            user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             MyCart myCart = new MyCart();
-            myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+            myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
             foreach (var caratDetailsData in myCart.cartDetails)
             {
                 var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
@@ -1023,9 +1023,9 @@ namespace UILayer.Controllers
                 checkout1.userId = checkout.userId;
                 checkout.status = OrderStatus.orderplaced;
                 checkout.price = (int)data.price;
-                bool result = userApi.CreateCheckOut(checkout);
+                bool result = _userApi.CreateCheckOut(checkout);
             }
-            userApi.DeleteCart(myCart.id);
+            _userApi.DeleteCart(myCart.id);
             return View("orderplaced");
         }
         [HttpGet("/user/CancelCheckout/{orderId}")]
@@ -1034,10 +1034,10 @@ namespace UILayer.Controllers
             Checkout checkout = new Checkout();
             OrderStatus statuses = new OrderStatus();
 
-            var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
+            var checkoutData = _userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
             checkoutData.status = OrderStatus.cancelled;
             checkoutData.cancelRequested = RoleTypes.User;
-            userApi.EditCheckout(checkoutData);
+            _userApi.EditCheckout(checkoutData);
             return Redirect("/");
         }
         [HttpGet]
@@ -1048,10 +1048,10 @@ namespace UILayer.Controllers
             bool check = false;
             if (User.Identity.IsAuthenticated)
             {
-                var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
 
                 MyCart myCart = new MyCart();
-                myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
                 foreach (var caratDetailsData in myCart.cartDetails)
                 {
                     var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
@@ -1065,7 +1065,7 @@ namespace UILayer.Controllers
                         mycartData.price = mycartData.quantity * mycartData.product.price;
                     }
                 }
-                userApi.EditCart(myCart);
+                _userApi.EditCart(myCart);
             }
             else
             {
@@ -1118,10 +1118,10 @@ namespace UILayer.Controllers
             bool check = false;
             if (User.Identity.IsAuthenticated)
             {
-                var user = userApi.GetUserData(username, password).Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
 
                 MyCart myCart = new MyCart();
-                myCart = userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
                 foreach (var caratDetailsData in myCart.cartDetails)
                 {
                     var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
@@ -1135,7 +1135,7 @@ namespace UILayer.Controllers
                         mycartData.price = mycartData.quantity * mycartData.product.price;
                     }
                 }
-                userApi.EditCart(myCart);
+                _userApi.EditCart(myCart);
             }
             else
             {

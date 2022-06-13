@@ -194,6 +194,10 @@ element.style {
                                     <select asp-for="specs.simType" class="form-control master js-select2" asp-items="new SelectList(ViewBag.SimType) "></select>
                                     <span asp-validation-for="specs.simType" class="text-danger"></span>
                                 </div>
+                                <label for="formFileMultiple" class="form-label">Uplaod Product Image</label>
+                                <input id="image" asp-for="imageFile" accept="image/*" class="form-control" type="file" onchange="imageselect()" style="height: 45px;margin-top: 3px;">
+                                <div class="col-md-8 col-10">
+                                </div>
                                 <div class="col-md-12" style="padding-top: 2%">
                                     <div asp-for="description" class="control-label" style="text-align-last:justify;  margin-top:30px"> Description</div>
                                     @*<textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
@@ -204,18 +208,17 @@ element.style {
 
                             </div>
                         </div>
-                        <div class="col-md-8 col-10">
-                        </div>
-                            @if (Model == null)
-                            {
-                                <input type="submit" value="Add" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 6%; background-color: #e52d2e" />
-                            }
-                            else
-                            {
-                                <input type="submit" value="Update" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 8%; margin-top: 184px; background-color: #e52d2e;" />
-                            }
-                            <a style="color: white; margin-left: 656%; width: 6%; padding-bottom: -10px; " asp-controller="Admin" asp-action="Index" class="col-md-2 float-right btn btn-primary col-1 align-items-lg-start"><b>Back</b></a>
                         
+                        @if (Model == null)
+                        {
+                            <input type="submit" value="Add" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 6%; background-color: #e52d2e" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Update" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 8%; margin-top: 184px; background-color: #e52d2e;" />
+                        }
+                        <a style="color: white; margin-left: 656%; width: 6%; padding-bottom: -10px; " asp-controller="Admin" asp-action="Index" class="col-md-2 float-right btn btn-primary col-1 align-items-lg-start"><b>Back</b></a>
+
                     </form>
 
 

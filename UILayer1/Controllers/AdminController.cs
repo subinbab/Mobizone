@@ -71,7 +71,7 @@ namespace UIlayer.Controllers
             _carts = new List<Cart>();
         }
 
-        public IActionResult Dashboard()
+        public IActionResult List()
         {
             try
             {
@@ -92,7 +92,7 @@ namespace UIlayer.Controllers
             ViewBag.Title = "Admin - Product List";
             try
             {
-                ViewBag.UsersCount = _userApi.GetUserData(username,password).Count();
+                ViewBag.UsersCount = _userApi.GetUserData().Count();
                 ViewBag.ProductCount = _opApi.GetAll().Result.Count();
             }
            catch(Exception ex)
@@ -273,7 +273,7 @@ namespace UIlayer.Controllers
                 _notyf.Error("Not deleted");
 
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Home");
         }
         public ActionResult prductmodel()
         {
@@ -422,7 +422,7 @@ namespace UIlayer.Controllers
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserApi userApi = new UserApi(Configuration);
-            _userDataList = userApi.GetUserData(username, password);
+            _userDataList = userApi.GetUserData();
             return View(_userDataList);
         }
         
@@ -472,7 +472,7 @@ namespace UIlayer.Controllers
                     {
                      
                         UserApi userApi = new UserApi(Configuration);
-                        _userDataList = userApi.GetUserData(userName, password);
+                        _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("email", user.username));
@@ -690,7 +690,7 @@ namespace UIlayer.Controllers
             data.status = ProductStatus.disable;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
-            return RedirectToAction("Dashboard");
+            return RedirectToAction("List");
         }
         [HttpGet("/admin/Enable/{id}")]
         public async Task<IActionResult> Enable(int id)
@@ -700,7 +700,7 @@ namespace UIlayer.Controllers
             data.status = 0;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
             _opApi.EditProduct(mappedData);
-            return RedirectToAction("Dashboard");
+            return RedirectToAction("List");
         }
         [HttpGet]
         public IActionResult EditMaster(int id)

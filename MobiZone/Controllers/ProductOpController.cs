@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace ApiLayer.Controllers
 {
-    
+    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductOpController : ControllerBase

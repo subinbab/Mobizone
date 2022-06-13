@@ -14,7 +14,7 @@
         <div id="product">
             <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create"  ? "active" : "")"style="text-decoration: none;">Products</a>
             <div id="dropdown1" class="dropdown">
-                <a asp-action="Dashboard" style="margin-right:100px;text-decoration:none;"class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
+                <a asp-action="List" style="margin-right:100px;text-decoration:none;"class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
                 <a asp-action="Create" style="margin-right: 100px; text-decoration: none;"class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Add</a>
             </div>
         </div>

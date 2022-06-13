@@ -127,7 +127,7 @@ namespace ApiLayer.Controllers
 
 
         #region Get Method for users
-        //[Authorize(AuthenticationSchemes = "BasicAuthentication")]
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpGet("userdata")]
         public IActionResult userdata()
         {
