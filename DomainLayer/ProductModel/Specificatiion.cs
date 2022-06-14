@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DomainLayer.ProductModel
 {
+    [Table("Specificatiion")]
     public class Specificatiion
     {
         [Key]

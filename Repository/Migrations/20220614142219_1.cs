@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class _3 : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,7 +94,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Privacy",
+                name: "PrivacyPolicy",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -103,11 +103,11 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Privacy", x => x.id);
+                    table.PrimaryKey("PK_PrivacyPolicy", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -119,11 +119,11 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "roles",
+                name: "Roles",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -136,7 +136,7 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_roles", x => x.id);
+                    table.PrimaryKey("PK_Roles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,7 +157,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "userRegistrations",
+                name: "UserRegistration",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -173,7 +173,7 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_userRegistrations", x => x.UserId);
+                    table.PrimaryKey("PK_UserRegistration", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -283,7 +283,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "login",
+                name: "Login",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -299,11 +299,11 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_login", x => x.id);
+                    table.PrimaryKey("PK_Login", x => x.id);
                     table.ForeignKey(
-                        name: "FK_login_roles_rolesId",
+                        name: "FK_Login_Roles_rolesId",
                         column: x => x.rolesId,
-                        principalTable: "roles",
+                        principalTable: "Roles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -376,7 +376,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "address",
+                name: "Address",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -393,37 +393,17 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_address", x => x.id);
+                    table.PrimaryKey("PK_Address", x => x.id);
                     table.ForeignKey(
-                        name: "FK_address_userRegistrations_UserRegistrationUserId",
+                        name: "FK_Address_UserRegistration_UserRegistrationUserId",
                         column: x => x.UserRegistrationUserId,
-                        principalTable: "userRegistrations",
+                        principalTable: "UserRegistration",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "dbCart",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    sessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    usersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_dbCart", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_dbCart_userRegistrations_usersId",
-                        column: x => x.usersId,
-                        principalTable: "userRegistrations",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "myCart",
+                name: "MyCart",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -433,11 +413,11 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_myCart", x => x.id);
+                    table.PrimaryKey("PK_MyCart", x => x.id);
                     table.ForeignKey(
-                        name: "FK_myCart_userRegistrations_usersId",
+                        name: "FK_MyCart_UserRegistration_usersId",
                         column: x => x.usersId,
-                        principalTable: "userRegistrations",
+                        principalTable: "UserRegistration",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -463,38 +443,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "order",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    orderId = table.Column<int>(type: "int", nullable: false),
-                    productid = table.Column<int>(type: "int", nullable: true),
-                    usersUserId = table.Column<int>(type: "int", nullable: true),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    paymentId = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_order", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_order_ProductModel_productid",
-                        column: x => x.productid,
-                        principalTable: "ProductModel",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_order_userRegistrations_usersUserId",
-                        column: x => x.usersUserId,
-                        principalTable: "userRegistrations",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Order",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -511,29 +460,29 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.id);
+                    table.PrimaryKey("PK_Order", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Orders_address_addressId",
+                        name: "FK_Order_Address_addressId",
                         column: x => x.addressId,
-                        principalTable: "address",
+                        principalTable: "Address",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_ProductModel_productId",
+                        name: "FK_Order_ProductModel_productId",
                         column: x => x.productId,
                         principalTable: "ProductModel",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_userRegistrations_userId",
+                        name: "FK_Order_UserRegistration_userId",
                         column: x => x.userId,
-                        principalTable: "userRegistrations",
+                        principalTable: "UserRegistration",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "cartDetails",
+                name: "CartDetails",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -541,26 +490,19 @@ namespace Repository.Migrations
                     productId = table.Column<int>(type: "int", nullable: false),
                     quantity = table.Column<int>(type: "int", nullable: true),
                     price = table.Column<int>(type: "int", nullable: true),
-                    DbCartId = table.Column<int>(type: "int", nullable: true),
                     MyCartid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cartDetails", x => x.id);
+                    table.PrimaryKey("PK_CartDetails", x => x.id);
                     table.ForeignKey(
-                        name: "FK_cartDetails_dbCart_DbCartId",
-                        column: x => x.DbCartId,
-                        principalTable: "dbCart",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_cartDetails_myCart_MyCartid",
+                        name: "FK_CartDetails_MyCart_MyCartid",
                         column: x => x.MyCartid,
-                        principalTable: "myCart",
+                        principalTable: "MyCart",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_cartDetails_ProductModel_productId",
+                        name: "FK_CartDetails_ProductModel_productId",
                         column: x => x.productId,
                         principalTable: "ProductModel",
                         principalColumn: "id",
@@ -568,7 +510,7 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "productSubPart",
+                name: "ProductSubPart",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -583,15 +525,15 @@ namespace Repository.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_productSubPart", x => x.id);
+                    table.PrimaryKey("PK_ProductSubPart", x => x.id);
                     table.ForeignKey(
-                        name: "FK_productSubPart_Color_colorid",
+                        name: "FK_ProductSubPart_Color_colorid",
                         column: x => x.colorid,
                         principalTable: "Color",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_productSubPart_ProductModel_productId",
+                        name: "FK_ProductSubPart_ProductModel_productId",
                         column: x => x.productId,
                         principalTable: "ProductModel",
                         principalColumn: "id",
@@ -618,16 +560,16 @@ namespace Repository.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Images_productSubPart_ProductSubPartid",
+                        name: "FK_Images_ProductSubPart_ProductSubPartid",
                         column: x => x.ProductSubPartid,
-                        principalTable: "productSubPart",
+                        principalTable: "ProductSubPart",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_address_UserRegistrationUserId",
-                table: "address",
+                name: "IX_Address_UserRegistrationUserId",
+                table: "Address",
                 column: "UserRegistrationUserId");
 
             migrationBuilder.CreateIndex(
@@ -670,29 +612,19 @@ namespace Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_cartDetails_DbCartId",
-                table: "cartDetails",
-                column: "DbCartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_cartDetails_MyCartid",
-                table: "cartDetails",
+                name: "IX_CartDetails_MyCartid",
+                table: "CartDetails",
                 column: "MyCartid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_cartDetails_productId",
-                table: "cartDetails",
+                name: "IX_CartDetails_productId",
+                table: "CartDetails",
                 column: "productId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Color_ProductEntityid",
                 table: "Color",
                 column: "ProductEntityid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_dbCart_usersId",
-                table: "dbCart",
-                column: "usersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_ProductEntityId",
@@ -705,38 +637,28 @@ namespace Repository.Migrations
                 column: "ProductSubPartid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_login_rolesId",
-                table: "login",
+                name: "IX_Login_rolesId",
+                table: "Login",
                 column: "rolesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_myCart_usersId",
-                table: "myCart",
+                name: "IX_MyCart_usersId",
+                table: "MyCart",
                 column: "usersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_order_productid",
-                table: "order",
-                column: "productid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_order_usersUserId",
-                table: "order",
-                column: "usersUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_addressId",
-                table: "Orders",
+                name: "IX_Order_addressId",
+                table: "Order",
                 column: "addressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_productId",
-                table: "Orders",
+                name: "IX_Order_productId",
+                table: "Order",
                 column: "productId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_userId",
-                table: "Orders",
+                name: "IX_Order_userId",
+                table: "Order",
                 column: "userId");
 
             migrationBuilder.CreateIndex(
@@ -745,13 +667,13 @@ namespace Repository.Migrations
                 column: "specsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_productSubPart_colorid",
-                table: "productSubPart",
+                name: "IX_ProductSubPart_colorid",
+                table: "ProductSubPart",
                 column: "colorid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_productSubPart_productId",
-                table: "productSubPart",
+                name: "IX_ProductSubPart_productId",
+                table: "ProductSubPart",
                 column: "productId");
 
             migrationBuilder.CreateIndex(
@@ -789,28 +711,25 @@ namespace Repository.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "cartDetails");
+                name: "CartDetails");
 
             migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "login");
+                name: "Login");
 
             migrationBuilder.DropTable(
                 name: "Master");
 
             migrationBuilder.DropTable(
-                name: "order");
+                name: "Order");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "PrivacyPolicy");
 
             migrationBuilder.DropTable(
-                name: "Privacy");
-
-            migrationBuilder.DropTable(
-                name: "products");
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Ram");
@@ -825,25 +744,22 @@ namespace Repository.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "dbCart");
+                name: "MyCart");
 
             migrationBuilder.DropTable(
-                name: "myCart");
+                name: "ProductSubPart");
 
             migrationBuilder.DropTable(
-                name: "productSubPart");
+                name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "roles");
-
-            migrationBuilder.DropTable(
-                name: "address");
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Color");
 
             migrationBuilder.DropTable(
-                name: "userRegistrations");
+                name: "UserRegistration");
 
             migrationBuilder.DropTable(
                 name: "ProductModel");

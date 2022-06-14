@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DomainLayer.Users
 {
+    [Table("UserRegistration")]
     public class UserRegistration
     {
         [Key]

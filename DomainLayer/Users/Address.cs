@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DomainLayer.Users
 {
+    [Table("Address")]
     public class Address
     {
         public int id { get; set; }

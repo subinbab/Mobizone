@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DomainLayer
 {
+    [Table("DbCart")]
     public class DbCart
     {
         [Column("Id")]

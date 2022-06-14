@@ -7,6 +7,7 @@ using System.Text;
 
 namespace BusinessObjectLayer.ProductOperations
 {
+    [Table("ProductSubPart")]
     public class ProductSubPart
     {
         [Key]

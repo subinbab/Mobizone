@@ -24,7 +24,6 @@ namespace Repository
         public DbSet<MasterTable> masterData { get; set; }
         public DbSet<ProductEntity> product { get; set; }
         public DbSet<Login> login { get; set; }
-        public DbSet<Order> order { get; set; }
         public DbSet<PrivacyPolicy> privacy { get; set; }
         public DbSet<About> about { get; set; }
         public DbSet<Checkout> checkOut { get; set; }
@@ -32,7 +31,6 @@ namespace Repository
         public DbSet<Roles> roles { get; set; }
         public DbSet<ProductSubPart> productSubPart { get; set; }
         public DbSet<Address> address { get; set; }
-        public DbSet<DbCart> dbCart { get; set; }
         public DbSet<MyCart> myCart { get; set; }
         public DbSet<CartDetails> cartDetails { get; set; }
 

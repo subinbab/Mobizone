@@ -1,8 +1,10 @@
 ﻿using DomainLayer.ProductModel;
 using DomainLayer.Users;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainLayer
 {
+    [Table("Orders")]
     public class Order
     {
         public int id { get; set; }

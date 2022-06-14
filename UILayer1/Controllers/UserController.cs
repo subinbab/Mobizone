@@ -691,6 +691,10 @@ namespace UILayer.Controllers
             _user.address = addresses;
             bool result = _userApi.EditUser(_user);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            if (ReturnUrl == null)
+            {
+                return Redirect("/user/ManageAddress");
+            }
             return Redirect(ReturnUrl);
         }
         [HttpPost]

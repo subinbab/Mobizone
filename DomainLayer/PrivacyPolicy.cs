@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainLayer
 {
-    [Table("Privacy")]
+    [Table("PrivacyPolicy")]
     public class PrivacyPolicy
     {
         [Key]

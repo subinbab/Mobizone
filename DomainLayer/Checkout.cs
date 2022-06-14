@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DomainLayer
 {
-    [Table("Orders")]
+    [Table("Order")]
     public class Checkout
     {
         [Key]
