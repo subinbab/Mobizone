@@ -41,8 +41,15 @@
                 @if (User.Identity.IsAuthenticated)
                 {
 
+                    if (((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim("Role", "Admin"))
+                    {
+                        <p class="col-3" style="color: white; text-decoration: none; margin-bottom: 0rem; padding-top: 6px; ">Hello @User.Identity.Name </p>
+                    }
+                    else
+                    {
+                        <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
+                    }
 
-                    <a asp-controller="User" asp-action="account" style="color:white;text-decoration:none;">Hello @User.Identity.Name </a>
                 }
                 else
                 {
@@ -62,9 +69,16 @@
                             <div class="row" style=" justify-content: center; display: flex; ">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a asp-controller="User" asp-action="account">My Account </a>
-                                    <hr />
-                                    <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                    if (((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim("Role", "Admin"))
+                                    {
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="User" asp-action="account">My Account </a>
+                                        <hr />
+                                        <a asp-controller="User" asp-action="MyOrders">My Orders</a>
+                                    }
+
                                     <hr />
                                     <a asp-controller="User" asp-action="Logout" style="padding-left: 29px;">Logout</a>
                                     <hr />
@@ -90,16 +104,23 @@
 
 
                 </div>
-                <div class="row">
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                @if (((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim("Role", "Admin"))
+                {
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
-                        <a asp-action="addtocart" class="fa-solid fa-cart-shopping"></a>
+                            <a asp-action="addtocart" class="fa-solid fa-cart-shopping"></a>
 
+                        </div>
+                        <div class="col" style="align-items: center;justify-content: center;display: flex;">
+                            <a asp-action="addtocart" style="color: white; text-decoration: none; margin-right: 180%">Cart</a>
+                        </div>
                     </div>
-                    <div class="col" style="align-items: center;justify-content: center;display: flex;">
-                        <a asp-action="addtocart" style="color: white; text-decoration: none; margin-right: 180%">Cart</a>
-                    </div>
-                </div>
+                }
+
 
             </div>
 

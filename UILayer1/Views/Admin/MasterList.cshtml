@@ -18,31 +18,35 @@
             <div class="card-body">
                 <div class="">
 
-                    <table id="datatable" class="table table-bordered table-hover table-sm" style="width:100%">
+                    <table id="datatable" class="table table-bordered table-hover table-sm" style="width: 37%;">
                         <thead>
                             <tr>
 
-                                <th>
+                                <th style="width: 179.156px;">
                                     @ViewBag.MasterTitle
                                 </th>
-
+                                <th style="width: 219.219px;">
+                                    Action
+                                </th>
 
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                            <tr>
 
-                                    <td>
-                                        <div class="col">
-                                            @Html.DisplayFor(modelItem => item.masterData)
-                                            <span class="glyphicon glyphicon-edit" onclick="masterEdit(@item.id)"></span>
-                                        </div>
-                                    </td>
+                                <td>
+                                    <div class="col">
+                                        @Html.DisplayFor(modelItem => item.masterData)
 
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="glyphicon glyphicon-edit" onclick="masterEdit(@item.id)"></span>
+                                </td>
 
-                                </tr>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -60,7 +64,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit</h5>
+                <h5 class="modal-title" style="font-weight: bold;font-size: 23px;">Edit Master Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -89,6 +93,12 @@
         font-size: 1.25rem;
         line-height: inherit;
         white-space: nowrap;
+    }
+    span{
+        cursor:pointer;
+    }
+    .paddingIssue{
+        padding-top : 80px;
     }
 </style>
 <script>

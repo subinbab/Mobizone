@@ -34,27 +34,27 @@
     <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
 
 
-        <div id="filter" style="padding: 0px; background-color: #c93e3e00; color: red ">
-            <a class="@(Context.Request.Path == "/User/filter" || Context.Request.Path == "/user/Create" ? "active" : "")">Filter By</a>
+        <div id="filter" style="padding: 0px; background-color: #c93e3e00; ">
+            <a class="@(Context.Request.Path == "/User/filter" ? "active" : "")">Filter By</a>
         </div>
         <div id="dropdown1" class="dropdown">
             <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)">
+                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)" style="padding: 4px;width: 65%;">
                     <option disabled selected> Select Brand </option>
                 </select>
 
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active " : "") " type="submit" value="Filter" style="color:white; background-color: #e52d2e">
+                <input class=" @(Context.Request.Path == "/User/filter" ? "active  btn" : "btn"  ) " type="submit" value="Filter" style="color:white;background-color: #e52d2e;width: 32%;">
 
             </form>
         </div>
 
-        <div id="sort" style="padding: 0px; background-color: #c93e3e00; color: red">
-            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/user/Create" ? "active" : "")">sort By</a>
+        <div id="sort" style="padding: 0px; background-color: #c93e3e00; ">
+            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/User/sortby" ? "active" : "")">sort By</a>
 
         </div>
         <div id="dropdown1" class="dropdown">
-            <a asp-action="sort" method="post" style="width: 100%; font-size: 130%"> Price(Low to High)</a>
-            <a asp-action="sortby" method="post" style="width: 100%; font-size: 130%">Price(High to Low)</a>
+            <a class="@(Context.Request.Path == "/User/sort" ? "active" : "")" asp-action="sort" method="post" style="width: 100%; font-size: 130%"> Price(Low to High)</a>
+            <a asp-action="sortby" class="@(Context.Request.Path == "/User/sortby" ? "active" : "")" method="post" style="width: 100%; font-size: 130%">Price(High to Low)</a>
 
         </div>
 

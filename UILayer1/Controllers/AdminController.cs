@@ -108,6 +108,7 @@ namespace UIlayer.Controllers
         [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
+            ViewBag.ReturnUrl = "/admin/ProductDetails/" + id;
             ProductEntity details = null;
             try
             {
@@ -273,7 +274,7 @@ namespace UIlayer.Controllers
                 _notyf.Error("Not deleted");
 
             }
-            return RedirectToAction("Home");
+            return RedirectToAction("List");
         }
         public ActionResult prductmodel()
         {
@@ -462,6 +463,7 @@ namespace UIlayer.Controllers
                         claims.Add(new Claim("email", user.username));
                         claims.Add(new Claim(ClaimTypes.NameIdentifier, " Admin"));
                         claims.Add(new Claim("password", user.password));
+                        claims.Add(new Claim("Role", "Admin"));
                         claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -670,8 +672,25 @@ namespace UIlayer.Controllers
             var datalist = await _opApi.GetAll();
             ProductEntity products = new ProductEntity();
             products = datalist.ToList().Where(c => c.model.Equals(product.model)).FirstOrDefault();
-            products.quantity = product.quantity + Convert.ToInt32(newQuantity);
+            products.quantity = products.quantity + Convert.ToInt32(newQuantity);
             var productEntity = (ProductViewModel)_mapper.Map<ProductViewModel>(products);
+            productEntity.specs.ram = new List<string>();
+            if (products.specs.rams != null || products.specs.rams.Count() > 0)
+            {
+                foreach (var data in products.specs.rams)
+                {
+                    productEntity.specs.ram.Add(data.ram);
+                }
+            }
+            productEntity.specs.storage = new List<string>();
+            if (products.specs.storages != null || products.specs.storages.Count() > 0)
+            {
+                foreach (var data in products.specs.storages)
+                {
+                    productEntity.specs.storage.Add(data.storage);
+                }
+            }
+               
             bool result = _opApi.EditProduct(productEntity);
             return RedirectToAction("ProductDetails", new { id = products.id });
         }
@@ -683,23 +702,63 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpGet("admin/disable/{id}")]
-        public async  Task<IActionResult> Disable(int id)
+        public async  Task<IActionResult> Disable(int id,string returnUrl)
         {
             var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
             data.status = ProductStatus.disable;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+            mappedData.specs.ram = new List<string>();
+            if (data.specs.rams != null || data.specs.rams.Count() > 0)
+            {
+                foreach (var ramData in data.specs.rams)
+                {
+                    mappedData.specs.ram.Add(ramData.ram);
+                }
+            }
+            mappedData.specs.storage = new List<string>();
+            if (data.specs.storages != null || data.specs.storages.Count() > 0)
+            {
+                foreach (var storageData in data.specs.storages)
+                {
+                    mappedData.specs.storage.Add(storageData.storage);
+                }
+            }
             _opApi.EditProduct(mappedData);
+            if(returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction("List");
         }
         [HttpGet("/admin/Enable/{id}")]
-        public async Task<IActionResult> Enable(int id)
+        public async Task<IActionResult> Enable(int id, string returnUrl)
         {
             var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
             data.status = 0;
             var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
+            mappedData.specs.ram = new List<string>();
+            if (data.specs.rams != null || data.specs.rams.Count() > 0)
+            {
+                foreach (var ramData in data.specs.rams)
+                {
+                    mappedData.specs.ram.Add(ramData.ram);
+                }
+            }
+            mappedData.specs.storage = new List<string>();
+            if (data.specs.storages != null || data.specs.storages.Count() > 0)
+            {
+                foreach (var storageData in data.specs.storages)
+                {
+                    mappedData.specs.storage.Add(storageData.storage);
+                }
+            }
             _opApi.EditProduct(mappedData);
+            if(returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction("List");
         }
         [HttpGet]

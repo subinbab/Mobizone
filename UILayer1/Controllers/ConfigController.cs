@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using UIlayer.Data.ApiServices;
 using UILayer.Data.ApiServices;
 
 namespace UILayer.Controllers
@@ -32,6 +33,11 @@ namespace UILayer.Controllers
         {
             var header = Base64Encode(_config.GetSection("AuthenticationCredentials:username").Value + ":" + _config.GetSection("AuthenticationCredentials:password").Value);
             return new JsonResult(header);
+        }
+        public IActionResult Test()
+{
+            var data = _productOpApi.GetAll().Result.FirstOrDefault();
+            return View(data);
         }
 
         public static string Base64Encode(string plainText)

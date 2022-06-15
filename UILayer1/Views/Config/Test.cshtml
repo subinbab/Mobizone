@@ -7,7 +7,6 @@
 @{
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
-    var returnUrl = ViewBag.ReturnUrl as string;
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -48,27 +47,14 @@
                             <p>No Image</p>
                         }}
                 </div>
-                <div class="disableBtn col-12">
-                    @if (Model.status == 0)
-                    {
-                        <a href="/admin/disable/@Model.id?ReturnUrl=@returnUrl">Disable</a>
-                    }
-                    else
-                    {
-                        <a href="/admin/enable/@Model.id?ReturnUrl=@returnUrl">Enable</a>
-                    }
-                    </div>
+                <a class="disableBtn col-12">Disable</a>
             </div>
         </div>
     </p>
 </div>
 <div class="row col-6">
-    <div class="col-12 name">
-        @Model.name ( Ram( @if (Model.specs.rams != null && Model.specs.rams.Count() > 0)
-        {@Model.specs.rams.FirstOrDefault().ram}  ) , Storage(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
-        {@Model.specs.storages.FirstOrDefault().storage}))
-    </div>
-    <div class="col-12 price">Price : &#8377 @Model.price</div>
+    <div class="col-12 name">@Model.name</div>
+    <div class="col-12 price">&#8377 @Model.price</div>
     <div class="col-12 row" style="margin-top:14px;"><div class="col-6 quantity">Curent Quantity :  @Model.quantity</div><div class="col-6"><form asp-action="quatity" method="post"><input asp-for="model" type="hidden" /><input name="newQuantity" required type="number" /><button>ADD</button></form></div></div>
     <table class="specTable">
         <tr>
@@ -76,21 +62,21 @@
                 Highlights
             </td>
             <td>
-                <ul class="row">
-                    <li class="col-12">Operation System : @Model.specs.os</li>
-                    <li class="col-12">Processor : @Model.specs.processor</li>
-                    <li class="col-12">Cores : @Model.specs.core</li>
-                    <li class="col-12">Ram : 
+                <ul>
+                    <li>@Model.specs.os</li>
+                    <li>@Model.specs.processor</li>
+                    <li>@Model.specs.core</li>
+                    <li>
                         @foreach (var item in Model.specs.rams.ToList())
                         {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
                     </li>
-                    <li class="col-12">Storage : 
+                    <li>
                         @foreach (var item in Model.specs.storages.ToList())
                         {<span style="padding-right: 14px; border-block: outset;">@item.storage </span>}
                     </li>
-                    <li class="col-12">Sim Type : @Model.specs.simType</li>
-                    <li class="col-12">Rear Camera : @Model.specs.camFeatures</li>
-                    <li class="col-12">Quantity : @Model.quantity</li>
+                    <li>@Model.specs.simType</li>
+                    <li>Rear Camera : @Model.specs.camFeatures</li>
+                    <li>Quantity : @Model.quantity</li>
                 </ul>
             </td>
         </tr>
@@ -167,7 +153,7 @@
     .name {
         font-weight: bold;
         margin: 19px;
-        font-size: 35px;
+        font-size: 45px;
     }
 
     .price {

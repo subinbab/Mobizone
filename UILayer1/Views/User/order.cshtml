@@ -70,7 +70,7 @@ else
                         <div class="row">
                             <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
                             <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style=" background-color: #e52d2e;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
+                                <a style=" background-color: #e52d2e; display:none;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
                             </div>
 
                         </div>
@@ -418,13 +418,16 @@ else
                                     console.log("''''")
                                 }
                             } else {
-                                alert("not checked")
+                                //alert("not checked")
                                 $box.prop("checked", false);
                                 console.log($box)
                             }
                         });
-        })
-
+                    })
+    function showbutton1() {
+        //alert("cheuijhg")
+        $("#submit_prog").toggle();
+    }
 
 
 

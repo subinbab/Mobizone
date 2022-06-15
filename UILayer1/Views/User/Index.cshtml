@@ -1,7 +1,7 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
     int count = (int)ViewBag.count;
     int pagination = 1;
@@ -9,11 +9,11 @@
 @if (User.Identity.IsAuthenticated!)
 {
 
-   @* <script type="text/javascript">
-        function preventBack() { window.history.forward(); }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
-    </script>*@
+    @* <script type="text/javascript">
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () { null };
+        </script>*@
 }
 @model IEnumerable<DomainLayer.ProductModel.ProductEntity>
 @if (Model == null || Model.Count().Equals(0))
@@ -28,7 +28,7 @@ else
     <div class="row" style="justify-content: center;">
         @foreach (var item in Model)
         {
-            <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-lg-3 col-md-4 col-sm-6"@*style="height: 22rem;"*@>
+            <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-xl-3 col-lg-5 col-md-6 col-sm-6" @*style="height: 22rem;"*@>
                 <div class="card-body">
 
                     <div class="col-12">
@@ -48,15 +48,16 @@ else
 
 
 
-                        <div class="col-12">
-
-                            <h5 class="m-2"> Price : <span style="color: black; font-family: fantasy; font-size: larger;">  &#8377 @item.price</span></h5>
-
-                            <div class="row">
-                                <div class="col-5 buynow"><a asp-action="order" asp-route-id="@item.id"><button class="btn btn-orange" style="padding: 14px;">Buy Now</button></a></div>
-                                <div class="col-7 buynow"><a asp-action="AddtoCart" asp-route-id="@item.id"><button class="btn btn-indigo" style="padding: 14px;">Add to Cart</button></a></div>
-                            </div>
+                        <div class="col-12 row">
+                            <p class=" col-6 responsive-font-example" style=" padding-right: 0px;"> Price : </p><p style=" color: black; font-family: fantasy; font-size: larger;" class="co-6 responsive-font-example">  &#8377 @item.price</p>
                         </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-5 buynow btn btn-orange row"><a asp-action="order" asp-route-id="@item.id" style="" id="buyNow">Buy Now</a></div>
+                        <div class="col-2"></div>
+                        <div class="col-5  btn btn-indigo row"><a asp-action="AddtoCart" asp-route-id="@item.id" style="" id="addtoCart">Add to Cart</a></div>
                     </div>
                 </div>
             </div>
@@ -92,9 +93,20 @@ else
     .btn-orange {
         background: #0099f3;
     }
+
+    a{
+        text-decoration: none;
+        color: inherit;
+        
+    }
+    .card-body.a:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
+    
     $(document).ready(function () {
         $.ajax({
             url: 'http://localhost:22888/api/productop/GetAll',

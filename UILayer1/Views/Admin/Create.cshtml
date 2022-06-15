@@ -165,14 +165,14 @@ element.style {
                                 <div class="col-md-4 row" style="padding-top: 2%">
                                     <label asp-for="specs.ram" class="control-label"> Ram</label>
 
-                                    <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)"></select>
+                                    <select asp-for="specs.ram" multiple class="form-control master js-select2" asp-items="new SelectList(ViewBag.Ram)" required></select>
 
                                     <span asp-validation-for="specs.ram" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 row" style="padding-top: 2%">
                                     <label asp-for="specs.storage" class="control-label"> Storage</label>
 
-                                    <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)"></select>
+                                    <select asp-for="specs.storage" multiple class="form-control  js-select2" asp-items="new SelectList(ViewBag.Storage)" required></select>
 
                                     <span asp-validation-for="specs.storage" class="text-danger"></span>
                                 </div>
@@ -208,16 +208,19 @@ element.style {
 
                             </div>
                         </div>
+                        <div class="col-12 row">
+                            <div class="col-7"></div>
+                            @if (Model == null)
+                            {
+                                <input type="submit" value="Add" id="btn-submit" class=" float-right  btn btn-primary col-2 align-items-lg-start" style=" background-color: #e52d2e" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Update" id="btn-submit" class="m-1 float-right  btn btn-primary col-2 align-items-lg-start" style=" margin-top: 184px;  background-color: #e52d2e;" />
+                            }
+                            <a style="color: white; margin-left: 2%; padding-bottom: -10px; " asp-controller="Admin" asp-action="Index" class="col-md-2 float-right btn btn-primary col-2 align-items-lg-start"><b>Back</b></a>
+                        </div>
                         
-                        @if (Model == null)
-                        {
-                            <input type="submit" value="Add" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 6%; background-color: #e52d2e" />
-                        }
-                        else
-                        {
-                            <input type="submit" value="Update" id="btn-submit" class="m-1 float-right  btn btn-primary col-md-2 col-1 align-items-lg-start" style="width: 8%; margin-top: 184px; background-color: #e52d2e;" />
-                        }
-                        <a style="color: white; margin-left: 656%; width: 6%; padding-bottom: -10px; " asp-controller="Admin" asp-action="Index" class="col-md-2 float-right btn btn-primary col-1 align-items-lg-start"><b>Back</b></a>
 
                     </form>
 

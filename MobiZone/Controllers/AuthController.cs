@@ -113,7 +113,6 @@ namespace ApiLayer.Controllers
                 var list = await _loginOperations.Get();
                 check = list.Where(c => c.username.Equals(data.username) && c.password.Equals(password)).FirstOrDefault();
                 
-                
                 if (check != null)
                 {
                     /*try
@@ -126,10 +125,13 @@ namespace ApiLayer.Controllers
                     {
 
                     }*/
-                    /*check.sessionId = data.sessionId;
-                    check.password = _sec.Encrypt("admin", data.password);*/
-                    //await _loginOperations.Edit(check);
-                    /*UserRegistration check = _userCreate.Authenticate(data.userName, password);*/
+
+
+
+                    //UserRegistration check = _userCreate.Authenticate(data.userName, password);
+                    check.sessionId = data.sessionId;
+                    check.password = _sec.Encrypt("admin", data.password);
+                    _loginOperations.Edit(check);
                     message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);
                     return _response;
@@ -254,4 +256,4 @@ namespace ApiLayer.Controllers
             return NoContent();
         }*/
     }
-}
+            }

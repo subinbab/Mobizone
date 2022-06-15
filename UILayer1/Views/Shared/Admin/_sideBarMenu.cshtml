@@ -2,7 +2,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
 
-<div class="" style="padding-top:60px;">
+<div class="paddingIssue">
 
 
 
@@ -10,18 +10,18 @@
 
 
 
-        <a class="dashboard" asp-action="Index">Dashboard</a>
+        <a class="@(Context.Request.Path == "/Admin"  ? "active" : "")" asp-action="Index">Dashboard</a>
         <div id="product">
-            <a class="@(Context.Request.Path == "/Admin" || Context.Request.Path == "/Admin/Create"  ? "active" : "")"style="text-decoration: none;">Products</a>
+            <a class="@(Context.Request.Path == "/Admin/list" || Context.Request.Path == "/Admin/Create"  ? "active" : "")"style="text-decoration: none;">Products</a>
             <div id="dropdown1" class="dropdown">
-                <a asp-action="List" style="margin-right:100px;text-decoration:none;"class="@(Context.Request.Path == "/Admin" ? "active " : "")">List</a>
+                <a asp-action="List" style="margin-right:100px;text-decoration:none;"class="@(Context.Request.Path == "/Admin/list" ? "active " : "")">List</a>
                 <a asp-action="Create" style="margin-right: 100px; text-decoration: none;"class="@(Context.Request.Path == "/Admin/Create" ? "active " : "")">Add</a>
             </div>
         </div>
 
-        <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")"style="text-decoration: none;">Users</a>
+        <a asp-action="userdata" class="@(Context.Request.Path == "/Admin/userdata" ? "active " : "")"style="text-decoration: none;">Users</a>
 
-        <a asp-action="orderlist" class="@(Context.Request.Path == "/Admin/Settings/Master" ? "active " : "")"style="text-decoration: none;">Orders</a>
+        <a asp-action="orderlist" class="@(Context.Request.Path == "/Admin/orderlist" ? "active " : "")"style="text-decoration: none;">Orders</a>
         <div id="settings">
             <a class="@(Context.Request.Path == "/Admin/About" || Context.Request.Path == "/Admin/Privacy"  || Context.Request.Path == "/Admin/Contact"  ? "active" : "")"style="text-decoration: none;">Settings</a>
             <div id="dropdown2" class="dropdown">
