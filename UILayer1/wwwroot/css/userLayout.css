@@ -1,0 +1,140 @@
+﻿#ui-id-1 {
+    z-index: 1000;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 0px;
+}
+
+footer {
+    margin-top: 100px;
+}
+
+.dropdown {
+    display: none;
+    background-color: #275e4900;
+    padding-left: 8px;
+    text-align: center;
+    font-size: medium;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    cursor: pointer;
+}
+
+
+.dropbtn {
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 26px;
+        text-decoration: none;
+        display: block;
+    }
+
+
+
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown:hover .dropbtn {
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 26px;
+    text-decoration: none;
+    display: block;
+}
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+}
+
+
+
+
+.row {
+    margin-left: 0px !important;
+}
+
+*.icon-blue {
+    color: #0088cc;
+}
+
+*.icon-grey {
+    color: grey;
+}
+
+i {
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+}
+
+.badge1::after {
+    content: attr(data-count);
+    position: absolute;
+    background: #262626;
+    height: 29px;
+    top: -1rem;
+    right: 1.5rem;
+    width: 29px;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 16px;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid #ffffff;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-top: 0px;
+}
+
+a:hover {
+    color: inherit !important;
+}

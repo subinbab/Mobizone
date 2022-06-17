@@ -34,8 +34,8 @@ using Newtonsoft.Json;
 
 namespace UIlayer.Controllers
 {
-    
-    [Authorize(Roles="Admin")]
+
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         Product data = null;
@@ -48,7 +48,7 @@ namespace UIlayer.Controllers
         private readonly IMapper _mapper;
         private readonly IDistributedCache _distributedCache;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        List<Cart> _carts;
+        List<MyCart> _carts;
         IEnumerable<UserRegistration> _userDataList;
         // for testing ////////////////////////////firebase//////////////////////////////////
         private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
@@ -63,12 +63,16 @@ namespace UIlayer.Controllers
             pr = new ProductApi(Configuration);
             data = new Product();
             _masterApi = new MasterApi(Configuration);
-            _opApi = new ProductOpApi(Configuration,mapper,webHostEnvironment);
+            _opApi = new ProductOpApi(Configuration, mapper, webHostEnvironment);
             _userApi = new UserApi(Configuration);
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _distributedCache = distributedCache;
-            _carts = new List<Cart>();
+            _carts = new List<MyCart>();
+           if(ViewBag.CartCount == null)
+            {
+                ViewBag.CartCount = 0;
+            }
         }
 
         public IActionResult List()
@@ -84,7 +88,7 @@ namespace UIlayer.Controllers
             return View("Index");
         }
         #region Index page
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index(int? i)
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
@@ -95,7 +99,7 @@ namespace UIlayer.Controllers
                 ViewBag.UsersCount = _userApi.GetUserData().Count();
                 ViewBag.ProductCount = _opApi.GetAll().Result.Count();
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -112,12 +116,12 @@ namespace UIlayer.Controllers
             ProductEntity details = null;
             try
             {
-                details =  _opApi.GetProduct(id).Result;
+                details = _opApi.GetProduct(id).Result;
             }
             catch (Exception ex)
             {
                 details = null;
-            }      
+            }
             return View(details);
         }
         #endregion
@@ -137,7 +141,7 @@ namespace UIlayer.Controllers
                 ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
                 ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.BrandList = null;
                 ViewBag.SimType = null;
@@ -166,7 +170,7 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
-                        
+
                         bool result = _opApi.CreateProduct(product);
                         if (result)
                         {
@@ -179,12 +183,12 @@ namespace UIlayer.Controllers
                             _notyf.Error("Not Added");
                             return RedirectToAction("Create");
                         }
-                        
+
                     }
                 }
                 else
                 {
-                    
+
                     bool result = _opApi.EditProduct(product);
                     if (result)
                     {
@@ -197,14 +201,14 @@ namespace UIlayer.Controllers
                         _notyf.Error("Not Updated");
                         return RedirectToAction("Create");
                     }
-                    
+
                 }
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Create");
             }
-            
+
         }
         [HttpGet("/admin/edit/{id}")]
         [Authorize]
@@ -213,7 +217,7 @@ namespace UIlayer.Controllers
             var product = await _opApi.GetProduct(id);
             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
             data.specs.ram = new List<string>();
-            foreach(var rams in product.specs.rams)
+            foreach (var rams in product.specs.rams)
             {
                 data.specs.ram.Add(rams.ram);
             }
@@ -231,7 +235,7 @@ namespace UIlayer.Controllers
             ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
             ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
 
-            return View("Create",data);
+            return View("Create", data);
         }
         [HttpPost]
         public ActionResult Edit(Product product)
@@ -242,7 +246,7 @@ namespace UIlayer.Controllers
             }
             return RedirectToAction("ProductDetails");
         }
-        
+
         [HttpGet("Delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -298,7 +302,7 @@ namespace UIlayer.Controllers
         public ActionResult MasterData(MasterTable data)
         {
             IEnumerable<MasterTable> masterData = _masterApi.GetAll();
-            if (masterData.Any(c=> c.masterData.Equals(data.masterData)))
+            if (masterData.Any(c => c.masterData.Equals(data.masterData)))
             {
                 _notyf.Error("data already exist");
             }
@@ -314,7 +318,7 @@ namespace UIlayer.Controllers
                     _notyf.Error(Configuration.GetSection("Master")["MasterAddedError"].ToString());
                 }
             }
-           
+
             ModelState.Clear();
             return View();
         }
@@ -322,63 +326,63 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult MasterList(int id)
         {
-            IEnumerable < MasterTable > data  = _masterApi.GetAll();
-            var masterdata = data.Where(c=> id.Equals(c.parantId));
+            IEnumerable<MasterTable> data = _masterApi.GetAll();
+            var masterdata = data.Where(c => id.Equals(c.parantId));
             ViewBag.MasterTitle = (Master)id;
             return View(masterdata);
         }
-       /* [HttpGet]
-        [Authorize]*/
-       /* public async Task<ActionResult> MasterEdit(int id)
-        {
-           *//* var product = await _opApi.GetProduct(id);
-            var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
-            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
-            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
-            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
-            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
-            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
+        /* [HttpGet]
+         [Authorize]*/
+        /* public async Task<ActionResult> MasterEdit(int id)
+         {
+            *//* var product = await _opApi.GetProduct(id);
+             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
+             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
+             ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+             ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+             ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+             ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+             ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+             ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+             ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
 
-            return *//*Redirect("Index");*/
-       /* }
-        [HttpPost]
-        public ActionResult MasterEdit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                bool result = pr.EditProduct(product);
-            }
-            return RedirectToAction("");
-        }*/
+             return *//*Redirect("Index");*/
+        /* }
+         [HttpPost]
+         public ActionResult MasterEdit(Product product)
+         {
+             if (ModelState.IsValid)
+             {
+                 bool result = pr.EditProduct(product);
+             }
+             return RedirectToAction("");
+         }*/
 
-       /* [HttpGet("MasterDelete")]
-        public ActionResult MasterDelete(int id)
-        {
-           
-            bool result = _masterApi.Delete(id);
-            if (result)
-            {
-                _notyf.Success(Configuration.GetSection("Master")["MasterDeleted"].ToString());
-            }
-            else
-            {
-                _notyf.Error(Configuration.GetSection("Master")["MasterDeletedError"].ToString());
-            }
-            return RedirectToAction("MasterList");
-        }*/
+        /* [HttpGet("MasterDelete")]
+         public ActionResult MasterDelete(int id)
+         {
+
+             bool result = _masterApi.Delete(id);
+             if (result)
+             {
+                 _notyf.Success(Configuration.GetSection("Master")["MasterDeleted"].ToString());
+             }
+             else
+             {
+                 _notyf.Error(Configuration.GetSection("Master")["MasterDeletedError"].ToString());
+             }
+             return RedirectToAction("MasterList");
+         }*/
         [HttpGet("ProductList")]
         [Authorize]
         public async Task<ActionResult> ProductList()
         {
-            
+
             var data = await _opApi.GetProduct();
-            return new JsonResult(data.OrderByDescending(c=>c.id));
+            return new JsonResult(data.OrderByDescending(c => c.id));
         }
         [HttpGet("admin/ProductDetails/AddImage/{id}")]
-        public async Task<IActionResult> AddImage(int  id)
+        public async Task<IActionResult> AddImage(int id)
         {
             var productEntity = await _opApi.GetProduct(id);
 
@@ -393,28 +397,28 @@ namespace UIlayer.Controllers
             ProductEntity details = null;
             try
             {
-                   
+
                 var data = _opApi.GetAll().Result.Where(c => c.id.Equals(product.id)).FirstOrDefault();
                 var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
                 mappedData.imageFile = product.imageFile;
                 bool result = _opApi.EditProduct(mappedData);
                 details = _opApi.GetProduct(product.id).Result;
                 if (result)
-                    {
-                        _notyf.Success("Image added");
-                    }
-                    else
-                    {
-                        _notyf.Error("Not Added");
-                    }
-                
-                
+                {
+                    _notyf.Success("Image added");
+                }
+                else
+                {
+                    _notyf.Error("Not Added");
+                }
+
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
-            
+
             return RedirectToAction("ProductDetails", new { id = product.id });
         }
         [Authorize]
@@ -426,7 +430,7 @@ namespace UIlayer.Controllers
             _userDataList = userApi.GetUserData();
             return View(_userDataList);
         }
-        
+
         public IActionResult _ImagePreview()
         {
             return PartialView();
@@ -434,7 +438,7 @@ namespace UIlayer.Controllers
         [AllowAnonymous]
         [HttpGet("login")]
         public IActionResult Login(string returnUrl)
-        
+
         {
             /*var myString = returnUrl;
             myString = myString.Substring(1);*/
@@ -447,13 +451,14 @@ namespace UIlayer.Controllers
         {
             try
             {
-                adminApi adminApi = new adminApi(Configuration,_mapper);
+                adminApi adminApi = new adminApi(Configuration, _mapper);
                 LoginViewModel user = new LoginViewModel();
                 user.username = userName;
                 user.password = password;
                 HttpContext.Session.SetString("testKey", "testValue");
                 user.sessionId = HttpContext.Session.Id;
                 Login check = adminApi.Authenticate(user);
+                UserRegistration userData = _userApi.GetUserData().Where(c => c.Email.Equals(check.username)).FirstOrDefault();
                 if (check != null)
                 {
                     if (check.rolesId == (int)RoleTypes.Admin)
@@ -472,35 +477,86 @@ namespace UIlayer.Controllers
                     }
                     else
                     {
-                     
+
                         UserApi userApi = new UserApi(Configuration);
                         _userDataList = userApi.GetUserData();
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("email", user.username));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, _userDataList.Where(c=>c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().FirstName + " " + _userDataList.Where(c => c.Email.Equals(user.username)).FirstOrDefault().LastName));
                         claims.Add(new Claim("password", user.password));
                         claims.Add(new Claim(ClaimTypes.Role, "User"));
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                         await HttpContext.SignInAsync(claimsPrincipal);
-                        if(ReturnUrl == null)
+                        var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
+                        string name = _distributedCache.GetStringAsync("cart").Result;
+                        if(name != null)
                         {
-                            return Redirect("/");
+                            _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
                         }
-                        else
-                        {
-                            return Redirect(ReturnUrl);
+                        
+                        var cartsfromDb = _userApi.GetCart().Result.Where(c => c.usersId.Equals(userData.UserId)).FirstOrDefault();
+                        if (_carts.Any(c => c.sessionId.Equals(check.sessionId)))
+                        { 
+                            var cartWithSameSessionId = _carts.Where(c => c.sessionId.Equals(check.sessionId));
+                            foreach (var cart in cartWithSameSessionId)
+                            {
+                                if (cart.sessionId.Equals(check.sessionId))
+                                {
+                                    foreach (var cartDetailsData in cart.cartDetails.ToList())
+                                    {
+                                        if(cartsfromDb != null)
+                                        {
+                                            if(cartsfromDb.cartDetails.Any(c=> c.productId.Equals(cartDetailsData.productId)))
+                                            {
+                                                foreach(var cartDetailsFromDb in cartsfromDb.cartDetails.ToList())
+                                                {
+                                                    if (cartDetailsData.productId.Equals(cartDetailsFromDb.productId))
+                                                    {
+                                                        cartDetailsFromDb.quantity = cartDetailsFromDb.quantity + 1;
+                                                    }
+                                                    
+                                                }
+                                            }
+                                            else
+                                            {
+                                                cartsfromDb.cartDetails.Add(cartDetailsData);
+                                            }
+
+                                        }
+                                        
+                                    }
+                                    _userApi.EditCart(cartsfromDb);
+                                }
+                                else
+                                {
+                                    _userApi.Createcart(cart);
+                                }
+
+                            }
+
                         }
+
+
+                    }
+                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
+                    if (ReturnUrl == null)
+                    {
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        return Redirect(ReturnUrl);
                     }
                 }
                 else
-                {
-                    TempData["Error"] = "Invalid Email or Password !";
-                    return Redirect("login");
-                }
-
+            {
+                TempData["Error"] = "Invalid Email or Password !";
+                return Redirect("login");
             }
+
+        } 
             catch (Exception ex)
             {
                 TempData["Error"] = "Load error please try again";

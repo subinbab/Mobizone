@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DomainLayer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,12 +15,17 @@ namespace UILayer.Controllers
 {
     public class ConfigController : Controller
     {
+        IUserApi _userApi;
         IConfiguration _config;
         IProductOpApi _productOpApi;
-        public ConfigController(IConfiguration config, IProductOpApi productOpApi)
+        List<MyCart> _carts;
+        private readonly IDistributedCache _distributedCache;
+        public ConfigController(IConfiguration config, IProductOpApi productOpApi, IUserApi userApi, IDistributedCache distributedCache)
         {
             _config = config;
             _productOpApi = productOpApi;
+            _userApi = userApi;
+            _distributedCache = distributedCache;
         }
         public JsonResult GetApi()
         {
@@ -44,6 +52,37 @@ namespace UILayer.Controllers
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
+        }
+        public JsonResult CartCount()
+        {
+            int count = 0;
+            if (User.Identity.IsAuthenticated)
+            {
+                if(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value != "admin@gmail.com")
+                {
+                    var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                    if (_userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)) != null && _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).Count() > 0)
+                    {
+                        count = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault().cartDetails.Count();
+                    }
+                }
+                }
+            
+            else
+            {
+
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if(name != null)
+                {
+                    if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
+                    {
+                        _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+                    }
+                    count = _carts.Count();
+                }
+            }
+                
+            return new JsonResult(count);
         }
     }
 

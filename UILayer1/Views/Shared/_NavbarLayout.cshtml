@@ -1,8 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
-
+<link href="~/css/userLayout.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <nav class="navbar navbar-light " style="position: fixed; width: 100%; background: linear-gradient(to right,black, red ); ">
 
 
@@ -93,7 +95,7 @@
                                     </div>
 
 
-                                    <a href="https://mobizone.azurewebsites.net/Login">Login</a>
+                                    <a href="../Login">Login</a>
 
 
                                 }
@@ -112,7 +114,7 @@
                     <div class="row">
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
 
-                            <a asp-action="addtocart" class="fa-solid fa-cart-shopping"></a>
+                            <a asp-action="addtocart" class=" "><i id="cartIcon" class="fa-solid fa-cart-shopping " style="font-size:26px;"></i></a>
 
                         </div>
                         <div class="col" style="align-items: center;justify-content: center;display: flex;">
@@ -131,108 +133,24 @@
 </nav>
 
 <style>
-    #ui-id-1 {
-        z-index: 1000;
-    }
-
-    .container-fluid {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: 0px;
-    }
-
-    footer {
-        margin-top: 100px;
-    }
-
-    .dropdown {
-        display: none;
-        background-color: #275e4900;
-        padding-left: 8px;
-        text-align: center;
-        font-size: medium;
-    }
-
-    li {
-        display: inline;
-    }
-
-    a {
-        cursor: pointer;
-    }
-
-
-    .dropbtn {
-        color: black;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 26px;
-            text-decoration: none;
-            display: block;
-        }
-
-
-
-
-            .dropdown-content a:hover {
-                background-color: #ddd;
-            }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-
-    .dropdown:hover .dropbtn {
-    }
-
-    .dropdown-content a {
-        color: black;
-        padding: 12px 26px;
-        text-decoration: none;
-        display: block;
-    }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown:hover .dropbtn {
-    }
-
-
-
-
-    .row {
-        margin-left: 0px !important;
-    }
 </style>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/config/CartCount',
+            type: 'get',
+            success: function (data) {
+                if (data == 0) {
+
+                }
+                else {
+                    $("#cartIcon").addClass("badge1");
+                    $("#cartIcon").attr("data-count", data);
+                }
+
+            }
+        })
+    })
+</script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/searchBar.js"></script>

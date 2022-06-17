@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
+<link href="~/css/userLayout.css" rel="stylesheet" />
 @{
     int count = (int)ViewBag.count;
     int pagination = 1;
@@ -94,19 +94,23 @@ else
         background: #0099f3;
     }
 
-    a{
+    a:hover{
         text-decoration: none;
         color: inherit;
-        
     }
-    .card-body.a:hover {
+    a {
+        text-decoration: none;
+        color:inherit;
+    }
+
+    .card-body {
         text-decoration: none;
         cursor: pointer;
     }
 </style>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
-    
+
     $(document).ready(function () {
         $.ajax({
             url: 'http://localhost:22888/api/productop/GetAll',

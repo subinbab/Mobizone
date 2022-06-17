@@ -130,7 +130,6 @@ namespace ApiLayer.Controllers
 
                     //UserRegistration check = _userCreate.Authenticate(data.userName, password);
                     check.sessionId = data.sessionId;
-                    check.password = _sec.Encrypt("admin", data.password);
                     _loginOperations.Edit(check);
                     message = "" + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                     _response.AddResponse(true, 0, check, message);

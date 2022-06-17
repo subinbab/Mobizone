@@ -332,7 +332,7 @@ namespace ApiLayer.Controllers
             user.modifiedOn = DateTime.Now;
             user.createdBy = user.FirstName + " " + user.LastName;
             user.modifiedBy = user.FirstName + " " + user.LastName;
-            user.Password = _sec.Encrypt("admin", user.Password);
+            user.Password = user.Password;
             _login = _loginOperations.Get().Result.Where(c => c.username.Equals(user.Email)).FirstOrDefault();
             _login.username = user.Email;
             _login.password = user.Password;
