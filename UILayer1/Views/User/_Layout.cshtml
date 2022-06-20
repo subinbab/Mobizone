@@ -27,36 +27,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/css-spinning-spinners/1.1.0/load2.css" />
 
 </head>
 <body>
     <partial name="_NavbarLayout" />
     <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
 
-
-        <div id="filter" style="padding: 0px; background-color: #c93e3e00; ">
-            <a class="@(Context.Request.Path == "/User/filter" ? "active" : "")">Filter By</a>
-        </div>
+        <div class="SideBarChild " >
+             <div class="filter">
+            <a class="@(Context.Request.Path == "/User/filter" ? "active" : "")" id="filterLink">Filter By</a>
+                
+            
+       
         <div id="dropdown1" class="dropdown">
-            <form asp-action="filter" method="post">
-                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)" style="padding: 4px;width: 65%;">
-                    <option disabled selected> Select Brand </option>
+                <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)" style="padding: 4px;width: 65%;" id="brandname">
+                    <option  selected value=""> All Brands </option>
                 </select>
 
-                <input class=" @(Context.Request.Path == "/User/filter" ? "active  btn" : "btn"  ) " type="submit" value="Filter" style="color:white;background-color: #e52d2e;width: 32%;">
-
-            </form>
+                <input class=" @(Context.Request.Path == "/User/filter" ? "active  btn" : "btn"  ) " type="submit" value="Filter" style="color:white;background-color: #e52d2e;width: 32%;" id="filterSubmit">
         </div>
+         </div>
 
-        <div id="sort" style="padding: 0px; background-color: #c93e3e00; ">
-            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/User/sortby" ? "active" : "")">sort By</a>
+        <div id="" class="sort" style="padding: 0px; background-color: #c93e3e00; ">
+            <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/User/sortby" ? "active" : "")" >sort By</a>
+
+        
+        <div class="dropdown2">
+            <a class="card LowToHighBtn"  style="" id="sortLowToHigh"> Price(Low to High)</a>
+            <a id="sortHighToLow" class=" card LowToHighBtn"  >Price(High to Low)</a>
 
         </div>
-        <div id="dropdown1" class="dropdown">
-            <a class="@(Context.Request.Path == "/User/sort" ? "active" : "")" asp-action="sort" method="post" style="width: 100%; font-size: 130%"> Price(Low to High)</a>
-            <a asp-action="sortby" class="@(Context.Request.Path == "/User/sortby" ? "active" : "")" method="post" style="width: 100%; font-size: 130%">Price(High to Low)</a>
-
         </div>
+        </div>
+       
 
     </div>
 
@@ -64,15 +68,14 @@
 
 
 
-    <div class="content " style=" padding: 143px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
+    <div class="content " style=" padding: 50px 16px; padding-bottom: 10px; background-color: #f5f2f2;">
 
 
-        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px; background-color: #f5f2f2; ">
+        <div class="content " style=" padding: 143px 16px;padding-bottom: 10px;  margin-top: -10%; margin-left: 25px; padding-bottom: 10px; background-color: #f5f2f2; ">
 
 
             <div class="container-fluid">
                 <main role="main" class="pb-3">
-                    <div id="mypartialview"></div>
                     <div>
 
                         @RenderBody()
@@ -129,6 +132,10 @@
                                 margin-right: auto;
                                 margin-left: 0px;
                             }
+                            #filter{
+                                padding: 0px;
+                                background-color: ##bfb7b7;
+                            }
 
                             footer {
                                 margin-top: 100px;
@@ -149,7 +156,9 @@
                             a {
                                 cursor: pointer;
                             }
-
+                            #dropdown1{
+                                display:none;
+                            }
 
                             .dropbtn {
                                 color: black;
@@ -204,7 +213,7 @@
                             }
 
                                 .dropdown-content a:hover {
-                                    background-color: #ddd;
+                                    background-color: #darkgray;
                                 }
 
                             .dropdown:hover .dropdown-content {
@@ -220,6 +229,21 @@
                             .row {
                                 margin-left: 0px !important;
                             }
+                            .content{
+                                 min-height:500px;
+                             }
+                             .SideBarChild{
+                                   background-color: #d7d3d3;
+                                   margin-left: 6px;
+                                }
+                                .LowToHighBtn{
+                                    width: 100%; font-size: 130%;
+                                    background-color: #ddd;
+                                }
+                                .dropdown2{
+                                    display:none;
+                                }
+                
                         </style>
                         @* </footer>*@
                     </div>
@@ -240,7 +264,18 @@
         @await Component.InvokeAsync("Notyf")
         @await RenderSectionAsync("Scripts", required: false)
     </div>
+    <script>
+        $(document).ready(function(){
+            $(".filter").hover(function() {
+                //alert("clicked")
+    $("#dropdown1").toggle();
+})
+        $(".sort").hover(function(){
+            $(".dropdown2").toggle();
+        })
+        })
 
+    </script>
 </body>
 </html>
 

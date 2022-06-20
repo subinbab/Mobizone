@@ -50,12 +50,7 @@ namespace UIlayer.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         List<MyCart> _carts;
         IEnumerable<UserRegistration> _userDataList;
-        // for testing ////////////////////////////firebase//////////////////////////////////
-        private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
-        private static string Bucket = "mobizone-55ea5.appspot.com";
-        private static string AuthEmail = "subinbabusd720@gmail.com";
-        private static string AuthPassword = "Subin@1999";
-        //////////////////////////////////////////////////////
+
         public AdminController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache)
         {
             _notyf = notyf;
@@ -171,7 +166,7 @@ namespace UIlayer.Controllers
                     else
                     {
 
-                        bool result = _opApi.CreateProduct(product);
+                        bool result = _opApi.CreateProduct(product).Result;
                         if (result)
                         {
                             _notyf.Success("Product added");
@@ -189,7 +184,7 @@ namespace UIlayer.Controllers
                 else
                 {
 
-                    bool result = _opApi.EditProduct(product);
+                    bool result = _opApi.EditProduct(product).Result;
                     if (result)
                     {
                         _notyf.Success("Product Updated");
@@ -401,7 +396,7 @@ namespace UIlayer.Controllers
                 var data = _opApi.GetAll().Result.Where(c => c.id.Equals(product.id)).FirstOrDefault();
                 var mappedData = (ProductViewModel)_mapper.Map<ProductViewModel>(data);
                 mappedData.imageFile = product.imageFile;
-                bool result = _opApi.EditProduct(mappedData);
+                bool result = _opApi.EditProduct(mappedData).Result;
                 details = _opApi.GetProduct(product.id).Result;
                 if (result)
                 {
@@ -747,7 +742,7 @@ namespace UIlayer.Controllers
                 }
             }
                
-            bool result = _opApi.EditProduct(productEntity);
+            bool result = _opApi.EditProduct(productEntity).Result;
             return RedirectToAction("ProductDetails", new { id = products.id });
         }
         [RequestFormLimits(MultipartBodyLengthLimit = 104857600)]

@@ -26,10 +26,6 @@ li {
     display: inline;
 }
 
-a {
-    cursor: pointer;
-}
-
 
 .dropbtn {
     color: black;
@@ -135,6 +131,3 @@ i {
     padding-top: 0px;
 }
 
-a:hover {
-    color: inherit !important;
-}

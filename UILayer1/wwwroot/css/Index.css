@@ -1,0 +1,55 @@
+﻿.center {
+    justify-content: center;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.noImage {
+    align-items: center;
+    margin-left: 27%;
+    width: 30%
+}
+
+.row {
+    margin-left: 0 !important;
+}
+
+.btn-indigo {
+    background: #e52d2e;
+}
+
+.btn-orange {
+    background: #0099f3;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+}
+.anchorTag a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+a {
+    text-decoration: none;
+    color: inherit ;
+}
+
+.card-body {
+    text-decoration: none;
+    cursor: pointer;
+}
+.nav-anchor-tag{
+    color:black;
+}
+.nav-anchor-tag:hover{
+    color:black;
+}
+.register:hover {
+    background-color: black;
+    padding: inherit;
+    border-radius: 28px;
+    padding: 9px;
+}
