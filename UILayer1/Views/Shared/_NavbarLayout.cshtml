@@ -65,10 +65,10 @@
 
 
                     <div class="dropdown">
-                        <a class="dropbtn" style="color: white;">Account</a>
+                        <a class="dropbtn" style="color: white; ">Account</a>
                         <div class="dropdown-content">
 
-                            <div class="row" style=" justify-content: center; display: flex; ">
+                            <div class="row" style=" justify-content: center; display: flex;  ">
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     if (((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim("Role", "Admin"))
