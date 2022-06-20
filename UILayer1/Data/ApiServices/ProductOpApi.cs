@@ -3,6 +3,8 @@ using BusinessObjectLayer.ProductOperations;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DTOLayer.Product;
+using Firebase.Auth;
+using Firebase.Storage;
 using log4net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UILayer.Models;
 
@@ -25,6 +28,12 @@ namespace UILayer.Data.ApiServices
         private IConfiguration _configuration { get; }
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        // for testing ////////////////////////////firebase//////////////////////////////////
+        private static string apiKey = "AIzaSyBvGbaacBA91vzQfmvUsF77eAJSYn6b4VE";
+        private static string Bucket = "mobizone-55ea5.appspot.com";
+        private static string AuthEmail = "subinbabu4127@gmail.com";
+        private static string AuthPassword = "Subin@1999";
+        //////////////////////////////////////////////////////
         public ProductOpApi(IConfiguration configuration, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _configuration = configuration;
@@ -126,7 +135,7 @@ namespace UILayer.Data.ApiServices
         #endregion
 
         #region edit method
-        public bool EditProduct(ProductViewModel product)
+        public async Task<bool> EditProduct(ProductViewModel product)
         {
             try
             {
@@ -141,14 +150,40 @@ namespace UILayer.Data.ApiServices
                     {
                         foreach (IFormFile files in product.imageFile)
                         {
+                            FileStream fs;
                             string folder = "Product/Images";
                             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
                             string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
                             string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                            using (fs = new FileStream(folderPath, FileMode.Create))
+                            {
+                                files.CopyToAsync(fs);
+                            }
+                            //files.CopyTo(new FileStream(folderPath, FileMode.Create));
                             image = new Images();
                             image.imagePath = uniqueFileName;
                             images.Add(image);
+                            //try
+                            //{
+                            //    fs = new FileStream(folderPath, FileMode.Open);
+                            //    var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
+                            //    var a = auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
+                            //    var cancellationToken = new CancellationTokenSource();
+                            //    var upload = new FirebaseStorage(Bucket,
+                            //        new FirebaseStorageOptions
+                            //        {
+                            //            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                            //            ThrowOnCancel = true
+                            //        })
+                            //        .Child("assets")
+                            //        .Child($"{files.FileName}.{Path.GetExtension(files.FileName).Substring(1)}")
+                            //        .PutAsync(fs, cancellationToken.Token);
+                            //    var imagePost = await upload;
+                            //}
+                            //catch (Exception ex)
+                            //{
+
+                            //}
                         }
                     }
                     else
@@ -234,7 +269,7 @@ namespace UILayer.Data.ApiServices
         #endregion
 
         #region create method
-        public bool CreateProduct(ProductViewModel product)
+        public async Task<bool> CreateProduct(ProductViewModel product)
         {
             try
             {
@@ -286,14 +321,40 @@ namespace UILayer.Data.ApiServices
                     {
                         foreach (IFormFile files in product.imageFile)
                         {
+                            FileStream fs;
                             string folder = "Product/Images";
                             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
                             uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
                             string folderPath = Path.Combine(serverFolder, uniqueFileName);
-                            files.CopyTo(new FileStream(folderPath, FileMode.Create));
+                            using (fs = new FileStream(folderPath,FileMode.Create))
+                            {
+                                files.CopyToAsync(fs);
+                            }
+                            //files.CopyTo(new FileStream(folderPath, FileMode.Create));
                             image = new Images();
                             image.imagePath = uniqueFileName;
                             images.Add(image);
+                            //try
+                            //{
+                            //    fs = new FileStream(folderPath, FileMode.Open);
+                            //    var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
+                            //    var a =  auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
+                            //    var cancellationToken = new CancellationTokenSource();
+                            //    var upload = new FirebaseStorage(Bucket,
+                            //        new FirebaseStorageOptions
+                            //        {
+                            //            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                            //            ThrowOnCancel = true
+                            //        })
+                            //        .Child("assets")
+                            //        .Child($"{files.FileName}.{Path.GetExtension(files.FileName).Substring(1)}")
+                            //        .PutAsync(fs, cancellationToken.Token);
+                            //    var imagePost =await upload;
+                            //}
+                            //catch (Exception ex)
+                            //{
+
+                            //}
                         }
                     }
                     else
@@ -304,7 +365,7 @@ namespace UILayer.Data.ApiServices
                 }
                 RequestHandler<ProductEntity> requestHandler = new RequestHandler<ProductEntity>(_configuration);
                 requestHandler.url = "api/productop/CreateProduct";
-                var result = requestHandler.Post(products);
+                var result =  requestHandler.Post(products);
                 if (result != null)
                 {
                     if (result.IsSuccess)
