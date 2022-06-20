@@ -185,7 +185,7 @@ namespace UILayer.Controllers
                     var webLink = _configuration.GetSection("Development:WebLink").Value;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<div><a href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div>";
+            mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hai, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = _userApi.PostMail(mailRequest);
