@@ -9,11 +9,11 @@ namespace UILayer.Data.ApiServices
     public interface IProductOpApi
     {
         bool AddProductSubPart(ProductSubPart productSubPart);
-        bool CreateProduct(ProductViewModel product);
+        Task<bool> CreateProduct(ProductViewModel product);
         bool DeleteProduct(int id);
         bool DeleteRam(int id);
         bool DeleteStorage(int id);
-        bool EditProduct(ProductViewModel product);
+        Task<bool> EditProduct(ProductViewModel product);
         Task<IEnumerable<ProductEntity>> Filter(string name);
         Task<IEnumerable<ProductEntity>> GetAll();
         Task<IEnumerable<ProductListViewModel>> GetProduct();

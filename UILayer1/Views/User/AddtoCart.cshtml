@@ -6,7 +6,7 @@
     var cartList = Model.ToList();
 }
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
-
+<link href="~/css/Index.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="~/css/Quantity.css" rel="stylesheet" />
 <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -49,10 +49,10 @@
                 <div class="col-7" style=" margin-left: -7%;">
                     <p class="textStyle" style="margin: 4%;">@data.product.name</p>
                     <p class="textStyle textColorGreen" style="margin-left: 4%; margin-top: -3%;">@data.price</p>
-                    <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><span id="minus" class="glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span></a><input id="quantity" disabled="disabled" style="width: 6%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><span id="plus" class="glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;"></span></a></div>
+                    <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><span id="minus" class="nav-anchor-tag glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span></a><input id="quantity" disabled="disabled" style="width: 8%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><span id="plus" class="nav-anchor-tag glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;"></span></a></div>
                 </div>
                 <div class="3" style="margin: 10%;">
-                    <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="glyphicon glyphicon-trash" style="font-size: 22px;padding: 5%;"></span></a>
+                    <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="nav-anchor-tag glyphicon glyphicon-trash" style="font-size: 22px;padding: 5%;"></span></a>
                 </div>
             </div>
         }

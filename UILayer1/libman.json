@@ -5,6 +5,10 @@
     {
       "library": "datatable@2.0.2",
       "destination": "wwwroot/datatable/"
+    },
+    {
+      "library": "css-spinning-spinners@1.1.1",
+      "destination": "wwwroot/css/css-spinning-spinners/"
     }
   ]
 }

@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<link href="~/css/userLayout.css" rel="stylesheet" />
+<link href="~/css/Index.css" rel="stylesheet"/>
+@{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
+}
+@model IEnumerable<DomainLayer.ProductModel.ProductEntity>
+@if (Model == null || Model.Count().Equals(0))
+{
+
+    <img src="/css/Images/no product.png" class="noImage" />
+
+
+}
+else
+{
+    <div class="row center">
+        @foreach (var item in Model)
+        {
+            <div class="card shadow-lg  bg-white rounded mr-4 mt-4 col-xl-3 col-lg-5 col-md-6 col-sm-6">
+                <div class="card-body">
+
+                    <div class="col-12">
+                        <h4 class="card-title" style="">@item.name</h4>
+                        @if (item.images == null || item.images.Count == 0)
+                        {
+                            <div class="col-3" align="center"><a asp-action="ProductDetails" asp-route-id="@item.id"><img src="~/css/Images/noimage.jpg" style="align-items:center;  height: 100%; width: 700%;"></a></div>
+                        }
+                        else
+                        {
+                            @foreach (var data in item.images)
+                            {
+                                <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" style="align-items: center; height: 59%; width: 47%;"></div></a>
+                                break;
+                            }
+                        }
+
+
+
+                        <div class="col-12 row">
+                            <p class=" col-6 responsive-font-example" style=" padding-right: 0px;"> Price : </p><p style=" color: black; font-family: fantasy; font-size: larger;" class="co-6 responsive-font-example">  &#8377 @item.price</p>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-5 buynow btn btn-orange row"><a asp-action="order" asp-route-id="@item.id" style="" id="buyNow">Buy Now</a></div>
+                        <div class="col-2"></div>
+                        <div class="col-5  btn btn-indigo row"><a asp-action="AddtoCart" asp-route-id="@item.id" style="" id="addtoCart">Add to Cart</a></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        @if (Model != null)
+        {
+            @for (int i = 0; i <= count; i++)
+            {
+                <li class="page-item"><a class="page-link"  id="pagination" onclick="pagination(@i)">@pagination</a></li>
+
+                pagination = pagination + 1;
+            }
+        }
+
+
+    </ul>
+</nav>
+<style>
+    
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/index.js"></script>
