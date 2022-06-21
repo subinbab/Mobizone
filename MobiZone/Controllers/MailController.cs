@@ -22,7 +22,7 @@ namespace ApiLayer.Controllers
         public MailController(IMailService _mailService)
         {
            this._mailService = _mailService;
-            _log = LogManager.GetLogger(typeof(ProductController));
+            /*_log = LogManager.GetLogger(typeof(ProductController));*/
         }
         [HttpPost("send")]
         public async Task<IActionResult> SendMail( MailRequest request)
