@@ -1015,6 +1015,7 @@ namespace UILayer.Controllers
             return Redirect("/user/Addtocart");
         }
         [HttpPost]
+        [Authorize(Roles ="User")]
         public IActionResult CartOrder()
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
@@ -1107,39 +1108,45 @@ namespace UILayer.Controllers
                 {
                     if (mycartData.productId.Equals(id))
                     {
-                        mycartData.quantity = mycartData.quantity -1;
-                        mycartData.price = mycartData.quantity * mycartData.product.price;
-                    }
-                }
-                _userApi.EditCart(myCart);
-            }
-            else
-            {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null || _carts.Count > 0)
-                {
-                    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-                    {
-                        foreach (var data in _carts)
+                        if ((mycartData.quantity - 1) * mycartData.product.price > 0)
                         {
-                            foreach (var caratDetailsData in data.cartDetails)
-                            {
-                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                                caratDetailsData.product = product;
-                            }
-                            if (data.sessionId.Equals(HttpContext.Session.Id))
-                            {
-            
-                                foreach (var data1 in data.cartDetails)
-                                {
-                                    if (data1.productId.Equals(id))
-                                    {
-                                        data1.quantity = data1.quantity -1;
-                                        data1.price = data1.quantity * data1.product.price;
-                                        /*cartList.Add(data1);*/
-                                    }
-                                    else
+                            mycartData.quantity = mycartData.quantity - 1;
+                            mycartData.price = mycartData.quantity * mycartData.product.price;
+                        }
+    }
+}
+_userApi.EditCart(myCart);
+}
+else
+{
+string name = _distributedCache.GetStringAsync("cart").Result;
+_carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+if (_carts != null || _carts.Count > 0)
+{
+    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
+    {
+        foreach (var data in _carts)
+        {
+            foreach (var caratDetailsData in data.cartDetails)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                caratDetailsData.product = product;
+            }
+            if (data.sessionId.Equals(HttpContext.Session.Id))
+            {
+
+                foreach (var data1 in data.cartDetails)
+                {
+                    if (data1.productId.Equals(id))
+                    {
+                        if ((data1.quantity-1) * data1.product.price > 0)
+                        {
+                            data1.quantity = data1.quantity - 1;
+                            data1.price = data1.quantity * data1.product.price;
+                        }
+                        /*cartList.Add(data1);*/
+                    }
+                    else
                                     {
 
                                     }
@@ -1181,7 +1188,12 @@ namespace UILayer.Controllers
                         mycartData.price = mycartData.quantity * mycartData.product.price;
                     }
                 }
-                _userApi.EditCart(myCart);
+                var checkNegative = myCart.cartDetails.Where(c => c.price > 0);
+                if (checkNegative != null)
+                {
+                    _userApi.EditCart(myCart);
+                }
+                
             }
             else
             {
@@ -1205,8 +1217,11 @@ namespace UILayer.Controllers
                                 {
                                     if (data1.productId.Equals(id))
                                     {
-                                        data1.quantity = data1.quantity + 1;
-                                        data1.price = data1.quantity * data1.product.price;
+                                      
+                                            data1.quantity = data1.quantity + 1;
+                                            data1.price = data1.quantity * data1.product.price;
+                                        
+                                        
                                         /*cartList.Add(data1);*/
                                     }
                                     else

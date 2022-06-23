@@ -120,7 +120,27 @@
                             </div>
 
                         </footer>
-                        <style>
+                        
+                        @* </footer>*@
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+
+        @await Component.InvokeAsync("Notyf")
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
+    <style>
                             #ui-id-1 {
                                 z-index: 1000;
                             }
@@ -245,25 +265,6 @@
                                 }
                 
                         </style>
-                        @* </footer>*@
-                    </div>
-                </main>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
-
-
-
-
-
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
-    </div>
     <script>
         $(document).ready(function(){
             $(".filter").hover(function() {

@@ -31,7 +31,7 @@
 }
 else
 { 
-  <div class="container-fluid mt-3">
+  <div class="container-fluid mt-3" style="padding-top:10%">
 
         <div class="row" style="margin-right: 6%;margin-left: 7%;">
             <form asp-action="BuyCart" method="post" class="col" id="my-form">
@@ -91,7 +91,9 @@ else
                         <div class="">
                             
                             <h5 class="card-title address">Order Summary</h5>
-                            @foreach(var cart in carts)
+                            @if(carts != null)
+                            {
+                                @foreach(var cart in carts)
                 {
                         <div class="orderDetails">
                             <div class="form-check">
@@ -128,7 +130,9 @@ else
                             </div>
                         </div>
                 }
-                            
+                 
+                            }
+                                       
                             
 
 
@@ -160,7 +164,7 @@ else
                             <div class="row">
                                 <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
                                 <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #b5d9ff; display: none"  onchange="displaySubmit()" /></div>
+                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color:  rgb(61 139 227); display: none"  onchange="displaySubmit()" /></div>
                             </div>
 
 
@@ -246,7 +250,7 @@ else
         }
         
         .submit {
-            background-color: #3d8be3;
+            background-color: rgb(61 139 227);
         }
         .Price {
             background: #e52d2e;

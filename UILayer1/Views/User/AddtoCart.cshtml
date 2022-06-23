@@ -5,9 +5,8 @@
     ViewData["Title"] = "Mobizone- Cart Page";
     var cartList = Model.ToList();
 }
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet"/>
 <link href="~/css/Index.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="~/css/Quantity.css" rel="stylesheet" />
 <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -30,7 +29,8 @@
 
 @if (Model != null && Model.Count()>0)
 {
-<div class="row">
+    <div class="margin-top">
+        <div class="row ">
     <div class="col-8">
         @foreach (var data in Model)
         {
@@ -49,7 +49,7 @@
                 <div class="col-7" style=" margin-left: -7%;">
                     <p class="textStyle" style="margin: 4%;">@data.product.name</p>
                     <p class="textStyle textColorGreen" style="margin-left: 4%; margin-top: -3%;">@data.price</p>
-                    <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><span id="minus" class="nav-anchor-tag glyphicon glyphicon-minus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-right: 4px;"></span></a><input id="quantity" disabled="disabled" style="width: 8%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><span id="plus" class="nav-anchor-tag glyphicon glyphicon-plus" style="background-color: gray;padding: 5px;border-radius: 13px;margin-left: 4px;"></span></a></div>
+                    <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><i class="fa-solid fa-minus minus-icon"></i></a><input id="quantity" disabled="disabled" style="width: 8%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><i class="fa-solid fa-plus plus-icon"></i></a></div>
                 </div>
                 <div class="3" style="margin: 10%;">
                     <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="nav-anchor-tag glyphicon glyphicon-trash" style="font-size: 22px;padding: 5%;"></span></a>
@@ -59,7 +59,7 @@
 
     </div>
     <div class="col-4 ">
-        <div class="row" style="width: 32vh;height: 53vh;">
+        <div class="row" style="width: 45vh;height: 53vh;">
             <div class="col-12" style="border: groove;height: 14%;">
                 <p class="textStyle">Total</p>
             </div>
@@ -96,12 +96,15 @@
     </div>
 
 </div>
+
+    </div>
+
 }
 else
 {
-<img src="/css/Images/empty-cart.png" style="align-items: center; margin-left: 27%; width:30%" />
+<img src="/css/Images/empty-cart.png" style="align-items: center; margin-left: 27%; width:30% ;margin-top:10%;" />
 <div style="text-align:center">
-    <h2>Empty Cart <a asp-action="index" >Fill Your Cart Now</a></h2>
+    <h2>Empty Cart <a class="fill-cart" asp-action="index" >Fill Your Cart Now</a></h2>
 </div>
 }
 
@@ -109,6 +112,12 @@ else
 
 
 <style>
+    .margin-top{
+        padding-top:10%;
+    }
+    a:hover{
+        color:black;
+    }
     .textStyle {
         font-variant-caps: normal;
         font-style: normal;
@@ -119,6 +128,24 @@ else
     .textColorGreen {
         color: green;
     }
+    .plus-icon{
+    width: 7%;
+    background-color: black;
+    padding: 4px;
+    border-radius: 19px;
+    margin-left: 3px;
+    color: white;
+    font-size: 23px;
+}
+.minus-icon{
+    width: 7%;
+    background-color: black;
+    padding: 4px;
+    border-radius: 19px;
+    margin-right: 3px;
+    color: white;
+    font-size: 23px;
+}
 </style>
 
 @*<script>

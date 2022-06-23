@@ -1,216 +1,90 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+
+
 @{
+    var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
 }
-@{
-    if (ViewBag.BrandList == null)
-    {
-        ViewBag.BrandList = "";
-    }
-}
-<!DOCTYPE html>
+
+
+
+
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-
-    <link rel="stylesheet" href="~/css/navigation-bar.css" />
+    <link rel="stylesheet" href="~/css/SideBar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&family=Nunito:wght@600&family=Oswald:wght@500&family=Roboto+Condensed:wght@700&family=Rubik&family=Sansita+Swashed:wght@600&family=Satisfy&display=swap" rel="stylesheet">
-    <link href="~/css/userLayout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
+
+
+
     <partial name="_NavbarLayout" />
 
+    @RenderBody();
 
 
 
-    <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
+    <footer style="margin-top: 240px">
+        <div class="row justify-content-center">
+            <a asp-action="index">
+                <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
+                     class="float-left" />
+            </a>
 
-        <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
-
-            <div class="container-fluid">
-                <main role="main" class="pb-3">
-                    <div id="mypartialview"></div>
-                    <div>
-                        @RenderBody()
-                        <footer>
-                            <div class="row justify-content-center">
-                                <a asp-action="index">
-                                    <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" style="height:60px; width:60px;"
-                                         class="float-left" />
-                                </a>
-
-                                <ul class="list">
-
-                                    </li>
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="Company" style="margin-right:-86px;text-decoration:none;">Company</a>
-                                    </li>
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="About" style="margin-right:-86px;text-decoration:none;">About</a>
-                                    </li>
-
-                                    <li class="about">
-                                        <a asp-controller="User" asp-action="Privacy" style="margin-right: -86px; text-decoration: none;">Privacy & Policy</a>
-                                    </li>
-
-                                    <li class="about">
-
-                                        <a asp-controller="User" asp-action="Contact" style="margin-right: -86px; text-decoration: none;">Contact Us</a>
+            <ul class="list">
 
 
-                                    </li>
-                                </ul>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Company" style="margin-right: -86px; text-decoration: none;">Company</a>
+                </li>
+                <li class="about">
+                    <a asp-controller="User" asp-action="About" style="margin-right: -86px; text-decoration: none;">About</a>
+                </li>
 
-                            </div>
+                <li class="about">
+                    <a asp-controller="User" asp-action="Privacy" style="margin-right: -86px; text-decoration: none;">Privacy & Policy</a>
+                </li>
 
+                <li class="about">
 
-
-
-                            <div style="font-size: 12px; padding-bottom:10px">
-                                <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
-
-                            </div>
-
-                        </footer>
-
-
-                        <style>
-                            .container-fluid {
-                                width: 100%;
-                                padding-right: 15px;
-                                padding-left: 15px;
-                                margin-right: auto;
-                                margin-left: 0px;
-                            }
-
-                            footer {
-                                margin-top: 100px;
-                            }
-
-                            .dropdown {
-                                display: none;
-                                background-color: #275e4900;
-                                padding-left: 8px;
-                                text-align: center;
-                                font-size: medium;
-                            }
-
-                            li {
-                                display: inline;
-                            }
-
-                            a {
-                                cursor: pointer;
-                            }
+                    <a asp-controller="User" asp-action="Contact" style="margin-right: -86px; text-decoration: none;">Contact Us</a>
 
 
-                            .dropbtn {
-                                color: black;
-                                padding: 16px;
-                                font-size: 16px;
-                                border: none;
-                            }
+                </li>
+            </ul>
 
-                            .dropdown {
-                                position: relative;
-                                display: inline-block;
-                            }
-
-
-                            .dropdown-content {
-                                display: none;
-                                position: absolute;
-                                background-color: white;
-                                min-width: 160px;
-                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                                z-index: 1;
-                            }
-
-
-                                .dropdown-content a {
-                                    color: black;
-                                    padding: 12px 26px;
-                                    text-decoration: none;
-                                    display: block;
-                                }
-
-
-
-
-                                    .dropdown-content a:hover {
-                                        background-color: #ddd;
-                                    }
-
-                            .dropdown:hover .dropdown-content {
-                                display: block;
-                            }
-
-
-                            .dropdown:hover .dropbtn {
-                            }
-
-                            .dropdown-content a {
-                                color: black;
-                                padding: 12px 26px;
-                                text-decoration: none;
-                                display: block;
-                            }
-
-                                .dropdown-content a:hover {
-                                    background-color: #ddd;
-                                }
-
-                            .dropdown:hover .dropdown-content {
-                                display: block;
-                            }
-
-                            .dropdown:hover .dropbtn {
-                            }
-
-
-
-
-                            .row {
-                                margin-left: 0px !important;
-                            }
-                        </style>
-
-                    </div>
-                </main>
-            </div>
         </div>
 
 
 
-        <script src="~/js/searchBar.js"></script>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#filter").click(function () {
-                    $("#dropdown1").toggle();
-                });
 
-            });
+        <div style="font-size: 12px; padding-bottom:10px">
+            <img src="~/css/Images/copyright-38672_1280.png" style="height: 10px; width: 10px;" /><a> Mobizone private limited all right reserved</a>
 
-            $(document).ready(function () {
-                $("#sort").click(function () {
-                    $("#dropdown2").toggle();
-                });
-            });
-        </script>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/js/searchBar.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
+        </div>
+
+    </footer>
+    <style>
+
+    </style>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/searchBar.js"></script>
 </body>
 </html>
+
+
+
+
+
