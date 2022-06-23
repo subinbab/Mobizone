@@ -84,6 +84,16 @@ namespace UILayer.Controllers
                 
             return new JsonResult(count);
         }
+        public PartialViewResult unauthorized()
+        {
+            return PartialView("Unauthorized");
+;        }
+        [HttpGet("/config/GetProduct/{id}")]
+        public JsonResult GetProduct(int id)
+        {
+            var data = _productOpApi.GetProduct(id).Result;
+            return new JsonResult(data);
+        }
     }
 
 }

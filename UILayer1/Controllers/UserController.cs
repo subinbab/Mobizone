@@ -304,7 +304,7 @@ namespace UILayer.Controllers
         }
         [Authorize(Roles = "User")]
         [HttpGet("/user/order/{id}")]
-        public IActionResult order(int id)
+        public PartialViewResult order(int id)
         {
             ViewBag.ReturnUrl = "/user/order/" + id;
             var data = _opApi.GetProduct(id).Result;
@@ -314,7 +314,7 @@ namespace UILayer.Controllers
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
+            return PartialView("order");
         }
         [Authorize(Roles = "User")]
         [HttpGet]
@@ -336,13 +336,13 @@ namespace UILayer.Controllers
             return View();
         }
         [HttpPost("/user/order")]
-        public IActionResult order(Checkout checkout,int addressId)
+        public PartialViewResult order(Checkout checkout,int addressId)
         {
             if (checkout == null)
             {
                 _notyf.Error("Not Added");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-                return RedirectToAction("Index");
+                return PartialView("Orderplaced");
             }
             else
             {
@@ -370,7 +370,7 @@ namespace UILayer.Controllers
                 ViewBag.orderId = checkout.orderId;
                 _notyf.Success("succesfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-                return View("Orderplaced");
+                return PartialView("Orderplaced");
             }
 
         }
@@ -400,7 +400,7 @@ namespace UILayer.Controllers
         }
         
         [HttpGet]
-        public IActionResult AddtoCart()
+        public PartialViewResult cart()
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
@@ -480,7 +480,7 @@ namespace UILayer.Controllers
                 cartList = null;
             }
 
-            return View(cartList);
+            return PartialView("AddtoCart",cartList);
         }
         [HttpGet("/user/addtocart/{id}")]
         public IActionResult AddtoCart(int id)
