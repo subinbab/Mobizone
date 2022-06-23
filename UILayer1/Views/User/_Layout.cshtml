@@ -29,7 +29,6 @@
         <link rel="stylesheet" href="/resources/demos/style.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/css-spinning-spinners/1.1.0/load2.css" />
 
-<<<<<<< HEAD
 </head>
 <body>
     <partial name="_NavbarLayout" />
@@ -129,41 +128,7 @@
                     </div>
                 </main>
             </div>
-=======
-    </head>
-    <body>
-        <partial name="_NavbarLayout" />
-        <div class="sidebar" style="position: fixed; padding-top: 114px; z-index: 99; background-color: #f5f2f2;">
 
-            <div class="SideBarChild " >
-                 <div class="filter">
-                <a class="@(Context.Request.Path == "/User/filter" ? "active" : "")" id="filterLink">Filter By</a>
-                
-            
-       
-            <div id="dropdown1" class="dropdown">
-                    <select name="brandName" asp-items="new SelectList(ViewBag.BrandList)" style="padding: 4px;width: 65%;" id="brandname">
-                        <option  selected value=""> All Brands </option>
-                    </select>
-
-                    <input class=" @(Context.Request.Path == "/User/filter" ? "active  btn" : "btn"  ) " type="submit" value="Filter" style="color:white;background-color: #e52d2e;width: 32%;" id="filterSubmit">
-            </div>
-             </div>
-
-            <div id="" class="sort" style="padding: 0px; background-color: #c93e3e00; ">
-                <a class="@(Context.Request.Path == "/User/sort" || Context.Request.Path == "/User/sortby" ? "active" : "")" >sort By</a>
-
-        
-            <div class="dropdown2">
-                <a class="card LowToHighBtn"  style="" id="sortLowToHigh"> Price(Low to High)</a>
-                <a id="sortHighToLow" class=" card LowToHighBtn"  >Price(High to Low)</a>
-
-            </div>
-            </div>
-            </div>
-       
-
->>>>>>> 67ebd7b2333034e70137e5a64b52b82faeda7bf5
         </div>
 
 
