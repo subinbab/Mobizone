@@ -17,12 +17,8 @@
             <form action="/user/Address?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnUrl)" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
                 <input asp-for="id" class="form-control" type="hidden" />
-
-               
-
-                <div class="row">
+                 <div class="row">
                     <div class="col-md-8">
                         <label asp-for="name" class="control-label">Name</label>
                         <input asp-for="name" class="form-control" />

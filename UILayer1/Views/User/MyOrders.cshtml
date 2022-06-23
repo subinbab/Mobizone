@@ -6,10 +6,10 @@
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
     ViewData["Title"] = "Mobizone- My Orders";
 }
-<div style="margin: 10px; font-weight: bold;"> My Orders </div>
+<div style="font-weight: bold;"> My Orders </div>
         @foreach (var data in Model)
         {
-            <div class="row" style="padding: 14px; border: solid 1px #d7d1d1; margin: 4px;">
+            <div class="row" style="padding: 14px; border: solid 1px #d7d1d1; margin-top: 5%">
                 <div class="col-2">
                     @if (data.product.images != null && data.product.images.Count != 0)
                     {

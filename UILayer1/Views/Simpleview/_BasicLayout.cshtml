@@ -71,6 +71,7 @@
                     </div>
                     <div>
                         @RenderBody()
+                        @RenderSection("scripts", false)
                         <footer>
                             <div class="row justify-content-center">
                                 <a asp-action="index">
@@ -113,7 +114,7 @@
                         </footer>
 
 
-                        
+
 
                     </div>
                 </main>
