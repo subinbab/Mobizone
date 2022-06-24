@@ -47,7 +47,7 @@ else
 
                     </div>
                     <div class="row">
-                        <div class="col-5 buynow btn btn-orange row"><a onclick="callbuynow(@item.id)"  style="" id="buyNow">Buy Now</a></div>
+                        <div class="col-5 buynow btn btn-orange row"><a  asp-route-id="@item.id" asp-action="Order"  style="" id="buyNow">Buy Now</a></div>
                         <div class="col-2"></div>
                         <div class="col-5  btn btn-indigo row"><a asp-action="AddtoCart" asp-route-id="@item.id" style="" id="addtoCart">Add to Cart</a></div>
                     </div>

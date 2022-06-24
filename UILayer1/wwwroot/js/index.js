@@ -155,7 +155,7 @@ function IndexRequest(callback,data) {
 }
 function callbuynow(data) {
     productId = data;
-    alert(productId)
+    //alert(productId)
     //alert("ProductId"+data)
     document.getElementById("sidebar-user").innerHTML = "";
     $(".content").css("margin-left", "0px")

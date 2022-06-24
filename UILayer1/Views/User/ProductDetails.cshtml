@@ -1,209 +1,202 @@
-﻿@model DomainLayer.ProductModel.ProductEntity
-
+﻿
+@model DomainLayer.ProductModel.ProductEntity
 @{
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
-    ViewData["Title"] = "Mobizone- Details Page";
+    var returnUrl = ViewBag.ReturnUrl as string;
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
 
-<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-<div class="row">
-    <div class="sticky col-4 row card" style="position: absolute; width: 30%;">
-        <div class="col-3">
-            <table class="table ">
-                @if (Model.images == null)
-                {
-                    <h1>No images</h1>
-                }
-                else
-                {
-                    foreach (var item in Model.images)
+<div class="sticky" width="50%" style="float: left; height: 79vh;  margin: 2%; width:28%; ">
+    <p width="50%">
+        <div class="row">
+            <div class="col-2">
+                @{if (Model.images == null)
                     {
-                        <div class="card" style="width : 50px; height:100px; position:absolute">
-                            <img src="~/Product/Images/@item.imagePath" width="50" height="100" onclick="showImage('@item.imagePath');" />
-
-
-                        </div>
-
+                        <h1>No iamges</h1>
                     }
-                }
+                    else
+                    {
+                        foreach (var item in Model.images)
+                        {
+                            <div class="card" style="width : 50px; height:100px;">
+                                <img src="~/Product/Images/@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
 
-            </table>
-        </div>
-        <div class="col-9 row" style="justify-content: center;">
-            @if (Model.images != null && Model.images.Any())
-            {
+                            </div>
+                        }
 
-                <img class="showimage col-9" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" style="max-width: 50%; height: 300px;" />
+                    }}
+            </div>
+            <div class="col-10 row">
+                <div class="col-12">
+                    @{if (Model.images != null && Model.images.Any())
+                        {
 
+                            <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" alt="No images available" />
 
-            }
-            else
-            {
-                <p>No Image</p>
-            }
-
-        </div>
-        <div class="row  mt-3">
-            <div class="col "><a asp-action="order" asp-route-id="@Model.id"><button class="btn btn-orange buynow" style="background-color: #0099f3; margin-top: 581%; margin-left: -367%; ">Buy Now</button></a></div>
-            <div class="col "><a asp-action="AddtoCart" asp-route-id="@Model.id"><button class="btn btn-orange buynow; " style="background-color: #e52d2e; letter-spacing: .1rem; margin-top: 581%; margin-left: -361%; ">Add to Cart</button></a></div>
-          
-        </div>
-
-        
-    </div>
-    <div class="col-8" style="position: relative;margin-left: 518px;">
-        <div class="col-7 pb-3">
-            <h2 class="card-title " style="font-size: 21px;">Model.name (@if(Model.specs.storages != null && Model.specs.storages.Count()>0){@Model.specs.storages.FirstOrDefault().storage}) Ram(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
-            {@Model.specs.rams.FirstOrDefault().ram})</h2>
-            <h3 class="card-subtitle" style="padding-left: 14px;font-weight: 600;"> &#8377 @Model.price </h3>
-            <h4>Model:@Model.model</h4>
-      
-                <div class="col-12 row mt-3">
-                    <div class="col-3" style="color: Black;font-weight: 600;">Highlights :</div>
-                    <table class="col-9 ">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                       
-                       @* <tr>
-                            <td>Processor</td>
-                            <td>
-                                @foreach (var item in Model.specs.processor.ToList())
-                                {<span>@Model.specs.processor</span>}
-                            </td>
-                        </tr>*@
-                        <tr>
-                            <td class="class" >Ram</td>
-                            <td class="class" >
-                                @foreach (var item in Model.specs.rams.ToList())
-                                {<span style="margin-left: -25%;">@item.ram </span>}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="class">Storages </td>
-                            <td class="class" >
-                                @foreach (var item in Model.specs.storages.ToList())
-                                {<span style="margin-left: -25%;">@item.storage </span>}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-12 row mt-3">
-                    <div class="col-3" style="color: Black;font-weight: 600;">Specification :</div>
-                    <table class="col-9">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="td">Brand </td>
-                                <td class="td"><li>@Model.productBrand</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Model </td>
-                                <td class="td"><li>@Model.model</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Quatity </td>
-                                <td class="td"><li>@Model.quantity</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Os</td>
-                                <td class="td"><li> @Model.specs.os</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Processor </td>
-                                <td class="td">@Model.specs.processor</td>
-                            </tr>
-                            <tr>
-                                <td class="td">Processor Core </td>
-                                <td class="td"><li>@Model.specs.core</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Ram</td>
-                                <td class="td">
-                                    @foreach (var item in Model.specs.rams.ToList())
-                                    {<span>@item.ram </span>}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="td">Storages </td>
-                                <td class="td">
-                                @foreach (var item in Model.specs.storages.ToList())
-                        {<span >@item.storage </span>}
-                            </td>
-
-                            </tr>
-                            <tr>
-                                <td class="td">SimType</td>
-                                <td class="td"><li> @Model.specs.simType</li></td>
-                            </tr>
-                            <tr>
-                                <td class="td">Camera</td>
-                                <td class="td"<li> @Model.specs.camFeatures</li></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-                    <div class="col-12">
-                        <p style="color: Black; font-weight: 600; margin-top: 5%">Description : </p>
-                        <p><li>@Model.description</li></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    
-                    <a type="button" class="btn btn-primary" asp-action="Index" style="margin-left:143%; padding-top:1%;margin-top:12%">Back</a>
+                        }
+                        else
+                        {
+                            <p>No Image</p>
+                        }}
                 </div>
 
             </div>
+            <div class="row col-12" style="padding:10px;">
+                <div class="col-6 "><a asp-action="order" asp-route-id="@Model.id" class="btn btn-orange buynow" style=" font-size: 10px; color: white;  width: 100%; background-color: #0099f3; " >Buy Now</a></div>
+                <div class="col-6 "><a asp-action="AddtoCart" asp-route-id="@Model.id" class="btn btn-orange buynow; " style="color: white; font-size: 10px; background-color: #e52d2e; letter-spacing: .1rem; width: 100%; ">Add to Cart</a></div>
+
+            </div>
+        </div>
+    </p>
+</div>
+<div class="row col-6">
+    <div class="col-12 name">
+        @Model.name ( Ram( @if (Model.specs.rams != null && Model.specs.rams.Count() > 0)
+        {@Model.specs.rams.FirstOrDefault().ram}  ) , Storage(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
+        {@Model.specs.storages.FirstOrDefault().storage}))
     </div>
-    </div>
+    <div class="col-12 price">Price : &#8377 @Model.price</div>
+    
+    <table class="specTable">
+        <tr>
+            <td>
+                Highlights
+            </td>
+            <td>
+                <ul class="row">
+                    <li class="col-12">Operation System : @Model.specs.os</li>
+                    <li class="col-12">Processor : @Model.specs.processor</li>
+                    <li class="col-12">Cores : @Model.specs.core</li>
+                    <li class="col-12">
+                        Ram :
+                        @foreach (var item in Model.specs.rams.ToList())
+                        {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
+                    </li>
+                    <li class="col-12">
+                        Storage :
+                        @foreach (var item in Model.specs.storages.ToList())
+                        {<span style="padding-right: 14px; border-block: outset;">@item.storage </span>}
+                    </li>
+                    <li class="col-12">Sim Type : @Model.specs.simType</li>
+                    <li class="col-12">Rear Camera : @Model.specs.camFeatures</li>
+                    <li class="col-12">Quantity : @Model.quantity</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        This MSI gaming laptop features a SteelSeries silver-lining printing keyboard that only enhances the appeal of the laptop but also ensures lasting build quality. This gaming laptop also ensures quiet and cool performance even under heavy load. And, with Hi-resolution Audio, you can experience rich sound while playing music, streaming content, gaming, and so on.
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
 </div>
 
-
-
 <style>
-    div.sticky {
-        position: -webkit-sticky;
-        position: fixed;
-        height: 587px;
-        margin-top: 96px;
-        top: 0;
-
-        padding: 9px;
-        font-size: 20px;
-    }
-    div.content {
-        margin-left: 84px;
-        padding: 1px 16px;
-        height: 100%;
-    }
-
-    .td{
-        margin-top:-10px;
-        padding-top:20px;
-    }
-    .class {
-        padding-top: 20px;
-        padding-right: -20px;
-        margin-left: 5px;
-    }
-    li {
-        text-decoration: none;
-        list-style-type: disc;
-    }
     
 
+    .disableBtn {
+        text-align: center;
+        margin: 5%;
+        background: antiquewhite;
+        padding: 11px;
+    }
+
+    .specTable {
+        width: 100%;
+        margin-top: 3%;
+        font-size: 18px;
+    }
+
+    .name {
+        font-weight: bold;
+        margin: 19px;
+        font-size: 35px;
+    }
+
+    .price {
+        font-weight: bold;
+        font-size: 28px;
+    }
+
+    .quantity {
+        font-weight: bold;
+        font-size: 22px;
+    }
+</style>
+<script>
+
+    function showImage(data) {
+
+        $(".showimage").attr('src', '/Product/Images/' + data);
+    }
+    function someFunction(data) {
+        var id = data;
+        $(document).ready(function (e) {
+            $.ajax({
+                url: '/admin/ProductDetails/AddImage/' + id,
+                type: 'get',
+                success: function (response) {
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal('show');
+                },
+                failure: function (response) {
+                    alert("fail");
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+
+        });
+    }
+
+
+
+</script>
+<style>
+    .col-6 {
+        padding-left: 36px;
+    }
+
+    p {
+        display: block;
+    }
 </style>
 
+<script>
+    function deleteImage(data) {
+        var id = data;
+        $.ajax({
+            url: 'DeleteImage/' + id,
+            type: 'get',
+            success: function (response) {
+                $("#partialModal").find(".modal-body").html(response);
+                $("#partialModal").modal('show');
+            },
+            failure: function (response) {
+                alert("fail");
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
 
+    }
+
+
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>

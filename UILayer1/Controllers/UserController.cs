@@ -304,7 +304,7 @@ namespace UILayer.Controllers
         }
         [Authorize(Roles = "User")]
         [HttpGet("/user/order/{id}")]
-        public PartialViewResult order(int id)
+        public ActionResult order(int id)
         {
             ViewBag.ReturnUrl = "/user/order/" + id;
             var data = _opApi.GetProduct(id).Result;
@@ -314,7 +314,7 @@ namespace UILayer.Controllers
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return PartialView("order");
+            return View("order");
         }
         [Authorize(Roles = "User")]
         [HttpGet]
@@ -400,7 +400,7 @@ namespace UILayer.Controllers
         }
         
         [HttpGet]
-        public PartialViewResult cart()
+        public IActionResult AddtoCart()
         {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
@@ -480,7 +480,7 @@ namespace UILayer.Controllers
                 cartList = null;
             }
 
-            return PartialView("AddtoCart",cartList);
+            return View(cartList);
         }
         [HttpGet("/user/addtocart/{id}")]
         public IActionResult AddtoCart(int id)
