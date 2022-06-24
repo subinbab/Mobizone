@@ -23,246 +23,245 @@
         }
     }
 }
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 @if (user == null)
 {
     <h5>Not A User</h5>
-    <a asp-action="login"><button class="btn btn-primary">Click To Login</button></a>
+    <a asp-action="login" class="btn btn-primary">Click To Login</a>
 }
 else
-{ 
-  <div class="container-fluid mt-3" style="padding-top:10%">
+{ }
+<div class="container-fluid mt-3">
 
-        <div class="row" style="margin-right: 6%;margin-left: 7%;">
-            <form asp-action="BuyCart" method="post" class="col" id="my-form">
-                <input asp-for="id" value="0" type="hidden" />
-                @*<input asp-for="productId" type="hidden" value="@product.id" />*@
-                <input asp-for="userId" type="hidden" value="@user.UserId" />
-                <div>
-                    
-                    <div class="card ">
-                        <div class="">
-                            <div class="address"><p class="card-title">Delivery Address</p></div>
+    <div class="row" style="margin-right: 6%;margin-left: 7%;">
+        <form action="/user/BuyCart" method="post" class="col" id="idForm">
+            <input asp-for="id" value="0" type="hidden" />
+            @*<input asp-for="productId" type="hidden" value="@data.id" />*@
+            <input asp-for="userId" type="hidden" value="@user.UserId" />
+            <div>
 
-                            @if (user.address == null)
-                            {
-                                <p>No address available please create one </p>
-                            }
-                            else
-                            {
-                                <div class="addressDetails" id="realDiv">
-                                    @foreach (var address in @user.address)
-                                    {
-                                        <div class="form-check ">
-                                            <label asp-for="@Model.addressList[count].IsChecked">
-                                                <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" />
-                                            </label>
-                                            @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
-                                            <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
-                                            <input asp-for="addressList[count].address" value="@address.address" type="hidden" />
-                                            <input asp-for="addressList[count].country" value="@address.country" type="hidden" />
-                                            <input asp-for="addressList[count].district" value="@address.district" type="hidden" />
-                                            <input asp-for="addressList[count].name" value="@address.name" type="hidden" />
-                                            <input asp-for="addressList[count].phoneNumber" value="@address.phoneNumber" type="hidden" />
-                                            <input asp-for="addressList[count].pincode" value="@address.pincode" type="hidden" />
-                                            <input asp-for="addressList[count].additionalInfo" value="@address.additionalInfo" type="hidden" />
-                                            <input asp-for="addressList[count].state" value="@address.state" type="hidden" />
-                                            <label class="form-check-label @address.id" for="flexCheckDefault" id="@address.id">
-                                                @address.name <br> @address.address<br> @address.district
-                                            </label>
-                                        </div>
-                                        <hr />
-                                        count++;
-                                    }
-                                </div>
-                            }
-                            <div id="selectedAddress" style="margin:7%;"></div>
+                <div class="card ">
+                    <div class="">
+                        <div class="address"><p class="card-title">Delivery Address</p></div>
 
-                            <div class="row">
-                                <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
-                                <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                    <a style=" background-color: #e52d2e;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card order mt-3" style="display:none">
-                        <div class="">
-                            
-                            <h5 class="card-title address">Order Summary</h5>
-                            @if(carts != null)
-                            {
-                                @foreach(var cart in carts)
-                {
-                        <div class="orderDetails">
-                            <div class="form-check">
-                                <div class="">
-                                    <div class="col-12">
-                                        @if (cart.product.images == null || cart.product.images.Count() == 0)
-                                        {
-                                            <p>no image</p>
-                                        }
-                                        else
-                                        {
-                                            <img src="~/Product/Images/@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
-                                        }
-                                    <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                        @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
-                                        {@cart.product.name;
-                                    }
-                                        (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
-                                        {
-                                            @cart.product.specs.rams.FirstOrDefault().ram;
-                                        } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
-                                        {
-                                            @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
-                                            Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
+                        @if (user.address == null)
+                        {
+                            <p>No address available please create one </p>
+                        }
+                        else
+                        {
+                            <div class="addressDetails" id="realDiv">
+                                @foreach (var address in @user.address)
+                                {
+                                    <div class="form-check ">
+                                        <label asp-for="@Model.addressList[count].IsChecked">
+                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" />
+                                        </label>
+                                        @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
+                                        <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
+                                        <input asp-for="addressList[count].address" value="@address.address" type="hidden" />
+                                        <input asp-for="addressList[count].country" value="@address.country" type="hidden" />
+                                        <input asp-for="addressList[count].district" value="@address.district" type="hidden" />
+                                        <input asp-for="addressList[count].name" value="@address.name" type="hidden" />
+                                        <input asp-for="addressList[count].phoneNumber" value="@address.phoneNumber" type="hidden" />
+                                        <input asp-for="addressList[count].pincode" value="@address.pincode" type="hidden" />
+                                        <input asp-for="addressList[count].additionalInfo" value="@address.additionalInfo" type="hidden" />
+                                        <input asp-for="addressList[count].state" value="@address.state" type="hidden" />
+                                        <label class="form-check-label @address.id" for="flexCheckDefault" id="@address.id">
+                                            @address.name <br> @address.address<br> @address.district
                                         </label>
                                     </div>
-
-                                </div>
-
-
-
-
-
+                                    <hr />
+                                    count++;
+                                }
                             </div>
-                        </div>
-                }
-                 
-                            }
-                                       
-                            
+                        }
+                        <div id="selectedAddress" style="margin:7%;"></div>
 
-
-
-                            <div class="row">
-                                <div class="col">
-                                    <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="orderDetailsCancel()">cancel</a>
-                                </div>
-                                <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
+                        <div class="row">
+                            <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
+                            <div class="col col d-flex justify-content-end " id="addressContinue ">
+                                <a style=" background-color: #e52d2e; display:none;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
                             </div>
 
                         </div>
                     </div>
+                </div>
+                <div class="card order mt-3" style="display:none">
+                    <div class="">
 
-                    <div class="card payment mt-3" style="display:none">
-                        <div class="">
-                            <h5 class="card-title address">Payment</h5>
-                            @foreach (var item in values)
+                        <h5 class="card-title address">Order Summary</h5>
+                        @if (carts != null)
+                        {
+                            @foreach (var cart in carts)
                             {
+                                <div class="orderDetails">
+                                    <div class="form-check">
+                                        <div class="">
+                                            <div class="col-12">
+                                                @if (cart.product.images == null || cart.product.images.Count() == 0)
+                                                {
+                                                    <p>no image</p>
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Product/Images/@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
+                                                }
+                                                <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                                    @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                    {@cart.product.name;
+                                                }
+                                                    (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                    {
+                                                        @cart.product.specs.rams.FirstOrDefault().ram;
+                                                    } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
+                                                    {
+                                                        @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
+                                                        Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
+                                                    </label>
+                                                </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        @item
-                                    </label>
-                                </div>
-                            }
-                            <p class="card-text"></p>
-                            <div class="row">
-                                <div class="col"><a asp-action="index" class="btn btn-orange">Cancel</a></div>
-                                <div class="col"></div>
-                                <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color:  rgb(61 139 227); display: none"  onchange="displaySubmit()" /></div>
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                }
+
+                        }
+
+
+
+
+
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="orderDetailsCancel()">cancel</a>
                             </div>
-
-
+                            <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
                         </div>
-                    </div>
-
-
-                </div>
-            </form>
-
-                <div class="col-6">
-                    <div class="card" style="margin-left: 19%;margin-right: -38%;">
-
-                        <div class="Price">
-                            <h5 class="card-title" style="">Price Details</h5>
-                           
-                        </div>
-                        <div>
-                            <p class="card-text" id="priceField">Price @price</p>
-                            <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
-                            <div id="price"></div>
-                        </div>
-                        
-                        <div class="">
-                            <p class="card-text" id="totalPrice">Total Payable @price</p>
-                            <div id="price"></div>
-                        </div>
-
-
-
 
                     </div>
                 </div>
-                <!-- Card with center text alignment -->
-                
-            
+                <div class="card payment mt-3" style="display:none">
+                    <div class="">
+                        <h5 class="card-title address">Payment</h5>
+                        @foreach (var item in values)
+                        {
+
+                            <div class="form-check">
+                                <input class="form-check-input" onchange="displaySubmit()" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @item
+                                </label>
+                            </div>
+                        }
+                        <p class="card-text"></p>
+                        <div class="row">
+                            <div class="col"><a href="#" onclick="paymentCancel()" class="btn btn-orange">Cancel</a></div>
+                            <div class="col"></div>
+                            <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;" id="order-submit" /></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+        <div class="col-6">
+            <div class="card" style="margin-left: 19%;margin-right: -38%;">
+
+                <div class="Price">
+                    <h5 class="card-title" style="">Price Details</h5>
+
+                </div>
+                <div>
+                    <p class="card-text" id="priceField">Price @price</p>
+                    <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
+                    <div id="price"></div>
+                </div>
+
+                <div class="">
+                    <p class="card-text" id="totalPrice">Total Payable @price</p>
+                    <div id="price"></div>
+                </div>
+
+
+
+
+            </div>
         </div>
+        <!-- Card with center text alignment -->
+
+
     </div>
-}
+</div>
+
+
+<style>
 
 
 
-    <style>
-        .submit{
-            display:none;
-        }
-        .address {
-            background-color: #e52d2e;
-            padding: 5px;
-            font-variant: all-small-caps;
-            font-size: 22px;
-            padding-left: 16px;
-            color: aliceblue;
-        }
-        .form-check {
-            position: relative;
-            display: block;
-            padding-left: 1.25rem;
-            margin: 16px;
-        }
-        input[type=checkbox], input[type=radio] {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 6px;
-        }
-        .form-check-label {
-            margin-bottom: 0;
-            margin-left: 32px;
-        }
-        .row {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-right: 0;
-            margin: 11px;
-        }
-        .footer {
-            margin-top: 333px !important;
-        }
-        .btn-orange {
-            background: #3d8be3;
-        }
-        
-        .submit {
-            background-color: rgb(61 139 227);
-        }
-        .Price {
-            background: #e52d2e;
-            color: white;
-            font-variant: all-small-caps;
-            padding: 8px;
-        }
-        
-    </style>
-    <script>
+    .address {
+        background-color: #e52d2e;
+        padding: 5px;
+        font-variant: all-small-caps;
+        font-size: 22px;
+        padding-left: 16px;
+        color: aliceblue;
+    }
 
-    var addressDiv = '<div class="addressDetails" id="realDiv">';
+    .form-check {
+        position: relative;
+        display: block;
+        padding-left: 1.25rem;
+        margin: 16px;
+    }
+
+    input[type=checkbox], input[type=radio] {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 6px;
+    }
+
+    .form-check-label {
+        margin-bottom: 0;
+        margin-left: 32px;
+    }
+
+
+
+    .footer {
+        margin-top: 333px !important;
+    }
+
+    .btn-orange {
+        background: #3d8be3;
+    }
+
+    .submit {
+        background-color: #3d8be3;
+    }
+
+    .Price {
+        background: #e52d2e;
+        color: white;
+        font-variant: all-small-caps;
+        padding: 8px;
+    }
+</style>
+<script>
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+   var addressDiv = '<div class="addressDetails" id="realDiv">';
         var previousDiv
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(data))');
         function changePrice(data) {
@@ -292,24 +291,27 @@ else
             }
         });
 
-                        console.log(sourcearray)
+                        //console.log(sourcearray)
                         function paymentDetails() {
                             $(".payment").show();
                         $(".cancel2").hide();
-                        $(".orderDetails").hide();
+                        //$(".orderDetails").hide();
                         $(".toggle-button1").hide();
-                        $(".toggle-button2").hide();
+                            $(".toggle-button2").hide();
+
         }
-                        function orderDetails() {
+    function orderDetails() {
                             document.getElementById("selectedAddress").innerHTML = addressDiv
             console.log(address)
                         var value = $("#flexCheckDefault").val()
                         console.log(value)
-                        $('#addNewAddress').hide();
+        $('#addNewAddress').hide();
+        $("#submit_prog").hide();
                         $('.addressInput').hide();
                         $(".order").show();
                         $("#realDiv").hide();
-                        $(".toggle-button1").hide();
+                            $(".toggle-button1").hide();
+
                         apply()
 
                         }
@@ -324,7 +326,8 @@ else
                         $(".order").hide();
                         console.log("_______")
                         console.log(previousDiv)
-                        document.getElementById("selectedAddress").innerHTML = "";
+                            document.getElementById("selectedAddress").innerHTML = "";
+                            $("#submit_prog").show();
                         apply()
         }
                         function paymentCancel() {
@@ -346,9 +349,6 @@ else
                         $(".addressDetails").show();
         }
 
-                        $('#my-form').on('change keyup paste', ':input', function (e) {
-                            // The form has been changed. Your code here.
-                        });
 
                         function price() {
 
@@ -356,8 +356,8 @@ else
                         document.getElementById("priceField").innerHTML(data);
 
             }
-                        function displaySubmit() {
-                            $(".submit").toggle();
+    function displaySubmit() {
+        $("#order-submit").toggle()
         }
 
                         function apply() {
@@ -367,30 +367,29 @@ else
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
-                            console.log("enter")
 
                     var group = "input:checkbox[class='" + $box.attr("class") + "']";
                         $(group).prop("checked", false);
                         $box.prop("checked", true);
                         addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
-                    console.log($box)
-                    console.log($(group).length)
+                    //console.log($box)
+                    //console.log($(group).length)
 
                     //console.log($("#" + $box[0].id)[0].innerHTML)
                     for (let step = 0; step <= $(group).length; step++) {
-                        console.log($(group)[step].id)
-                        console.log($box[0].id)
+                        //console.log($(group)[step].id)
+                        //console.log($box[0].id)
                     if ($(group)[step].id == $box[0].id) {
-                        console.log("equals")
+                        //console.log("equals")
 
-                            console.log($("#" + $box[0].id))
+                            //console.log($("#" + $box[0].id))
                         }
-                    console.log("''''")
+                    //console.log("''''")
                     }
                 } else {
                         alert("not checked")
                     $box.prop("checked", false);
-                    console.log($box)
+                    //console.log($box)
                 }
             });
         }
@@ -400,37 +399,22 @@ else
                             var $box = $(this);
                             if ($box.is(":checked")) {
                                 //alert("checked")
-                                console.log("enter")
+                                //console.log("enter")
 
                                 var group = "input:checkbox[class='" + $box.attr("class") + "']";
                                 $(group).prop("checked", false);
                                 $box.prop("checked", true);
                                 addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
-                                console.log($box)
-                                console.log($(group).length)
 
-                    //console.log($("#" + $box[0].id)[0].innerHTML)
-                    for (let step = 0; step <= $(group).length; step++) {
-                                    console.log($(group)[step].id)
-                                    console.log($box[0].id)
-                                    if ($(group)[step].id == $box[0].id) {
-                                        console.log("equals")
-
-                                        console.log($("#" + $box[0].id))
-                                    }
-                                    console.log("''''")
-                                }
                             } else {
-                                alert("not checked")
+                                //alert("not checked")
                                 $box.prop("checked", false);
-                                console.log($box)
+                                //console.log($box)
                             }
                         });
-        })
-
-
-
-
-    </script>
-
-
+                    })
+    function showbutton1() {
+        //alert("cheuijhg")
+        $("#submit_prog").toggle();
+    }
+</script>
