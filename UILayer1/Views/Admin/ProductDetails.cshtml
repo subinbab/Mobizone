@@ -100,9 +100,16 @@
             </td>
             <td>
                 <ul>
+                    
+                        @if(Model.description != null)
+            {
                     <li>
-                        This MSI gaming laptop features a SteelSeries silver-lining printing keyboard that only enhances the appeal of the laptop but also ensures lasting build quality. This gaming laptop also ensures quiet and cool performance even under heavy load. And, with Hi-resolution Audio, you can experience rich sound while playing music, streaming content, gaming, and so on.
+                        @Model.description
                     </li>
+                                    }
+                                    
+
+                                
                 </ul>
             </td>
         </tr>
