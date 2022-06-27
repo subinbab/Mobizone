@@ -1069,7 +1069,7 @@ namespace UILayer.Controllers
                 checkout1.paymentModeId = checkout.paymentModeId;
                 checkout1.userId = checkout.userId;
                 checkout1.status = OrderStatus.orderplaced;
-                checkout.price = (int)data.price;
+                checkout1.price = (int)data.price;
                 bool result = _userApi.CreateCheckOut(checkout1);
             }
             _userApi.DeleteCart(myCart.id);
