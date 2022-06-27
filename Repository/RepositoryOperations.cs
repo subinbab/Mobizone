@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using log4net;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,12 +18,12 @@ namespace Repository
         IEnumerable<T> entities;
         IQueryable<T> query;
         T entity;
-       
+        private readonly ILog _log;
         public RepositoryOperations(ProductDbContext product)
         {
             _context = product;
             dbSet = _context.Set<T>();
-           
+            _log = LogManager.GetLogger(typeof(RepositoryOperations<T>));
         }
         public async Task Add(T entity)
         {
@@ -30,9 +31,9 @@ namespace Repository
             {
                 dbSet.AddAsync(entity);
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             
         }
@@ -45,7 +46,7 @@ namespace Repository
             }
             catch (Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             
         }
@@ -56,9 +57,9 @@ namespace Repository
             {
                 entities =  dbSet.ToListAsync().Result;
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             return entities;
         }
@@ -69,9 +70,9 @@ namespace Repository
                 IQueryable<T> result = dbSet;
                 query = includes.Aggregate(result, (current, includeProperty) => current.Include(includeProperty));
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             return query;
         }
@@ -82,9 +83,9 @@ namespace Repository
             {
                 entity = dbSet.Find(Id);
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
 
             return entity;
@@ -102,8 +103,9 @@ namespace Repository
                 entity = dbSet.Find();
                 return entity;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
+                _log.Error("log4net:Error in post controller", ex);
                 return null;
             }
 
@@ -117,7 +119,7 @@ namespace Repository
             }
             catch(Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             
         }
@@ -128,9 +130,9 @@ namespace Repository
             {
                 dbSet.Update(entity);
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
-
+                _log.Error("log4net:Error in post controller", ex);
             }
             
         }

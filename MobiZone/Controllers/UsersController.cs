@@ -107,9 +107,9 @@ namespace ApiLayer.Controllers
             ResponseModel<UserViewModel> _userResponse = new ResponseModel<UserViewModel>();
             try
             {
-                _userCreate.AddUserRegistration(_user);
+                await _userCreate.AddUserRegistration(_user);
                 await Task.Delay(1000);
-                _loginOperations.Add(_login);
+                await _loginOperations.Add(_login);
                 string message = _userMessages.Added + ",Response Message : " + new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 _userResponse.AddResponse(true, 0, null, message);
                 return _userResponse;
@@ -185,6 +185,7 @@ namespace ApiLayer.Controllers
             {
                 ResponseModel<string> _response = new ResponseModel<string>();
                 _response.AddResponse(false,0, null, ex.Message);
+                _log.Error("log4net:Error in post controller", ex);
                 return new JsonResult(_response);
             }
             
@@ -267,7 +268,7 @@ namespace ApiLayer.Controllers
             }
         }
        
-      [HttpPost]
+      /*[HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserViewModel model)
         {
@@ -295,7 +296,7 @@ namespace ApiLayer.Controllers
                 
 
             return Ok(_response);
-        }
+        }*/
 
         #region delete method for address
         [HttpDelete("AddressDelete/{id}")]
