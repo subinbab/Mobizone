@@ -145,7 +145,7 @@ else
                         {
 
                             <div class="form-check">
-                                <input class="form-check-input" onchange="displaySubmit()" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>
+                               @* <input class="form-check-input" onchange="displaySubmit()" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>*@
                                 <label class="form-check-label" for="flexCheckDefault">
                                     @item
                                 </label>
@@ -155,7 +155,7 @@ else
                         <div class="row">
                             <div class="col"><a href="#" onclick="paymentCancel()" class="btn btn-orange">Cancel</a></div>
                             <div class="col"></div>
-                            <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  id="order-submit"/></div>
+                            <div class="col col d-flex justify-content-end"><input   type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;"  id="order-submit"/></div>
                         </div>
                     </div>
                 </div>
