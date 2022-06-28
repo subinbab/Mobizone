@@ -153,7 +153,10 @@ namespace UILayer.Controllers
             if (userList.Any(c => c.Email.Equals(user.Email)))
             {
                 _notyf.Error("User Already Registered");
+                ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+                return RedirectToAction("Registration");
             }
+
             else
             {
                 bool result = userApi.CreateUser(user);
@@ -170,16 +173,15 @@ namespace UILayer.Controllers
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                     await HttpContext.SignInAsync(claimsPrincipal);
+                    return Redirect("/");
                 }
                 else
                 {
                     _notyf.Error("UserAddedError");
-
+                    return RedirectToAction("Registration");
                 }
             }
 
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return Redirect("/");
         }
 
         [HttpGet]
