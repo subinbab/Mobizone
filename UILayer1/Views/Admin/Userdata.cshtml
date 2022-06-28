@@ -63,10 +63,9 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+                //console.log(data)
                 getProductLink = data + 'api/users/userdata';
-                header();
-                callback(getUserData);
+                header(getUserData);
             }
         })
     }
@@ -76,7 +75,7 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+                //console.log(data)
                 header = data;
                 callback();
 
@@ -93,7 +92,7 @@
                 xhr.setRequestHeader("Authorization", "Basic " + header);
             },
             success: function (data) {
-                console.log(data.result);
+                //console.log(data.result);
                 $('#datatable').dataTable({
                     data: data.result,
                     columns: [
