@@ -25,90 +25,90 @@
     }
 
 }
+<body>
 
-
-@if (Model != null && Model.Count()>0)
-{
-    <div>
-        <div class="row ">
-    <div class="col-8">
-        @foreach (var data in Model)
-        {
-
-            <div class="row">
-                <div class="col-2">
-                    @if (data.product.images == null || data.product.images.Count() == 0)
+    @if (Model != null && Model.Count() > 0)
+    {
+        <div>
+            <div class="row ">
+                <div class="col-8">
+                    @foreach (var data in Model)
                     {
-                        <p>no image</p>
-                    }
-                    else
-                    {
-                        <img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 60%; height:60%;">
-                    }
-                </div>
-                <div class="col-7" style=" margin-left: -7%;">
-                    <p class="textStyle" style="margin: 4%;">@data.product.name</p>
-                    <p class="textStyle textColorGreen" style="margin-left: 4%; margin-top: -3%;">@data.price</p>
-                    <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><i class="fa-solid fa-minus minus-icon"></i></a><input id="quantity" disabled="disabled" style="width: 8%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><i class="fa-solid fa-plus plus-icon"></i></a></div>
-                </div>
-                <div class="3" style="margin: 10%;">
-                    <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="nav-anchor-tag fa-solid fa-trash-can" style="font-size: 22px;padding: 5%;"></span></a>
-                </div>
-            </div>
-        }
 
-    </div>
-    <div class="col-4 ">
-        <div class="row" style="width: 45vh;height: 53vh;">
-            <div class="col-12" style="border: groove;height: 14%;">
-                <p class="textStyle">Total</p>
-            </div>
-            <hr />
-            <div class="col-12" style="border: groove;height: 70%;">
-                @if (Model != null)
-                {
-                    <p><span>Price( @Model.Count() item) : </span><span>@price</span></p>
-                }
-                @*<p><span>Price( 0 item) : </span><span>0</span></p>*@
-
-            </div>
-            <hr />
-            <div class="col-12" style="border: groove;height: 17%;">
-
-                <p>
-                    <span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 25px;text-align: center;margin: 10px;font-weight: bold;">
-                        @if (Model != null)
-                        {@price}
-                    </span>
-                </p>
-            </div>
-            <form action="/user/CartOrder" method="post" style="height: 144%;width: 100%;">
-                <div class="col-12" style="height: 53%;padding: 0px;">
-                    @if (price > 0)
-                    {
-                        <input type="submit" value="Proceed To Buy" style=" width: 100%; height: 18%; background: brown; color: white;" />
+                        <div class="row">
+                            <div class="col-2">
+                                @if (data.product.images == null || data.product.images.Count() == 0)
+                                {
+                                    <p>no image</p>
+                                }
+                                else
+                                {
+                                    <img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 60%; height:60%;">
+                                }
+                            </div>
+                            <div class="col-7" style=" margin-left: -7%;">
+                                <p class="textStyle" style="margin: 4%;">@data.product.name</p>
+                                <p class="textStyle textColorGreen" style="margin-left: 4%; margin-top: -3%;">@data.price</p>
+                                <div style="margin-top:-7%;"><a asp-action="minus" asp-route-id="@data.productId"><i class="fa-solid fa-minus minus-icon"></i></a><input id="quantity" disabled="disabled" style="width: 8%;margin-top:5% ;" type="number" value="@data.quantity" /><a asp-action="plus" asp-route-id="@data.productId"><i class="fa-solid fa-plus plus-icon"></i></a></div>
+                            </div>
+                            <div class="3" style="margin: 10%;">
+                                <a asp-action="RemoveCart" asp-route-id="@data.productId"><span class="nav-anchor-tag fa-solid fa-trash-can" style="font-size: 22px;padding: 5%;"></span></a>
+                            </div>
+                        </div>
                     }
 
-
                 </div>
-            </form>
+                <div class="col-4 ">
+                    <div class="row" style="width: 45vh;height: 53vh;">
+                        <div class="col-12" style="border: groove;height: 14%;">
+                            <p class="textStyle">Total</p>
+                        </div>
+                        <hr />
+                        <div class="col-12" style="border: groove;height: 70%;">
+                            @if (Model != null)
+                            {
+                                <p><span>Price( @Model.Count() item) : </span><span>@price</span></p>
+                            }
+                            @*<p><span>Price( 0 item) : </span><span>0</span></p>*@
+
+                        </div>
+                        <hr />
+                        <div class="col-12" style="border: groove;height: 17%;">
+
+                            <p>
+                                <span style="font-family: sans-serif;font-weight: bold;font-size: 17px;">Total Amount :</span><span style="color: green;font-size: 25px;text-align: center;margin: 10px;font-weight: bold;">
+                                    @if (Model != null)
+                                    {@price}
+                                </span>
+                            </p>
+                        </div>
+                        <form action="/user/CartOrder" method="post" style="height: 144%;width: 100%;">
+                            <div class="col-12" style="height: 53%;padding: 0px;">
+                                @if (price > 0)
+                                {
+                                    <input type="submit" value="Proceed To Buy" style=" width: 100%; height: 18%; background: brown; color: white;" />
+                                }
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    </div>
 
-</div>
+    }
+    else
+    {
+        <img src="/css/Images/empty-cart.png" style="align-items: center; margin-left: 27%; width:30% ;margin-top:10%;" />
+        <div style="text-align:center">
+            <h2>Empty Cart <a class="fill-cart" asp-action="index" style="color: darkred;">Fill Your Cart Now</a></h2>
+        </div>
+    }
 
-    </div>
-
-}
-else
-{
-<img src="/css/Images/empty-cart.png" style="align-items: center; margin-left: 27%; width:30% ;margin-top:10%;" />
-<div style="text-align:center">
-    <h2>Empty Cart <a class="fill-cart" asp-action="index" style="color: darkred;">Fill Your Cart Now</a></h2>
-</div>
-}
-
-
+</body>
 
 
 <style>
