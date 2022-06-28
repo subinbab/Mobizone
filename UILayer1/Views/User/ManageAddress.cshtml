@@ -31,7 +31,7 @@
 
                 <div class="Edit" style="">
                     <a asp-action="address" asp-route-id="@data.id" type="button" class="btn btn-orange" style="background-color: #e52d2e;">Edit</a>
-                    <a href="/user/DeleteAddress/@data.id"  type="button" class="btn btn-indigo" style="background-color: #0099f3 ">Delete</a>
+                    <a href="/user/DeleteAddress/@data.id"  type="button" class="btn btn-indigo address-btn">Delete</a>
                 </div>
             </div>
                    
@@ -63,6 +63,12 @@
         background-color: #0099f3;
     }
     .btn-indigo {
+
         background-color: #e52d2e;
+    }
+    .address-btn {
+        margin-top: -22%;
+        background-color: #0099f3;
+        margin-left: 65%;
     }
 </style>

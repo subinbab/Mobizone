@@ -44,7 +44,7 @@ else
                                 {
                                     <div class="form-check ">
                                         <label asp-for="@Model.addressList[count].IsChecked">
-                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()"style="margin-top: -10%; " />
+                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" style="margin-top:-10%" />
                                         </label>
                                         @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
                                         <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
