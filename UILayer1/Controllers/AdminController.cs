@@ -527,7 +527,7 @@ namespace UIlayer.Controllers
 
 
                     }
-                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
+                     _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
                     if (ReturnUrl == null)
                     {
                         return Redirect("/");

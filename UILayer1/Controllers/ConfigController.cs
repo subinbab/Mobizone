@@ -78,7 +78,11 @@ namespace UILayer.Controllers
                     {
                         _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
                     }
-                    count = _carts.Count();
+                    if(_carts != null)
+                    {
+                        count = _carts.Count();
+                    }
+                    
                 }
             }
                 

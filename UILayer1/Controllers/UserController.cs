@@ -567,8 +567,7 @@ namespace UILayer.Controllers
                 {
                     string name = _distributedCache.GetStringAsync("cart").Result;
                     _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-
-                    if (_carts != null || _carts.Count > 0)
+                    if (_carts != null)
                     {
                         if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
                         {
@@ -613,6 +612,7 @@ namespace UILayer.Controllers
                     }
                     else
                     {
+                        _carts = new List<MyCart>();
                         _carts.Add(cart);
                         _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                     }
@@ -626,33 +626,6 @@ namespace UILayer.Controllers
                 }
 
 
-            }
-            try
-            {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
-                {
-                    _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                }
-
-            }
-            catch (Exception ex)
-            {
-            }
-            List<CartDetails> cartDetailsList = new List<CartDetails>();
-            if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
-            {
-                var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
-
-                var count = 0;
-
-                foreach (var item in data)
-                {
-                    if (item.sessionId.Equals(HttpContext.Session.Id))
-                    {
-                        cartDetailsList.Add(item.cartDetails.FirstOrDefault());
-                    }
-                }
             }
 
 
