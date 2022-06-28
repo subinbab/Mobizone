@@ -1,36 +1,28 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using DomainLayer;
-using DomainLayer.ProductModel.Master;
-using DomainLayer.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using UIlayer.Data.ApiServices;
-using UILayer.Data.ApiServices;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using DomainLayer.ProductModel;
-using Microsoft.AspNetCore.Http;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using DTOLayer.Product;
-using DocumentFormat.OpenXml.Presentation;
-using DTOLayer.UserModel;
+using BusinessObjectLayer.ProductOperations;
+using DomainLayer;
+using DomainLayer.ProductModel;
+using DomainLayer.ProductModel.Master;
 using DomainLayer.Users;
-using System.Threading.Tasks;
-using UILayer.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using DTOLayer.Product;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
-using UILayer.Controllers;
-using BusinessObjectLayer.ProductOperations;
-using Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using UIlayer.Data.ApiServices;
+using UILayer.Data.ApiServices;
+using UILayer.Models;
 
 namespace UIlayer.Controllers
 {
@@ -554,7 +546,7 @@ namespace UIlayer.Controllers
         } 
             catch (Exception ex)
             {
-                TempData["Error"] = "Load error please try again";
+                TempData["Error"] = "Invalid Email or Password !";
                 return Redirect("login");
             }
 

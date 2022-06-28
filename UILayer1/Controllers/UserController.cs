@@ -1,6 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
-using DocumentFormat.OpenXml.Wordprocessing;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
@@ -37,7 +36,7 @@ namespace UILayer.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
-        List<MyCart> _carts;
+        List<MyCart> _carts = null;
         IUserApi _userApi; 
         UserRegistration _user { get; set; }
         private readonly IDistributedCache _distributedCache;
