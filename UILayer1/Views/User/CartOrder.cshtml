@@ -57,7 +57,7 @@ else
                                 {
                                     <div class="form-check ">
                                         <label asp-for="@Model.addressList[count].IsChecked">
-                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" style="margin-top:-10%"/>
+                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" style="margin-top:-8%" />
                                         </label>
                                         @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
                                         <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
@@ -78,10 +78,10 @@ else
                                 }
                             </div>
                         }
-                        <div id="selectedAddress" style="margin:7%;"></div>
+                        <div id="selectedAddress" style="margin:2%;"></div>
 
                         <div class="row">
-                            <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color: white">Add New Address</a></div>
+                            <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color:white;margin-bottom:5%;">Add New Address</a></div>
                             <div class="col col d-flex justify-content-end " id="addressContinue ">
                                 <a style=" background-color: #e52d2e; display:none;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
                             </div>
@@ -155,7 +155,7 @@ else
                         {
 
                             <div class="form-check">
-                               @* <input class="form-check-input" onchange="displaySubmit()" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>*@
+                                @* <input class="form-check-input" onchange="displaySubmit()" name="paymentModeId" type="checkbox" value='@Convert.ToInt32(item)'>*@
                                 <label class="form-check-label" for="flexCheckDefault">
                                     @item
                                 </label>
@@ -174,6 +174,7 @@ else
             </div>
         </form>
 
+     
         <div class="col-6">
             <div class="card" style="margin-left: 19%;margin-right: -38%;">
 
@@ -182,14 +183,13 @@ else
 
                 </div>
                 <div>
-                    <p class="card-text" id="priceField">Price @price</p>
-                    <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="color: green;">  Free</p>  </div></div>
+                   <div class="card-text"> <div class="row"><p class="col-6">Price <p class="col-6" style="font-weight: bold;"> @price </p>  </div></div>
+                    <div class="card-text"> <div class="row"><p class="col-6">Shipping Charge <p class="col-6" style="font-weight: bold; color: green;">  Free</p>  </div></div>
                     <div id="price"></div>
                 </div>
 
                 <div class="">
-                    <p class="card-text" id="totalPrice">Total Payable @price</p>
-                    <div id="price"></div>
+                    <div class="card-text"> <div class="row"><p class="col-6">Total Payable  <p class="col-6" style="font-weight: bold;"> @price </p>  </div></div>
                 </div>
 
 
