@@ -27,7 +27,7 @@
                              <div class="form-group row mb-4">
                                  <div class="col-md-12">
                                      <label asp-for="shopName" class="edit" style="margin-left:-84%;">Shop Name</label>
-                                     <input asp-for="shopName" placeholder="Shop Name" class="form-control" type="text"  />
+                                     <input asp-for="shopName" placeholder="Shop Name" class="form-control" type="text" />
                                      <span asp-validation-for="shopName" class="text-danger"></span>
                                  </div>
 
@@ -36,7 +36,7 @@
                              <div class="row">
                                  <div class="col-md-12">
                                      <label asp-for="address" class="edit" style="margin-left:-88%">Address</label>
-                                     <input asp-for="address" placeholder="Address" class="form-control"  type="text"  />
+                                     <input asp-for="address" placeholder="Address" class="form-control" type="text" />
                                      <span asp-validation-for="address" class="text-danger"></span>
                                  </div>
                              </div>
@@ -54,11 +54,11 @@
                              <br />
                              <div class="row">
                                  <div class="col-md-6">
-                                     <input asp-for="state" placeholder="State" class="form-control"  type="text"  />
+                                     <input asp-for="state" placeholder="State" class="form-control" type="text" />
                                      <span asp-validation-for="state" class="text-danger"></span>
                                  </div>
                                  <div class="col-md-6">
-                                     <input asp-for="country" placeholder="Country"class="form-control"  type="text"  />
+                                     <input asp-for="country" placeholder="Country" class="form-control" type="text" />
                                      <span asp-validation-for="country" class="text-danger"></span>
 
                                  </div>
@@ -69,7 +69,7 @@
                              <div class="row">
                                  <div class="col-md-6">
                                      <label asp-for="email" class="control-label" style="margin-right:87%;">Email</label>
-                                     <input asp-for="email" class="form-control"  type="text"  />
+                                     <input asp-for="email" class="form-control" type="text" />
 
 
                                  </div>
@@ -84,21 +84,24 @@
                              </div>
 
 
-                             <div class="text-center" style="margin-top: 4%;margin-left: 55%;">
+                           
+                         </div>
+                         <div class="row" style="margin-left: 73%; margin-top: 5%;">
+                           
                                  <div class="form-group">
                                      <input type="submit" value="Save" class="btn btn-orange" />
                                  </div>
-                             </div>
+                          
+                                 <div class="form-group">
+                                     <a class="btn btn-indigo" asp-controller="Admin" asp-action="Contact" style="text-decoration: none; margin-left: 20%; margin-top: 0.5%; "><b style="color: white;">Cancel</b></a>
+                                 </div>
+
                          </div>
+                        
                      </form>
 
 
-                    <div class="text-center">
-                        <div class="form-group">
-                            <a class="btn btn-indigo" asp-controller="Admin" asp-action="Contact" style="text-decoration: none; "><b style="color: white;">Cancel</b></a>
-                        </div>
-
-                    </div>
+                   
                  </div>
             </div>
         </div>
