@@ -826,6 +826,15 @@ namespace UILayer.Controllers
 
                }*/
         [HttpPost]
+        public IActionResult SearchNotPartial(string name)
+        {
+            ViewBag.count = 0;
+
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            var data = _opApi.Search(name).Result;
+            return View("PartialViews/_IndexPartialView", data);
+        }
+        [HttpPost]
         public PartialViewResult Search(string name)
         {
             ViewBag.count = 0;
