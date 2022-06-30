@@ -157,33 +157,43 @@ namespace UILayer.Data.ApiServices
                             string folderPath = Path.Combine(serverFolder, uniqueFileName);
                             using (fs = new FileStream(folderPath, FileMode.Create))
                             {
-                                files.CopyToAsync(fs);
+                                await files.CopyToAsync(fs);
                             }
                             //files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                            image = new Images();
-                            image.imagePath = uniqueFileName;
-                            images.Add(image);
-                            //try
-                            //{
-                            //    fs = new FileStream(folderPath, FileMode.Open);
-                            //    var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
-                            //    var a = auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
-                            //    var cancellationToken = new CancellationTokenSource();
-                            //    var upload = new FirebaseStorage(Bucket,
-                            //        new FirebaseStorageOptions
-                            //        {
-                            //            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                            //            ThrowOnCancel = true
-                            //        })
-                            //        .Child("assets")
-                            //        .Child($"{files.FileName}.{Path.GetExtension(files.FileName).Substring(1)}")
-                            //        .PutAsync(fs, cancellationToken.Token);
-                            //    var imagePost = await upload;
-                            //}
-                            //catch (Exception ex)
-                            //{
+                            
+                            try
+                            {
+                                fs = new FileStream(folderPath, FileMode.Open);
+                                var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
+                                var a = auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
+                                var cancellationToken = new CancellationTokenSource();
+                                var upload = new FirebaseStorage(Bucket,
+                                    new FirebaseStorageOptions
+                                    {
+                                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                                        ThrowOnCancel = true
+                                    })
+                                    .Child("assets")
+                                    .Child($"{uniqueFileName}.{Path.GetExtension(files.FileName).Substring(1)}")
+                                    .PutAsync(fs, cancellationToken.Token);
+                                image = new Images();
+                                image.imagePath = await upload;
+                                images.Add(image);
+                                System.IO.DirectoryInfo di = new DirectoryInfo(serverFolder);
 
-                            //}
+                                foreach (FileInfo file in di.GetFiles())
+                                {
+                                    file.Delete();
+                                }
+                                foreach (DirectoryInfo dir in di.GetDirectories())
+                                {
+                                    dir.Delete(true);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                     }
                     else
@@ -294,28 +304,13 @@ namespace UILayer.Data.ApiServices
                 ProductEntity products = new ProductEntity();
                 products = (ProductEntity)_mapper.Map<ProductEntity>(data);
                 products.status = ProductStatus.enable;
-                //Images image;
-                //List<Images> images = new List<Images>();
-                //if (product.imageFile != null)
-                //{
-                //    foreach (IFormFile files in data.imageFile)
-                //    {
-
-                //        image = new Images();
-                //        image.imagePath = files.FileName;
-                //        images.Add(image);
-                //    }
-                //}
-
-               /* products.images = images;*/
-
-
-
+                Images image;
+                List<Images> images = new List<Images>();
                 string uniqueFileName = null;
                 if (product.imageFile != null)
                 {
-                    Images image;
-                    List<Images> images = new List<Images>();
+                    //Images image;
+                    //List<Images> images = new List<Images>();
                     //images = data.images.ToList();
                     if (product.imageFile != null)
                     {
@@ -328,33 +323,42 @@ namespace UILayer.Data.ApiServices
                             string folderPath = Path.Combine(serverFolder, uniqueFileName);
                             using (fs = new FileStream(folderPath,FileMode.Create))
                             {
-                                files.CopyToAsync(fs);
+                                await files.CopyToAsync(fs);
                             }
                             //files.CopyTo(new FileStream(folderPath, FileMode.Create));
-                            image = new Images();
-                            image.imagePath = uniqueFileName;
-                            images.Add(image);
-                            //try
-                            //{
-                            //    fs = new FileStream(folderPath, FileMode.Open);
-                            //    var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
-                            //    var a =  auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
-                            //    var cancellationToken = new CancellationTokenSource();
-                            //    var upload = new FirebaseStorage(Bucket,
-                            //        new FirebaseStorageOptions
-                            //        {
-                            //            AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                            //            ThrowOnCancel = true
-                            //        })
-                            //        .Child("assets")
-                            //        .Child($"{files.FileName}.{Path.GetExtension(files.FileName).Substring(1)}")
-                            //        .PutAsync(fs, cancellationToken.Token);
-                            //    var imagePost =await upload;
-                            //}
-                            //catch (Exception ex)
-                            //{
+                            try
+                            {
+                                fs = new FileStream(folderPath, FileMode.Open);
+                                var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
+                                var a = auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword).Result;
+                                var cancellationToken = new CancellationTokenSource();
+                                var upload = new FirebaseStorage(Bucket,
+                                    new FirebaseStorageOptions
+                                    {
+                                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                                        ThrowOnCancel = true
+                                    })
+                                    .Child("assets")
+                                    .Child($"{uniqueFileName}.{Path.GetExtension(files.FileName).Substring(1)}")
+                                    .PutAsync(fs, cancellationToken.Token);
+                                image = new Images();
+                                image.imagePath = await upload;
+                                images.Add(image);
+                                System.IO.DirectoryInfo di = new DirectoryInfo(serverFolder);
 
-                            //}
+                                foreach (FileInfo file in di.GetFiles())
+                                {
+                                    file.Delete();
+                                }
+                                foreach (DirectoryInfo dir in di.GetDirectories())
+                                {
+                                    dir.Delete(true);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                     }
                     else

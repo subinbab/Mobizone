@@ -107,7 +107,7 @@ else
                                                 }
                                                 else
                                                 {
-                                                    <img src="~/Product/Images/@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
+                                                    <img src="@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
                                                 }
                                                 <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
                                                     @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)

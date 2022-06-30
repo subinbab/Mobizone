@@ -2,6 +2,7 @@
 var previousDiv
 var sourcearray;
 var productId;
+var actionMethod ="indexPartial";
 $(document).ready(function () {
     $("#Index").addClass("loading");
     getData(function () {
@@ -9,6 +10,7 @@ $(document).ready(function () {
     })
     $("#sortLowToHigh").click(function () {
         //alert("clicked")
+        actionMethod = "sortLowToHighPartial";
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
         $("#Index").addClass("loading");
         getDataLowToHigh(function () {
@@ -18,6 +20,7 @@ $(document).ready(function () {
     })
     $("#sortHighToLow").click(function () {
         //alert("clicked")
+        actionMethod = "sortHighToLow";
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
         $("#Index").addClass("loading");
         getDataHighToLow(function () {
@@ -140,7 +143,7 @@ function pagination(data) {
 }
 function IndexRequest(callback,data) {
     $.ajax({
-        url: '/user/indexPartial',
+        url: '/user/'+actionMethod,
         type: 'post',
         data: 'count=' + data,
         success: function (data) {

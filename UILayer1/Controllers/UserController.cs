@@ -40,11 +40,6 @@ namespace UILayer.Controllers
         IUserApi _userApi; 
         UserRegistration _user { get; set; }
         private readonly IDistributedCache _distributedCache;
-
-
-        INotyfService _notyfService;
-
-
         public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache, IUserApi userApi)
 
         {
@@ -80,13 +75,13 @@ namespace UILayer.Controllers
                 int cout = 0;
                 for (int i = 0; i <= 0; i++)
                 {
-                    if (productCount > 10)
+                    if (productCount > 12)
                     {
                         cout += 1;
                     }
                     productCount = productCount - 12;
                 }
-                var result = data.Skip((int)count * 10).Take(10);
+                var result = data.Skip((int)count * 12).Take(12);
                 ViewBag.count = cout;
                 if (data != null)
                 {
@@ -117,13 +112,13 @@ namespace UILayer.Controllers
             int cout = 0;
             for (int i = 0; i <= 0; i++)
             {
-                if (productCount > 10)
+                if (productCount > 12)
                 {
                     cout += 1;
                 }
                 productCount = productCount - 12;
             }
-            var result = data.Skip((int)count * 10).Take(10);
+            var result = data.Skip((int)count * 12).Take(12);
             ViewBag.count = cout;
             return PartialView("PartialViews/_IndexPartialView", result);
         }
@@ -705,19 +700,48 @@ namespace UILayer.Controllers
 
         public IActionResult Sort()
         {
+            int count = 0;
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            ViewBag.count = 0;
+            
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
-            return View("Index", SortedData);
+            var productCount = SortedData.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            ViewBag.count = cout;
+            var result = SortedData.Skip((int)count * 12).Take(12);
+            return View("Index", result);
         }
-        public PartialViewResult sortLowToHighPartial()
+        public PartialViewResult sortLowToHighPartial(int? count)
         {
+            if (count == null)
+            {
+                count = 0;
+            }
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            ViewBag.count = 0;
+            
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
-            return PartialView("PartialViews/_IndexPartialView", SortedData);
+            var productCount = SortedData.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            ViewBag.count = cout;
+            var result = SortedData.Skip((int)count * 12).Take(12);
+            return PartialView("PartialViews/_IndexPartialView", result);
         }
 
         public IActionResult Sortby()
@@ -730,11 +754,24 @@ namespace UILayer.Controllers
         }
         public PartialViewResult SortHighToLowPartial()
         {
-            ViewBag.Title = "Mobizone - Price(High to Low )";
-            ViewBag.count = 0;
+            int count = 0;
+            ViewBag.Title = " Mobizone - Price(Low to High)";
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
-            return PartialView("PartialViews/_IndexPartialView", SortedData);
+            var productCount = SortedData.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            ViewBag.count = cout;
+            var result = SortedData.Skip((int)count * 12).Take(12);
+            return PartialView("PartialViews/_IndexPartialView", result);
         }
         [HttpPost]
         public PartialViewResult filterByBrandName(string brandName)
@@ -814,17 +851,6 @@ namespace UILayer.Controllers
             return View();
         }
 
-
-        /*    return Json();
-*/
-
-        /*     [HttpPost]
-             public IActionResult sort(string price)
-               {
-                   ViewBag.count = 0;
-                   ViewBag.PriceList = _
-
-               }*/
         [HttpPost]
         public IActionResult SearchNotPartial(string name)
         {

@@ -34,7 +34,7 @@
                             {
                                 @foreach (var data in item.images)
                                 {
-                                    <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="~/Product/Images/@data.imagePath" style="align-items: center; height: 59%; width: 47%;"></div></a>
+                                    <a asp-action="ProductDetails" asp-route-id="@item.id"><div class="col-12" align="center"><img src="@data.imagePath" style="align-items: center; height: 59%; width: 47%;"></div></a>
                                     break;
                                 }
                             }
@@ -82,4 +82,3 @@
     
 </style>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/index.js"></script>
