@@ -681,7 +681,6 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);
