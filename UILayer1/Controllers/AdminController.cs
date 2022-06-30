@@ -698,7 +698,7 @@ namespace UIlayer.Controllers
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
             var products = await _opApi.GetAll();
             var product = products.Where(c => c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
-            bool result = imageApi.Delete(id);
+            bool result = await imageApi.DeleteAsync(id,sample.imagePath);
             if (result)
             {
                 _notyf.Success("Image deleted");
