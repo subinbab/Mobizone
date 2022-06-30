@@ -96,10 +96,9 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
-            ViewBag.ReturnUrl = "/admin/ProductDetails/" + id;
+            ViewBag.ReturnUrl = "/admin/ProductDetails?id=" + id;
             ProductEntity details = null;
             try
             {
@@ -682,7 +681,6 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);

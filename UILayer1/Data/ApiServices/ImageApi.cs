@@ -47,8 +47,16 @@ namespace UILayer.Data.ApiServices
         public async Task<bool> DeleteAsync(int id,string filename)
         {
 try
-{
-                var extractFilename = Regex.Split(filename, @"%2F(.*?)\?alt")[1];
+            {
+                string extractFilename = "";
+                try
+                {
+                    extractFilename = Regex.Split(filename, @"%2F(.*?)\?alt")[1];
+                }
+                catch (Exception ex)
+                {
+
+                } 
                 try
                 {
                     var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
@@ -71,7 +79,7 @@ try
                 }
                 RequestHandler<string> requestHandler = new RequestHandler<string>(Configuration);
                 requestHandler.url = "api/imagesoperations/";
-                var result = requestHandler.Delete(id);
+                var result =requestHandler.Delete(id);
                 if(result != null)
                 {
                     if (result.IsSuccess)
