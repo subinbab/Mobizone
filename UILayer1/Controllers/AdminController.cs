@@ -96,10 +96,9 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
-            ViewBag.ReturnUrl = "/admin/ProductDetails/" + id;
+            ViewBag.ReturnUrl = "/admin/ProductDetails?id=" + id;
             ProductEntity details = null;
             try
             {
