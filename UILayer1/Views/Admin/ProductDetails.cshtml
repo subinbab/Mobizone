@@ -81,7 +81,7 @@
                     <li class="col-12">Cores : @Model.specs.core</li>
                     <li class="col-12">Ram : 
                         @foreach (var item in Model.specs.rams.ToList())
-                        {<span style="padding-right:14px; border-block: outset;">@item.specificatiion.rams</span>}
+                        {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
                     </li>
                     <li class="col-12">Storage : 
                         @foreach (var item in Model.specs.storages.ToList())
@@ -190,7 +190,7 @@
 
     function showImage(data) {
 
-        $(".showimage").attr('src',data);
+        $(".showimage").attr('src', data);
     }
     function someFunction(data) {
         var id = data;
