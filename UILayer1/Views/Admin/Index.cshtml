@@ -2,7 +2,7 @@
 @model IEnumerable<DTOLayer.Product.ProductListViewModel>
 
 @{
-    Layout = "~/Views/Admin/_Layout.cshtml";
+    //Layout = "~/Views/Admin/_Layout.cshtml";
     ViewData["Title"] = "Mobizone(Admin) ProductList";
 }
 @{
@@ -60,9 +60,9 @@
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
+                    //console.log(data)
                     getProductLink = data + 'api/productop/getlist';
-                    header();
+                    //header();
                     callback(GetProductData);
                 }
             })
@@ -73,7 +73,7 @@
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
+                    //console.log(data)
                     header = data;
                     callback();
                 
@@ -90,7 +90,7 @@
                     xhr.setRequestHeader("Authorization", "Basic " + header);
                 },
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $('[tool-tip-toggle="tooltip- demo"]').tooltip({
 
                         placement: 'top'
@@ -106,10 +106,10 @@
                             {
                                 "render": function (data, type, full, meta) {
                                     if (full.status == 0) {
-                                        return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="fa-solid fa-pen-to-square glyphicon" data-toggle="tooltip" title="Edit"aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="fa-solid fa-trash"  data-toggle="tooltip" title="Delete"aria-hidden="true"></span></a></div><div><a href="/admin/disable/' + full.id + '"><span class="fa-solid fa-circle-xmark" data-toggle="tooltip"  title="Disable" style="color:red"></span></a></div><div class="col"><a href ="/admin/ProductDetails/' + full.id + '"><span class="fa-solid fa-eye glyphicon" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
+                                        return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="fa-solid fa-pen-to-square glyphicon" data-toggle="tooltip" title="Edit"aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="fa-solid fa-trash"  data-toggle="tooltip" title="Delete"aria-hidden="true"></span></a></div><div><a href="/admin/disable/' + full.id + '"><span class="fa-solid fa-circle-xmark" data-toggle="tooltip"  title="Disable" style="color:red"></span></a></div><div class="col"><a href ="/admin/ProductDetails?id=' + full.id + '"><span class="fa-solid fa-eye glyphicon" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
                                     }
                                     else {
-                                        return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="fa-solid fa-pen-to-square glyphicon"  data-toggle="tooltip" title="Edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="fa-solid fa-trash" data-toggle="tooltip"  title="Delete"  aria-hidden="true"></span></a></div><div><a href="/admin/enable/' + full.id + '"><span class="fa-solid fa-circle-check"  data-toggle="tooltip" title="Enable"style="color:green"></span></a></div>  <div class="col"><a href ="/admin/ProductDetails/' + full.id + '"><span class="fa-solid fa-eye glyphicon" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
+                                        return '<div class="row"><div class="col"><a  href="/admin/Edit/' + full.id + '"><span class="fa-solid fa-pen-to-square glyphicon"  data-toggle="tooltip" title="Edit" aria-hidden="true"></span></a></div><div class="col"> <a class="" onclick="someFunction(' + full.id + ');"> <span class="fa-solid fa-trash" data-toggle="tooltip"  title="Delete"  aria-hidden="true"></span></a></div><div><a href="/admin/enable/' + full.id + '"><span class="fa-solid fa-circle-check"  data-toggle="tooltip" title="Enable"style="color:green"></span></a></div>  <div class="col"><a href ="/admin/ProductDetails?id=' + full.id + '"><span class="fa-solid fa-eye glyphicon" data-toggle="tooltip" title="View" aria-hidden="true"></span></a></div></div>';
                                     }
                                 }
                             }

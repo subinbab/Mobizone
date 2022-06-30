@@ -27,7 +27,7 @@
                         foreach (var item in Model.images)
                         {
                             <div class="card" style="width : 50px; height:100px;">
-                                <img src="~/Product/Images/@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
+                                <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
                                 <span class="glyphicon glyphicon-remove  position-absolute" style="background-color: cornsilk;width: 39%; cursor: pointer; height: 19%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
 
                             </div>
@@ -40,7 +40,7 @@
                     @{if (Model.images != null && Model.images.Any())
                         {
 
-                            <img class="showimage" src="~/Product/Images/@Model.images.FirstOrDefault().imagePath" alt="No images available" />
+                            <img class="showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
 
                         }
                         else
@@ -119,7 +119,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Image</h5>
+                <h5 class="modal-title"</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -136,7 +136,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Image</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -147,7 +147,7 @@
         </div>
     </div>
 </div>
-        </div>
+       
 <style>
     div.sticky {
         position: -webkit-sticky;
@@ -191,7 +191,7 @@
 
     function showImage(data) {
 
-        $(".showimage").attr('src', '/Product/Images/' + data);
+        $(".showimage").attr('src', data);
     }
     function someFunction(data) {
         var id = data;

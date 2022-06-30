@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{ 
+}
+@model IEnumerable<DomainLayer.ProductModel.Images>
+
+
+<table class="table">
+    @if (Model == null)
+    {
+        <h1>No iamges</h1>
+}
+    else
+    {
+        foreach (var item in Model)
+        {
+            <img src="~/Product/Images/@item.imagePath" width="500" height="600" />
+            <span class="position-absolute" onclick="delete_image(@item.id) ">&times;</span>
+        }
+    }
+
+</table>
+<script>
+    function someFunction(data) {
+    var id = data;
+    $(document).ready(function (e) {
+        if (confirm("please confirm") == true) {
+            $.ajax({
+                url: 'admin/ImageDelete/' + id,
+                type: 'delete',
+                dataType: 'json',
+                success: function (data) {
+                    alert(data["result"])
+                }
+            })
+        }
+        else (
+            alert("thankyou"))
+
+
+    });
+}
+</script>
+

@@ -94,7 +94,7 @@ else
                                             @foreach (var item in data.images)
                                             {
 
-                                                <a asp-action="ProductDetails" asp-route-id="@data.id" class="col-3"><img src="~/Product/Images/@item.imagePath" style="width: 100%;"></a>
+                                                <a asp-action="ProductDetails" asp-route-id="@data.id" class="col-3"><img src="@item.imagePath" style="width: 100%;"></a>
                                                 break;
                                             }
                                         }

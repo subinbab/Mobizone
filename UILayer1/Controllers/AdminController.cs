@@ -96,10 +96,9 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
-            ViewBag.ReturnUrl = "/admin/ProductDetails/" + id;
+            ViewBag.ReturnUrl = "/admin/ProductDetails?id=" + id;
             ProductEntity details = null;
             try
             {
@@ -698,7 +697,7 @@ namespace UIlayer.Controllers
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
             var products = await _opApi.GetAll();
             var product = products.Where(c => c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
-            bool result = imageApi.Delete(id);
+            bool result = await imageApi.DeleteAsync(id,sample.imagePath);
             if (result)
             {
                 _notyf.Success("Image deleted");

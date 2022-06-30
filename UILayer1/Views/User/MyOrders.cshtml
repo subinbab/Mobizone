@@ -13,7 +13,7 @@
                 <div class="col-2">
                     @if (data.product.images != null && data.product.images.Count != 0)
                     {
-                        <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="~/Product/Images/@data.product.images.FirstOrDefault().imagePath" style="width: 54px;" /></a>
+                        <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="@data.product.images.FirstOrDefault().imagePath" style="width: 54px;" /></a>
                     }
                     else
                     {
