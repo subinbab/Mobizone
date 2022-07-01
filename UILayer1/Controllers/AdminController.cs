@@ -200,25 +200,29 @@ namespace UIlayer.Controllers
         [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
+            List<string> ramList = _masterApi.GetList((int)Master.Ram);
+            List<string> storageList = _masterApi.GetList((int)Master.Storage);
             var product = await _opApi.GetProduct(id);
             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
             data.specs.ram = new List<string>();
             foreach (var rams in product.specs.rams)
             {
                 data.specs.ram.Add(rams.ram);
+                ramList.Remove(rams.ram);
             }
             data.specs.storage = new List<string>();
             foreach (var storages in product.specs.storages)
             {
                 data.specs.storage.Add(storages.storage);
+                storageList.Remove(storages.storage);
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
             ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
             ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
             ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
             ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
-            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.Ram = ramList;
+            ViewBag.Storage = storageList;
             ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
 
             return View("Create", data);
