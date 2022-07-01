@@ -107,21 +107,27 @@ else
                                                 }
                                                 else
                                                 {
-                                                    <img src="@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
-                                                }
-                                                <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                                    @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
-                                                    {@cart.product.name;
-                                                }
-                                                    (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                    @foreach (var item in cart.product.images)
                                                     {
-                                                        @cart.product.specs.rams.FirstOrDefault().ram;
-                                                    } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
-                                                    {
-                                                        @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
-                                                        Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
-                                                    </label>
-                                                </div>
+                                                        <a asp-action="ProductDetails" asp-route-id="@cart.id" class="col-3">
+                                                            <img src="@item.imagePath" style="width: 10%;">
+                                                        </a>
+                                                        break;
+                                                    }
+                                                }
+                                                    <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                                        @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                        {@cart.product.name;
+                                                    }
+                                                        (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                        {
+                                                            @cart.product.specs.rams.FirstOrDefault().ram;
+                                                        } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
+                                                        {
+                                                            @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
+                                                            Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
+                                                        </label>
+                                                    </div>
 
                                             </div>
 
