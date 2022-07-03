@@ -20,8 +20,8 @@ namespace BusinessObjectLayer
         {
             try
             {
-                _repo.Add(entity);
-                _repo.Save();
+                await _repo.Add(entity);
+                await _repo.Save();
             }
             catch (Exception ex)
             {
@@ -31,14 +31,14 @@ namespace BusinessObjectLayer
 
         public async Task Delete(MyCart entity)
         {
-            _repo.Delete(entity);
-            _repo.Save();
+            await _repo.Delete(entity);
+            await _repo.Save();
         }
 
         public async Task Edit(MyCart entity)
         {
-            _repo.Update(entity);
-            _repo.Save();
+            await _repo.Update(entity);
+            await _repo.Save();
         }
 
         public Task<MyCart> GetById(int id)

@@ -4,12 +4,7 @@ var sourcearray;
 var productId;
 var actionMethod = "indexPartial";
 var brandname = null;
-var name = null;
 $(document).ready(function () {
-    $("#Index").addClass("loading");
-    getData(function () {
-        $("#Index").removeClass("loading");
-    })
     $("#sortLowToHigh").click(function () {
         //alert("clicked")
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
@@ -83,7 +78,7 @@ function getDataLowToHigh(callback) {
             callback();
             actionMethod = "sortLowToHighPartial";
             brandname = $("#brandname").val();
-            if (brandname == "null") {
+            if (brandname === "null") {
                 brandname = null;
             }
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
@@ -98,7 +93,7 @@ function getDataHighToLow(callback) {
             callback()
             actionMethod = "SortHighToLowPartial";
             brandname = $("#brandname").val();
-            if (brandname == "null") {
+            if (brandname === "null") {
                 brandname = null;
             }
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
@@ -114,6 +109,9 @@ function filterByBrand(callback) {
         success: function (data) {
             callback()
             brandname = $("#brandname").val();
+            if (brandname === "null") {
+                brandname = null;
+            }
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         },
         error: function (data) {

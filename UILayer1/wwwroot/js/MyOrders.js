@@ -3,7 +3,7 @@ var previousDiv
 var sourcearray;
 var productId;
 var actionMethod = "indexPartial";
-var brandname = null;
+var statusName = null;
 var name = null;
 $(document).ready(function () {
     $("#Index").addClass("loading");
@@ -33,21 +33,21 @@ $(document).ready(function () {
         //alert("clicked")
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
         $("#Index").addClass("loading");
-        filterByBrand(function () {
+        filterByStatus(function () {
             $("#Index").removeClass("loading");
         })
     })
-    $("#search-btn").click(function () {
+    /*$("#search-btn").click(function () {
         document.getElementById("Index").innerHTML = '<div id="Index"></div>'
         $("#Index").addClass("loading");
         search(function () {
             $("#Index").removeClass("loading");
         })
-    })
+    })*/
     $("#cart-icon").click(function () {
         //alert("cart button clicked")
         document.getElementById("sidebar-user").innerHTML = "";
-        $(".content").css("margin-left","0px")
+        $(".content").css("margin-left", "0px")
         document.getElementById("Index").innerHTML = '<div id="Index"></div>'
         $("#Index").addClass("loading");
         cart(function () {
@@ -63,10 +63,10 @@ $(document).ready(function () {
             $("#Index").removeClass("loading");
         })
     })
-})      
+})
 function getData(callback) {
     $.ajax({
-        url: '/user/indexPartial',
+        url: '/user/MyOrdersPartialView',
         type: 'get',
         success: function (data) {
             //console.log(data);
@@ -92,7 +92,7 @@ function getDataLowToHigh(callback) {
 }
 function getDataHighToLow(callback) {
     $.ajax({
-        url: '/user/SortHighToLowPartial?count=' + null + '&brandName=' + brandname+'&name='+name,
+        url: '/user/SortHighToLowPartial?count=' + null + '&brandName=' + brandname + '&name=' + name,
         type: 'get',
         success: function (data) {
             callback()
@@ -105,15 +105,15 @@ function getDataHighToLow(callback) {
         }
     })
 }
-function filterByBrand(callback) {
-    brandname = $("#brandname").val();
+function filterByStatus(callback) {
+    statusName = $("#statusname").val();
     $.ajax({
-        url: '/user/filterByBrandName',
+        url: '/user/FilterOrderByStatusName',
         type: 'post',
-        data: 'brandName=' + brandname,
+        data: 'statusName=' + statusName,
         success: function (data) {
             callback()
-            brandname = $("#brandname").val();
+            statusName = $("#statusname").val();
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         },
         error: function (data) {
@@ -125,7 +125,7 @@ function search(callback) {
     name = $("#tags").val();
     if (name) {
         $.ajax({
-            url: '/user/search?name=' + name+'&count=' + null + '&brandName=' + brandname,
+            url: '/user/search?name=' + name + '&count=' + null + '&brandName=' + brandname,
             type: 'post',
             success: function (data) {
                 //alert(data)
@@ -143,14 +143,14 @@ function search(callback) {
         alert("Please type Here")
         getData(callback)
     }
-    
+
 }
 function pagination(data) {
     document.getElementById("Index").innerHTML = '<div id="index"></div>'
     $("#Index").addClass("loading");
     IndexRequest(function () {
         $("#Index").removeClass("loading");
-    },data)
+    }, data)
 }
 function IndexRequest(callback, data) {
     $.ajax({
@@ -192,26 +192,26 @@ function cart(callback) {
         }
     })
 }
-function buyNow(callback,id){
+function buyNow(callback, id) {
     $.ajax({
-        url: '/user/order/'+ id,
+        url: '/user/order/' + id,
         type: 'get',
         success: function (data) {
             //console.log(data);
-            callback(); 
+            callback();
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</div>';
             GetProduct(productId, orderInit)
             changeQty();
             orderSubmitClick();
             console.log(sourcearray)
-            
-            
-            
+
+
+
         }
     }).always(function (jqXHR) {
         console.log(jqXHR.status);
         if (jqXHR.status == 401) {
-           // alert("unauthorized")
+            // alert("unauthorized")
             document.getElementById("sidebar-user").innerHTML = "";
             $(".content").css("margin-left", "0px")
             document.getElementById("Index").innerHTML = '<div id="Index"></div>'
@@ -221,7 +221,7 @@ function buyNow(callback,id){
             });
         }
     });
-    
+
 }
 function unauthorized(callback) {
     $.ajax({
@@ -406,12 +406,12 @@ function showbutton1() {
     //alert("cheuijhg")
     $("#submit_prog").toggle();
 }
-function GetProduct(id,callback) {
+function GetProduct(id, callback) {
     alert(id)
     $.ajax({
-        url: 'config/GetProduct/'+ id,
+        url: 'config/GetProduct/' + id,
         type: 'get',
-        dataType:'json',
+        dataType: 'json',
         success: function (data) {
             sourcearray = data;
             console.log(data)
@@ -440,7 +440,7 @@ function orderSubmitClick() {
 
     });
 }
-function orderSubmit(formData,actionUrl,callback) {
+function orderSubmit(formData, actionUrl, callback) {
     $.ajax({
         type: "POST",
         url: actionUrl,

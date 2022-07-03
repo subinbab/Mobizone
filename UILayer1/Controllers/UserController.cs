@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using DocumentFormat.OpenXml.Wordprocessing;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
@@ -717,10 +718,30 @@ namespace UILayer.Controllers
             }
             ViewBag.count = cout;
             var result = SortedData.Skip((int)count * 12).Take(12);
-            return View("Index", result);
-        }
-        public PartialViewResult sortLowToHighPartial(int? count)
+return View("Index", result);
+}
+        public async Task<PartialViewResult> sortLowToHighPartial(int? count, string brandName ,string name)
         {
+            if (brandName == "null")
+                brandName = null;
+            if (name == "null")
+                name = null;
+            IEnumerable<ProductEntity> SortedData = null;
+            if (brandName != null && name != "null")
+            {
+                var data = await _opApi.Filter(brandName);
+                SortedData = data.OrderBy(c => c.price);
+            }
+            else if (name != null && name != "null")
+            {
+                var data = await _opApi.Search(name);
+                SortedData = data.OrderBy(c => c.price);
+            }
+            else
+            {
+                var data = await _opApi.Sort();
+                SortedData = data.Where(c => c.status.Equals(ProductStatus.enable));
+            }
             if (count == null)
             {
                 count = 0;
@@ -728,7 +749,6 @@ namespace UILayer.Controllers
             ViewBag.Title = " Mobizone - Price(Low to High)";
             
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
             var productCount = SortedData.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
@@ -752,13 +772,33 @@ namespace UILayer.Controllers
             var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("Index", SortedData);
         }
-        public PartialViewResult SortHighToLowPartial()
+        public PartialViewResult SortHighToLowPartial(int? count , string brandName, string name)
         {
-            int count = 0;
-            ViewBag.Title = " Mobizone - Price(Low to High)";
+            if (brandName == "null")
+                brandName = null;
+            if (name == "null")
+                name = null;
+            IEnumerable<ProductEntity> SortedData = null;
+            if (brandName != null && name != "null")
+            {
+                SortedData = _opApi.Filter(brandName).Result.OrderByDescending(c=>c.price);
+            }
+            else if (name != null && name != "null")
+            {
+                SortedData = _opApi.Search(name).Result.OrderByDescending(c => c.price);
+            }
+            else
+            {
+                SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
+            }
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.Title = " Mobizone - Price(High To Low)";
 
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
+            
             var productCount = SortedData.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
@@ -776,6 +816,8 @@ namespace UILayer.Controllers
         [HttpPost]
         public PartialViewResult filterByBrandName(string brandName)
         {
+            if (brandName == "null")
+                brandName = null;
             int cout = 0;
             int count = 0;
             ViewBag.Title = " Mobizone - Filter ";
@@ -815,6 +857,11 @@ namespace UILayer.Controllers
         }
         public IActionResult MyOrders()
         {
+            ViewBag.Status = Enum.GetNames(typeof(OrderStatus)).ToList();
+            return View();
+        }
+        public PartialViewResult MyOrdersPartialView()
+        {
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -825,7 +872,30 @@ namespace UILayer.Controllers
                 checkOutData.product = product;
 
             }
-            return View(userOrders);
+            return PartialView("PartialViews/_MyOrdersPartialView", userOrders);
+        }
+        public PartialViewResult FilterOrderByStatusName(string statusName)
+        {
+            IEnumerable<Checkout> userOrders = null;
+            Enum.TryParse(statusName, out OrderStatus myStatus);
+            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
+            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
+            var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            if(statusName != null)
+            {
+                userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId) && c.status.Equals(myStatus));
+            }
+            else
+            {
+                userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
+            }
+            foreach (var checkOutData in userOrders)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(checkOutData.productId)).FirstOrDefault();
+                checkOutData.product = product;
+
+            }
+            return PartialView("PartialViews/_MyOrdersPartialView", userOrders);
         }
         [HttpGet]
         public IActionResult OrderDetails(int id)
@@ -855,13 +925,13 @@ namespace UILayer.Controllers
         public IActionResult SearchNotPartial(string name)
         {
             ViewBag.count = 0;
-
+            ViewBag.Search = name;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var data = _opApi.Search(name).Result;
             return View("PartialViews/_IndexPartialView", data);
         }
         [HttpPost]
-        public PartialViewResult Search(string name)
+        public PartialViewResult Search(string name, int? count)
         {
             ViewBag.count = 0;
 

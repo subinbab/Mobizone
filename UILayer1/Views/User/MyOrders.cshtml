@@ -6,52 +6,15 @@
     Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
     ViewData["Title"] = "Mobizone- My Orders";
 }
-<div style="font-weight: bold;"> My Orders </div>
-        @foreach (var data in Model)
-        {
-            <div class="row" style="padding: 14px; border: solid 1px #d7d1d1; margin-top: 5%">
-                <div class="col-2">
-                    @if (data.product.images != null && data.product.images.Count != 0)
-                    {
-                        <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="@data.product.images.FirstOrDefault().imagePath" style="width: 54px;" /></a>
-                    }
-                    else
-                    {
-                        <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/css/Images/noimage.jpg" style="width: 100px;" /></a>
-                    }
+<div id="Index">
 
-                </div>
-                <div class="col-3">
-                    <div class="col-12" style="font-weight: bold;">@data.product.name</div>
-                    <div class="col-12">@data.product.model</div>
-                </div>
-                <div class="col-3">
-                    <div class="col-12" style="font-weight: bold;color: green;"> &#8377 @data.price</div>
-                </div>
-                <div class="col-4">
-                    <div class="col-12" style="font-weight: bold;">@data.status</div>
-                </div>
-            </div>
-        }
-
-<a type="button" class="btn  btn-orange" style="background-color: #078ceb; padding-left: 1%; padding-right: 1%; color: white; margin-left: 81%; margin-top: 13%; " asp-action="index">Back</a>&nbsp;
-
-
+</div>
 <style>
-    .product {
-        margin-left: 8%;
-        font-size: 150%;
-    }
-
-    .price {
-        margin-top: -34px;
-        margin-left: 48%;
-        font-size: 150%;
-    }
-
-    .status {
-        margin-left: 85%;
-        margin-top: -35px;
-        font-size: 150%;
+    #Index {
+        min-height: 50vh;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/MyOrders.js"></script>

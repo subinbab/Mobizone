@@ -29,6 +29,8 @@
 <body>
 
     <partial name="_NavbarLayout" />
+    
+
     <div class="content " style=" padding: 143px 16px; padding-bottom:10px">
 
         <div class="content " style=" padding: 120px 16px; margin-top: -10%; margin-left: 25px; padding-bottom: 15px ">
@@ -120,28 +122,28 @@
                 </main>
             </div>
         </div>
-</div>
+    </div>
 
 
-        <script src="~/js/searchBar.js"></script>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#filter").click(function () {
-                    $("#dropdown1").toggle();
-                });
-
+    <script src="~/js/searchBar.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#filter").click(function () {
+                $("#dropdown1").toggle();
             });
 
-            $(document).ready(function () {
-                $("#sort").click(function () {
-                    $("#dropdown2").toggle();
-                });
-            });
-        </script>
+        });
 
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        @await Component.InvokeAsync("Notyf")
-        @await RenderSectionAsync("Scripts", required: false)
+        $(document).ready(function () {
+            $("#sort").click(function () {
+                $("#dropdown2").toggle();
+            });
+        });
+    </script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
