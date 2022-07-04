@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Mobizone- Buy Now";
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
 }
 @model DomainLayer.Checkout
 @{
@@ -44,7 +44,7 @@ else
                                 {
                                     <div class="form-check ">
                                         <label asp-for="@Model.addressList[count].IsChecked">
-                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" style="margin-top:-8%" />
+                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id"  style="margin-top:-8%" />
                                         </label>
                                         @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
                                         <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
@@ -383,7 +383,11 @@ else
                 }
             });
         }
-                    $(document).ready(function () {
+    $(document).ready(function () {
+        var $submit = $("#submit_prog").hide(),
+        $cbs = $('input[class="check"]').click(function () {
+            $submit.toggle($cbs.is(":checked"));
+        });
                         $(".check").on('click', function () {
                             debugger
                             var $box = $(this);
@@ -403,10 +407,7 @@ else
                             }
                         });
                     })
-    function showbutton1() {
-        //alert("cheuijhg")
-        $("#submit_prog").toggle();
-    }
+ 
 </script>
 
 
