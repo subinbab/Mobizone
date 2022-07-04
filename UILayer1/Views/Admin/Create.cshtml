@@ -200,8 +200,8 @@ element.style {
                                 </div>
                                 <div class="col-md-12" style="padding-top: 2%">
                                     <div asp-for="description" class="control-label" style="text-align-last:justify;  margin-top:30px"> Description</div>
-                                    @*<textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                    <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250" />
+                                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="maximum limit upto 100-250 words"  maxlength="250"></textarea>
+                                   @* <input asp-for="description" placeholder="maximum limit upto 100-250 words" class="form-control" id="Description" rows="3" style="height:120%" maxlength="250" />*@
                                     <span asp-validation-for="description" class="text-danger"></span>
                                 </div>
 

@@ -11,7 +11,7 @@
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     var cartData = ViewData["cart"] as DomainLayer.MyCart;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var ReturnUrl = ViewBag.ReturnUrl as string;
     int? price = 0;
     int count = 0;
