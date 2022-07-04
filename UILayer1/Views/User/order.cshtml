@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Mobizone- Buy Now";
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
 }
 @model DomainLayer.Checkout
 @{
@@ -351,9 +351,9 @@ else
         }
 
                         function apply() {
-            debugger
+           
                         $(".check").on('click', function () {
-                debugger
+               
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
@@ -383,9 +383,17 @@ else
                 }
             });
         }
-                    $(document).ready(function () {
+    $(document).ready(function () {
+                        $('input[class="check"]').change(function(){
+    var submitBtn=$('#submit_prog');
+                            if ($('input[class="check"]:checked').length > 0) {
+        submitBtn.show();
+    } else {
+        submitBtn.hide();
+    }
+});
                         $(".check").on('click', function () {
-                            debugger
+                          
                             var $box = $(this);
                             if ($box.is(":checked")) {
                                 //alert("checked")
@@ -405,7 +413,18 @@ else
                     })
     function showbutton1() {
         //alert("cheuijhg")
-        $("#submit_prog").toggle();
+        //$("#submit_prog").toggle();
+        console.log($('.check:checkbox'))
+        console.log($('.check:checkbox').length)
+        for (var i = 0; i < $('.check:checkbox').length; i++) {
+            if ($('.check:checkbox')[i].checked) {
+                $("#submit_prog").show();
+                break;
+            }
+            else {
+                $("#submit_prog").hide();
+            }
+        }
     }
 </script>
 
