@@ -145,6 +145,14 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
             try
             {
                 if (product.id == 0)
@@ -152,7 +160,7 @@ namespace UIlayer.Controllers
                     if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                     {
                         _notyf.Error("Product Already Exist");
-                        return RedirectToAction("Create");
+                        return View("Create",product);
                     }
                     else
                     {
@@ -174,7 +182,6 @@ namespace UIlayer.Controllers
                 }
                 else
                 {
-
                     bool result = _opApi.EditProduct(product).Result;
                     if (result)
                     {

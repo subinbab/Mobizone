@@ -59,21 +59,25 @@
         </div>
 
     }
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-end">
-            @if (Model != null)
+    @if(Model != null && Model.Count()>0)
             {
-                @for (int i = 0; i <= count; i++)
-                {
-                    <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        @if (Model != null)
+        {
+            @for (int i = 0; i <= count; i++)
+            {
+                <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
 
-                    pagination = pagination + 1;
-                }
+                pagination = pagination + 1;
             }
+        }
 
 
-        </ul>
-    </nav>
+    </ul>
+</nav>
+            }
+    
 </div>
 
 
