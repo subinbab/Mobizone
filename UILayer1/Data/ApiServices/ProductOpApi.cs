@@ -205,6 +205,7 @@ namespace UILayer.Data.ApiServices
                 data.name = product.name;
                 data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
+                data.description = product.description;
                 data.status = product.status;
                 data.price = product.price;
                 data.model = product.model;

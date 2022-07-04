@@ -69,8 +69,16 @@
                 <br />
                 <div class="text-center">
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-orange" style="margin-top: -41%;" /> 
-                        <a asp-action="Account" value="Cancel" class="btn btn-primary" style="margin-left: 93%; margin-top: -41%;" >Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-orange" style="margin-top: -41%;" />
+                        @if (returnUrl != null)
+                        {
+                            <a href="@returnUrl" value="Cancel" class="btn btn-primary" style="margin-left: 93%; margin-top: -41%;">Cancel</a>
+                        }
+            else
+            {
+                    <a asp-action="Account" value="Cancel" class="btn btn-primary" style="margin-left: 93%; margin-top: -41%;">Cancel</a>
+            }
+                        
                     </div>
 
                 </div>

@@ -207,7 +207,7 @@ namespace UILayer.Controllers
                     var webLink = _configuration.GetSection("Development:WebLink").Value;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hai, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
+            mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hi, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = _userApi.PostMail(mailRequest);
@@ -369,7 +369,7 @@ namespace UILayer.Controllers
                 checkout.price = checkout.quantity * data.price;
                 bool result = _userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
-                _notyf.Success("succesfully ordered");
+                _notyf.Success("successfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return PartialView("Orderplaced");
             }
@@ -641,6 +641,7 @@ namespace UILayer.Controllers
         }
         public IActionResult ManageAddress()
         {
+            ViewBag.ReturnUrl = "/user/ManageAddress";
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
