@@ -51,7 +51,8 @@ namespace DomainLayer.ProductModel
         [MaxLength(250)]
         [Display(Name = "Description")]
         public string description { get; set; }
-        
+        [Column("PurchasedNumber", TypeName = "nvarchar", Order = 10)]
+        public int? purchasedNumber { get; set; }
         private int IsActive { get; set; }
         public ProductStatus status { get; set; }
     }

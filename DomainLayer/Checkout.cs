@@ -33,5 +33,14 @@ namespace DomainLayer
         public RoleTypes? cancelRequested { get; set; }
         [NotMapped]
         public List<Address> addressList { get; set; }
+        public DateTime? createdOn { get; set; }
+        [Column("CreatedBy", TypeName = "nvarchar")]
+        [MaxLength(150)]
+        public string? createdBy { get; set; }
+        [Column("ModifiedOn")]
+        public DateTime? modifiedOn { get; set; }
+        [Column("ModifiedBy", TypeName = "nvarchar")]
+        [MaxLength(150)]
+        public string? modifiedBy { get; set; }
     }
 }
