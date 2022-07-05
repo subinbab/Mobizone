@@ -44,7 +44,7 @@ else
                                 {
                                     <div class="form-check ">
                                         <label asp-for="@Model.addressList[count].IsChecked">
-                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id"  style="margin-top:-8%" />
+                                            <input multiple class="form-check-input check  addressInput" asp-for="@Model.addressList[count].IsChecked" type="checkbox" id="@address.id" onchange="showbutton1()" style="margin-top:-8%" />
                                         </label>
                                         @*@Html.CheckBoxFor(model => model.addressList[count].IsChecked, new { @class = "check",@id=address.id })*@
                                         <input asp-for="addressList[count].id" value="@address.id" type="hidden" />
@@ -351,9 +351,9 @@ else
         }
 
                         function apply() {
-            debugger
+           
                         $(".check").on('click', function () {
-                debugger
+               
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
@@ -377,19 +377,23 @@ else
                     //console.log("''''")
                     }
                 } else {
-                        alert("not checked")
+                        //alert("not checked")
                     $box.prop("checked", false);
                     //console.log($box)
                 }
             });
         }
     $(document).ready(function () {
-        var $submit = $("#submit_prog").hide(),
-        $cbs = $('input[class="check"]').click(function () {
-            $submit.toggle($cbs.is(":checked"));
-        });
+                        $('input[class="check"]').change(function(){
+    var submitBtn=$('#submit_prog');
+                            if ($('input[class="check"]:checked').length > 0) {
+        submitBtn.show();
+    } else {
+        submitBtn.hide();
+    }
+});
                         $(".check").on('click', function () {
-                            debugger
+                          
                             var $box = $(this);
                             if ($box.is(":checked")) {
                                 //alert("checked")
@@ -407,7 +411,21 @@ else
                             }
                         });
                     })
- 
+    function showbutton1() {
+        //alert("cheuijhg")
+        //$("#submit_prog").toggle();
+        console.log($('.check:checkbox'))
+        console.log($('.check:checkbox').length)
+        for (var i = 0; i < $('.check:checkbox').length; i++) {
+            if ($('.check:checkbox')[i].checked) {
+                $("#submit_prog").show();
+                break;
+            }
+            else {
+                $("#submit_prog").hide();
+            }
+        }
+    }
 </script>
 
 
