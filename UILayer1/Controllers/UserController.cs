@@ -349,6 +349,9 @@ namespace UILayer.Controllers
             {
                 var data = _opApi.GetProduct(checkout.productId).Result;
                 data.quantity = data.quantity - checkout.quantity;
+                if (data.purchasedNumber == null)
+                    data.purchasedNumber = 0;
+                data.purchasedNumber = data.purchasedNumber + checkout.quantity;
                 if (data.quantity == 0)
                 {
                     data.status = ProductStatus.disable;

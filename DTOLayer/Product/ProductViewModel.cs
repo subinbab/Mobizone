@@ -38,5 +38,6 @@ namespace DTOLayer.Product
         [DisplayName("Description")]
         public string description { get; set; }
         public ProductStatus status { get; set; }
+        public int? purchasedNumber { get; set; }
     }
 }

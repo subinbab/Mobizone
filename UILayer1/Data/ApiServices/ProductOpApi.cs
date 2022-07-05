@@ -209,6 +209,7 @@ namespace UILayer.Data.ApiServices
                 data.status = product.status;
                 data.price = product.price;
                 data.model = product.model;
+                data.purchasedNumber = product.purchasedNumber;
                 List<Ram> rams = new List<Ram>();
                 foreach (var ramData in data.specs.rams)
                 {
