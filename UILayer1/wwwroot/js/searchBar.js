@@ -17,7 +17,7 @@
                         type: 'get',
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data)
+                            //console.log(data)
                             getProductLink = data + 'api/productop/GetAll';
                             //header();
                             callback(getAll);
@@ -30,7 +30,7 @@
                         type: 'get',
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data)
+                            //console.log(data)
                             header = data;
                             callback();
 
