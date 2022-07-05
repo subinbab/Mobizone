@@ -174,6 +174,23 @@ namespace Repository.Migrations
                     b.Property<int?>("cancelRequested")
                         .HasColumnType("int");
 
+                    b.Property<string>("createdBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime?>("createdOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("modifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("ModifiedBy");
+
+                    b.Property<DateTime?>("modifiedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ModifiedOn");
+
                     b.Property<int>("orderId")
                         .HasColumnType("int");
 
@@ -419,6 +436,10 @@ namespace Repository.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)")
                         .HasColumnName("Type");
+
+                    b.Property<string>("purchasedNumber")
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("PurchasedNumber");
 
                     b.Property<int>("quantity")
                         .HasColumnType("int")
