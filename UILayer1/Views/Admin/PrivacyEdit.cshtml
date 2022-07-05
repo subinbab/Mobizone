@@ -18,7 +18,7 @@
                         <form asp-action="PrivacyEdit" method="post">
                             <h2> Edit Privacy & Policy</h2>
                             <input asp-for="id" value="@Model.id" type="hidden" maxlength="500" />
-                            <textarea asp-for="content" rows="10" cols="50"></textarea>
+                            <textarea asp-for="content" rows="10" cols="50"  placeholder="maximum limit upto 100-500 words"  maxlength="500"></textarea>
                             <br />
                             <div>
                                 <input type="submit" value="Save" class="btn btn-orange" />
