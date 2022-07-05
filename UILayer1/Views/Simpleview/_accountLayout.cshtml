@@ -19,16 +19,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/css-spinning-spinners/1.1.0/load2.css" />
 </head>
 <body>
-
-
-
-    <link href="~/css/Index.css" rel="stylesheet" />
-    <link href="~/css/userLayout.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <partial name="_NavbarLayoutSimple" />
-
     <style>
     </style>
 
@@ -167,6 +158,9 @@
             overflow-y: hidden;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
             $.ajax({
@@ -185,8 +179,6 @@
             })
         })
     </script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/searchBar.js"></script>
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>

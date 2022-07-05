@@ -1,6 +1,6 @@
 ﻿
             var nameList = [];
-            $(document).ready(function () {
+$(document).ready(function () {
                 $("#filter").click(function () {
                     $("#dropdown1").toggle();
                 });

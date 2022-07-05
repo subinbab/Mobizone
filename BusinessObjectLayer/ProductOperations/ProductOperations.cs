@@ -48,7 +48,9 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task EditProduct(ProductEntity entity)
         {
-            if(entity.quantity == 0)
+            if (entity.purchasedNumber == null)
+                entity.purchasedNumber = 0;
+            if (entity.quantity == 0)
             {
                 entity.status = ProductStatus.disable;
                 await _repo.Update(entity);
