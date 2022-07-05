@@ -46,12 +46,12 @@
                             xhr.setRequestHeader("Authorization", "Basic " + header);
                         },
                         success: function (data) {
-                            console.log(data.result)
+                            //console.log(data.result)
                             var resultData = data.result;
                             resultData.forEach(function (items, index) {
-                                console.log(items.name)
+                                //console.log(items.name)
                                 nameList.push(items.name);
-                                console.log(nameList)
+                                //console.log(nameList)
                                 $("#tags").autocomplete({
                                     source: nameList
                                 });

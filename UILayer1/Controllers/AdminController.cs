@@ -494,50 +494,54 @@ namespace UIlayer.Controllers
                         }
 
                         var cartsfromDb = _userApi.GetCart().Result.Where(c => c.usersId.Equals(userData.UserId)).FirstOrDefault();
-                        if (_carts.Any(c => c.sessionId.Equals(check.sessionId)))
+                        if(_carts != null)
                         {
-                            var cartWithSameSessionId = _carts.Where(c => c.sessionId.Equals(check.sessionId));
-                            foreach (var cart in cartWithSameSessionId)
+                            if (_carts.Any(c => c.sessionId.Equals(check.sessionId)))
                             {
-                                if (cart.sessionId.Equals(check.sessionId))
+                                var cartWithSameSessionId = _carts.Where(c => c.sessionId.Equals(check.sessionId));
+                                foreach (var cart in cartWithSameSessionId)
                                 {
-                                    foreach (var cartDetailsData in cart.cartDetails.ToList())
+                                    if (cart.sessionId.Equals(check.sessionId))
                                     {
-                                        if (cartsfromDb != null)
+                                        foreach (var cartDetailsData in cart.cartDetails.ToList())
                                         {
-                                            if (cartsfromDb.cartDetails.Any(c => c.productId.Equals(cartDetailsData.productId)))
+                                            if (cartsfromDb != null)
                                             {
-                                                foreach (var cartDetailsFromDb in cartsfromDb.cartDetails.ToList())
+                                                if (cartsfromDb.cartDetails.Any(c => c.productId.Equals(cartDetailsData.productId)))
                                                 {
-                                                    if (cartDetailsData.productId.Equals(cartDetailsFromDb.productId))
+                                                    foreach (var cartDetailsFromDb in cartsfromDb.cartDetails.ToList())
                                                     {
-                                                        cartDetailsFromDb.quantity = cartDetailsFromDb.quantity + 1;
-                                                    }
+                                                        if (cartDetailsData.productId.Equals(cartDetailsFromDb.productId))
+                                                        {
+                                                            cartDetailsFromDb.quantity = cartDetailsFromDb.quantity + 1;
+                                                        }
 
+                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                cartsfromDb.cartDetails.Add(cartDetailsData);
+                                                else
+                                                {
+                                                    cartsfromDb.cartDetails.Add(cartDetailsData);
+                                                }
+
                                             }
 
                                         }
-
+                                        _userApi.EditCart(cartsfromDb);
                                     }
-                                    _userApi.EditCart(cartsfromDb);
-                                }
-                                else
-                                {
-                                    _userApi.Createcart(cart);
+                                    else
+                                    {
+                                        _userApi.Createcart(cart);
+                                    }
+
                                 }
 
                             }
-
                         }
+                        
 
 
                     }
-                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
+                    await _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
                     if (ReturnUrl == null)
                     {
                         return Redirect("/");

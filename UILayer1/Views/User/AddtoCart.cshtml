@@ -190,7 +190,7 @@
     }
     function deleteItem(data) {
         var id = data
-        console.log(id)
+        //console.log(id)
         $.post("/user/removeCart", { id: id }, function (data) {
             location.reload();
         });

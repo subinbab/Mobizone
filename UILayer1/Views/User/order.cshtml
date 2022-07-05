@@ -111,7 +111,7 @@ else
                                                 {
                                                     @data.specs.storages.FirstOrDefault().storage}
                                                 GB)<br>&#8377 @data.price;
-                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" min="1" value="1" id="quantitytag" /></div>
+                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" min="1" max="@data.quantity" value="1" id="quantitytag" /></div>
                                             </label>
                                         </div>
                                     </div>
