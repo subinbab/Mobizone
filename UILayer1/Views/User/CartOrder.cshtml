@@ -369,9 +369,9 @@ else
         }
 
                         function apply() {
-            debugger
+           
                         $(".check").on('click', function () {
-                debugger
+                
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
@@ -395,17 +395,26 @@ else
                     //console.log("''''")
                     }
                 } else {
-                        alert("not checked")
+                       // alert("not checked")
                     $box.prop("checked", false);
                     //console.log($box)
                 }
             });
         }
                     $(document).ready(function () {
+                        $('input[class="check"]').change(function () {
+                            var submitBtn = $('#submit_prog');
+                            if ($('input[class="check"]:checked').length > 0) {
+                                submitBtn.show();
+                            } else {
+                                submitBtn.hide();
+                            }
+                        });
                         $(".check").on('click', function () {
-                            debugger
+                           
                             var $box = $(this);
-                            if ($box.is(":checked")) {
+                            if ($box.is(":checked"))
+                            {
                                 //alert("checked")
                                 //console.log("enter")
 
@@ -414,15 +423,30 @@ else
                                 $box.prop("checked", true);
                                 addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
 
-                            } else {
+                            }
+                            else
+                            {
                                 //alert("not checked")
                                 $box.prop("checked", false);
                                 //console.log($box)
                             }
                         });
                     })
-    function showbutton1() {
-        //alert("cheuijhg")
-        $("#submit_prog").toggle();
-    }
+                    function showbutton1()
+                    {
+                        //alert("cheuijhg")
+                        console.log($('.check:checkbox'))
+                        console.log($('.check:checkbox').length)
+                        for (var i = 0; i < $('.check:checkbox').length; i++) {
+                            if ($('.check:checkbox')[i].checked)
+                            {
+                                $("#submit_prog").show();
+                                break;
+                            }
+                            else
+                            {
+                                $("#submit_prog").hide();
+                            }
+                        }
+                    }
 </script>
