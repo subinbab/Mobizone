@@ -50,19 +50,9 @@
                     </div>
                 </div>
             </div>
-            @if (Model.status != DomainLayer.OrderStatus.cancelled)
-            {
-                <div class="col-2">
-                    <div style=" margin-left: 60%;">
-                        <a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a>
-                    </div>
-                </div>
-            }
-
         </div>
     </div>
 </div>
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
         var sourcearray = JSON.parse('@Html.Raw(Json.Serialize(Model))');
