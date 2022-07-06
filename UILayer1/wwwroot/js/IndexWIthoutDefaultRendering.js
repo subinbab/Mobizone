@@ -71,6 +71,9 @@ function getData(callback) {
     })
 }
 function getDataLowToHigh(callback) {
+    if ($("input[name='searchName']").val() != null) {
+        name = $("input[name='searchName']").val();
+    }
     $.ajax({
         url: '/user/sortLowToHighPartial?count=' + null + '&brandName=' + brandname + '&name=' + name,
         type: 'get',
@@ -86,6 +89,9 @@ function getDataLowToHigh(callback) {
     })
 }
 function getDataHighToLow(callback) {
+    if ($("input[name='searchName']").val() != null) {
+        name = $("input[name='searchName']").val();
+    }
     $.ajax({
         url: '/user/SortHighToLowPartial?count=' + null + '&brandName=' + brandname+'&name='+name,
         type: 'get',
