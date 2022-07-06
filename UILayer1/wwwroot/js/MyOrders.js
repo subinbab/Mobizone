@@ -107,13 +107,15 @@ function getDataHighToLow(callback) {
     })
 }
 function filterByStatus(callback) {
+    debugger
     statusName = $("#statusname").val();
     $.ajax({
         url: '/user/FilterOrderByStatusName',
         type: 'post',
-        data: 'statusName=' + statusName,
+        data: 'statusName=' + statusName +"&count="+0,
         success: function (data) {
             callback()
+            actionMethod = "FilterOrderByStatusName";
             statusName = $("#statusname").val();
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         },
@@ -154,10 +156,11 @@ function pagination(data) {
     }, data)
 }
 function IndexRequest(callback, data) {
+    statusName = $("#statusname").val();
     $.ajax({
         url: '/user/' + actionMethod,
         type: 'post',
-        data: "count=" + data + "&brandName=" + brandname,
+        data: "count=" + data + "&brandName=" + brandname + "&statusName=" + statusName,
         success: function (data) {
             //alert(data)
             callback()

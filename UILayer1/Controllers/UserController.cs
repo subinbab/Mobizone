@@ -896,8 +896,14 @@ return View("Index", result);
             ViewBag.count = cout;
             return PartialView("PartialViews/_MyOrdersPartialView", result);
         }
-        public PartialViewResult FilterOrderByStatusName(string statusName)
+        public PartialViewResult FilterOrderByStatusName(string statusName, int? count)
         {
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.count = 0;
+            ViewBag.currentCount = count;
             IEnumerable<Checkout> userOrders = null;
             Enum.TryParse(statusName, out OrderStatus myStatus);
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
@@ -917,11 +923,24 @@ return View("Index", result);
                 checkOutData.product = product;
 
             }
-            return PartialView("PartialViews/_MyOrdersPartialView", userOrders);
+            var productCount = userOrders.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            var result = userOrders.Skip((int)count * 12).Take(12);
+            ViewBag.count = cout;
+            return PartialView("PartialViews/_MyOrdersPartialView", result);
         }
         [HttpGet]
         public IActionResult OrderDetails(int id)
         {
+            ViewBag.ReturnUrl = "/user/OrderDetails?id="+id;
             if (id == 0)
             {
                 return View("Index");
@@ -1182,7 +1201,7 @@ return View("Index", result);
             return View("orderplaced");
         }
         [HttpGet("/user/CancelCheckout/{orderId}")]
-        public async Task<IActionResult> CancelCheckout(int orderId)
+        public async Task<IActionResult> CancelCheckout(int orderId,string? returnUrl)
         {
             Checkout checkout = new Checkout();
             OrderStatus statuses = new OrderStatus();
@@ -1191,6 +1210,10 @@ return View("Index", result);
             checkoutData.status = OrderStatus.cancelled;
             checkoutData.cancelRequested = RoleTypes.User;
             _userApi.EditCheckout(checkoutData);
+            if(returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return Redirect("/");
         }
         [HttpGet]

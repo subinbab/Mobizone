@@ -6,9 +6,10 @@
 
 @{
     ViewData["Title"] = "Mobizone Order Details";
-    Layout = "~/Views/Simpleview/_UserLayout.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var productDetails = ViewData["ProductDetails"] as DomainLayer.ProductModel.ProductEntity;
     var addressDetails = ViewData["Address"] as DomainLayer.Users.Address;
+    var ReturnUrl = ViewBag.ReturnUrl as string;
 }<h3 style="text-align:center"></h3>
  <div>
      <div class="container-fluid" style="border: solid 1px #d7d7d7;padding: 26px; margin:5px;">
@@ -52,11 +53,11 @@
                      </div>
                  </div>
              </div>
-             @if (Model.status != DomainLayer.OrderStatus.cancelled)
+             @if (Model.status != DomainLayer.OrderStatus.cancelled && Model.status != DomainLayer.OrderStatus.delivered)
              {
                  <div class="col-2">
                      <div style=" margin-left: 60%;">
-                         <a href="/user/cancelcheckout/@Model.orderId" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a>
+                         <a href="/user/cancelcheckout/@Model.orderId?returnUrl=@ReturnUrl" class="btn btn-orange" style="padding-bottom:10px;">Cancel Order</a>
                      </div>
                  </div>
              }
