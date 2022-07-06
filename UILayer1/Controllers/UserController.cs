@@ -317,7 +317,7 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View("order");
         }
-        [Authorize(Roles = "User")]
+        /*[Authorize(Roles = "User")]
         [HttpGet]
         public IActionResult CartOrder(List<ProductEntity> productList)
         {
@@ -335,7 +335,7 @@ namespace UILayer.Controllers
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
-        }
+        }*/
         [HttpPost("/user/order")]
         public PartialViewResult order(Checkout checkout,int addressId)
         {
@@ -530,7 +530,9 @@ namespace UILayer.Controllers
                                 {
                                     if (cartDetailsData.productId.Equals(id))
                                     {
+                                        var product = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
                                         cartDetailsData.quantity = cartDetailsData.quantity + 1;
+                                        cartDetailsData.price = cartDetailsData.quantity * product.price;
                                     }
                                 }
                             }
@@ -862,8 +864,14 @@ return View("Index", result);
             ViewBag.Status = Enum.GetNames(typeof(OrderStatus)).ToList();
             return View();
         }
-        public PartialViewResult MyOrdersPartialView()
+        public PartialViewResult MyOrdersPartialView(int? count)
         {
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.count = 0;
+            ViewBag.currentCount = count;
             var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
             var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -874,7 +882,19 @@ return View("Index", result);
                 checkOutData.product = product;
 
             }
-            return PartialView("PartialViews/_MyOrdersPartialView", userOrders);
+            var productCount = userOrders.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            var result = userOrders.Skip((int)count * 12).Take(12);
+            ViewBag.count = cout;
+            return PartialView("PartialViews/_MyOrdersPartialView", result);
         }
         public PartialViewResult FilterOrderByStatusName(string statusName)
         {
@@ -1099,7 +1119,7 @@ return View("Index", result);
             }
             return Redirect("/user/Addtocart");
         }
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles ="User")]
         public IActionResult CartOrder()
         {
@@ -1120,6 +1140,7 @@ return View("Index", result);
             ViewData["cartDetails"] = carts;
             ViewData["cart"] = vartData;
             ViewData["userData"] = user;
+            ViewBag.ReturnUrl = "/user/cartorder";
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }

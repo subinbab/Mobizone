@@ -2,7 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model IEnumerable<DomainLayer.Checkout>
-
+@{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
+}
 <div style="font-weight: bold;"> My Orders </div>
 @if (Model == null || Model.Count() == 0)
 {
@@ -36,6 +39,24 @@ else
             </div>
         </div>
     }
+    @if (Model != null && Model.Count() > 0)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                @if (Model != null)
+                {
+                    @for (int i = 0; i <= count; i++)
+                    {
+                        <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
+
+                        pagination = pagination + 1;
+                    }
+                }
+
+
+            </ul>
+        </nav>
+    }
 }
 
 
@@ -59,6 +80,7 @@ else
         margin-top: -35px;
         font-size: 150%;
     }
+
     .empty {
         margin-top: 10%;
         text-align: center;

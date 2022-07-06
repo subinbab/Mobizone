@@ -2,9 +2,10 @@
 var previousDiv
 var sourcearray;
 var productId;
-var actionMethod = "indexPartial";
+var actionMethod = "MyOrdersPartialView";
 var statusName = null;
 var name = null;
+var brandname = null;
 $(document).ready(function () {
     $("#Index").addClass("loading");
     getData(function () {
