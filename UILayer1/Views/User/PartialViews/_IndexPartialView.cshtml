@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <link href="~/css/userLayout.css" rel="stylesheet" />
-<link href="~/css/Index.css" rel="stylesheet"/>
+<link href="~/css/Index.css" rel="stylesheet" />
 @{
     int count = (int)ViewBag.count;
     int pagination = 1;
@@ -59,36 +59,39 @@
         </div>
 
     }
-    @if(Model != null && Model.Count()>0)
-            {
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
-        @if (Model != null)
-        {
-            @for (int i = 0; i <= count; i++)
-            {
-                <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                @if (Model != null)
+                {
+                    @for (int i = 0; i <= count; i++)
+                    {
+                        <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
 
-                pagination = pagination + 1;
-            }
-        }
+                        pagination = pagination + 1;
+                    }
+                }
 
 
-    </ul>
-</nav>
-            }
-    
+            </ul>
+        </nav>
+    }
+
 </div>
 
 
 
 <style>
-    
 </style>
+@if (@ViewBag.Search != null)
+{
+    <input name="searchName" type="hidden" value="@ViewBag.Search" />
+}
+
 <script>
     var searchName = "@ViewBag.Search";
-    alert(searchName)
-    var name = $("input[name='name']").val()
-    console.log(name)
+    var name = $("input[name='searchName']").val()
+
 </script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
