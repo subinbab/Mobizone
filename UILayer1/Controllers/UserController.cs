@@ -530,7 +530,9 @@ namespace UILayer.Controllers
                                 {
                                     if (cartDetailsData.productId.Equals(id))
                                     {
+                                        var product = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
                                         cartDetailsData.quantity = cartDetailsData.quantity + 1;
+                                        cartDetailsData.price = cartDetailsData.quantity * product.price;
                                     }
                                 }
                             }
