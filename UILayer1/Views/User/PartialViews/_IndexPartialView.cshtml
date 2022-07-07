@@ -48,9 +48,9 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-5 buynow btn btn-orange row" asp-action="Order"><a asp-route-id="@item.id" asp-action="Order" style="" id="buyNow">Buy Now</a></div>
+                            <a asp-route-id="@item.id" asp-action="Order" style="" id="buyNow"class="col-5 buynow btn btn-orange row "><div >Buy Now</div></a>
                             <div class="col-2"></div>
-                            <div class="col-5  btn btn-indigo row" asp-action="AddtoCart"><a asp-action="AddtoCart" asp-route-id="@item.id" style="" id="addtoCart">Add to Cart</a></div>
+                            <a asp-action="AddtoCart" asp-route-id="@item.id" style="" id="addtoCart" class="col-5  btn btn-indigo row"><div asp->Add to Cart</div></a>
                         </div>
                     </div>
                 </div>

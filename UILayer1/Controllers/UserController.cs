@@ -1194,6 +1194,7 @@ return View("Index", result);
                 checkout1.paymentModeId = checkout.paymentModeId;
                 checkout1.userId = checkout.userId;
                 checkout1.status = OrderStatus.orderplaced;
+                _notyf.Success("successfully ordered");
                 checkout1.price = (int)data.price;
                 bool result = _userApi.CreateCheckOut(checkout1);
             }
