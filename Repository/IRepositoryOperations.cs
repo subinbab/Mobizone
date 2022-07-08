@@ -12,7 +12,7 @@ namespace Repository
     {
         Task Add(T entity);
         Task Update(T entity);
-        Task Delete(T entity);
+        Task update(T entity);
         Task<IEnumerable<T>> Get();
         Task<IQueryable<T>> Get(params Expression<Func<T, object>>[] includes);
         Task<T> GetById(int Id);

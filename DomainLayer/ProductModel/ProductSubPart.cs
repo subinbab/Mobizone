@@ -31,5 +31,6 @@ namespace BusinessObjectLayer.ProductOperations
         public int price { get; set; }
         public int IsActive { get; set; }
         public ICollection<Images> images { get; set; }
+
     }
 }

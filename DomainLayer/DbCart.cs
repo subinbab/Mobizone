@@ -1,8 +1,6 @@
 ﻿using DomainLayer.Users;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DomainLayer
 {
@@ -16,5 +14,6 @@ namespace DomainLayer
         public ICollection<CartDetails> cartDetails { get; set; }
         public int usersId { get; set; }
         public UserRegistration users { get; set; }
+        public int IsActive { get; set; }
     }
 }

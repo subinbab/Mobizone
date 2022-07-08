@@ -15,5 +15,6 @@ namespace DomainLayer.ProductModel
         public string imagePath { get; set; }
         public int? ProductEntityId { get; set; }
         public ProductEntity? product { get; set; }
+        public int IsActive { get; set; }
     }
 }

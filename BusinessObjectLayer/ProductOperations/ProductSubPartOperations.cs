@@ -1,4 +1,5 @@
-﻿using Repository;
+﻿using DomainLayer;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,8 @@ namespace BusinessObjectLayer.ProductOperations
         public async Task AddProduct(ProductSubPart entity)
         {
             try
-            {
+{
+                entity.IsActive = 0;
                 _repo.Add(entity);
                 _repo.Save();
             }
@@ -29,12 +31,14 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task DeleteProduct(ProductSubPart entity)
         {
-            _repo.Delete(entity);
+            entity.IsActive = 1;
+            _repo.update(entity);
             _repo.Save();
         }
 
         public async Task EditProduct(ProductSubPart entity)
         {
+            
             _repo.Update(entity);
             _repo.Save();
         }
@@ -44,7 +48,7 @@ namespace BusinessObjectLayer.ProductOperations
             return _repo.GetById(id);
         }
 
-        public Task<IEnumerable<ProductSubPart>> GetProduct()
+        public  Task<IEnumerable<ProductSubPart>> GetProduct()
         {
             return _repo.Get();
         }

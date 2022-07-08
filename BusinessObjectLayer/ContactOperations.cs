@@ -1,6 +1,7 @@
 ﻿using DomainLayer;
 using Repository;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -14,6 +15,7 @@ namespace BusinessObjectLayer
         }
         public async Task Add(AdminContact data)
         {
+            data.IsActive = 0;
             _repo.Add(data);
             _repo.Save();
 
@@ -30,9 +32,10 @@ namespace BusinessObjectLayer
             _repo.Get();
         }
 
-        public Task<IEnumerable<AdminContact>> Get()
+        public async Task<IEnumerable<AdminContact>> Get()
         {
-          return  _repo.Get();
+            var result = await _repo.Get();
+            return result.Where(c => c.IsActive.Equals(0));
         }
     }
 }

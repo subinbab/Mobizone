@@ -18,13 +18,15 @@ namespace BusinessObjectLayer.ProductOperations
         }
         public async Task Add(MasterTable data)
         {
+            data.IsActive = 0;
             _repo.Add(data);
             _repo.Save();
         }
 
         public async Task Delete(MasterTable entity)
         {
-            await _repo.Delete(entity);
+            entity.IsActive = 1;
+            await _repo.update(entity);
             await _repo.Save();
         }
 
@@ -36,7 +38,8 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<MasterTable>> GetAll()
         {
-            return await _repo.Get();
+            var result = await _repo.Get();
+            return result.Where(c=> c.IsActive.Equals(0));
         }
     }
 }

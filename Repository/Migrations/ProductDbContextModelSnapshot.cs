@@ -64,6 +64,9 @@ namespace Repository.Migrations
                         .HasColumnName("id")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<string>("content")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -81,6 +84,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("address")
                         .IsRequired()
@@ -140,6 +146,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MyCartid")
                         .HasColumnType("int");
 
@@ -167,6 +176,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<int>("addressId")
                         .HasColumnType("int");
@@ -230,6 +242,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<string>("createdBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -268,6 +283,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<string>("sessionId")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,6 +306,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("content")
                         .IsRequired()
@@ -355,6 +376,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ProductEntityId")
                         .HasColumnType("int");
 
@@ -382,6 +406,9 @@ namespace Repository.Migrations
                         .HasColumnName("id")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<string>("masterData")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -403,6 +430,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("description")
                         .HasMaxLength(250)
@@ -465,6 +495,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<string>("ram")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -485,6 +518,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<int?>("camFeatures")
                         .HasColumnType("int");
@@ -516,6 +552,9 @@ namespace Repository.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
+
                     b.Property<int>("specificationid")
                         .HasColumnType("int");
 
@@ -535,6 +574,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("createdBy")
                         .HasColumnType("nvarchar(max)");
@@ -562,6 +604,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserRegistrationUserId")
                         .HasColumnType("int");
@@ -618,6 +663,9 @@ namespace Repository.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IsActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()

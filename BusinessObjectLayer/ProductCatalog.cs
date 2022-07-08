@@ -23,7 +23,7 @@ namespace BusinessObjectLayer
 
         public async Task DeleteProduct(Product entity)
         {
-            _repo.Delete(entity);
+            _repo.update(entity);
             _repo.Save();
         }
 

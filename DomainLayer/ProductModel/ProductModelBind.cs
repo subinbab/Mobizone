@@ -8,5 +8,6 @@ namespace DomainLayer.ProductModel
     {
         public ProductEntity product { get; set; }
         public Images image { get; set; }
+        public int IsActive { get; set; }
     }
 }

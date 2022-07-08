@@ -36,6 +36,7 @@ namespace DomainLayer.Users
         public string additionalInfo { get; set; }
         [NotMapped]
         public bool IsChecked { get; set; }
+        public int IsActive { get; set; }
 
     }
 }

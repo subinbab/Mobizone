@@ -32,5 +32,6 @@ namespace DomainLayer.ProductModel
         public string os { get; set; }
         [Display(Name = " Cam Features")]
         public int? camFeatures { get; set; }
+        public int IsActive { get; set; }
     }
 }

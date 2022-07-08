@@ -43,6 +43,6 @@ namespace DomainLayer.Users
         [MaxLength(150)]
         public string modifiedBy { get; set; }
         public ICollection<Address> ? address { get; set; }
-
+        public int IsActive { get; set; }
     }
 }

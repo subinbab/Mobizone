@@ -12,5 +12,6 @@ namespace DomainLayer.ProductModel
         public string storage { get; set; }
         public int specificationid { get; set; }
         public Specificatiion specification { get; set; }
+        public int IsActive { get; set; }
     }
 }

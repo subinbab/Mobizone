@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -18,6 +19,7 @@ namespace BusinessObjectLayer
         {
             try
             {
+                data.IsActive = 0;
                 await _repo.Add(data);
                 await _repo.Save();
             }
@@ -34,9 +36,10 @@ namespace BusinessObjectLayer
         }
 
        
-        public Task<IEnumerable<About>> Get()
+        public async Task<IEnumerable<About>> Get()
         {
-            return _repo.Get();
+            var result = await _repo.Get();
+            return result.Where(c => c.IsActive.Equals(0));
         }
     }
 }

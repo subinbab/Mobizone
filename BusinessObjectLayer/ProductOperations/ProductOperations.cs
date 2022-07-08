@@ -28,6 +28,7 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task Add(ProductEntity product)
         {
+            product.IsActive = 0;
             _repo.Add(product);
             _repo.Save();
         }
@@ -36,7 +37,8 @@ namespace BusinessObjectLayer.ProductOperations
         {
             try
             {
-                await _repo.Delete(entity);
+                entity.IsActive = 1;
+                await _repo.update(entity);
                 await _repo.Save();
             }
             catch (Exception ex)

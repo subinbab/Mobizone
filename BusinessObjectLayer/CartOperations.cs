@@ -10,7 +10,6 @@ namespace BusinessObjectLayer
 {
     public class CartOperations : ICartOperations
     {
-        ProductDbContext _context;
         IRepositoryOperations<MyCart> _repo;
         public CartOperations(IRepositoryOperations<MyCart> repo)
         {
@@ -20,6 +19,7 @@ namespace BusinessObjectLayer
         {
             try
             {
+                entity.IsActive = 0;
                 await _repo.Add(entity);
                 await _repo.Save();
             }
@@ -31,7 +31,8 @@ namespace BusinessObjectLayer
 
         public async Task Delete(MyCart entity)
         {
-            await _repo.Delete(entity);
+            entity.IsActive = 1;
+            await _repo.Update(entity);
             await _repo.Save();
         }
 

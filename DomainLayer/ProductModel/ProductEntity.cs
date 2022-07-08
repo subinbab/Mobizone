@@ -53,7 +53,7 @@ namespace DomainLayer.ProductModel
         public string description { get; set; }
         [Column("PurchasedNumber", TypeName = "nvarchar", Order = 10)]
         public int? purchasedNumber { get; set; }
-        private int IsActive { get; set; }
+        public int IsActive { get; set; }
         public ProductStatus status { get; set; }
     }
 }
