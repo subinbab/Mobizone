@@ -38,7 +38,7 @@ namespace Repository
             
         }
 
-        public async Task update(T entity)
+        public async Task Delete(T entity)
         {
             try
             {

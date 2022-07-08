@@ -38,7 +38,7 @@ namespace BusinessObjectLayer.ProductOperations
             try
             {
                 entity.IsActive = 1;
-                await _repo.update(entity);
+                await _repo.Update(entity);
                 await _repo.Save();
             }
             catch (Exception ex)
@@ -68,28 +68,29 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
-            return await _repo.Get(n1=> n1.specs,n2=> n2.images , n3=> n3.specs.rams,n4=> n4.specs.storages);
+            var result = await _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams, n4 => n4.specs.storages);
+            return result.Where(c => c.IsActive.Equals(0));
         }
 
         public async Task<ProductEntity> GetById(int id)
         {
             var datalist = _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams,n4=> n4.specs.storages).Result;
-            return  datalist.Where(c => c.id.Equals(id)).FirstOrDefault();
+            return  datalist.Where(c => c.id.Equals(id)&& c.IsActive.Equals(0)).FirstOrDefault();
         }
 
         public async Task<IEnumerable<ProductEntity>> SortByPriceAscending()
         {
-            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderBy(c => c.price);
+            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderBy(c => c.price).Where(c=> c.IsActive.Equals(0));
         }
         public async Task<IEnumerable<ProductEntity>> SortByPriceDescending()
         {
-            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderByDescending(c => c.price);
+            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderByDescending(c => c.price).Where(c => c.IsActive.Equals(0));
         }
 
         public async Task<IEnumerable<ProductEntity>> FilterByBrand(string name)
         {
            var data = _repo.Get(n1 => n1.specs, n2 => n2.images).Result.Where(c => c.productBrand.Equals(name));
-            return data.OrderBy(c => c.productBrand);
+            return data.OrderBy(c => c.productBrand).Where(c => c.IsActive.Equals(0));
         }
 
         

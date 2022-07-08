@@ -15,7 +15,7 @@ namespace BusinessObjectLayer.ProductOperations
         public void delete(Images data)
         {
             data.IsActive=1;
-            _repo.update(data);
+            _repo.Update(data);
             _repo.Save();
         }
         public Task<IEnumerable<Images>> get()
