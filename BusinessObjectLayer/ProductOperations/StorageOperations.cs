@@ -27,7 +27,7 @@ namespace BusinessObjectLayer.ProductOperations
         public async Task DeleteProduct(Storage entity)
         {
             entity.IsActive = 1;
-            await _repo.update(entity);
+            await _repo.Update(entity);
             await _repo.Save();
         }
 

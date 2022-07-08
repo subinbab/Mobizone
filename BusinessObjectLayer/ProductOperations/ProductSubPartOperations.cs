@@ -32,7 +32,7 @@ namespace BusinessObjectLayer.ProductOperations
         public async Task DeleteProduct(ProductSubPart entity)
         {
             entity.IsActive = 1;
-            _repo.update(entity);
+            _repo.Update(entity);
             _repo.Save();
         }
 

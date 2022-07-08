@@ -890,5 +890,20 @@ namespace UIlayer.Controllers
             var data = _opApi.GetRams().Where(c => c.id.Equals(id)).FirstOrDefault();
             return View();
         }
+        [HttpGet("Admin/MasterDelete/{id}")]
+        public PartialViewResult MasterDelete(int id)
+        {
+            var result = _masterApi.GetAll().Where(c => c.id.Equals(id)).FirstOrDefault();
+            return PartialView(result);
+        }
+        [HttpPost]
+        public IActionResult MasterDelete(MasterTable masterTable)
+        {
+            var result = _masterApi.Delete(masterTable.id);
+            if (result)
+                _notyf.Success("Master Data is deleted succesfully");
+            _notyf.Error("Master Data is not deleted ");
+            return Redirect("/masterlist");
+        }
     }
 }
