@@ -1147,17 +1147,17 @@ return View("Index", result);
             UserRegistration user;
             user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var cartDataList = _userApi.GetCart().Result;
-            var vartData = cartDataList.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+            var cartData = cartDataList.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
             ProductEntity product;
             List<CartDetails> carts = new List<CartDetails>();
-            foreach (var cartDetails in vartData.cartDetails)
+            foreach (var cartDetails in cartData.cartDetails)
             {
                 product = _opApi.GetAll().Result.Where(c => c.id.Equals(cartDetails.productId)).FirstOrDefault();
                 cartDetails.product = product;
                 carts.Add(cartDetails);
             }
             ViewData["cartDetails"] = carts;
-            ViewData["cart"] = vartData;
+            ViewData["cart"] = cartData;
             ViewData["userData"] = user;
             ViewBag.ReturnUrl = "/user/cartorder";
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
