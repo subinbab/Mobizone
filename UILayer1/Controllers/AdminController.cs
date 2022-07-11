@@ -901,9 +901,14 @@ namespace UIlayer.Controllers
         {
             var result = _masterApi.Delete(masterTable.id);
             if (result)
+            {
                 _notyf.Success("Master Data is deleted succesfully");
-            _notyf.Error("Master Data is not deleted ");
-            return Redirect("/masterlist");
+            }
+            else
+            {
+                _notyf.Error("Master Data is not deleted ");
+            }  
+            return Redirect("/masterlist?id="+masterTable.parantId);
         }
     }
 }
