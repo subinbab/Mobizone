@@ -8,12 +8,13 @@
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var returnUrl = ViewBag.ReturnUrl as string;
-}<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
-<h3> Product Details </h3>
-<div class="sticky" width="50%" style="float: left; height: 79vh; background: aliceblue; margin: 2%; width: 71vh; ">
+<h3 style="margin-top:2%;margin-left:18%;"> Product Details </h3>
+<!--<div class="sticky" width="50%" style="float: left; height: 79vh; background: aliceblue; margin: 2%; width: 71vh; ">
     <p width="50%">
         <div class="row">
             <div class="col-2">
@@ -79,19 +80,19 @@
                     <li class="col-12">Operation System : @Model.specs.os</li>
                     <li class="col-12">Processor : @Model.specs.processor</li>
                     <li class="col-12">Cores : @Model.specs.core</li>
-                    <li class="col-12">Ram : 
+                    <li class="col-12">Ram :
                         @foreach (var item in Model.specs.rams.ToList())
                         {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
                     </li>
-                    <li class="col-12">Storage : 
+                    <li class="col-12">Storage :
                         @foreach (var item in Model.specs.storages.ToList())
                         {<span style="padding-right: 14px; border-block: outset;">@item.storage </span>}
                     </li>
                     <li class="col-12">Sim Type : @Model.specs.simType</li>
                     <li class="col-12">Rear Camera : @Model.specs.camFeatures</li>
-                    <li class="col-12">Quantity : @Model.quantity</li>
-                   @* <li class="col-12">Deacription:@Model.description</li>*@
-                </ul>
+                    <li class="col-12">Quantity : @Model.quantity</li>-->
+@* <li class="col-12">Deacription:@Model.description</li>*@
+<!--</ul>
             </td>
         </tr>
         <tr>
@@ -100,16 +101,16 @@
             </td>
             <td>
                 <ul>
-                    
+
                         @if(Model.description != null)
             {
                     <li>
                         @Model.description
                     </li>
                                     }
-                                    
 
-                                
+
+
                 </ul>
             </td>
         </tr>
@@ -146,8 +147,164 @@
 
         </div>
     </div>
+</div>-->
+
+<div class="row col-12" style="margin-top:4%">
+    <div class="col-4 _78xt5Y">
+        <div class="row col-12">
+            <div class="col-3 ">
+                @{if (Model.images == null)
+                    {
+                        <h1>No images</h1>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.images)
+                        {
+                            <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
+                        }
+                    }}
+            </div>
+            @{if (Model.images != null && Model.images.Any())
+                {
+
+                    <img class="card col-7 Image showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
+
+                }
+                else
+                {
+                    <p>No Image</p>
+                }}
+        </div>
+        
+    </div>
+    <div class="col-8">
+        <p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
+        <span class="card price"> &#8377 @Model.price</span>
+        <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Orders have been done for this Product</span></div>
+        <table class="table table-hover col-7">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Operation System</td>
+                    <td>@Model.specs.os</td>
+                </tr>
+                <tr>
+                    <td>Processor</td>
+                    <td>@Model.specs.processor</td>
+                </tr>
+                <tr>
+                    <td>Cores</td>
+                    <td>@Model.specs.core</td>
+                </tr>
+                <tr>
+                    <td>Ram</td>
+                    <td>
+                        @foreach (var item in Model.specs.rams.ToList())
+                        {<span>@item.ram </span>}
+                </td>
+            </tr>
+            <tr>
+                <td>Storage</td>
+                <td>
+                    @foreach (var item in Model.specs.storages.ToList())
+                    {<span>@item.storage </span>}
+                </td>
+            </tr>
+            <tr>
+                <td>Sim Type</td>
+                <td>@Model.specs.simType</td>
+            </tr>
+            <tr>
+                <td>Rear Camera</td>
+                <td>@Model.specs.simType</td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td>@Model.quantity</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>@Model.description</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-       
+</div>
+<script>
+
+    function showImage(data) {
+
+        $(".showimage").attr('src', data);
+    }
+</script>
+<style>
+    .sideImage {
+        width: 54px;
+        padding: 1%
+    }
+
+    .Image {
+        padding: 1%;
+    }
+
+    .heading {
+        font-size: 19px;
+        font-family: system-ui;
+        font-weight: bold;
+        margin-top: 2%;
+    }
+
+    .price {
+        padding: 1%;
+        border-radius: 24px;
+        min-width: 14%;
+        max-width: 20%;
+        font-weight: bold;
+        font-size: 24px;
+        color: tomato;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .buy {
+        text-align: center;
+        padding: 2%;
+        background-color: #ff0404;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    .cart {
+        text-align: center;
+        padding: 2%;
+        background-color: blue;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    ._78xt5Y {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 64px;
+        bottom: 0;
+        z-index: 2;
+        -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+    }
+</style>
+
+
+
+
 <style>
     div.sticky {
         position: -webkit-sticky;
