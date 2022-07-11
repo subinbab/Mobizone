@@ -11,11 +11,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
 
-<div class="sticky" width="50%" style="float: left; height: 79vh;  margin: 2%; width:28%; ">
-    <p width="50%">
-        <div class="row">
-            <div class="col-2">
-                @{if (Model.images == null)
+<div class="row col-12">
+    <div class="col-4 _78xt5Y"><div class="row col-12"><div class="col-3 ">
+        @{if (Model.images == null)
                     {
                         <h1>No iamges</h1>
                     }
@@ -23,183 +21,132 @@
                     {
                         foreach (var item in Model.images)
                         {
-                            <div class="card" style="width : 50px; height:100px;">
-                                <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
-
-                            </div>
+                                <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
                         }
-
-                    }}
-            </div>
-            <div class="col-10 row">
-                <div class="col-12">
-                    @{if (Model.images != null && Model.images.Any())
+                        }}
+    </div>
+    @{if (Model.images != null && Model.images.Any())
                         {
 
-                            <img class="showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
+                            <img class="card col-7 Image showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
 
                         }
                         else
                         {
                             <p>No Image</p>
                         }}
-                </div>
-
-            </div>
-            <div class="row col-12" style="padding:10px;">
-                <div class="col-6 "><a asp-action="order" asp-route-id="@Model.id" class="btn btn-orange buynow" style=" font-size: 10px; color: white;  width: 100%; background-color: #0099f3; " >Buy Now</a></div>
-                <div class="col-6 "><a asp-action="AddtoCart" asp-route-id="@Model.id" class="btn btn-orange buynow; " style="color: white; font-size: 10px; background-color: #e52d2e; letter-spacing: .1rem; width: 100%; ">Add to Cart</a></div>
-
-            </div>
-        </div>
-    </p>
+                        </div>
+    <div class="row col-12"><a class="col-5 buy">Buy</a><a class="col-5 cart">AddtoCart</a></div></div>
+    <div class="col-8"><p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
+        <span class="card price">&#8377 @Model.price</span>
+        <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Number of Orders have done of this Product</span></div>
+    <table class="table table-hover col-7">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Operation System</td>
+      <td>@Model.specs.os</td>
+    </tr>
+    <tr>
+      <td>Processor</td>
+      <td>@Model.specs.processor</td>
+    </tr>
+    <tr>
+      <td>Cores</td>
+      <td>@Model.specs.core</td>
+    </tr>
+    <tr>
+      <td>Ram</td>
+      <td>@foreach (var item in Model.specs.rams.ToList())
+                        {<span>@item.ram </span>}</td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td> @foreach (var item in Model.specs.storages.ToList())
+                        {<span>@item.storage </span>}</td>
+    </tr>
+    <tr>
+      <td>Sim Type</td>
+      <td>@Model.specs.simType</td>
+    </tr>
+    <tr>
+      <td>Rear Camera</td>
+      <td>@Model.specs.simType</td>
+    </tr>
+     <tr>
+      <td>Quantity</td>
+      <td>@Model.quantity</td>
+    </tr>
+     <tr>
+      <td>Description</td>
+      <td>@Model.description</td>
+    </tr>
+  </tbody>
+</table>
 </div>
-<div class="row col-6">
-    <div class="col-12 name">
-        @Model.name ( Ram( @if (Model.specs.rams != null && Model.specs.rams.Count() > 0)
-        {@Model.specs.rams.FirstOrDefault().ram}  ) , Storage(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
-        {@Model.specs.storages.FirstOrDefault().storage}))
-    </div>
-    <div class="col-12 price">Price : &#8377 @Model.price</div>
-    
-    <table class="specTable">
-        <tr>
-            <td>
-                Highlights
-            </td>
-            <td>
-                <ul class="row">
-                    <li class="col-12">Operation System : @Model.specs.os</li>
-                    <li class="col-12">Processor : @Model.specs.processor</li>
-                    <li class="col-12">Cores : @Model.specs.core</li>
-                    <li class="col-12">
-                        Ram :
-                        @foreach (var item in Model.specs.rams.ToList())
-                        {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
-                    </li>
-                    <li class="col-12">
-                        Storage :
-                        @foreach (var item in Model.specs.storages.ToList())
-                        {<span style="padding-right: 14px; border-block: outset;">@item.storage </span>}
-                    </li>
-                    <li class="col-12">Sim Type : @Model.specs.simType</li>
-                    <li class="col-12">Rear Camera : @Model.specs.camFeatures</li>
-                    <li class="col-12">Quantity : @Model.quantity</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Description
-            </td>
-            <td>
-                <ul>
-                    @if (Model.description != null)
-                    {
-                        <li>
-                            @Model.description
-                        </li>
-                    }
-                </ul>
-            </td>
-        </tr>
-    </table>
 </div>
-
-<style>
-    
-
-    .disableBtn {
-        text-align: center;
-        margin: 5%;
-        background: antiquewhite;
-        padding: 11px;
-    }
-
-    .specTable {
-        width: 100%;
-        margin-top: 3%;
-        font-size: 18px;
-    }
-
-    .name {
-        font-weight: bold;
-        margin: 19px;
-        font-size: 35px;
-    }
-
-    .price {
-        font-weight: bold;
-        font-size: 28px;
-    }
-
-    .quantity {
-        font-weight: bold;
-        font-size: 22px;
-    }
-</style>
 <script>
 
     function showImage(data) {
 
         $(".showimage").attr('src', data);
     }
-    function someFunction(data) {
-        var id = data;
-        $(document).ready(function (e) {
-            $.ajax({
-                url: '/admin/ProductDetails/AddImage/' + id,
-                type: 'get',
-                success: function (response) {
-                    $("#partialModal").find(".modal-body").html(response);
-                    $("#partialModal").modal('show');
-                },
-                failure: function (response) {
-                    alert("fail");
-                },
-                error: function (response) {
-                    console.log(response);
-                }
-            })
-
-        });
-    }
-
-
-
 </script>
 <style>
-    .col-6 {
-        padding-left: 36px;
+    .sideImage{
+        width:54px;
+        padding:1%
     }
-
-    p {
-        display: block;
+    .Image{
+        
+        padding:1%;
     }
+    .heading{
+    font-size: 19px;
+    font-family: system-ui;
+    font-weight: bold;
+    margin-top: 2%;
+}
+.price{
+    padding: 1%;
+    border-radius: 24px;
+    min-width: 14%;
+    max-width: 20%;
+    font-weight: bold;
+    font-size: 24px;
+    color: tomato;
+}
+.bold
+    {
+    font-weight: bold;
+}
+.buy{
+    text-align: center;
+    padding: 2%;
+    background-color: #ff0404;
+    margin: 4%;
+    border-radius: 28px;
+    color: white !important;
+    font-size: 20px;
+}
+.cart{
+    text-align: center;
+    padding: 2%;
+    background-color: blue;
+    margin: 4%;
+    border-radius: 28px;
+    color: white !important;
+    font-size: 20px;
+}
+._78xt5Y {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 64px;
+    bottom: 0;
+    z-index: 2;
+    -webkit-align-self: flex-start;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
 </style>
-
-<script>
-    function deleteImage(data) {
-        var id = data;
-        $.ajax({
-            url: 'DeleteImage/' + id,
-            type: 'get',
-            success: function (response) {
-                $("#partialModal").find(".modal-body").html(response);
-                $("#partialModal").modal('show');
-            },
-            failure: function (response) {
-                alert("fail");
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        })
-
-    }
-
-
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-</script>
