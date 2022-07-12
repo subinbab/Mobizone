@@ -23,19 +23,11 @@
                     {
                         foreach (var item in Model.images)
                         {
-<<<<<<< HEAD
+
                             <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
                             <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
                         }
-=======
-                            <div class="card sideImage">
-                                <img src="@item.imagePath" class=" sideImage" onclick="showImage('@item.imagePath');" />
-                                <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 28%; color:black; cursor: pointer; height: 16%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
-                            </div>
-                        }
-                        <i class="fa fa-plus add-image addImageIcon" onclick="someFunction(@Model.id)" aria-hidden="true" ></i>
 
->>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
                     }}
             </div>
             @{if (Model.images != null && Model.images.Any())
@@ -49,10 +41,7 @@
                     <p>No Image</p>
                 }}
         </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
     </div>
     <div class="col-8">
         <p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
