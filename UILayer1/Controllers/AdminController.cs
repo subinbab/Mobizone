@@ -228,8 +228,8 @@ namespace UIlayer.Controllers
             ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
             ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
             ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = ramList;
-            ViewBag.Storage = storageList;
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
             ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
 
             return View("Create", data);
@@ -901,9 +901,14 @@ namespace UIlayer.Controllers
         {
             var result = _masterApi.Delete(masterTable.id);
             if (result)
+            {
                 _notyf.Success("Master Data is deleted succesfully");
-            _notyf.Error("Master Data is not deleted ");
-            return Redirect("/masterlist");
+            }
+            else
+            {
+                _notyf.Error("Master Data is not deleted ");
+            }  
+            return Redirect("/masterlist?id="+masterTable.parantId);
         }
     }
 }

@@ -23,9 +23,19 @@
                     {
                         foreach (var item in Model.images)
                         {
+<<<<<<< HEAD
                             <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
                             <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
                         }
+=======
+                            <div class="card sideImage">
+                                <img src="@item.imagePath" class=" sideImage" onclick="showImage('@item.imagePath');" />
+                                <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 28%; color:black; cursor: pointer; height: 16%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
+                            </div>
+                        }
+                        <i class="fa fa-plus add-image addImageIcon" onclick="someFunction(@Model.id)" aria-hidden="true" ></i>
+
+>>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
                     }}
             </div>
             @{if (Model.images != null && Model.images.Any())
@@ -39,7 +49,10 @@
                     <p>No Image</p>
                 }}
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
     </div>
     <div class="col-8">
         <p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
@@ -89,12 +102,17 @@
             </tr>
             <tr>
                 <td>Description</td>
+<<<<<<< HEAD
                 <td>@Model.description</td>
+=======
+                <td>@Html.Raw(Model.description)</td>
+>>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
             </tr>
         </tbody>
     </table>
 </div>
 </div>
+<<<<<<< HEAD
 <script>
 
     function showImage(data) {
@@ -164,6 +182,38 @@
         align-self: flex-start;
     }
 </style>
+=======
+<div id="deleteModel" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="partialModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+
+        </div>
+    </div>
+</div>
+>>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
 <script>
 
     function showImage(data) {
@@ -190,8 +240,81 @@
 
         });
     }
+<<<<<<< HEAD
 
 </script>
+=======
+</script>
+<style>
+    .sideImage {
+        width: 54px;
+        padding: 1%
+    }
+
+    .Image {
+        padding: 1%;
+    }
+
+    .heading {
+        font-size: 19px;
+        font-family: system-ui;
+        font-weight: bold;
+        margin-top: 2%;
+    }
+
+    .price {
+        padding: 1%;
+        border-radius: 24px;
+        min-width: 14%;
+        max-width: 20%;
+        font-weight: bold;
+        font-size: 24px;
+        color: tomato;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .buy {
+        text-align: center;
+        padding: 2%;
+        background-color: #ff0404;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    .cart {
+        text-align: center;
+        padding: 2%;
+        background-color: blue;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    ._78xt5Y {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 64px;
+        bottom: 0;
+        z-index: 2;
+        -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+    }
+    .addImageIcon {
+        padding: 16px;
+        border-block: 1px black;
+        border: 2px solid;
+        margin-top: 11px;
+        width: 69%;
+    }
+</style>
+>>>>>>> 72cad8c94d3662305a0996d24350f00d9943122f
 <script>
     function deleteImage(data) {
         var id = data;
@@ -199,8 +322,8 @@
             url: 'DeleteImage?id=' + id,
             type: 'get',
             success: function (response) {
-                $("#partialModal").find(".modal-body").html(response);
-                $("#partialModal").modal('show');
+                $("#deleteModel").find(".modal-body").html(response);
+                $("#deleteModel").modal('show');
             },
             failure: function (response) {
                 alert("fail");

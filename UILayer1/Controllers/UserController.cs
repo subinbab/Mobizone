@@ -40,10 +40,11 @@ namespace UILayer.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
         List<MyCart> _carts = null;
-        IUserApi _userApi; 
+        IUserApi _userApi;
         UserRegistration _user { get; set; }
         private readonly IDistributedCache _distributedCache;
         CartLib cartLib = null;
+
         CacheData cacheData = null;
         IProductOpApi _productOpApi;
         public IEnumerable<ProductEntity> _products;
@@ -61,9 +62,9 @@ namespace UILayer.Controllers
             _carts = new List<MyCart>();
             // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.WebLink = _configuration.GetSection("Development:WebLink").Value;
-            cartLib = new CartLib(_opApi,_userApi,_distributedCache);
-            _productOpApi = productOpApi;
-            cacheData = new CacheData(_distributedCache, _productOpApi);
+            cartLib = new CartLib(_opApi, _userApi, _distributedCache);
+
+
 
         }
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
@@ -157,8 +158,6 @@ namespace UILayer.Controllers
         public async Task<IActionResult> Registration(UserViewModel user)
         {
             UserApi userApi = new UserApi(_configuration);
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var userList = userApi.GetUserData();
             if (userList.Any(c => c.Email.Equals(user.Email)))
             {
@@ -208,8 +207,6 @@ namespace UILayer.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgetPasswordViewModel data)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             if (ModelState.IsValid)
             {
                 HttpContext.Session.SetString("Email", "hello");
@@ -222,7 +219,7 @@ namespace UILayer.Controllers
                     var webLink = _configuration.GetSection("Development:WebLink").Value;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hi, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
+                    mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hi, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='" + webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = _userApi.PostMail(mailRequest);
@@ -233,7 +230,7 @@ namespace UILayer.Controllers
                 {
                     ViewBag.check = true;
                 }
-               
+
 
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -243,8 +240,6 @@ namespace UILayer.Controllers
         [HttpGet("/user/ResetPassword/{email}/{sessionId}")]
         public ActionResult ResetPassword(string email, string sessionId)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             if (sessionId == HttpContext.Session.Id)
             {
                 var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
@@ -261,14 +256,12 @@ namespace UILayer.Controllers
         [HttpPost]
         public ActionResult ResetPassword(ResetPassword resetPassword)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             try
             {
                 UserRegistration register = new UserRegistration();
                 register = _userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
                 Security _sec = new Security();
-                register.Password = _sec.Encrypt("admin",resetPassword.newPassword);
+                register.Password = _sec.Encrypt("admin", resetPassword.newPassword);
                 var result = _userApi.EditUser(register);
                 return Redirect("/Login");
             }
@@ -325,15 +318,13 @@ namespace UILayer.Controllers
             ViewBag.ReturnUrl = "/user/order/" + id;
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View("order");
         }
         [HttpPost("/user/order")]
-        public PartialViewResult order(Checkout checkout,int addressId)
+        public PartialViewResult order(Checkout checkout, int addressId)
         {
             if (checkout == null)
             {
@@ -352,7 +343,7 @@ namespace UILayer.Controllers
                 {
                     data.status = ProductStatus.disable;
                 }
-                foreach(var address in checkout.addressList)
+                foreach (var address in checkout.addressList)
                 {
                     if (address.IsChecked)
                     {
@@ -398,33 +389,19 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult AddtoCart()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             List<CartDetails> cartList = new List<CartDetails>();
             try
             {
-                
-                if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin") 
+                if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
                 {
                     var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                    try
-                    {
-                        string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
-                        if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
-                        {
-                            _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                        }
 
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                    
-                    cartList = cartLib.GetCartDetailsList(_carts, user); 
+                    cartList = cartLib.GetCartDetailsList(user);
+
                 }
                 else
                 {
@@ -441,10 +418,11 @@ namespace UILayer.Controllers
                     catch (Exception ex)
                     {
                     }
-                    cartList = cartLib.GetCartDetailsList(_carts, HttpContext.Session.Id);
+                    cartList = cartLib.GetCartDetailsList(HttpContext.Session.Id);
+
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 cartList = null;
             }
@@ -457,7 +435,6 @@ namespace UILayer.Controllers
             HttpContext.Session.SetString("testKey", "testValue");
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
-                int cartDetailsCheck = 0;
                 UserRegistration user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
                 var result = cartLib.AddtoCart(id, user, HttpContext.Session.Id);
             }
@@ -467,13 +444,6 @@ namespace UILayer.Controllers
             }
             return Redirect("/user/Addtocart");
         }
-
-
-        public IActionResult AddtoCartPage()
-        {
-            return View();
-        }
-
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -482,8 +452,6 @@ namespace UILayer.Controllers
         public IActionResult ManageAddress()
         {
             ViewBag.ReturnUrl = "/user/ManageAddress";
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
@@ -491,8 +459,6 @@ namespace UILayer.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Account()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
@@ -501,8 +467,6 @@ namespace UILayer.Controllers
         [HttpGet("/user/DeleteAddress/{id}")]
         public IActionResult DeleteAddress(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var result = _userApi.DeleteAddress(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -511,10 +475,8 @@ namespace UILayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Address(int id , string ReturnUrl)
+        public IActionResult Address(int id, string ReturnUrl)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.ReturnUrl = ReturnUrl;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
@@ -522,10 +484,8 @@ namespace UILayer.Controllers
             return View(address);
         }
         [HttpPost("/user/address")]
-        public IActionResult Address(Address addreses,string ReturnUrl)
+        public IActionResult Address(Address addreses, string ReturnUrl)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -538,14 +498,14 @@ namespace UILayer.Controllers
             }
             return Redirect(ReturnUrl);
         }
-        
+
 
 
         public IActionResult Sort()
         {
             int count = 0;
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
             var productCount = SortedData.Count();
@@ -560,9 +520,9 @@ namespace UILayer.Controllers
             }
             ViewBag.count = cout;
             var result = SortedData.Skip((int)count * 12).Take(12);
-return View("Index", result);
-}
-        public async Task<PartialViewResult> sortLowToHighPartial(int? count, string brandName ,string name)
+            return View("Index", result);
+        }
+        public async Task<PartialViewResult> sortLowToHighPartial(int? count, string brandName, string name)
         {
             if (brandName == "null")
                 brandName = null;
@@ -589,7 +549,7 @@ return View("Index", result);
                 count = 0;
             }
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var productCount = SortedData.Count();
             int cout = 0;
@@ -614,7 +574,7 @@ return View("Index", result);
             var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("Index", SortedData);
         }
-        public PartialViewResult SortHighToLowPartial(int? count , string brandName, string name)
+        public PartialViewResult SortHighToLowPartial(int? count, string brandName, string name)
         {
             if (brandName == "null")
                 brandName = null;
@@ -623,7 +583,7 @@ return View("Index", result);
             IEnumerable<ProductEntity> SortedData = null;
             if (brandName != null && name != "null")
             {
-                SortedData = _opApi.Filter(brandName).Result.OrderByDescending(c=>c.price);
+                SortedData = _opApi.Filter(brandName).Result.OrderByDescending(c => c.price);
             }
             else if (name != null && name != "null")
             {
@@ -640,7 +600,7 @@ return View("Index", result);
             ViewBag.Title = " Mobizone - Price(High To Low)";
 
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            
+
             var productCount = SortedData.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
@@ -697,7 +657,7 @@ return View("Index", result);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         public IActionResult MyOrders()
         {
             ViewBag.Status = Enum.GetNames(typeof(OrderStatus)).ToList();
@@ -711,8 +671,6 @@ return View("Index", result);
             }
             ViewBag.count = 0;
             ViewBag.currentCount = count;
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
             foreach (var checkOutData in userOrders)
@@ -745,10 +703,8 @@ return View("Index", result);
             ViewBag.currentCount = count;
             IEnumerable<Checkout> userOrders = null;
             Enum.TryParse(statusName, out OrderStatus myStatus);
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-            if(statusName != null)
+            if (statusName != null)
             {
                 userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId) && c.status.Equals(myStatus));
             }
@@ -779,7 +735,7 @@ return View("Index", result);
         [HttpGet]
         public IActionResult OrderDetails(int id)
         {
-            ViewBag.ReturnUrl = "/user/OrderDetails?id="+id;
+            ViewBag.ReturnUrl = "/user/OrderDetails?id=" + id;
             if (id == 0)
             {
                 return View("Index");
@@ -822,8 +778,6 @@ return View("Index", result);
         [HttpPost]
         public IActionResult quantity(int quantity, int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
@@ -840,8 +794,6 @@ return View("Index", result);
         [HttpGet]
         public IActionResult RemoveCart(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
@@ -895,11 +847,9 @@ return View("Index", result);
             return Redirect("/user/Addtocart");
         }
         [HttpGet]
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         public IActionResult CartOrder()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
             user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var cartDataList = _userApi.GetCart().Result;
@@ -921,8 +871,6 @@ return View("Index", result);
         }
         public IActionResult BuyCart(Checkout checkout)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
             user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             MyCart myCart = new MyCart();
@@ -932,7 +880,7 @@ return View("Index", result);
                 var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
                 caratDetailsData.product = product;
             }
-            foreach(var data in myCart.cartDetails)
+            foreach (var data in myCart.cartDetails)
             {
                 Checkout checkout1 = new Checkout();
                 checkout1.productId = data.productId;
@@ -958,7 +906,7 @@ return View("Index", result);
             return View("orderplaced");
         }
         [HttpGet("/user/CancelCheckout/{orderId}")]
-        public async Task<IActionResult> CancelCheckout(int orderId,string? returnUrl)
+        public async Task<IActionResult> CancelCheckout(int orderId, string? returnUrl)
         {
             Checkout checkout = new Checkout();
             OrderStatus statuses = new OrderStatus();
@@ -967,7 +915,7 @@ return View("Index", result);
             checkoutData.status = OrderStatus.cancelled;
             checkoutData.cancelRequested = RoleTypes.User;
             _userApi.EditCheckout(checkoutData);
-            if(returnUrl != null)
+            if (returnUrl != null)
             {
                 return Redirect(returnUrl);
             }
@@ -976,173 +924,32 @@ return View("Index", result);
         [HttpGet]
         public IActionResult minus(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-
-                MyCart myCart = new MyCart();
-                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                foreach (var caratDetailsData in myCart.cartDetails)
-                {
-                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                    caratDetailsData.product = product;
-                }
-                foreach (var mycartData in myCart.cartDetails)
-                {
-                    if (mycartData.productId.Equals(id))
-                    {
-                        if ((mycartData.quantity - 1) * mycartData.product.price > 0)
-                        {
-                            mycartData.quantity = mycartData.quantity - 1;
-                            mycartData.price = mycartData.quantity * mycartData.product.price;
-                        }
-    }
-}
-_userApi.EditCart(myCart);
-}
-else
-{
-string name = _distributedCache.GetStringAsync("cart").Result;
-_carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-if (_carts != null || _carts.Count > 0)
-{
-    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-    {
-        foreach (var data in _carts)
-        {
-            foreach (var caratDetailsData in data.cartDetails)
-            {
-                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                caratDetailsData.product = product;
+                cartLib.Minus(id, user);
             }
-            if (data.sessionId.Equals(HttpContext.Session.Id))
+            else
             {
-
-                foreach (var data1 in data.cartDetails)
-                {
-                    if (data1.productId.Equals(id))
-                    {
-                        if ((data1.quantity-1) * data1.product.price > 0)
-                        {
-                            data1.quantity = data1.quantity - 1;
-                            data1.price = data1.quantity * data1.product.price;
-                        }
-                        /*cartList.Add(data1);*/
-                    }
-                    else
-                                    {
-
-                                    }
-
-                                }
-                            }
-
-                            /*  cartListSession.Add(data);*/
-                        }
-
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-                }
+                cartLib.Minus(id, HttpContext.Session.Id);
             }
             return Redirect("/user/Addtocart");
         }
         [HttpGet]
         public IActionResult plus(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                cartLib.Plus(id, user);
 
-                MyCart myCart = new MyCart();
-                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                foreach (var caratDetailsData in myCart.cartDetails)
-                {
-                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                    caratDetailsData.product = product;
-                }
-                foreach (var mycartData in myCart.cartDetails)
-                {
-                    if (mycartData.productId.Equals(id))
-                    {
-                        mycartData.quantity = mycartData.quantity + 1;
-                        mycartData.price = mycartData.quantity * mycartData.product.price;
-                    }
-                }
-                var checkNegative = myCart.cartDetails.Where(c => c.price > 0);
-                if (checkNegative != null)
-                {
-                    _userApi.EditCart(myCart);
-                }
-                
+
             }
             else
             {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null || _carts.Count > 0)
-                {
-                    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-                    {
-                        foreach (var data in _carts)
-                        {
-                            foreach (var caratDetailsData in data.cartDetails)
-                            {
-                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                                caratDetailsData.product = product;
-                            }
-                            if (data.sessionId.Equals(HttpContext.Session.Id))
-                            {
-
-                                foreach (var data1 in data.cartDetails)
-                                {
-                                    if (data1.productId.Equals(id))
-                                    {
-                                      
-                                            data1.quantity = data1.quantity + 1;
-                                            data1.price = data1.quantity * data1.product.price;
-                                        
-                                        
-                                        /*cartList.Add(data1);*/
-                                    }
-                                    else
-                                    {
-
-                                    }
-
-                                }
-                            }
-
-                            /*  cartListSession.Add(data);*/
-                        }
-
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-                }
+                cartLib.Plus(id, HttpContext.Session.Id);
             }
             return Redirect("/user/Addtocart");
-             int pagination(int count)
-            {
-                int cout = 0;
-                for (int i = 0; i <= 0; i++)
-                {
-                    if (count > 10)
-                    {
-                        cout += 1;
-                    }
-                    count = count - 10;
-                }
-                return cout;
-            }
-        }
-        public class quantityObj
-        {
-            public int quantity { get; set; }
         }
 
     }
@@ -1271,7 +1078,3 @@ if (_carts != null || _carts.Count > 0)
         }
     }
 }
-
-
-
-

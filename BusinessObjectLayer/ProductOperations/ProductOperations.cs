@@ -68,23 +68,23 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<ProductEntity>> GetAll()
         {
-            var result = await _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams, n4 => n4.specs.storages);
+            var result = await _repo.Get(n1 => n1.specs, n2 => n2.images.Where(c=>c.IsActive.Equals(0)), n3 => n3.specs.rams.Where(c => c.IsActive.Equals(0)), n4 => n4.specs.storages.Where(c => c.IsActive.Equals(0)));
             return result.Where(c => c.IsActive.Equals(0));
         }
 
         public async Task<ProductEntity> GetById(int id)
         {
-            var datalist = _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams,n4=> n4.specs.storages).Result;
+            var datalist = _repo.Get(n1 => n1.specs, n2 => n2.images.Where(c => c.IsActive.Equals(0)), n3 => n3.specs.rams.Where(c => c.IsActive.Equals(0)), n4=> n4.specs.storages.Where(c => c.IsActive.Equals(0))).Result;
             return  datalist.Where(c => c.id.Equals(id)&& c.IsActive.Equals(0)).FirstOrDefault();
         }
 
         public async Task<IEnumerable<ProductEntity>> SortByPriceAscending()
         {
-            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderBy(c => c.price).Where(c=> c.IsActive.Equals(0));
+            return _repo.Get(n1 => n1.specs, n2 => n2.images.Where(c => c.IsActive.Equals(0))).Result.OrderBy(c => c.price).Where(c=> c.IsActive.Equals(0));
         }
         public async Task<IEnumerable<ProductEntity>> SortByPriceDescending()
         {
-            return _repo.Get(n1 => n1.specs, n2 => n2.images).Result.OrderByDescending(c => c.price).Where(c => c.IsActive.Equals(0));
+            return _repo.Get(n1 => n1.specs, n2 => n2.images.Where(c => c.IsActive.Equals(0))).Result.OrderByDescending(c => c.price).Where(c => c.IsActive.Equals(0));
         }
 
         public async Task<IEnumerable<ProductEntity>> FilterByBrand(string name)
