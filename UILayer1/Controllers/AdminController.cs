@@ -228,8 +228,8 @@ namespace UIlayer.Controllers
             ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
             ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
             ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
-            ViewBag.Ram = ramList;
-            ViewBag.Storage = storageList;
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
             ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
 
             return View("Create", data);
