@@ -1,155 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
 @model DomainLayer.ProductModel.ProductEntity
 @{
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var returnUrl = ViewBag.ReturnUrl as string;
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">*@
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
-<h3 style="margin-top:2%;margin-left:18%;"> Product Details </h3>
-<!--<div class="sticky" width="50%" style="float: left; height: 79vh; background: aliceblue; margin: 2%; width: 71vh; ">
-    <p width="50%">
-        <div class="row">
-            <div class="col-2">
-                @{if (Model.images == null)
-                    {
-                        <h1>No iamges</h1>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.images)
-                        {
-                            <div class="card" style="width : 50px; height:100px;">
-                                <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
-                                <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
 
-                            </div>
-                        }
-                        <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" aria-hidden="true" style="padding: 16px;border-block: 1px black;border: 2px solid;margin-top: 11px; margin"></i>
-                    }}
-            </div>
-            <div class="col-10 row">
-                <div class="col-12">
-                    @{if (Model.images != null && Model.images.Any())
-                        {
-
-                            <img class="showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
-
-                        }
-                        else
-                        {
-                            <p>No Image</p>
-                        }}
-                </div>
-                <div class="disableBtn col-12">
-                    @if (Model.status == 0)
-                    {
-                        <a href="/admin/disable/@Model.id?ReturnUrl=@returnUrl">Disable</a>
-                    }
-                    else
-                    {
-                        <a href="/admin/enable/@Model.id?ReturnUrl=@returnUrl">Enable</a>
-                    }
-                    </div>
-            </div>
-        </div>
-    </p>
-</div>
-<div class="row col-6">
-    <div class="col-12 name">
-        @Model.name ( Ram( @if (Model.specs.rams != null && Model.specs.rams.Count() > 0)
-        {@Model.specs.rams.FirstOrDefault().ram}  ) , Storage(@if (Model.specs.storages != null && Model.specs.storages.Count() > 0)
-        {@Model.specs.storages.FirstOrDefault().storage}))
-    </div>
-    <div class="col-12 price">Price : &#8377 @Model.price</div>
-    <div class="col-12 row" style="margin-top:14px;"><div class="col-6 quantity">Curent Quantity :  @Model.quantity</div><div class="col-6"><form asp-action="quatity" method="post"><input asp-for="model" type="hidden" /><input name="newQuantity" required type="number" /><button>ADD</button></form></div></div>
-    <table class="specTable">
-        <tr>
-            <td>
-                Highlights
-            </td>
-            <td>
-                <ul class="row">
-                    <li class="col-12">Operation System : @Model.specs.os</li>
-                    <li class="col-12">Processor : @Model.specs.processor</li>
-                    <li class="col-12">Cores : @Model.specs.core</li>
-                    <li class="col-12">Ram :
-                        @foreach (var item in Model.specs.rams.ToList())
-                        {<span style="padding-right:14px; border-block: outset;">@item.ram </span>}
-                    </li>
-                    <li class="col-12">Storage :
-                        @foreach (var item in Model.specs.storages.ToList())
-                        {<span style="padding-right: 14px; border-block: outset;">@item.storage </span>}
-                    </li>
-                    <li class="col-12">Sim Type : @Model.specs.simType</li>
-                    <li class="col-12">Rear Camera : @Model.specs.camFeatures</li>
-                    <li class="col-12">Quantity : @Model.quantity</li>-->
-@* <li class="col-12">Deacription:@Model.description</li>*@
-<!--</ul>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Description
-            </td>
-            <td>
-                <ul>
-
-                        @if(Model.description != null)
-            {
-                    <li>
-                        @Model.description
-                    </li>
-                                    }
-
-
-
-                </ul>
-            </td>
-        </tr>
-    </table>
-</div>
-<div id="partialModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div id="deleteModel" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-
-        </div>
-    </div>
-</div>-->
-
-<div class="row col-12" style="margin-top:4%">
+<div class="row col-12">
     <div class="col-4 _78xt5Y">
         <div class="row col-12">
             <div class="col-3 ">
@@ -162,6 +24,7 @@
                         foreach (var item in Model.images)
                         {
                             <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
+                            <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
                         }
                     }}
             </div>
@@ -176,12 +39,12 @@
                     <p>No Image</p>
                 }}
         </div>
-        
+
     </div>
     <div class="col-8">
         <p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
         <span class="card price"> &#8377 @Model.price</span>
-        <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Orders have been done for this Product</span></div>
+        <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Number of Orders have done of this Product</span></div>
         <table class="table table-hover col-7">
             <thead>
             </thead>
@@ -301,49 +164,6 @@
         align-self: flex-start;
     }
 </style>
-
-
-
-
-<style>
-    div.sticky {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        background-color: yellow;
-        padding: 50px;
-        font-size: 20px;
-    }
-
-    .disableBtn {
-        text-align: center;
-        margin: 5%;
-        background: antiquewhite;
-        padding: 11px;
-    }
-
-    .specTable {
-        width: 100%;
-        margin-top: 3%;
-        font-size: 18px;
-    }
-
-    .name {
-        font-weight: bold;
-        margin: 19px;
-        font-size: 35px;
-    }
-
-    .price {
-        font-weight: bold;
-        font-size: 28px;
-    }
-
-    .quantity {
-        font-weight: bold;
-        font-size: 22px;
-    }
-</style>
 <script>
 
     function showImage(data) {
@@ -371,19 +191,7 @@
         });
     }
 
-
-
 </script>
-<style>
-    .col-6 {
-        padding-left: 36px;
-    }
-
-    p {
-        display: block;
-    }
-</style>
-
 <script>
     function deleteImage(data) {
         var id = data;

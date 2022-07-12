@@ -12,8 +12,10 @@
 
 
 <div class="row col-12">
-    <div class="col-4 _78xt5Y"><div class="row col-12"><div class="col-3 ">
-        @{if (Model.images == null)
+    <div class="col-4 _78xt5Y">
+        <div class="row col-12">
+            <div class="col-3 ">
+                @{if (Model.images == null)
                     {
                         <h1>No images</h1>
                     }
@@ -21,22 +23,24 @@
                     {
                         foreach (var item in Model.images)
                         {
-                                <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
+                            <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
                         }
-                        }}
+                    }}
+            </div>
+            @{if (Model.images != null && Model.images.Any())
+                {
+
+                    <img class="card col-7 Image showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
+
+                }
+                else
+                {
+                    <p>No Image</p>
+                }}
+        </div>
+         <div class="row col-12"><a class="col-5 buy" asp-action="Order" >Buy Now</a><a class="col-5 cart" asp-action="AddtoCart">Add to Cart</a></div>
+       
     </div>
-    @{if (Model.images != null && Model.images.Any())
-                        {
-
-                            <img class="card col-7 Image showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
-
-                        }
-                        else
-                        {
-                            <p>No Image</p>
-                        }}
-                        </div>
-    <div class="row col-12"><a class="col-5 buy">Buy</a><a class="col-5 cart">AddtoCart</a></div></div>
     <div class="col-8"><p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
                        <span class="card price"> &#8377 @Model.price</span>
         <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Number of Orders have done of this Product</span></div>
@@ -121,24 +125,24 @@
     {
     font-weight: bold;
 }
-.buy{
-    text-align: center;
-    padding: 2%;
-    background-color: #ff0404;
-    margin: 4%;
-    border-radius: 28px;
-    color: white !important;
-    font-size: 20px;
-}
-.cart{
-    text-align: center;
-    padding: 2%;
-    background-color: blue;
-    margin: 4%;
-    border-radius: 28px;
-    color: white !important;
-    font-size: 20px;
-}
+    .buy {
+        text-align: center;
+        padding: 2%;
+        background-color: #0099f3;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+    .cart {
+        text-align: center;
+        padding: 2%;
+        background-color: #e52d2e;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
 ._78xt5Y {
     position: -webkit-sticky;
     position: sticky;
