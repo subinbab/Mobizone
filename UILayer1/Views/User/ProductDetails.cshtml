@@ -15,7 +15,7 @@
     <div class="col-4 _78xt5Y"><div class="row col-12"><div class="col-3 ">
         @{if (Model.images == null)
                     {
-                        <h1>No iamges</h1>
+                        <h1>No images</h1>
                     }
                     else
                     {
@@ -36,9 +36,15 @@
                             <p>No Image</p>
                         }}
                         </div>
+<<<<<<< HEAD
     <div class="row col-12"><a class="col-5 buy" asp-action="order" asp-route-id="@Model.id">Buy</a><a class="col-5 cart" asp-action="AddtoCart" asp-route-id="@Model.id">AddtoCart</a></div></div>
     <div class="col-8"><p class="heading">@Model.name @Model.productBrand                                                                                                                                                              </p>
         <span class="card price">&#8377 @Model.price</span>
+=======
+    <div class="row col-12"><a class="col-5 buy">Buy</a><a class="col-5 cart">AddtoCart</a></div></div>
+    <div class="col-8"><p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
+                       <span class="card price"> &#8377 @Model.price</span>
+>>>>>>> f2c3ccdf1d363d9a0f5f5644b15aaed3c75e8691
         <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Number of Orders have done of this Product</span></div>
     <table class="table table-hover col-7">
   <thead>
