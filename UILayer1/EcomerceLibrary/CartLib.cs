@@ -24,10 +24,11 @@ namespace UILayer.EcomerceLibrary
             _userApi = userApi;
             _distributedCache = distributedCache;
         }
-        public List<CartDetails> GetCartDetailsList(List<MyCart> cart ,UserRegistration user)
+        public List<CartDetails> GetCartDetailsList(UserRegistration user)
         {
-            _carts = cart;
+            _carts = _userApi.GetCart().Result.ToList();
             _cartDetails = new List<CartDetails>();
+
             try
             {
                 if (IsExist(user))
@@ -47,17 +48,19 @@ namespace UILayer.EcomerceLibrary
                     data.product = product;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+
             {
 
             }
             return _cartDetails;
         }
-        public List<CartDetails> GetCartDetailsList(List<MyCart> cart, string sessionId)
+        public List<CartDetails> GetCartDetailsList(string sessionId)
         {
             try
             {
-                _carts = cart;
+                _carts = CartFromSession();
+
                 _cartDetails = new List<CartDetails>();
                 if (_carts.ToList().Where(c => c.sessionId.Equals(sessionId)) != null)
                 {
@@ -78,7 +81,8 @@ namespace UILayer.EcomerceLibrary
                     data.product = product;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+
             {
 
             }
@@ -87,13 +91,14 @@ namespace UILayer.EcomerceLibrary
         public bool IsExist(UserRegistration user)
         {
             productCartListFromDb = _userApi.GetCart().Result;
-            if(productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
+            if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
             {
                 return true;
             }
-                return false;
+            return false;
         }
-        public bool AddtoCart(int id , UserRegistration user,string sessionId)
+        public bool AddtoCart(int id, UserRegistration user, string sessionId)
+
         {
 
             try
@@ -104,7 +109,6 @@ namespace UILayer.EcomerceLibrary
                 cartDetails.quantity = 1;
                 var productData = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
                 cartDetails.price = 1 * productData.price;
-                
                 IEnumerable<MyCart> productCartListFromDb = _userApi.GetCart().Result;
                 if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
                 {
@@ -153,7 +157,7 @@ namespace UILayer.EcomerceLibrary
                 return false;
             }
         }
-        public bool AddtoCart(int id ,string sessionId)
+        public bool AddtoCart(int id, string sessionId)
         {
             CartDetails cartDetails = new CartDetails();
             MyCart cart = new MyCart();
@@ -167,9 +171,8 @@ namespace UILayer.EcomerceLibrary
             _carts = new List<MyCart>();
             try
             {
-                
                 _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null)
+                if (_carts != null && _carts.Count()!=0)
                 {
                     if (_carts.ToList().Any(c => c.sessionId.Equals(sessionId)))
                     {
@@ -215,6 +218,9 @@ namespace UILayer.EcomerceLibrary
                 else
                 {
                     _carts = new List<MyCart>();
+                    _cartDetails.Add(cartDetails);
+                    cart.cartDetails = _cartDetails;
+                    cart.sessionId = sessionId;
                     _carts.Add(cart);
                     _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                 }
@@ -231,7 +237,8 @@ namespace UILayer.EcomerceLibrary
             }
             return false;
         }
-        public bool Quantity(int id , int quantity , UserRegistration user)
+
+        public bool Quantity(int id, int quantity, UserRegistration user)
         {
             try
             {
@@ -250,12 +257,13 @@ namespace UILayer.EcomerceLibrary
                 _userApi.EditCart(myCart);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
+
             {
                 return false;
             }
         }
-        public bool Quantity(int id ,int quantity,string sessionId)
+        public bool Quantity(int id, int quantity, string sessionId)
         {
             try
             {
@@ -298,12 +306,14 @@ namespace UILayer.EcomerceLibrary
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
+
             {
                 return false;
             }
         }
-        public bool RemoveCart(int id,UserRegistration user)
+
+        public bool RemoveCart(int id, UserRegistration user)
         {
             try
             {
@@ -342,6 +352,204 @@ namespace UILayer.EcomerceLibrary
                         }
                     }
                     _userApi.EditCart(myCart);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public List<MyCart> CartFromDb()
+        {
+            try
+            {
+                string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
+                if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+                }
+                return _carts;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public List<MyCart> CartFromSession()
+        {
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
+                {
+                    _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+                }
+                return _carts;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public bool Plus(int id, UserRegistration user)
+        {
+            try
+            {
+                MyCart myCart = new MyCart();
+                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                foreach (var caratDetailsData in myCart.cartDetails)
+                {
+                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                    caratDetailsData.product = product;
+                }
+                foreach (var mycartData in myCart.cartDetails)
+                {
+                    if (mycartData.productId.Equals(id))
+                    {
+                        mycartData.quantity = mycartData.quantity + 1;
+                        mycartData.price = mycartData.quantity * mycartData.product.price;
+                    }
+                }
+                var checkNegative = myCart.cartDetails.Where(c => c.price > 0);
+                if (checkNegative != null)
+                {
+                    _userApi.EditCart(myCart);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool Plus(int id, string sessionId)
+        {
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+                if (_carts != null || _carts.Count > 0)
+                {
+                    if (_carts.ToList().Any(c => c.sessionId.Equals(sessionId)))
+                    {
+                        foreach (var data in _carts)
+                        {
+                            foreach (var caratDetailsData in data.cartDetails)
+                            {
+                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                                caratDetailsData.product = product;
+                            }
+                            if (data.sessionId.Equals(sessionId))
+                            {
+
+                                foreach (var data1 in data.cartDetails)
+                                {
+                                    if (data1.productId.Equals(id))
+                                    {
+
+                                        data1.quantity = data1.quantity + 1;
+                                        data1.price = data1.quantity * data1.product.price;
+
+
+                                        /*cartList.Add(data1);*/
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+                            }
+
+                            /*  cartListSession.Add(data);*/
+                        }
+
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool Minus(int id, UserRegistration user)
+        {
+            try
+            {
+
+                MyCart myCart = new MyCart();
+                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                foreach (var caratDetailsData in myCart.cartDetails)
+                {
+                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                    caratDetailsData.product = product;
+                }
+                foreach (var mycartData in myCart.cartDetails)
+                {
+                    if (mycartData.productId.Equals(id))
+                    {
+                        if ((mycartData.quantity - 1) * mycartData.product.price > 0)
+                        {
+                            mycartData.quantity = mycartData.quantity - 1;
+                            mycartData.price = mycartData.quantity * mycartData.product.price;
+                        }
+                    }
+                }
+                _userApi.EditCart(myCart);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool Minus(int id, string sessionId)
+        {
+            try
+            {
+                string name = _distributedCache.GetStringAsync("cart").Result;
+                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
+                if (_carts != null || _carts.Count > 0)
+                {
+                    if (_carts.ToList().Any(c => c.sessionId.Equals(sessionId)))
+                    {
+                        foreach (var data in _carts)
+                        {
+                            foreach (var caratDetailsData in data.cartDetails)
+                            {
+                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
+                                caratDetailsData.product = product;
+                            }
+                            if (data.sessionId.Equals(sessionId))
+                            {
+
+                                foreach (var data1 in data.cartDetails)
+                                {
+                                    if (data1.productId.Equals(id))
+                                    {
+                                        if ((data1.quantity - 1) * data1.product.price > 0)
+                                        {
+                                            data1.quantity = data1.quantity - 1;
+                                            data1.price = data1.quantity * data1.product.price;
+                                        }
+                                        /*cartList.Add(data1);*/
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+                            }
+
+                            /*  cartListSession.Add(data);*/
+                        }
+
+                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
+                    }
                 }
                 return true;
             }
