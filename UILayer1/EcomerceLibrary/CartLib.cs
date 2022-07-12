@@ -1,6 +1,5 @@
 ﻿using DomainLayer;
 using DomainLayer.Users;
-using Firebase.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -27,8 +26,9 @@ namespace UILayer.EcomerceLibrary
         }
         public List<CartDetails> GetCartDetailsList(UserRegistration user)
         {
+            _carts = _userApi.GetCart().Result.ToList();
             _cartDetails = new List<CartDetails>();
-            _carts = CartFromDb();
+
             try
             {
                 if (IsExist(user))
@@ -49,6 +49,7 @@ namespace UILayer.EcomerceLibrary
                 }
             }
             catch (Exception ex)
+
             {
 
             }
@@ -59,6 +60,7 @@ namespace UILayer.EcomerceLibrary
             try
             {
                 _carts = CartFromSession();
+
                 _cartDetails = new List<CartDetails>();
                 if (_carts.ToList().Where(c => c.sessionId.Equals(sessionId)) != null)
                 {
@@ -80,6 +82,7 @@ namespace UILayer.EcomerceLibrary
                 }
             }
             catch (Exception ex)
+
             {
 
             }
@@ -95,6 +98,7 @@ namespace UILayer.EcomerceLibrary
             return false;
         }
         public bool AddtoCart(int id, UserRegistration user, string sessionId)
+
         {
 
             try
@@ -105,7 +109,6 @@ namespace UILayer.EcomerceLibrary
                 cartDetails.quantity = 1;
                 var productData = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
                 cartDetails.price = 1 * productData.price;
-
                 IEnumerable<MyCart> productCartListFromDb = _userApi.GetCart().Result;
                 if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
                 {
@@ -168,9 +171,8 @@ namespace UILayer.EcomerceLibrary
             _carts = new List<MyCart>();
             try
             {
-
                 _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null)
+                if (_carts != null && _carts.Count()!=0)
                 {
                     if (_carts.ToList().Any(c => c.sessionId.Equals(sessionId)))
                     {
@@ -216,6 +218,9 @@ namespace UILayer.EcomerceLibrary
                 else
                 {
                     _carts = new List<MyCart>();
+                    _cartDetails.Add(cartDetails);
+                    cart.cartDetails = _cartDetails;
+                    cart.sessionId = sessionId;
                     _carts.Add(cart);
                     _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
                 }
@@ -232,6 +237,7 @@ namespace UILayer.EcomerceLibrary
             }
             return false;
         }
+
         public bool Quantity(int id, int quantity, UserRegistration user)
         {
             try
@@ -252,6 +258,7 @@ namespace UILayer.EcomerceLibrary
                 return true;
             }
             catch (Exception ex)
+
             {
                 return false;
             }
@@ -300,10 +307,12 @@ namespace UILayer.EcomerceLibrary
                 return true;
             }
             catch (Exception ex)
+
             {
                 return false;
             }
         }
+
         public bool RemoveCart(int id, UserRegistration user)
         {
             try
