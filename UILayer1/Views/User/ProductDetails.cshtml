@@ -24,7 +24,7 @@
                         foreach (var item in Model.images)
                         {
                             <div class="card" style="width : 50px; height:100px;">
-                                <img src="~/Product/Images/@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
+                                <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
 
                             </div>
                         }
