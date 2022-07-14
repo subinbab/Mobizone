@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Mobizone- Buy Now";
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
 }
 @model DomainLayer.Checkout
 @{
@@ -69,9 +69,10 @@ else
 
                         <div class="row">
                             <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color:white;margin-bottom:5%">Add New Address</a></div>
-                            <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style=" background-color: #e52d2e; display:none;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
+                           <div class="col col d-flex justify-content-end " id="addressContinue ">
+                                <a style=" background-color: #e52d2e; display: none; color: white; margin-bottom: 5%; margin-right: 3%;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
                             </div>
+                           
 
                         </div>
                     </div>
@@ -111,7 +112,7 @@ else
                                                 {
                                                     @data.specs.storages.FirstOrDefault().storage}
                                                 GB)<br>&#8377 @data.price;
-                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" min="1" value="1" id="quantitytag" /></div>
+                                                <div>Qty:<input name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" min="1" max="@data.quantity" value="1" id="quantitytag" /></div>
                                             </label>
                                         </div>
                                     </div>
@@ -351,9 +352,9 @@ else
         }
 
                         function apply() {
-            debugger
+           
                         $(".check").on('click', function () {
-                debugger
+               
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
@@ -377,15 +378,23 @@ else
                     //console.log("''''")
                     }
                 } else {
-                        alert("not checked")
+                        //alert("not checked")
                     $box.prop("checked", false);
                     //console.log($box)
                 }
             });
         }
-                    $(document).ready(function () {
+    $(document).ready(function () {
+                        $('input[class="check"]').change(function(){
+    var submitBtn=$('#submit_prog');
+                            if ($('input[class="check"]:checked').length > 0) {
+        submitBtn.show();
+    } else {
+        submitBtn.hide();
+    }
+});
                         $(".check").on('click', function () {
-                            debugger
+                          
                             var $box = $(this);
                             if ($box.is(":checked")) {
                                 //alert("checked")
@@ -405,7 +414,18 @@ else
                     })
     function showbutton1() {
         //alert("cheuijhg")
-        $("#submit_prog").toggle();
+        //$("#submit_prog").toggle();
+        console.log($('.check:checkbox'))
+        console.log($('.check:checkbox').length)
+        for (var i = 0; i < $('.check:checkbox').length; i++) {
+            if ($('.check:checkbox')[i].checked) {
+                $("#submit_prog").show();
+                break;
+            }
+            else {
+                $("#submit_prog").hide();
+            }
+        }
     }
 </script>
 

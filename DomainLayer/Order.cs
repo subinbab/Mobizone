@@ -15,5 +15,6 @@ namespace DomainLayer
         public int paymentId { get; set; }
         public int price { get; set; }
         public int quantity { get; set; }
+        public int IsActive { get; set; }
     }
 }

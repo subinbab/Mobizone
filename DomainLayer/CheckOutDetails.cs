@@ -12,5 +12,6 @@ namespace DomainLayer
         public int orderId { get; set; }
         public RoleTypes? cancelRequested { get; set; }
         public OrderStatus status { get; set; }
+        public int IsActive { get; set; }
     }
 }

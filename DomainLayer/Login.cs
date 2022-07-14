@@ -22,5 +22,6 @@ namespace DomainLayer
         public DateTime modifiedOn { get; set; }
         public string modifiedBy { get; set; }
         public string? sessionId { get; set; }
+        public int IsActive { get; set; }
     }
 }

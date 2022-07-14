@@ -15,5 +15,6 @@ namespace DomainLayer.ProductModel
         public string ram { get; set; }
         public int? specificatiionid { get; set; }
         public Specificatiion specificatiion { get; set; }
+        public int IsActive { get; set; }
     }
 }

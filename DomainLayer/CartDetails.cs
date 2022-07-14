@@ -1,8 +1,5 @@
 ﻿using DomainLayer.ProductModel;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DomainLayer
 {
@@ -14,5 +11,6 @@ namespace DomainLayer
         public ProductEntity product { get; set; }
         public int? quantity { get; set; }
         public int? price { get; set; }
+        public int IsActive { get; set; }
     }
 }

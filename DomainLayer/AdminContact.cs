@@ -48,5 +48,6 @@ namespace DomainLayer
         [MaxLength(50)]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string email { get; set; }
+        public int IsActive { get; set; }
     }
 }

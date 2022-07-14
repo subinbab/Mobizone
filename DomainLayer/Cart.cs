@@ -1,9 +1,6 @@
 ﻿using DomainLayer.Users;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DomainLayer
 {
@@ -16,5 +13,6 @@ namespace DomainLayer
         
         public int usersId { get; set; }
         public UserRegistration users { get; set; }
+        public int IsActive { get; set; }
     }
 }

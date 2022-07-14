@@ -21,5 +21,6 @@ namespace DomainLayer.ProductModel.Master
     public class masterModel
     {
         public Master master { get; set; }
+        public int IsActive { get; set; }
     }
 }

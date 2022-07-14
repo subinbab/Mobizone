@@ -66,12 +66,13 @@ namespace UILayer1
             }
             );
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            /*services.AddDistributedSqlServerCache(options => {
-                options.ConnectionString = Configuration.GetConnectionString("online_db_2");
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = Configuration.GetConnectionString("defaultConnection");
                 options.SchemaName = "dbo";
                 options.TableName = "Sessions";
                 //options.ExpiredItemsDeletionInterval = TimeSpan.FromMinutes(6);
-            });*/
+            });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

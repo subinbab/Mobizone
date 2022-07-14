@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AutoMapper;
+using DocumentFormat.OpenXml.Wordprocessing;
 using DomainLayer;
 using DomainLayer.ProductModel;
 using DomainLayer.ProductModel.Master;
@@ -23,7 +24,9 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using UILayer.Data;
 using UILayer.Data.ApiServices;
+using UILayer.EcomerceLibrary;
 
 namespace UILayer.Controllers
 {
@@ -37,10 +40,15 @@ namespace UILayer.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         MasterApi _masterApi;
         List<MyCart> _carts = null;
-        IUserApi _userApi; 
+        IUserApi _userApi;
         UserRegistration _user { get; set; }
         private readonly IDistributedCache _distributedCache;
-        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache, IUserApi userApi)
+        CartLib cartLib = null;
+
+        CacheData cacheData = null;
+        IProductOpApi _productOpApi;
+        public IEnumerable<ProductEntity> _products;
+        public UserController(IConfiguration configuration, INotyfService notyf, IMapper mapper, IWebHostEnvironment webHostEnvironment, IDistributedCache distributedCache, IUserApi userApi,IProductOpApi productOpApi)
 
         {
             _configuration = configuration;
@@ -54,7 +62,8 @@ namespace UILayer.Controllers
             _carts = new List<MyCart>();
             // HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(_carts));
             ViewBag.WebLink = _configuration.GetSection("Development:WebLink").Value;
-            
+            cartLib = new CartLib(_opApi, _userApi, _distributedCache);
+
 
 
         }
@@ -107,8 +116,16 @@ namespace UILayer.Controllers
                 count = 0;
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var data = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable));
-            var productCount = data.Count();
+            string name = _distributedCache.GetStringAsync("Products").Result;
+            if (name == null)
+            {
+                _products = _opApi.GetAll().Result.Where(c => c.status.Equals(ProductStatus.enable));
+            }
+            else
+            {
+                _products = JsonConvert.DeserializeObject<IEnumerable<ProductEntity>>(name);
+            } 
+            var productCount = _products.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
             {
@@ -118,7 +135,7 @@ namespace UILayer.Controllers
                 }
                 productCount = productCount - 12;
             }
-            var result = data.Skip((int)count * 12).Take(12);
+            var result = _products.Skip((int)count * 12).Take(12);
             ViewBag.count = cout;
             return PartialView("PartialViews/_IndexPartialView", result);
         }
@@ -141,8 +158,6 @@ namespace UILayer.Controllers
         public async Task<IActionResult> Registration(UserViewModel user)
         {
             UserApi userApi = new UserApi(_configuration);
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var userList = userApi.GetUserData();
             if (userList.Any(c => c.Email.Equals(user.Email)))
             {
@@ -192,8 +207,6 @@ namespace UILayer.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword(ForgetPasswordViewModel data)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             if (ModelState.IsValid)
             {
                 HttpContext.Session.SetString("Email", "hello");
@@ -206,7 +219,7 @@ namespace UILayer.Controllers
                     var webLink = _configuration.GetSection("Development:WebLink").Value;
                     data.emailSent = true;
                     MailRequest mailRequest = new MailRequest();
-            mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hai, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='"+ webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
+                    mailRequest.Body = "<h2 style='text-align:center'>MOBIZONE</h2><div><p>Hi, </p><p>Please click here to Reset Your Password</p><a style='padding: 2px; background - color:#c81913;text - decoration: none;border - radius: 2px;color: white;' href='" + webLink + "/user/ResetPassword/" + data.email + "/" + session + "'>Click Here</a></div><style></style>";
                     mailRequest.Subject = "ResetPassword";
                     mailRequest.ToEmail = userDetails.Email;
                     var checkEmail = _userApi.PostMail(mailRequest);
@@ -217,7 +230,7 @@ namespace UILayer.Controllers
                 {
                     ViewBag.check = true;
                 }
-               
+
 
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -227,8 +240,6 @@ namespace UILayer.Controllers
         [HttpGet("/user/ResetPassword/{email}/{sessionId}")]
         public ActionResult ResetPassword(string email, string sessionId)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             if (sessionId == HttpContext.Session.Id)
             {
                 var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(email)).FirstOrDefault();
@@ -245,14 +256,12 @@ namespace UILayer.Controllers
         [HttpPost]
         public ActionResult ResetPassword(ResetPassword resetPassword)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             try
             {
                 UserRegistration register = new UserRegistration();
                 register = _userApi.GetUserData().Where(c => c.Email.Equals(resetPassword.User.Email)).FirstOrDefault();
                 Security _sec = new Security();
-                register.Password = _sec.Encrypt("admin",resetPassword.newPassword);
+                register.Password = _sec.Encrypt("admin", resetPassword.newPassword);
                 var result = _userApi.EditUser(register);
                 return Redirect("/Login");
             }
@@ -309,34 +318,13 @@ namespace UILayer.Controllers
             ViewBag.ReturnUrl = "/user/order/" + id;
             var data = _opApi.GetProduct(id).Result;
             ViewData["ProductDetails"] = data;
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View("order");
         }
-        [Authorize(Roles = "User")]
-        [HttpGet]
-        public IActionResult CartOrder(List<ProductEntity> productList)
-        {
-            ViewBag.ReturnUrl = "/user/CartOrder/";
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            List<ProductEntity> productListForOrder = new List<ProductEntity>();
-            foreach (ProductEntity product in productList)
-            {
-                productListForOrder.Add(_opApi.GetProduct(product.id).Result);
-            }
-            var data = productListForOrder;
-            ViewData["ProductDetails"] = data;
-            _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-            ViewData["userData"] = _user;
-            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            return View();
-        }
         [HttpPost("/user/order")]
-        public PartialViewResult order(Checkout checkout,int addressId)
+        public PartialViewResult order(Checkout checkout, int addressId)
         {
             if (checkout == null)
             {
@@ -348,11 +336,14 @@ namespace UILayer.Controllers
             {
                 var data = _opApi.GetProduct(checkout.productId).Result;
                 data.quantity = data.quantity - checkout.quantity;
+                if (data.purchasedNumber == null)
+                    data.purchasedNumber = 0;
+                data.purchasedNumber = data.purchasedNumber + checkout.quantity;
                 if (data.quantity == 0)
                 {
                     data.status = ProductStatus.disable;
                 }
-                foreach(var address in checkout.addressList)
+                foreach (var address in checkout.addressList)
                 {
                     if (address.IsChecked)
                     {
@@ -368,7 +359,7 @@ namespace UILayer.Controllers
                 checkout.price = checkout.quantity * data.price;
                 bool result = _userApi.CreateCheckOut(checkout);
                 ViewBag.orderId = checkout.orderId;
-                _notyf.Success("succesfully ordered");
+                _notyf.Success("successfully ordered");
                 ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
                 return PartialView("Orderplaced");
             }
@@ -398,47 +389,19 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult AddtoCart()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             List<CartDetails> cartList = new List<CartDetails>();
             try
             {
-                
-                if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin") 
+                if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
                 {
                     var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                    try
-                    {
-                        string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
-                        if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
-                        {
-                            _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                        }
 
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                    if (_carts.ToList().Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault() != null)
-                    {
-                        var data = _carts.ToList().Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+                    cartList = cartLib.GetCartDetailsList(user);
 
-                        var count = 0;
-                        foreach (var item in data.cartDetails)
-                        {
-                            cartList.Add(item);
-
-                        }
-                    }
-                    foreach (var data in cartList)
-                    {
-                        var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
-                        data.product = product;
-                    }
                 }
                 else
                 {
@@ -455,27 +418,11 @@ namespace UILayer.Controllers
                     catch (Exception ex)
                     {
                     }
-                    if (_carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id)) != null)
-                    {
-                        var data = _carts.ToList().Where(c => c.sessionId.Equals(HttpContext.Session.Id));
+                    cartList = cartLib.GetCartDetailsList(HttpContext.Session.Id);
 
-                        var count = 0;
-                        foreach (var item in data)
-                        {
-                            if (item.sessionId.Equals(HttpContext.Session.Id))
-                            {
-                                cartList.Add(item.cartDetails.FirstOrDefault());
-                            }
-                        }
-                    }
-                    foreach (var data in cartList)
-                    {
-                        var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data.productId)).FirstOrDefault();
-                        data.product = product;
-                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 cartList = null;
             }
@@ -485,154 +432,18 @@ namespace UILayer.Controllers
         [HttpGet("/user/addtocart/{id}")]
         public IActionResult AddtoCart(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            bool check = false;
-            List<MyCart> cartListSession = new List<MyCart>();
-            List<CartDetails> cartList = new List<CartDetails>();
-            CartDetails cartDetails = new CartDetails();
-            cartDetails.productId = id;
-            cartDetails.quantity = 1;
-            var productData = _opApi.GetAll().Result.Where(c => c.id.Equals(id)).FirstOrDefault();
-            cartDetails.price = 1 * productData.price;
-
-
-            cartList.Add(cartDetails);
-            MyCart cart = new MyCart();
-            MyCart productCart = new MyCart();
             HttpContext.Session.SetString("testKey", "testValue");
-            cart.sessionId = HttpContext.Session.Id;
-            productCart.sessionId = HttpContext.Session.Id;
-            cart.cartDetails = cartList;
-            productCart.cartDetails = cartList;
-
-
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
-                int cartDetailsCheck = 0;
-                try
-                {
-                    UserRegistration user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                    IEnumerable<MyCart> productCartListFromDb = _userApi.GetCart().Result;
-                    if (productCartListFromDb.Any(c => c.usersId.Equals(user.UserId)))
-                    {
-                        var productCartBySessioId = productCartListFromDb.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                        var cartDetailslList = productCartBySessioId.cartDetails;
-                          if(cartDetailslList.Count == 0)
-                        {
-                            cartDetailslList.Add(cartDetails);
-                        }
-                        else
-                        {
-                            if(cartDetailslList.ToList().Any(c=> c.productId.Equals(id)))
-                            {
-                                foreach (var cartDetailsData in cartDetailslList.ToList())
-                                {
-                                    if (cartDetailsData.productId.Equals(id))
-                                    {
-                                        cartDetailsData.quantity = cartDetailsData.quantity + 1;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                cartDetailslList.Add(cartDetails);
-                            }
-                            
-                        }
-
-                        productCartBySessioId.cartDetails = cartDetailslList;
-                        _userApi.EditCart(productCartBySessioId);
-                    }
-                    else
-                    {
-                        productCart.usersId = user.UserId;
-                        _userApi.Createcart(productCart);
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
-
+                UserRegistration user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                var result = cartLib.AddtoCart(id, user, HttpContext.Session.Id);
             }
             else
             {
-                try
-                {
-                    string name = _distributedCache.GetStringAsync("cart").Result;
-                    _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                    if (_carts != null)
-                    {
-                        if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-                        {
-                            foreach (var data in _carts)
-                            {
-                                if (data.sessionId.Equals(HttpContext.Session.Id))
-                                {
-                                    foreach (var data1 in data.cartDetails)
-                                    {
-                                        if (data1.productId.Equals(id))
-                                        {
-                                            var product = _opApi.GetAll().Result.Where(c => c.id.Equals(data1.productId)).FirstOrDefault();
-                                            data1.product = product;
-                                            var quantity = data1.quantity;
-                                            data1.quantity = quantity + 1;
-                                            data1.price = data1.quantity * data1.product.price;
-                                            check = true;
-                                            /*cartList.Add(data1);*/
-                                        }
-                                        else
-                                        {
-
-                                        }
-
-                                    }
-                                }
-
-                                /*  cartListSession.Add(data);*/
-                            }
-                            if (check == false)
-                            {
-                                _carts.Add(cart);
-                            }
-                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                        }
-                        else
-                        {
-                            _carts.Add(cart);
-                            _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                        }
-
-                    }
-                    else
-                    {
-                        _carts = new List<MyCart>();
-                        _carts.Add(cart);
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    _carts.Add(cart);
-                    _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-
-                }
-
-
+                var result = cartLib.AddtoCart(id, HttpContext.Session.Id);
             }
-
-
             return Redirect("/user/Addtocart");
         }
-
-
-        public IActionResult AddtoCartPage()
-        {
-            return View();
-        }
-
         public IActionResult CartPage()
         {
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
@@ -640,16 +451,14 @@ namespace UILayer.Controllers
         }
         public IActionResult ManageAddress()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
+            ViewBag.ReturnUrl = "/user/ManageAddress";
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
             return View();
         }
+        [Authorize(Roles = "User")]
         public IActionResult Account()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             ViewData["userData"] = _user;
@@ -658,8 +467,6 @@ namespace UILayer.Controllers
         [HttpGet("/user/DeleteAddress/{id}")]
         public IActionResult DeleteAddress(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             var result = _userApi.DeleteAddress(id);
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -668,10 +475,8 @@ namespace UILayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Address(int id , string ReturnUrl)
+        public IActionResult Address(int id, string ReturnUrl)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             ViewBag.ReturnUrl = ReturnUrl;
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var address = _user.address.Where(c => c.id.Equals(id)).FirstOrDefault();
@@ -679,10 +484,8 @@ namespace UILayer.Controllers
             return View(address);
         }
         [HttpPost("/user/address")]
-        public IActionResult Address(Address addreses,string ReturnUrl)
+        public IActionResult Address(Address addreses, string ReturnUrl)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             List<Address> addresses = new List<Address>();
             addresses.Add(addreses);
             _user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("Email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
@@ -695,14 +498,14 @@ namespace UILayer.Controllers
             }
             return Redirect(ReturnUrl);
         }
-        
+
 
 
         public IActionResult Sort()
         {
             int count = 0;
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
             var productCount = SortedData.Count();
@@ -719,16 +522,35 @@ namespace UILayer.Controllers
             var result = SortedData.Skip((int)count * 12).Take(12);
             return View("Index", result);
         }
-        public PartialViewResult sortLowToHighPartial(int? count)
+        public async Task<PartialViewResult> sortLowToHighPartial(int? count, string brandName, string name)
         {
+            if (brandName == "null")
+                brandName = null;
+            if (name == "null")
+                name = null;
+            IEnumerable<ProductEntity> SortedData = null;
+            if (brandName != null && name != "null")
+            {
+                var data = await _opApi.Filter(brandName);
+                SortedData = data.OrderBy(c => c.price);
+            }
+            else if (name != null && name != "null")
+            {
+                var data = await _opApi.Search(name);
+                SortedData = data.OrderBy(c => c.price);
+            }
+            else
+            {
+                var data = await _opApi.Sort();
+                SortedData = data.Where(c => c.status.Equals(ProductStatus.enable));
+            }
             if (count == null)
             {
                 count = 0;
             }
             ViewBag.Title = " Mobizone - Price(Low to High)";
-            
+
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sort().Result.Where(c => c.status.Equals(ProductStatus.enable));
             var productCount = SortedData.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
@@ -752,13 +574,33 @@ namespace UILayer.Controllers
             var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("Index", SortedData);
         }
-        public PartialViewResult SortHighToLowPartial()
+        public PartialViewResult SortHighToLowPartial(int? count, string brandName, string name)
         {
-            int count = 0;
-            ViewBag.Title = " Mobizone - Price(Low to High)";
+            if (brandName == "null")
+                brandName = null;
+            if (name == "null")
+                name = null;
+            IEnumerable<ProductEntity> SortedData = null;
+            if (brandName != null && name != "null")
+            {
+                SortedData = _opApi.Filter(brandName).Result.OrderByDescending(c => c.price);
+            }
+            else if (name != null && name != "null")
+            {
+                SortedData = _opApi.Search(name).Result.OrderByDescending(c => c.price);
+            }
+            else
+            {
+                SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
+            }
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.Title = " Mobizone - Price(High To Low)";
 
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var SortedData = _opApi.Sortby().Result.Where(c => c.status.Equals(ProductStatus.enable));
+
             var productCount = SortedData.Count();
             int cout = 0;
             for (int i = 0; i <= 0; i++)
@@ -776,6 +618,8 @@ namespace UILayer.Controllers
         [HttpPost]
         public PartialViewResult filterByBrandName(string brandName)
         {
+            if (brandName == "null")
+                brandName = null;
             int cout = 0;
             int count = 0;
             ViewBag.Title = " Mobizone - Filter ";
@@ -813,10 +657,20 @@ namespace UILayer.Controllers
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View(details);
         }
+        [Authorize(Roles = "User")]
         public IActionResult MyOrders()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
+            ViewBag.Status = Enum.GetNames(typeof(OrderStatus)).ToList();
+            return View();
+        }
+        public PartialViewResult MyOrdersPartialView(int? count)
+        {
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.count = 0;
+            ViewBag.currentCount = count;
             var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
             foreach (var checkOutData in userOrders)
@@ -825,11 +679,63 @@ namespace UILayer.Controllers
                 checkOutData.product = product;
 
             }
-            return View(userOrders);
+            var productCount = userOrders.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            var result = userOrders.Skip((int)count * 12).Take(12);
+            ViewBag.count = cout;
+            return PartialView("PartialViews/_MyOrdersPartialView", result);
+        }
+        public PartialViewResult FilterOrderByStatusName(string statusName, int? count)
+        {
+            if (count == null)
+            {
+                count = 0;
+            }
+            ViewBag.count = 0;
+            ViewBag.currentCount = count;
+            IEnumerable<Checkout> userOrders = null;
+            Enum.TryParse(statusName, out OrderStatus myStatus);
+            var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+            if (statusName != null)
+            {
+                userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId) && c.status.Equals(myStatus));
+            }
+            else
+            {
+                userOrders = _userApi.GetCheckOut().Result.Where(c => c.userId.Equals(user.UserId));
+            }
+            foreach (var checkOutData in userOrders)
+            {
+                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(checkOutData.productId)).FirstOrDefault();
+                checkOutData.product = product;
+
+            }
+            var productCount = userOrders.Count();
+            int cout = 0;
+            for (int i = 0; i <= 0; i++)
+            {
+                if (productCount > 12)
+                {
+                    cout += 1;
+                }
+                productCount = productCount - 12;
+            }
+            var result = userOrders.Skip((int)count * 12).Take(12);
+            ViewBag.count = cout;
+            return PartialView("PartialViews/_MyOrdersPartialView", result);
         }
         [HttpGet]
         public IActionResult OrderDetails(int id)
         {
+            ViewBag.ReturnUrl = "/user/OrderDetails?id=" + id;
             if (id == 0)
             {
                 return View("Index");
@@ -855,13 +761,13 @@ namespace UILayer.Controllers
         public IActionResult SearchNotPartial(string name)
         {
             ViewBag.count = 0;
-
+            ViewBag.Search = name;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             var data = _opApi.Search(name).Result;
             return View("PartialViews/_IndexPartialView", data);
         }
         [HttpPost]
-        public PartialViewResult Search(string name)
+        public PartialViewResult Search(string name, int? count)
         {
             ViewBag.count = 0;
 
@@ -872,65 +778,15 @@ namespace UILayer.Controllers
         [HttpPost]
         public IActionResult quantity(int quantity, int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-
-                MyCart myCart = new MyCart();
-                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-
-                foreach (var mycartData in myCart.cartDetails)
-                {
-                    if (mycartData.productId.Equals(id))
-                    {
-                        mycartData.quantity = quantity;
-                        mycartData.price = quantity * mycartData.product.price;
-                    }
-                }
-                _userApi.EditCart(myCart);
+                cartLib.Quantity(id, quantity, user);
             }
             else
             {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null || _carts.Count > 0)
-                {
-                    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-                    {
-                        foreach (var data in _carts)
-                        {
-                            foreach (var caratDetailsData in data.cartDetails)
-                            {
-                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                                caratDetailsData.product = product;
-                            }
-                            if (data.sessionId.Equals(HttpContext.Session.Id))
-                            {
-                                foreach (var data1 in data.cartDetails)
-                                {
-                                    if (data1.productId.Equals(id))
-                                    {
-                                        data1.quantity = quantity;
-                                        data1.price = data1.quantity * data1.product.price;
-                                        /*cartList.Add(data1);*/
-                                    }
-                                    else
-                                    {
-
-                                    }
-
-                                }
-                            }
-
-                            /*  cartListSession.Add(data);*/
-                        }
-
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-                }
+                cartLib.Quantity(id, quantity, HttpContext.Session.Id);
             }
             return Redirect("/user/Addtocart");
         }
@@ -938,48 +794,11 @@ namespace UILayer.Controllers
         [HttpGet]
         public IActionResult RemoveCart(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-                try
-                {
-                    string name = JsonConvert.SerializeObject(_userApi.GetCart().Result);
-                    if (JsonConvert.DeserializeObject<List<MyCart>>(name) != null)
-                    {
-                        _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                }
-                if (_carts.ToList().Where(c => c.usersId.Equals(user.UserId)) != null)
-                {
-                    var data = _carts.ToList().Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-
-                    var count = 0;
-                    foreach (var item in data.cartDetails.ToList())
-                    {
-                        if (item.productId.Equals(id))
-                        {
-                            data.cartDetails.Remove(item);
-                        }
-
-                    }
-                    MyCart myCart = new MyCart();
-                    myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                    foreach (var mycartData in myCart.cartDetails)
-                    {
-                        if (mycartData.productId.Equals(id))
-                        {
-                            _userApi.DeleteCartDetails(mycartData.id);
-                        }
-                    }
-                    _userApi.EditCart(myCart);
-                }
+                cartLib.RemoveCart(id, user);
             }
             else
             {
@@ -1027,34 +846,31 @@ namespace UILayer.Controllers
             }
             return Redirect("/user/Addtocart");
         }
-        [HttpPost]
-        [Authorize(Roles ="User")]
+        [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult CartOrder()
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
             user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             var cartDataList = _userApi.GetCart().Result;
-            var vartData = cartDataList.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
+            var cartData = cartDataList.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
             ProductEntity product;
             List<CartDetails> carts = new List<CartDetails>();
-            foreach (var cartDetails in vartData.cartDetails)
+            foreach (var cartDetails in cartData.cartDetails)
             {
                 product = _opApi.GetAll().Result.Where(c => c.id.Equals(cartDetails.productId)).FirstOrDefault();
                 cartDetails.product = product;
                 carts.Add(cartDetails);
             }
             ViewData["cartDetails"] = carts;
-            ViewData["cart"] = vartData;
+            ViewData["cart"] = cartData;
             ViewData["userData"] = user;
+            ViewBag.ReturnUrl = "/user/cartorder";
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
             return View();
         }
         public IActionResult BuyCart(Checkout checkout)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
             UserRegistration user;
             user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
             MyCart myCart = new MyCart();
@@ -1064,7 +880,7 @@ namespace UILayer.Controllers
                 var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
                 caratDetailsData.product = product;
             }
-            foreach(var data in myCart.cartDetails)
+            foreach (var data in myCart.cartDetails)
             {
                 Checkout checkout1 = new Checkout();
                 checkout1.productId = data.productId;
@@ -1082,6 +898,7 @@ namespace UILayer.Controllers
                 checkout1.paymentModeId = checkout.paymentModeId;
                 checkout1.userId = checkout.userId;
                 checkout1.status = OrderStatus.orderplaced;
+                _notyf.Success("successfully ordered");
                 checkout1.price = (int)data.price;
                 bool result = _userApi.CreateCheckOut(checkout1);
             }
@@ -1089,7 +906,7 @@ namespace UILayer.Controllers
             return View("orderplaced");
         }
         [HttpGet("/user/CancelCheckout/{orderId}")]
-        public async Task<IActionResult> CancelCheckout(int orderId)
+        public async Task<IActionResult> CancelCheckout(int orderId, string? returnUrl)
         {
             Checkout checkout = new Checkout();
             OrderStatus statuses = new OrderStatus();
@@ -1098,178 +915,41 @@ namespace UILayer.Controllers
             checkoutData.status = OrderStatus.cancelled;
             checkoutData.cancelRequested = RoleTypes.User;
             _userApi.EditCheckout(checkoutData);
+            if (returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return Redirect("/");
         }
         [HttpGet]
         public IActionResult minus(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
-
-                MyCart myCart = new MyCart();
-                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                foreach (var caratDetailsData in myCart.cartDetails)
-                {
-                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                    caratDetailsData.product = product;
-                }
-                foreach (var mycartData in myCart.cartDetails)
-                {
-                    if (mycartData.productId.Equals(id))
-                    {
-                        if ((mycartData.quantity - 1) * mycartData.product.price > 0)
-                        {
-                            mycartData.quantity = mycartData.quantity - 1;
-                            mycartData.price = mycartData.quantity * mycartData.product.price;
-                        }
-    }
-}
-_userApi.EditCart(myCart);
-}
-else
-{
-string name = _distributedCache.GetStringAsync("cart").Result;
-_carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-if (_carts != null || _carts.Count > 0)
-{
-    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-    {
-        foreach (var data in _carts)
-        {
-            foreach (var caratDetailsData in data.cartDetails)
-            {
-                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                caratDetailsData.product = product;
+                cartLib.Minus(id, user);
             }
-            if (data.sessionId.Equals(HttpContext.Session.Id))
+            else
             {
-
-                foreach (var data1 in data.cartDetails)
-                {
-                    if (data1.productId.Equals(id))
-                    {
-                        if ((data1.quantity-1) * data1.product.price > 0)
-                        {
-                            data1.quantity = data1.quantity - 1;
-                            data1.price = data1.quantity * data1.product.price;
-                        }
-                        /*cartList.Add(data1);*/
-                    }
-                    else
-                                    {
-
-                                    }
-
-                                }
-                            }
-
-                            /*  cartListSession.Add(data);*/
-                        }
-
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-                }
+                cartLib.Minus(id, HttpContext.Session.Id);
             }
             return Redirect("/user/Addtocart");
         }
         [HttpGet]
         public IActionResult plus(int id)
         {
-            var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
-            var password = User.Claims?.FirstOrDefault(x => x.Type.Equals("password", StringComparison.OrdinalIgnoreCase))?.Value;
-            bool check = false;
             if (User.Identity.IsAuthenticated && User.Claims?.FirstOrDefault(x => x.Type.Equals("Role", StringComparison.OrdinalIgnoreCase))?.Value != "Admin")
             {
                 var user = _userApi.GetUserData().Where(c => c.Email.Equals(User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value)).FirstOrDefault();
+                cartLib.Plus(id, user);
 
-                MyCart myCart = new MyCart();
-                myCart = _userApi.GetCart().Result.Where(c => c.usersId.Equals(user.UserId)).FirstOrDefault();
-                foreach (var caratDetailsData in myCart.cartDetails)
-                {
-                    var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                    caratDetailsData.product = product;
-                }
-                foreach (var mycartData in myCart.cartDetails)
-                {
-                    if (mycartData.productId.Equals(id))
-                    {
-                        mycartData.quantity = mycartData.quantity + 1;
-                        mycartData.price = mycartData.quantity * mycartData.product.price;
-                    }
-                }
-                var checkNegative = myCart.cartDetails.Where(c => c.price > 0);
-                if (checkNegative != null)
-                {
-                    _userApi.EditCart(myCart);
-                }
-                
+
             }
             else
             {
-                string name = _distributedCache.GetStringAsync("cart").Result;
-                _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
-                if (_carts != null || _carts.Count > 0)
-                {
-                    if (_carts.ToList().Any(c => c.sessionId.Equals(HttpContext.Session.Id)))
-                    {
-                        foreach (var data in _carts)
-                        {
-                            foreach (var caratDetailsData in data.cartDetails)
-                            {
-                                var product = _opApi.GetAll().Result.Where(c => c.id.Equals(caratDetailsData.productId)).FirstOrDefault();
-                                caratDetailsData.product = product;
-                            }
-                            if (data.sessionId.Equals(HttpContext.Session.Id))
-                            {
-
-                                foreach (var data1 in data.cartDetails)
-                                {
-                                    if (data1.productId.Equals(id))
-                                    {
-                                      
-                                            data1.quantity = data1.quantity + 1;
-                                            data1.price = data1.quantity * data1.product.price;
-                                        
-                                        
-                                        /*cartList.Add(data1);*/
-                                    }
-                                    else
-                                    {
-
-                                    }
-
-                                }
-                            }
-
-                            /*  cartListSession.Add(data);*/
-                        }
-
-                        _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(_carts));
-                    }
-                }
+                cartLib.Plus(id, HttpContext.Session.Id);
             }
             return Redirect("/user/Addtocart");
-             int pagination(int count)
-            {
-                int cout = 0;
-                for (int i = 0; i <= 0; i++)
-                {
-                    if (count > 10)
-                    {
-                        cout += 1;
-                    }
-                    count = count - 10;
-                }
-                return cout;
-            }
-        }
-        public class quantityObj
-        {
-            public int quantity { get; set; }
         }
 
     }
@@ -1398,7 +1078,3 @@ if (_carts != null || _carts.Count > 0)
         }
     }
 }
-
-
-
-

@@ -1,6 +1,6 @@
 ﻿
             var nameList = [];
-            $(document).ready(function () {
+$(document).ready(function () {
                 $("#filter").click(function () {
                     $("#dropdown1").toggle();
                 });
@@ -17,7 +17,7 @@
                         type: 'get',
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data)
+                            //console.log(data)
                             getProductLink = data + 'api/productop/GetAll';
                             //header();
                             callback(getAll);
@@ -30,7 +30,7 @@
                         type: 'get',
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data)
+                            //console.log(data)
                             header = data;
                             callback();
 
@@ -46,12 +46,12 @@
                             xhr.setRequestHeader("Authorization", "Basic " + header);
                         },
                         success: function (data) {
-                            console.log(data.result)
+                            //console.log(data.result)
                             var resultData = data.result;
                             resultData.forEach(function (items, index) {
-                                console.log(items.name)
+                                //console.log(items.name)
                                 nameList.push(items.name);
-                                console.log(nameList)
+                                //console.log(nameList)
                                 $("#tags").autocomplete({
                                     source: nameList
                                 });

@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,13 +19,15 @@ namespace BusinessObjectLayer.ProductOperations
         }
         public async Task Add(Storage entity)
         {
+            entity.IsActive = 0;
             await _repo.Add(entity);
             await _repo.Save();
         }
 
         public async Task DeleteProduct(Storage entity)
         {
-            await _repo.Delete(entity);
+            entity.IsActive = 1;
+            await _repo.Update(entity);
             await _repo.Save();
         }
 
@@ -41,7 +44,8 @@ namespace BusinessObjectLayer.ProductOperations
 
         public async Task<IEnumerable<Storage>> Get()
         {
-            return await _repo.Get();
+            var result = await _repo.Get();
+            return result.Where(c => c.IsActive.Equals(0));
         }
     }
 }

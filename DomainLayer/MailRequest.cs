@@ -13,5 +13,6 @@ namespace DomainLayer
         public string Body { get; set; }
 
         public List<IFormFile> Attachments { get; set; }
+        public int IsActive { get; set; }
     }
 }

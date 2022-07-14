@@ -56,7 +56,7 @@ namespace UIlayer.Controllers
             _webHostEnvironment = webHostEnvironment;
             _distributedCache = distributedCache;
             _carts = new List<MyCart>();
-           if(ViewBag.CartCount == null)
+            if (ViewBag.CartCount == null)
             {
                 ViewBag.CartCount = 0;
             }
@@ -96,10 +96,9 @@ namespace UIlayer.Controllers
 
         #region Product Details page
         [Authorize]
-        [HttpGet("admin/ProductDetails/{id}")]
         public ActionResult ProductDetails(int id)
         {
-            ViewBag.ReturnUrl = "/admin/ProductDetails/" + id;
+            ViewBag.ReturnUrl = "/admin/ProductDetails?id=" + id;
             ProductEntity details = null;
             try
             {
@@ -146,6 +145,14 @@ namespace UIlayer.Controllers
         [Authorize]
         public ActionResult Create(ProductViewModel product)
         {
+            ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
+            ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
+            ViewBag.ProductType = _masterApi.GetList((int)Master.ProductType);
+            ViewBag.Processor = _masterApi.GetList((int)Master.OsProcessor);
+            ViewBag.Core = _masterApi.GetList((int)Master.OsCore);
+            ViewBag.Ram = _masterApi.GetList((int)Master.Ram);
+            ViewBag.Storage = _masterApi.GetList((int)Master.Storage);
+            ViewBag.camFeatures = _masterApi.GetList((int)Master.CamFeature);
             try
             {
                 if (product.id == 0)
@@ -153,7 +160,7 @@ namespace UIlayer.Controllers
                     if (_opApi.GetAll().Result.Any(c => c.model.Equals(product.model)))
                     {
                         _notyf.Error("Product Already Exist");
-                        return RedirectToAction("Create");
+                        return View("Create",product);
                     }
                     else
                     {
@@ -175,7 +182,6 @@ namespace UIlayer.Controllers
                 }
                 else
                 {
-
                     bool result = _opApi.EditProduct(product).Result;
                     if (result)
                     {
@@ -201,17 +207,21 @@ namespace UIlayer.Controllers
         [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
+            List<string> ramList = _masterApi.GetList((int)Master.Ram);
+            List<string> storageList = _masterApi.GetList((int)Master.Storage);
             var product = await _opApi.GetProduct(id);
             var data = (ProductViewModel)_mapper.Map<ProductViewModel>(product);
             data.specs.ram = new List<string>();
             foreach (var rams in product.specs.rams)
             {
                 data.specs.ram.Add(rams.ram);
+                ramList.Remove(rams.ram);
             }
             data.specs.storage = new List<string>();
             foreach (var storages in product.specs.storages)
             {
                 data.specs.storage.Add(storages.storage);
+                storageList.Remove(storages.storage);
             }
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand); ;
             ViewBag.SimType = _masterApi.GetList((int)Master.SimType);
@@ -478,56 +488,60 @@ namespace UIlayer.Controllers
                         await HttpContext.SignInAsync(claimsPrincipal);
                         var username = User.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
                         string name = _distributedCache.GetStringAsync("cart").Result;
-                        if(name != null)
+                        if (name != null)
                         {
                             _carts = JsonConvert.DeserializeObject<List<MyCart>>(name);
                         }
-                        
+
                         var cartsfromDb = _userApi.GetCart().Result.Where(c => c.usersId.Equals(userData.UserId)).FirstOrDefault();
-                        if (_carts.Any(c => c.sessionId.Equals(check.sessionId)))
-                        { 
-                            var cartWithSameSessionId = _carts.Where(c => c.sessionId.Equals(check.sessionId));
-                            foreach (var cart in cartWithSameSessionId)
+                        if(_carts != null)
+                        {
+                            if (_carts.Any(c => c.sessionId.Equals(check.sessionId)))
                             {
-                                if (cart.sessionId.Equals(check.sessionId))
+                                var cartWithSameSessionId = _carts.Where(c => c.sessionId.Equals(check.sessionId));
+                                foreach (var cart in cartWithSameSessionId)
                                 {
-                                    foreach (var cartDetailsData in cart.cartDetails.ToList())
+                                    if (cart.sessionId.Equals(check.sessionId))
                                     {
-                                        if(cartsfromDb != null)
+                                        foreach (var cartDetailsData in cart.cartDetails.ToList())
                                         {
-                                            if(cartsfromDb.cartDetails.Any(c=> c.productId.Equals(cartDetailsData.productId)))
+                                            if (cartsfromDb != null)
                                             {
-                                                foreach(var cartDetailsFromDb in cartsfromDb.cartDetails.ToList())
+                                                if (cartsfromDb.cartDetails.Any(c => c.productId.Equals(cartDetailsData.productId)))
                                                 {
-                                                    if (cartDetailsData.productId.Equals(cartDetailsFromDb.productId))
+                                                    foreach (var cartDetailsFromDb in cartsfromDb.cartDetails.ToList())
                                                     {
-                                                        cartDetailsFromDb.quantity = cartDetailsFromDb.quantity + 1;
+                                                        if (cartDetailsData.productId.Equals(cartDetailsFromDb.productId))
+                                                        {
+                                                            cartDetailsFromDb.quantity = cartDetailsFromDb.quantity + 1;
+                                                        }
+
                                                     }
-                                                    
                                                 }
-                                            }
-                                            else
-                                            {
-                                                cartsfromDb.cartDetails.Add(cartDetailsData);
+                                                else
+                                                {
+                                                    cartsfromDb.cartDetails.Add(cartDetailsData);
+                                                }
+
                                             }
 
                                         }
-                                        
+                                        _userApi.EditCart(cartsfromDb);
                                     }
-                                    _userApi.EditCart(cartsfromDb);
-                                }
-                                else
-                                {
-                                    _userApi.Createcart(cart);
+                                    else
+                                    {
+                                        _userApi.Createcart(cart);
+                                    }
+
                                 }
 
                             }
-
                         }
+                        
 
 
                     }
-                     _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
+                    await _distributedCache.SetStringAsync("cart", JsonConvert.SerializeObject(""));
                     if (ReturnUrl == null)
                     {
                         return Redirect("/");
@@ -538,12 +552,12 @@ namespace UIlayer.Controllers
                     }
                 }
                 else
-            {
-                TempData["Error"] = "Invalid Email or Password !";
-                return Redirect("login");
-            }
+                {
+                    TempData["Error"] = "Invalid Email or Password !";
+                    return Redirect("login");
+                }
 
-        } 
+            }
             catch (Exception ex)
             {
                 TempData["Error"] = "Invalid Email or Password !";
@@ -576,34 +590,34 @@ namespace UIlayer.Controllers
 
         }
         [HttpPost("Admin/user/checkout")]
-        public async Task<IActionResult> OrderUpdate(string status ,int orderId)
+        public async Task<IActionResult> OrderUpdate(string status, int orderId)
         {
             Checkout checkout = new Checkout();
-            UserApi userApi = new UserApi(Configuration);   
+            UserApi userApi = new UserApi(Configuration);
             OrderStatus statuses = new OrderStatus();
-            
-                var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
-            if((OrderStatus)Enum.Parse(typeof(OrderStatus), status) == DomainLayer.OrderStatus.cancelled)
+
+            var checkoutData = userApi.GetCheckOut().Result.Where(c => c.orderId.Equals(orderId)).FirstOrDefault();
+            if ((OrderStatus)Enum.Parse(typeof(OrderStatus), status) == DomainLayer.OrderStatus.cancelled)
             {
                 checkoutData.cancelRequested = RoleTypes.Admin;
             }
-                checkoutData.status = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
+            checkoutData.status = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
             userApi.EditCheckout(checkoutData);
 
-            
+
             var data = await userApi.GetCheckOut();
             return RedirectToAction("OrderList");
         }
         [HttpGet("/admin/orderDetails/{id}")]
         public IActionResult orderDetails(int id)
         {
-            if(id == 0)
+            if (id == 0)
             {
                 return View("Index");
             }
             var checkoutList = _userApi.GetCheckOut().Result;
             var checkout = checkoutList.Where(c => c.orderId.Equals(id)).FirstOrDefault();
-            var ProductDetails = _opApi.GetAll().Result.Where(c=> c.id.Equals(checkout.productId)).FirstOrDefault();
+            var ProductDetails = _opApi.GetAll().Result.Where(c => c.id.Equals(checkout.productId)).FirstOrDefault();
             ViewData["ProductDetails"] = ProductDetails;
             ViewData["Address"] = _userApi.GetAddress().Result.Where(c => c.id.Equals(checkout.addressId)).FirstOrDefault();
             return View(checkout);
@@ -612,23 +626,23 @@ namespace UIlayer.Controllers
         public IActionResult Contact()
         {
 
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             return View(contactData);
-           
+
         }
         [HttpGet]
         public IActionResult ContactEdit()
         {
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
-          var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
+            var contactData = _adminApi.ContactGet().Result.FirstOrDefault();
             return View(contactData);
-         
+
         }
         [HttpPost]
         public IActionResult ContactEdit(AdminContact contact)
         {
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             _adminApi.EditContact(contact);
             return RedirectToAction("Contact");
         }
@@ -637,25 +651,25 @@ namespace UIlayer.Controllers
         [AllowAnonymous]
         public IActionResult Privacy()
         {
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             return View(privacyData);
-           
+
         }
         [HttpGet]
         public IActionResult PrivacyEdit()
         {
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             var privacyData = _adminApi.PrivacyGet().Result.FirstOrDefault();
             return View(privacyData);
         }
         [HttpPost]
         public IActionResult PrivacyEdit(PrivacyPolicy privacy)
         {
-            adminApi _adminApi = new adminApi(Configuration,_mapper);
+            adminApi _adminApi = new adminApi(Configuration, _mapper);
             _adminApi.EditPrivacy(privacy);
             return RedirectToAction("Privacy");
-           
+
         }
 
         public IActionResult About()
@@ -682,7 +696,6 @@ namespace UIlayer.Controllers
         {
             return View();
         }
-        [HttpGet("admin/ProductDetails/DeleteImage/{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             ImageApi imageApi = new ImageApi(Configuration);
@@ -698,7 +711,7 @@ namespace UIlayer.Controllers
             var sample = data.Where(c => c.id.Equals(id)).FirstOrDefault();
             var products = await _opApi.GetAll();
             var product = products.Where(c => c.id.Equals(sample.ProductEntityId)).FirstOrDefault();
-            bool result = await imageApi.DeleteAsync(id,sample.imagePath);
+            bool result = await imageApi.DeleteAsync(id, sample.imagePath);
             if (result)
             {
                 _notyf.Success("Image deleted");
@@ -707,7 +720,7 @@ namespace UIlayer.Controllers
             {
                 _notyf.Error("Not deleted");
             }
-            return RedirectToAction("ProductDetails", new {id=sample.ProductEntityId});
+            return RedirectToAction("ProductDetails", new { id = sample.ProductEntityId });
         }
         [HttpPost]
         public async Task<ActionResult> quatity(ProductEntity product, string newQuantity)
@@ -733,7 +746,7 @@ namespace UIlayer.Controllers
                     productEntity.specs.storage.Add(data.storage);
                 }
             }
-               
+
             bool result = _opApi.EditProduct(productEntity).Result;
             return RedirectToAction("ProductDetails", new { id = products.id });
         }
@@ -745,7 +758,7 @@ namespace UIlayer.Controllers
             return View();
         }
         [HttpGet("admin/disable/{id}")]
-        public async  Task<IActionResult> Disable(int id,string returnUrl)
+        public async Task<IActionResult> Disable(int id, string returnUrl)
         {
             var datas = await _opApi.GetAll();
             var data = datas.Where(c => c.id == id).FirstOrDefault();
@@ -768,7 +781,7 @@ namespace UIlayer.Controllers
                 }
             }
             _opApi.EditProduct(mappedData);
-            if(returnUrl != null)
+            if (returnUrl != null)
             {
                 return Redirect(returnUrl);
             }
@@ -798,7 +811,7 @@ namespace UIlayer.Controllers
                 }
             }
             _opApi.EditProduct(mappedData);
-            if(returnUrl != null)
+            if (returnUrl != null)
             {
                 return Redirect(returnUrl);
             }
@@ -836,7 +849,7 @@ namespace UIlayer.Controllers
             var datas = _opApi.GetRams();
             var data = datas.Where(c => c.specificatiionid.Equals(id));
             List<string> rams = new List<string>();
-            foreach(Ram ram in data)
+            foreach (Ram ram in data)
             {
                 rams.Add(ram.ram);
             }
@@ -851,7 +864,7 @@ namespace UIlayer.Controllers
             ViewBag.Storages = storages;
             return View();
         }
-        public IActionResult ProductsSubPart(ProductSubPart productSubPart,string storage , string ram)
+        public IActionResult ProductsSubPart(ProductSubPart productSubPart, string storage, string ram)
         {
             var rams = _opApi.GetRams().Where(c => c.ram.Equals(ram)).FirstOrDefault();
             var storages = _opApi.GetStorages().Where(c => c.storage.Equals(storage)).FirstOrDefault();
@@ -876,6 +889,26 @@ namespace UIlayer.Controllers
         {
             var data = _opApi.GetRams().Where(c => c.id.Equals(id)).FirstOrDefault();
             return View();
+        }
+        [HttpGet("Admin/MasterDelete/{id}")]
+        public PartialViewResult MasterDelete(int id)
+        {
+            var result = _masterApi.GetAll().Where(c => c.id.Equals(id)).FirstOrDefault();
+            return PartialView(result);
+        }
+        [HttpPost]
+        public IActionResult MasterDelete(MasterTable masterTable)
+        {
+            var result = _masterApi.Delete(masterTable.id);
+            if (result)
+            {
+                _notyf.Success("Master Data is deleted succesfully");
+            }
+            else
+            {
+                _notyf.Error("Master Data is not deleted ");
+            }  
+            return Redirect("/masterlist?id="+masterTable.parantId);
         }
     }
 }

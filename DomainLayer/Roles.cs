@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DomainLayer
 {
@@ -16,5 +14,6 @@ namespace DomainLayer
         public string createdBy { get; set; }
         public DateTime modifiedOn { get; set; }
         public string modifiedBy { get; set; }
+        public int IsActive { get; set; }
     }
 }

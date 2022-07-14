@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer
@@ -18,6 +19,7 @@ namespace BusinessObjectLayer
         {
             try
             {
+                address.IsActive = 0;
                 _repo.Add(address);
                 _repo.Save();
             }
@@ -32,7 +34,8 @@ namespace BusinessObjectLayer
         {
             try
             {
-                _repo.Delete(data);
+                data.IsActive = 1;
+                _repo.Update(data);
                 _repo.Save();
             }
             catch (Exception ex)
@@ -47,9 +50,10 @@ namespace BusinessObjectLayer
             _repo.Save();
         }
 
-        public Task<IEnumerable<Address>> get()
+        public async  Task<IEnumerable<Address>> get()
         {
-            return _repo.Get();
+            var result = await _repo.Get();
+            return result.Where(c => c.IsActive.Equals(0));
         }
     }
 }

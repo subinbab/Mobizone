@@ -1,6 +1,7 @@
 ﻿using DomainLayer.ProductModel;
 using Repository;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessObjectLayer.ProductOperations
@@ -14,12 +15,14 @@ namespace BusinessObjectLayer.ProductOperations
         }
         public void delete(Images data)
         {
-            _repo.Delete(data);
+            data.IsActive=1;
+            _repo.Update(data);
             _repo.Save();
         }
-        public Task<IEnumerable<Images>> get()
+        public async Task<IEnumerable<Images>> get()
         {
-            return _repo.Get();
+            var result = _repo.Get();
+            return result.Result.ToList().Where(c => c.IsActive.Equals(0));
         }
     }
 }

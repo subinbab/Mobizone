@@ -20,5 +20,6 @@ namespace DomainLayer.ProductModel.Master
         public string masterData { get; set; }
         [Column("PerantId",Order =3)]
         public int? parantId { get; set; }
+        public int IsActive { get; set; }
     }
 }

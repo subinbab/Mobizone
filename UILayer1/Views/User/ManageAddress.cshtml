@@ -5,6 +5,7 @@
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     Layout = "~/Views/Simpleview/_accountLayout.cshtml";
     ViewData["Title"] = "Mobizone- Manage Address";
+    var returnUrl = ViewBag.ReturnUrl as string;
 }
 @model DomainLayer.Users.Address
 
@@ -12,13 +13,11 @@
     <div class="tab-content" style="">
         <div class="tab-pane fade active show" id="account-general">
 
-            <div class="card-body media align-items-center">
-
-            </div>
+          
 
             <div class="card-body">
                 <div class="form-group"    style=" margin-bottom: -20%;">
-                   <a asp-action="address" class="btn btn-default" asp-controller="user" > + Add New Address</a>
+                   <a href="/user/address?ReturnUrl=@returnUrl" class="btn btn-default" > + Add New Address</a>
                 </div>
                 @foreach (var data in user.address)
                 {

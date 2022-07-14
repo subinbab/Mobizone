@@ -2,7 +2,9 @@
 var previousDiv
 var sourcearray;
 var productId;
-var actionMethod ="indexPartial";
+var actionMethod = "indexPartial";
+var brandname = null;
+var name = null;
 $(document).ready(function () {
     $("#Index").addClass("loading");
     getData(function () {
@@ -10,7 +12,6 @@ $(document).ready(function () {
     })
     $("#sortLowToHigh").click(function () {
         //alert("clicked")
-        actionMethod = "sortLowToHighPartial";
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
         $("#Index").addClass("loading");
         getDataLowToHigh(function () {
@@ -20,7 +21,6 @@ $(document).ready(function () {
     })
     $("#sortHighToLow").click(function () {
         //alert("clicked")
-        actionMethod = "sortHighToLow";
         document.getElementById("Index").innerHTML = '<div id="index"></div>'
         $("#Index").addClass("loading");
         getDataHighToLow(function () {
@@ -77,33 +77,43 @@ function getData(callback) {
 }
 function getDataLowToHigh(callback) {
     $.ajax({
-        url: '/user/sortLowToHighPartial',
+        url: '/user/sortLowToHighPartial?count=' + null + '&brandName=' + brandname + '&name=' + name,
         type: 'get',
         success: function (data) {
             callback();
+            actionMethod = "sortLowToHighPartial";
+            brandname = $("#brandname").val();
+            if (brandname == "null") {
+                brandname = null;
+            }
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         }
     })
 }
 function getDataHighToLow(callback) {
     $.ajax({
-        url: '/user/SortHighToLowPartial',
+        url: '/user/SortHighToLowPartial?count=' + null + '&brandName=' + brandname+'&name='+name,
         type: 'get',
         success: function (data) {
             callback()
+            actionMethod = "SortHighToLowPartial";
+            brandname = $("#brandname").val();
+            if (brandname == "null") {
+                brandname = null;
+            }
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         }
     })
 }
 function filterByBrand(callback) {
-    var brandname = $("#brandname").val();
+    brandname = $("#brandname").val();
     $.ajax({
         url: '/user/filterByBrandName',
         type: 'post',
         data: 'brandName=' + brandname,
         success: function (data) {
-            //alert(data)
             callback()
+            brandname = $("#brandname").val();
             document.getElementById("Index").innerHTML = '<div id="Index">' + data + '</data>';
         },
         error: function (data) {
@@ -112,14 +122,15 @@ function filterByBrand(callback) {
     })
 }
 function search(callback) {
-    var name = $("#tags").val();
+    name = $("#tags").val();
     if (name) {
         $.ajax({
-            url: '/user/search',
+            url: '/user/search?name=' + name+'&count=' + null + '&brandName=' + brandname,
             type: 'post',
-            data: 'name=' + name,
             success: function (data) {
                 //alert(data)
+                name = $("#tags").val();
+                actionMethod = "search";
                 callback()
                 document.getElementById("Index").innerHTML = data;
             },
@@ -141,11 +152,11 @@ function pagination(data) {
         $("#Index").removeClass("loading");
     },data)
 }
-function IndexRequest(callback,data) {
+function IndexRequest(callback, data) {
     $.ajax({
-        url: '/user/'+actionMethod,
+        url: '/user/' + actionMethod,
         type: 'post',
-        data: 'count=' + data,
+        data: "count=" + data + "&brandName=" + brandname,
         success: function (data) {
             //alert(data)
             callback()

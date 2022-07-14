@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<DomainLayer.Checkout>
+@{
+    int count = (int)ViewBag.count;
+    int pagination = 1;
+}
+<div style="font-weight: bold;"> My Orders </div>
+@if (Model == null || Model.Count() == 0)
+{
+    <p class="empty">0 results</p>
+}
+else
+{
+    @foreach (var data in Model)
+    {
+        <div class="row" style="padding: 14px; border: solid 1px #d7d1d1; margin-top: 5%">
+            <div class="col-2">
+                @if (data.product.images != null && data.product.images.Count != 0)
+                {
+                    <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="@data.product.images.FirstOrDefault().imagePath" style="width: 54px;" /></a>
+                }
+                else
+                {
+                    <a asp-action="OrderDetails" asp-route-id="@data.id"><img src="/css/Images/noimage.jpg" style="width: 100px;" /></a>
+                }
+
+            </div>
+            <div class="col-3">
+                <div class="col-12" style="font-weight: bold;">@data.product.name</div>
+                <div class="col-12">@data.product.model</div>
+            </div>
+            <div class="col-3">
+                <div class="col-12" style="font-weight: bold;color: green;"> &#8377 @data.price</div>
+            </div>
+            <div class="col-4">
+                <div class="col-12" style="font-weight: bold;">@data.status</div>
+            </div>
+        </div>
+    }
+    @if (Model != null && Model.Count() > 0)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                @if (Model != null)
+                {
+                    @for (int i = 0; i <= count; i++)
+                    {
+                        <li class="page-item"><a class="page-link" id="pagination" onclick="pagination(@i)">@pagination</a></li>
+
+                        pagination = pagination + 1;
+                    }
+                }
+
+
+            </ul>
+        </nav>
+    }
+}
+
+
+<a type="button" class="btn  btn-orange" style="background-color: #078ceb; padding-left: 1%; padding-right: 1%; color: white; margin-left: 81%; margin-top: 13%; " asp-action="index">Back</a>&nbsp;
+
+
+<style>
+    .product {
+        margin-left: 8%;
+        font-size: 150%;
+    }
+
+    .price {
+        margin-top: -34px;
+        margin-left: 48%;
+        font-size: 150%;
+    }
+
+    .status {
+        margin-left: 85%;
+        margin-top: -35px;
+        font-size: 150%;
+    }
+
+    .empty {
+        margin-top: 10%;
+        text-align: center;
+    }
+</style>

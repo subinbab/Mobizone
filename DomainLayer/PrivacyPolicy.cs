@@ -13,5 +13,6 @@ namespace DomainLayer
         [MaxLength(500)]
         [Required(ErrorMessage = "This field is required")]
         public string content { get; set; }
+        public int IsActive { get; set; }
     }
 }

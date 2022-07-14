@@ -205,18 +205,21 @@ namespace UILayer.Data.ApiServices
                 data.name = product.name;
                 data.productBrand = product.productBrand;
                 data.quantity = product.quantity;
+                data.description = product.description;
                 data.status = product.status;
                 data.price = product.price;
                 data.model = product.model;
+                data.purchasedNumber = product.purchasedNumber;
                 List<Ram> rams = new List<Ram>();
-                foreach (var ramData in data.specs.rams)
-                {
-                    DeleteRam(ramData.id);
-                }
+                
                 if (product.specs != null)
                 {
                     if (product.specs.ram != null)
                     {
+                        foreach (var ramData in data.specs.rams)
+                        {
+                            DeleteRam(ramData.id);
+                        }
                         foreach (var ramData in product.specs.ram)
                         {
                             Ram ram = new Ram();
@@ -227,14 +230,15 @@ namespace UILayer.Data.ApiServices
                 }
 
                 List<Storage> storages = new List<Storage>();
-                foreach (var storage1 in data.specs.storages)
-                {
-                    DeleteStorage(storage1.id);
-                }
+                
                 if (product.specs != null)
                 {
                     if (product.specs.storage != null)
                     {
+                        foreach (var storage1 in data.specs.storages)
+                        {
+                            DeleteStorage(storage1.id);
+                        }
                         foreach (var storageData in product.specs.storage)
                         {
                             Storage storage = new Storage();

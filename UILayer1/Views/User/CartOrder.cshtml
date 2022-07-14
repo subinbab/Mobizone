@@ -11,7 +11,7 @@
     var user = ViewData["userData"] as DomainLayer.Users.UserRegistration;
     var cartData = ViewData["cart"] as DomainLayer.MyCart;
     var values = Enum.GetValues(typeof(DomainLayer.PaymentModes));
-    Layout = "~/Views/Simpleview/_BasicLayoutcshtml.cshtml";
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var ReturnUrl = ViewBag.ReturnUrl as string;
     int? price = 0;
     int count = 0;
@@ -83,7 +83,7 @@ else
                         <div class="row">
                             <div class="col"><a id="addNewAddress" href="/user/address?ReturnUrl=@ReturnUrl" class="btn btn-orange" style=" color:white;margin-bottom:5%;">Add New Address</a></div>
                             <div class="col col d-flex justify-content-end " id="addressContinue ">
-                                <a style=" background-color: #e52d2e; display:none;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
+                                <a style=" background-color: #e52d2e; display: none; color: white; margin-bottom: 5%; margin-right: 3%;" href="#" class="btn btn-orange  " id="submit_prog" onclick="orderDetails()">continue</a>
                             </div>
 
                         </div>
@@ -107,21 +107,27 @@ else
                                                 }
                                                 else
                                                 {
-                                                    <img src="@cart.product.images.FirstOrDefault().imagePath" style="width: 10%;">
-                                                }
-                                                <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
-                                                    @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
-                                                    {@cart.product.name;
-                                                }
-                                                    (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                    @foreach (var item in cart.product.images)
                                                     {
-                                                        @cart.product.specs.rams.FirstOrDefault().ram;
-                                                    } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
-                                                    {
-                                                        @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
-                                                        Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
-                                                    </label>
-                                                </div>
+                                                        <a  asp-action="ProductDetails" asp-route-id="@cart.product.id" class="col-3">
+                                                            <img src="@item.imagePath" style="width: 10%;">
+                                                        </a>
+                                                        break;
+                                                    }
+                                                }
+                                                    <label class="form-check-label" for="flexCheckDefault" style="font-weight: bold;">
+                                                        @if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                        {@cart.product.name;
+                                                    }
+                                                        (@if (cart.product.specs.rams != null && cart.product.specs.rams.Count() > 0)
+                                                        {
+                                                            @cart.product.specs.rams.FirstOrDefault().ram;
+                                                        } GB, @if (cart.product.specs.storages != null && cart.product.specs.storages.Count() > 0)
+                                                        {
+                                                            @cart.product.specs.storages.FirstOrDefault().storage} GB)<br>&#8377 @cart.product.price
+                                                            Qty:<input disabled name="quantity" asp-for="quantity" type="number" style="width:50px; height:20px;" value="@cart.quantity" id="pricetag" />
+                                                        </label>
+                                                    </div>
 
                                             </div>
 
@@ -141,9 +147,9 @@ else
 
                         <div class="row">
                             <div class="col">
-                                <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="orderDetailsCancel()">cancel</a>
+                                <a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e; color: white; margin-bottom: 5%; " onclick="orderDetailsCancel()">cancel</a>
                             </div>
-                            <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e;" onclick="paymentDetails()">continue</a></div>
+                            <div class="col col d-flex justify-content-end " style="display:none"><a href="#" class="btn btn-orange toggle-button2" style="background-color: #e52d2e; color: white; margin-bottom: 5%; margin-right: 16%; }" onclick="paymentDetails()">continue</a></div>
                         </div>
 
                     </div>
@@ -165,7 +171,7 @@ else
                         <div class="row">
                             <div class="col"><a href="#" onclick="paymentCancel()" class="btn btn-orange">Cancel</a></div>
                             <div class="col"></div>
-                            <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e;" id="order-submit" /></div>
+                            <div class="col col d-flex justify-content-end "><input type="submit" value="Confirm Order" class="btn btn-orange submit" style="background-color: #e52d2e; margin-bottom: 5%; margin-right: 5%; color: white;" id="order-submit" /></div>
                         </div>
                     </div>
                 </div>
@@ -243,7 +249,9 @@ else
 
     .btn-orange {
         background: #3d8be3;
+        color: white;
     }
+    
 
     .submit {
         background-color: #3d8be3;
@@ -361,9 +369,9 @@ else
         }
 
                         function apply() {
-            debugger
+           
                         $(".check").on('click', function () {
-                debugger
+                
                         var $box = $(this);
                         if ($box.is(":checked")) {
                             //alert("checked")
@@ -387,17 +395,26 @@ else
                     //console.log("''''")
                     }
                 } else {
-                        alert("not checked")
+                       // alert("not checked")
                     $box.prop("checked", false);
                     //console.log($box)
                 }
             });
         }
                     $(document).ready(function () {
+                        $('input[class="check"]').change(function () {
+                            var submitBtn = $('#submit_prog');
+                            if ($('input[class="check"]:checked').length > 0) {
+                                submitBtn.show();
+                            } else {
+                                submitBtn.hide();
+                            }
+                        });
                         $(".check").on('click', function () {
-                            debugger
+                           
                             var $box = $(this);
-                            if ($box.is(":checked")) {
+                            if ($box.is(":checked"))
+                            {
                                 //alert("checked")
                                 //console.log("enter")
 
@@ -406,15 +423,30 @@ else
                                 $box.prop("checked", true);
                                 addressDiv = $("." + $box[0].id)[0].innerHTML + "</div>"
 
-                            } else {
+                            }
+                            else
+                            {
                                 //alert("not checked")
                                 $box.prop("checked", false);
                                 //console.log($box)
                             }
                         });
                     })
-    function showbutton1() {
-        //alert("cheuijhg")
-        $("#submit_prog").toggle();
-    }
+                    function showbutton1()
+                    {
+                        //alert("cheuijhg")
+                        console.log($('.check:checkbox'))
+                        console.log($('.check:checkbox').length)
+                        for (var i = 0; i < $('.check:checkbox').length; i++) {
+                            if ($('.check:checkbox')[i].checked)
+                            {
+                                $("#submit_prog").show();
+                                break;
+                            }
+                            else
+                            {
+                                $("#submit_prog").hide();
+                            }
+                        }
+                    }
 </script>

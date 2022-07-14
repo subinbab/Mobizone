@@ -17,7 +17,8 @@ namespace BusinessObjectLayer
         }
         public void delete(Checkout data)
         {
-            _repo.Delete(data);
+            data.IsActive = 1;
+            _repo.Update(data);
             _repo.Save();
         }
         public async Task<IEnumerable<Checkout>> get()
@@ -28,6 +29,7 @@ namespace BusinessObjectLayer
         {
             try
             {
+                data.IsActive = 0;
                 _repo.Add(data);
                 _repo.Save();
             }
