@@ -129,7 +129,7 @@
                 success: function (data) {
                     console.log(data)
                     getLink = data + 'api/users/CheckOutData';
-                    header();
+                    //header();
                     callback(getStatus);
                 }
             })
@@ -187,8 +187,16 @@ function getOrderList() {
                         { 'render': function (data, type, full, meta) { if (full.cancelRequested == null) { return ''; } else { return Roles[full.cancelRequested - 1] } } },
                         {
                             "render": function (data, type, full, meta) {
+                                debugger
+                                var sliceData
                                 dataStatus = full.status;
-                                var sliceData = dataList.slice(dataStatus)
+                                if (dataStatus == 3) {
+                                    sliceData = dataList.slice(2, 2);
+                                }
+                                else {
+                                    sliceData = dataList.slice(dataStatus)
+                                }
+                                
                                 var sliceStatus = statusList.slice(dataStatus)
 
                                 var formData = '<form id="orderStatus" action="user/checkout" method="post"><input name="orderId" type="hidden" value="' + full.orderId + '"/><select id="enumDropdown" name="status" style="width: 39%;"><option value="' + dataList[full.status - 1] + '">' + dataList[full.status - 1] + '</option>';
