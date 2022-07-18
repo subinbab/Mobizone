@@ -12,8 +12,10 @@
 
 
 <div class="row col-12">
-    <div class="col-4 _78xt5Y"><div class="row col-12"><div class="col-3 ">
-        @{if (Model.images == null)
+    <div class="col-4 _78xt5Y">
+        <div class="row col-12">
+            <div class="col-3 ">
+                @{if (Model.images == null)
                     {
                         <h1>No images</h1>
                     }
@@ -21,6 +23,7 @@
                     {
                         foreach (var item in Model.images)
                         {
+<<<<<<< HEAD
                                 <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
                         }
                         }}
@@ -38,6 +41,34 @@
                         </div>
     <div class="row col-12"><a class="col-5 buy">Buy</a><a class="col-5 cart">AddtoCart</a></div></div>
     <div class="col-8"><p class="heading">@Model.name @Model.productBrand                                                                                                                                                              </p>
+=======
+<<<<<<< HEAD
+                            <div class="card" style="width : 50px; height:100px;">
+                                <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" />
+
+                            </div>
+=======
+                            <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
+>>>>>>> 1c2e3503d89ddc8357904bae73627f25f56e4b5e
+                        }
+                    }}
+            </div>
+            @{if (Model.images != null && Model.images.Any())
+                {
+
+                    <img class="card col-7 Image showimage" src="@Model.images.FirstOrDefault().imagePath" alt="No images available" />
+
+                }
+                else
+                {
+                    <p>No Image</p>
+                }}
+        </div>
+         <div class="row col-12"><a class="col-5 buy" asp-action="Order" >Buy Now</a><a class="col-5 cart" asp-action="AddtoCart">Add to Cart</a></div>
+       
+    </div>
+    <div class="col-8"><p class="heading">@Model.name @Model.productBrand`                                                                                                                                                              </p>
+>>>>>>> 1a623dbe10b994fc74f88f492f3e3bfdf0f15826
                        <span class="card price"> &#8377 @Model.price</span>
         <div style="margin:2%"><span class="bold">@Model.purchasedNumber </span><span>Number of Orders have done of this Product</span></div>
     <table class="table table-hover col-7">
@@ -121,19 +152,19 @@
     {
     font-weight: bold;
 }
-.buy{
-    text-align: center;
-    padding: 2%;
-    background-color: #ff0404;
-    margin: 4%;
-    border-radius: 28px;
-    color: white !important;
-    font-size: 20px;
-}
+    .buy {
+        text-align: center;
+        padding: 2%;
+        background-color: #0099f3;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
 .cart{
     text-align: center;
     padding: 2%;
-    background-color: blue;
+    background-color:#e52d2e;
     margin: 4%;
     border-radius: 28px;
     color: white !important;

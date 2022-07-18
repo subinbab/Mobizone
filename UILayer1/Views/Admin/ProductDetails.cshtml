@@ -1,6 +1,7 @@
 ﻿
 @model DomainLayer.ProductModel.ProductEntity
 @{
+    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var returnUrl = ViewBag.ReturnUrl as string;
@@ -22,12 +23,10 @@
                     {
                         foreach (var item in Model.images)
                         {
-                            <div class="card sideImage">
-                                <img src="@item.imagePath" class=" sideImage" onclick="showImage('@item.imagePath');" />
-                                <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 28%; color:black; cursor: pointer; height: 16%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
-                            </div>
+
+                            <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
+                            <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
                         }
-                        <i class="fa fa-plus add-image addImageIcon" onclick="someFunction(@Model.id)" aria-hidden="true" ></i>
 
                     }}
             </div>
@@ -42,6 +41,7 @@
                     <p>No Image</p>
                 }}
         </div>
+
     </div>
     <div class="col-8">
         <p class="heading">@Model.name @Model.productBrand                                                                                                                                                              </p>
@@ -91,12 +91,84 @@
             </tr>
             <tr>
                 <td>Description</td>
-                <td>@Html.Raw(Model.description)</td>
+
+                <td>@Model.description</td>
+
             </tr>
         </tbody>
     </table>
 </div>
 </div>
+
+<script>
+
+    function showImage(data) {
+
+        $(".showimage").attr('src', data);
+    }
+</script>
+<style>
+    .sideImage {
+        width: 54px;
+        padding: 1%
+    }
+
+    .Image {
+        padding: 1%;
+    }
+
+    .heading {
+        font-size: 19px;
+        font-family: system-ui;
+        font-weight: bold;
+        margin-top: 2%;
+    }
+
+    .price {
+        padding: 1%;
+        border-radius: 24px;
+        min-width: 14%;
+        max-width: 20%;
+        font-weight: bold;
+        font-size: 24px;
+        color: tomato;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .buy {
+        text-align: center;
+        padding: 2%;
+        background-color: #ff0404;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    .cart {
+        text-align: center;
+        padding: 2%;
+        background-color: blue;
+        margin: 4%;
+        border-radius: 28px;
+        color: white !important;
+        font-size: 20px;
+    }
+
+    ._78xt5Y {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 64px;
+        bottom: 0;
+        z-index: 2;
+        -webkit-align-self: flex-start;
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+    }
+</style>
 <div id="deleteModel" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -153,6 +225,7 @@
 
         });
     }
+
 </script>
 <style>
     .sideImage {
@@ -223,6 +296,7 @@
         width: 69%;
     }
 </style>
+
 <script>
     function deleteImage(data) {
         var id = data;
