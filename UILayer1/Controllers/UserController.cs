@@ -213,8 +213,6 @@ namespace UILayer.Controllers
                 var session = HttpContext.Session.Id;
 
                 ModelState.Clear();
-
-
                 var userDetails = _userApi.GetUserData().Where(check => check.Email.Equals(data.email)).FirstOrDefault();
                 if (userDetails != null)
                 {

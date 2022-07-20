@@ -13,18 +13,21 @@
 
 <div class="row col-12">
     <div class="col-4 _78xt5Y"><div class="row col-12"><div class="col-3 ">
-        @{if (Model.images == null)
-                    {
-                        <h1>No images</h1>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.images)
-                        {
-                                <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
-                        }
-                        }}
-    </div>
+    @{if (Model.images == null)
+        {
+            <h1>No images</h1>
+        }
+        else
+        {
+            foreach (var item in Model.images)
+            {
+                <div class="card" style="width : 50px; height:100px;">
+                    <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" class="container"/>
+                </div>
+            }
+            <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)"  style="padding: 16px;border-block: 1px black;border: 2px solid;margin-top: 11px;"></i>
+        }}
+</div>
     @{if (Model.images != null && Model.images.Any())
                         {
 
@@ -100,7 +103,7 @@
         padding:1%
     }
     .Image{
-        
+        height:500px;
         padding:1%;
     }
     .heading{
@@ -150,4 +153,15 @@
     -ms-flex-item-align: start;
     align-self: flex-start;
 }
+    .container {
+        height: 100px;
+        position: relative;
+    }
+    .div1 {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
 </style>

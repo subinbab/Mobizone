@@ -1,7 +1,6 @@
 ﻿
 @model DomainLayer.ProductModel.ProductEntity
 @{
-    Layout = "~/Views/Simpleview/_BasicLayout.cshtml";
     var data = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var data1 = ViewData["images"] as IEnumerable<DomainLayer.ProductModel.Images>;
     var returnUrl = ViewBag.ReturnUrl as string;
@@ -24,10 +23,10 @@
                         foreach (var item in Model.images)
                         {
 
-                            <img src="@item.imagePath" class="card sideImage" onclick="showImage('@item.imagePath');" />
-                            <span class="fa-solid fa-trash position-absolute" style="background-color: white;width: 45%; color:black; cursor: pointer; height: 25%;" aria-hidden="true" onclick="deleteImage(@item.id)"></span>
+                            <img src="@item.imagePath" class="card sideImage " onclick="showImage('@item.imagePath');" />
+                            <span class="fa-solid fa-trash  deleteImage1 glyphicon-remove div1  position-absolute" onclick="deleteImage(@item.id)"></span>
                         }
-
+                        <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)" style="padding: 16px;border-block: 1px black;border: 2px solid;margin-top: 11px;"></i>
                     }}
             </div>
             @{if (Model.images != null && Model.images.Any())
@@ -294,6 +293,25 @@
         border: 2px solid;
         margin-top: 11px;
         width: 69%;
+    }
+    .deleteImage1 {
+        background-color: cornsilk;
+        width: 18%;
+        cursor: pointer;
+        height: 4%;
+    }
+    .position-absolute {
+        position: absolute !important;
+        font-size: 18px;
+        color: black;
+        margin-top: -109px;
+        padding: 1px;
+    }
+    i {
+        width: 51px;
+        text-align: center;
+        vertical-align: middle;
+        position: relative;
     }
 </style>
 

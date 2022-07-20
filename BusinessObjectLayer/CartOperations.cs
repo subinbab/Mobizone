@@ -52,7 +52,7 @@ namespace BusinessObjectLayer
             Task<IQueryable<MyCart>> result = null;
             try
             {
-                result =  _repo.Get(n1 => n1.cartDetails, n2 => n2.cartDetails);
+                result =  _repo.Get(n1 => n1.cartDetails.Where(c=> c.IsActive.Equals(0)));
             }
             catch(Exception ex)
             {
