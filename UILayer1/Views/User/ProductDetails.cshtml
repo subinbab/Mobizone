@@ -25,7 +25,6 @@
                     <img src="@item.imagePath" style="width: 48px; padding:6px;" onclick="showImage('@item.imagePath');" class="container"/>
                 </div>
             }
-            <i class="fa fa-plus add-image" onclick="someFunction(@Model.id)"  style="padding: 16px;border-block: 1px black;border: 2px solid;margin-top: 11px;"></i>
         }}
 </div>
     @{if (Model.images != null && Model.images.Any())
@@ -84,7 +83,7 @@
     </tr>
      <tr>
       <td>Description</td>
-      <td>@Model.description</td>
+      <td>@Html.Raw(Model.description)</td>
     </tr>
   </tbody>
 </table>

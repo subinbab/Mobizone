@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+    var contact = ViewBag.Contact as DomainLayer.AdminContact;
+    var orderData = ViewBag.OrderData as DomainLayer.Checkout;
+}
+
+<div id="invoice" style="border: 1px solid; padding: 1%; margin: 2%;">
+    <div style="display: flex; align-items: center;"><span style="font-weight: bold; font-size: 18px; flex: 1;">MOBIZONE pvt </span><div style="flex:5"> <div><span> contact us : @contact.phoneNumber |</span><span>@contact.email</span></div><div class="_div5" style="font-size: 12px;"><span>@contact.shopName</span><span>@contact.state ,@contact.country , @contact.pincode</span></div></div><span style="flex: 1; font-weight: bold;">INVOICE</span></div>
+    <hr />
+    <div style="display:flex">
+        <div style="flex: 1; font-size: 10px;">
+            <span>Order Id:</span><span>@orderData.orderId</span>
+            <p>Order Date: 12/07/2019</p>
+        </div>
+        <div style="flex: 1; font-size: 10px;">
+            <p>Billing Address</p>
+            <p>@contact.shopName</p>
+            <p>@contact.state</p>
+            <p>@contact.country</p>
+            <p>@contact.pincode</p>
+        </div>
+        <div style="flex: 1; font-size: 10px;">
+            <p>Shipping Address</p>
+            <p>@contact.shopName</p>
+            <p>@contact.state</p>
+            <p>@contact.country</p>
+            <p>@contact.pincode</p>
+        </div>
+    </div>
+    <table style="width: 100%; border: 1px solid">
+        <tr>
+            <th style="border: 1px solid">Product</th>
+            <th style="border: 1px solid">Title</th>
+            <th style="border: 1px solid">Quantity</th>
+            <th style="border: 1px solid">Price</th>
+            <th style="border: 1px solid">Total</th>
+        </tr>
+        <tr>
+            <td><div>@orderData.product.name</div></td>
+            <td>@orderData.product.productType</td>
+            <td>@orderData.quantity</td>
+            <td>@orderData.price</td>
+            <td>@orderData.price</td>
+        </tr>
+    </table>
+    <div style="display:flex;"><div style="flex:6"></div><div><span>Grand Total : </span><span>@orderData.price</span></div></div>
+</div>
+@using (Html.BeginForm("Download", "Invoice", FormMethod.Post))
+{
+    <input type="hidden" name="GridHtml" />
+    <input class="download-btn" type="submit" id="btnSubmit" value="Download Report" />
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#download-btn").on('click', function () {
+            var el = document.getElementById("invoice");
+            console.log(el.innerHTML)
+            var listString = el.innerHTML.split(">");
+            var listHtmlContent = "";
+            listString.forEach(function (index) {
+                listHtmlContent = listHtmlContent + index + ">\n"
+            })
+        });
+    })
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $("input[name='GridHtml']").val($("#invoice").html());
+        });
+    });
+
+</script>

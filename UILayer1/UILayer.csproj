@@ -38,6 +38,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Select.HtmlToPdf" Version="22.1.0" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="22.1.0" />
     <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.1.0.60" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="toastr" Version="2.1.1" />
