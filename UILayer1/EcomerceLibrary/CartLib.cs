@@ -351,7 +351,7 @@ namespace UILayer.EcomerceLibrary
                             _userApi.DeleteCartDetails(mycartData.id);
                         }
                     }
-                    _userApi.EditCart(myCart);
+                    _userApi.EditCart(data);
                 }
                 return true;
             }
