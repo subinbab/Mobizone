@@ -144,7 +144,7 @@ namespace UILayer.EcomerceLibrary
                 }
                 else
                 {
-                    _cartDetails.Add(cartDetails);
+                    //_cartDetails.Add(cartDetails);
                     cart.cartDetails = _cartDetails;
                     cart.sessionId = sessionId;
                     cart.usersId = user.UserId;
