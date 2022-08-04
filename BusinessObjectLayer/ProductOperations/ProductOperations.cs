@@ -22,7 +22,7 @@ namespace BusinessObjectLayer.ProductOperations
         public async Task<IEnumerable<ProductEntity>> Search(string name)
         {
             var data = _repo.Get(n1 => n1.specs, n2 => n2.images, n3 => n3.specs.rams, n4 => n4.specs.storages).Result.Where(c => c.name.ToLower().StartsWith(name.ToLower()));
-            var result = data.ToList();
+            var result = data.ToList().Where(c=> c.IsActive.Equals(0));
             return data;
         }
 

@@ -47,7 +47,7 @@ namespace BusinessObjectLayer.User
 
         public async  Task<IEnumerable<UserRegistration>> Get()
         {
-            return await _userRepo.Get(n1=> n1.address);
+            return await _userRepo.Get(n1=> n1.address.Where(c=> c.IsActive.Equals(0)));
         }
     }
 }

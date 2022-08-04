@@ -627,7 +627,7 @@ namespace UILayer.Controllers
             IEnumerable<ProductEntity> filteredData = _opApi.GetAll().Result;
             if (brandName != null)
             {
-                filteredData = _opApi.Filter(brandName).Result;
+                filteredData = _opApi.Filter(brandName).Result.Where(c => c.status.Equals(ProductStatus.enable));
                 if (filteredData != null)
                 {
 
@@ -763,7 +763,7 @@ namespace UILayer.Controllers
             ViewBag.count = 0;
             ViewBag.Search = name;
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var data = _opApi.Search(name).Result;
+            var data = _opApi.Search(name).Result.Where(c => c.status.Equals(ProductStatus.enable));
             return View("PartialViews/_IndexPartialView", data);
         }
         [HttpPost]
@@ -772,7 +772,7 @@ namespace UILayer.Controllers
             ViewBag.count = 0;
 
             ViewBag.BrandList = _masterApi.GetList((int)Master.Brand);
-            var data = _opApi.Search(name).Result;
+            var data = _opApi.Search(name).Result.Where(c => c.status.Equals(ProductStatus.enable));
             return PartialView("PartialViews/_IndexPartialView", data);
         }
         [HttpPost]
