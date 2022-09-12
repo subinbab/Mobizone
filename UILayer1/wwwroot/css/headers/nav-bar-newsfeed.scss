@@ -1,0 +1,76 @@
+﻿@import url("../utilities/_constants.scss");
+@import url("../utilities/_reset.scss");
+.nav-bar{
+    display:flex;
+}
+.alerts {
+    background-color: red;
+    padding: 1px;
+    height: 47px;
+    overflow:hidden;
+}
+.alerts p {
+    text-align: right;
+    /* animation properties */
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -moz-animation: my-animation 15s linear infinite;
+    -webkit-animation: my-animation 15s linear infinite;
+    animation: my-animation 15s linear infinite;
+    position: fixed;
+}
+@-moz-keyframes my-animation {
+    from {
+        -moz-transform: translateX(-100%);
+    }
+
+    to {
+        -moz-transform: translateX(100%);
+    }
+}
+@-webkit-keyframes my-animation {
+    from {
+        -webkit-transform: translateX(-100%);
+    }
+
+    to {
+        -webkit-transform: translateX(100%);
+    }
+}
+@keyframes my-animation {
+    from {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+
+    to {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(200%);
+    }
+}
+body{
+    background-color:black;
+}
+@media screen and (max-width: 545px) {
+    .alerts p {
+        font-size: 13px;
+        text-align: right;
+        /* animation properties */
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+        -moz-animation: my-animation 15s linear infinite;
+        -webkit-animation: my-animation 15s linear infinite;
+        animation: my-animation 15s linear infinite;
+        position: fixed;
+    }
+    .alerts {
+        background-color: red;
+        padding: 1px;
+        height: 39px;
+        overflow: hidden;
+    }
+}

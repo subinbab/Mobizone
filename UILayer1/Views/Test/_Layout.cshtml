@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/master.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="hamburg-show-div" id="side-show-hamburg" >
+        
+        <div class="close-icon-none" id="close-hamburg" onclick="myFunction()"></div>
+    </div>
+    
+    <div class="alerts">
+        <p>Your world is just a call away with boAt Storm Pro Call. Grab at just ₹3399 using code: </p>
+    </div>
+    <nav class="nav-bar">
+        <div class="hamburg-menu" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="logo">
+            <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" 
+                         class="float-left" />
+                         <p>Mobizone</p>
+        </div>
+        <div class="links">
+            <ul>
+                <li>Home</li>
+                <li>Services</li>
+                <li style="flex:2;">Latest Products</li>
+                <li>Extras</li>
+            </ul>
+        </div>
+        <div class="search">
+            <div class="searchBar">
+                    <input  placeholder="Search" value="" autocomplete="on" type="search" id="tags" class="form-control" name="name" required />
+                    <button id="search-btn" type="submit" name="searchQuerySubmit">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                        </svg>
+                    </button>
+                </div>
+        </div>
+        <div class="settings">
+            <div class="inner-settings">
+                <div class="user-settings">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                
+                <div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="search-bar-responsive">
+        <div class="searchBar">
+                    <input  placeholder="Search" value="" autocomplete="on" type="search" id="tags" class="form-control" name="name" required />
+                    <button id="search-btn" type="submit" name="searchQuerySubmit">
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                        </svg>
+                    </button>
+                </div>
+    </div>
+    
+    <div style="z-index: 2;">
+        <div class="filter-sort">
+            <div></div>
+            <div class=" none-sliding-filter" id="filter-container"><select class="slide-select"><option>High to Low</option><option>Low to High</option></select></div>
+            <div class="filter" onclick="filter()">
+                <p>Filter</p>
+            </div>
+            <div class="sort-div none-sliding-sort" id="sort-container"><select class="slide-select-sort"><option>Vivo</option><option>Redmi</option></select></div>
+            <div class="sort" onclick="sort()">
+                <p>Sort</p>
+            </div>
+            <div></div>
+        </div>
+        @RenderBody()
+    </div>
+    <div>
+        <table class="top-trending-table">
+            <tbody>
+                <tr>
+                    <td><p>Top Trending</p></td>
+                </tr>
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+function myFunction() {
+  var x = document.getElementById("side-show-hamburg");
+    var y = document.getElementById("close-hamburg");
+  if (x.className === "hamburg-show-div" || y.className === "close-icon-none close-icon-open") {
+    x.className = " responsive";
+      y.className = "close-icon";
+  } else {
+    x.className = "hamburg-show-div";
+      y.className = "close-icon-none ";
+      //x.className += " close-icon-open";
+  }
+}
+function filter(){
+    var x = document.getElementById("filter-container");
+    if (x.className === "none-sliding-filter") {
+    x.className = "sliding-filter";
+     
+  } else {
+    x.className = "none-sliding-filter";
+     
+  }
+}
+function sort(){
+    var x = document.getElementById("sort-container");
+    if (x.className === "none-sliding-sort") {
+    x.className = "sliding-sort";
+     
+  } else {
+    x.className = "none-sliding-sort";
+     
+  }
+}
+    </script>
+</body>
+</html>
