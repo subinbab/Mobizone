@@ -227,9 +227,49 @@ div.settings div i {
 }
 
 @media screen and (max-width: 999px) {
+  .hanburg-menu-bar {
+    content: "";
+    top: 0rem;
+    background-color: #000000;
+    width: 40px;
+    height: 5px;
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+    margin: 18px 24px 0px;
+  }
+
+  .hanburg-menu-bar::after {
+    content: "";
+    top: 1rem;
+    background-color: #000000;
+    width: 40px;
+    height: 5px;
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+    margin: 15px 0px 0px;
+  }
+
+  .hanburg-menu-bar::before {
+    content: "";
+    top: 1rem;
+    background-color: #000000;
+    width: 40px;
+    height: 5px;
+    border-radius: 4px;
+    display: block;
+    position: absolute;
+    margin: 0px 0px 0px;
+  }
+
   .nav-bar div.hamburg-menu {
     display: block;
     flex: 1;
+  }
+
+  .close-icon {
+    margin-left: 0% !important;
   }
 
   .links {
@@ -272,6 +312,7 @@ div.settings div i {
 }
 
 .responsive {
+  margin-top: 5.5%;
   height: 98vh;
   z-index: 10;
   width: 29%;
@@ -281,16 +322,36 @@ div.settings div i {
   animation: sidebar 1s 1;
 }
 
+.responsive ul {
+  list-style: none;
+  padding: 0;
+  background-color: blueviolet;
+}
+
+.responsive ul li {
+  padding: 13px;
+  font-weight: bold;
+  background-color: slategrey;
+}
+
+.responsive ul li:hover {
+  padding: 13px;
+  background-color: blueviolet;
+  color: white;
+  font-weight: bold;
+  border-radius: 13px;
+}
+
 .close-icon-none {
   display: none;
 }
 
 .close-icon {
   width: 88px;
-  background-color: yellow;
+  background-color: white;
   height: 49px;
   position: absolute;
-  margin-left: 100%;
+  margin-left: 100.3% !important;
   z-index: 9;
   animation: sidebar-close 1s 1;
 }
@@ -479,4 +540,141 @@ div.top-trending-table tbody tr td p {
 div.top-trending-table tbody tr td {
   border: black 1px solid;
   padding: 1%;
+}
+
+.close-icon-button {
+  content: "";
+  top: 1rem;
+  background-color: #000000;
+  width: 40px;
+  height: 5px;
+  border-radius: 4px;
+  display: block;
+  position: absolute;
+  margin: 12px 10px 0px;
+  animation: side-bar-close-button 1s 1 forwards;
+}
+
+.close-icon::after {
+  content: "";
+  top: 2rem;
+  background-color: #000000;
+  width: 40px;
+  height: 5px;
+  border-radius: 4px;
+  display: block;
+  position: absolute;
+  margin: 9px 10px 0px;
+  animation: side-bar-close-button-after 1s 1 forwards;
+}
+
+.close-icon::before {
+  content: "";
+  top: 0rem;
+  background-color: #000000;
+  width: 40px;
+  height: 5px;
+  border-radius: 4px;
+  display: block;
+  position: absolute;
+  animation: side-bar-close-button-before 1s 1 forwards;
+}
+
+.hamburg-menu {
+  width: 88px;
+  background-color: white;
+  height: 49px;
+  position: relative;
+  z-index: 9;
+  animation: sidebar-close 1s 1;
+}
+
+@keyframes side-bar-close-button {
+  from {
+    transform: rotateY(0deg) rotate(45deg);
+    /* needs Y at 0 deg to behave properly*/
+    transition: transform 2s;
+  }
+  to {
+    transform: rotateY(180deg) rotate(45deg);
+    /* notice the order */
+  }
+}
+@keyframes side-bar-close-button-after {
+  from {
+    margin: 15px 10px 0px;
+    transition: transform 2s;
+  }
+  to {
+    margin: -5px 10px 8px;
+    transform: rotateY(0deg) rotate(45deg);
+    /* notice the order */
+  }
+}
+@keyframes side-bar-close-button-before {
+  from {
+    margin: 9px 10px 0px;
+    transition: transform 2s;
+  }
+  to {
+    margin: 27px 10px 0px;
+    transform: rotateY(0deg) rotate(45deg);
+    /* notice the order */
+  }
+}
+.active {
+  padding: 13px;
+  background-color: blueviolet;
+  color: white;
+  font-weight: bold;
+}
+
+.foot {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  display: flex;
+}
+
+.foot div {
+  flex: 1;
+}
+
+.foot {
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .foot {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    display: flex;
+    height: 50px;
+    padding: 5px;
+  }
+
+  .foot div {
+    font-size: 27px;
+    flex: 1;
+  }
+
+  .foot div:hover {
+    background-color: blue;
+  }
+}
+.filter-sort {
+  display: none;
+}
+
+.active-foot {
+  background-color: blue;
 }

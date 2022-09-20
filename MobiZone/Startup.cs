@@ -1,4 +1,5 @@
 using ApiLayer.DI;
+using ApiLayer.GraphQl;
 using ApiLayer.Models;
 using BusinessObjectLayer;
 using BusinessObjectLayer.User;
@@ -54,6 +55,7 @@ namespace MobiZone
             .AllowAnyHeader()));
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            services.AddGraphQLServer().AddQueryType<Query>();
 
             /*services.AddAuthentication(options =>
             {
@@ -92,9 +94,10 @@ namespace MobiZone
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                /*endpoints.MapControllerRoute(
                     name:"default",
-                    pattern:"{controller=Home}/{action=Index}");
+                    pattern:"{controller=Home}/{action=Index}");*/
+                endpoints.MapGraphQL();
             });
         }
     }

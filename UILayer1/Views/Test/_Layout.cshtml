@@ -12,15 +12,24 @@
 <body>
     <div class="hamburg-show-div" id="side-show-hamburg" >
         
-        <div class="close-icon-none" id="close-hamburg" onclick="myFunction()"></div>
+        <div class="close-icon-none" id="close-hamburg" onclick="myFunction()"><div class="close-icon-button"></div></div>
+         <ul>
+                
+                <li id="2" class="side-bar-link active"> <i class="fa fa-home" aria-hidden="true"></i> Home</li>
+                <li id="3" class="side-bar-link" onclick="addClass()">Services</li>
+                <li id="4" class="side-bar-link" style="flex:2;"onclick="addClass()">Latest Products</li>
+                <li id="5" class="side-bar-link" onclick="addClass()">Extras</li>
+                
+            </ul>
     </div>
     
     <div class="alerts">
         <p>Your world is just a call away with boAt Storm Pro Call. Grab at just ₹3399 using code: </p>
     </div>
     <nav class="nav-bar">
-        <div class="hamburg-menu" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
+        <div class="hamburg-menu " onclick="myFunction()">
+            <div class="hanburg-menu-bar"></div>
+            
         </div>
         <div class="logo">
             <img src="~/css/Images/depositphotos_69864645-stock-illustration-letter-m-logo-icon-design-removebg-preview-removebg-preview.png" alt=" Mobizone" 
@@ -83,18 +92,12 @@
         </div>
         @RenderBody()
     </div>
-    <div>
-        <table class="top-trending-table">
-            <tbody>
-                <tr>
-                    <td><p>Top Trending</p></td>
-                </tr>
-                <tr>
-
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <footer class="foot">
+        <div class="foot-div active-foot"><i class="fa fa-home" aria-hidden="true"></i></div>
+        <div class="foot-div"><i class="fa fa-home" aria-hidden="true"></i></div>
+        <div class="foot-div"><i class="fa fa-home" aria-hidden="true"></i></div>
+        <div class="foot-div"><i class="fa fa-home" aria-hidden="true"></i></div>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -131,6 +134,42 @@ function sort(){
      
   }
 }
+function addClass(){
+    console.log()
+}
+$(document).ready(function() { 
+    var links = document.getElementsByClassName("side-bar-link");
+for (var i = 0; i < links.length;i++){
+    links[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  console.log(parseInt(this.id) - 1)
+  console.log(parseInt(this.id) + 1)
+        removeActive();
+        $("#"+(parseInt(this.id) - 1).toString()).addClass("hello");
+        $("#"+(parseInt(this.id) + 1).toString()).addClass("hello");
+  });
+}
+
+var foots = document.getElementsByClassName("foot-div");
+for (var i = 0; i < foots.length;i++){
+    foots[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active-foot");
+  current[0].className = current[0].className.replace(" active-foot", "");
+  this.className += " active-foot";
+ 
+  });
+}
+})
+
+function removeActive(){
+    var links = document.getElementsByClassName("side-bar-link");
+    for (var i = 0; i < links.length; i++) { 
+        console.log(links[i].className)
+    }
+}
+
     </script>
 </body>
 </html>
